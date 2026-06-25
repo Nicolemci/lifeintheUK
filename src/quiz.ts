@@ -28,6 +28,14 @@ export type ScoreSummary = {
   wrongQuestionIds: string[];
 };
 
+export type MockTestSet = {
+  id: string;
+  title: string;
+  questions: Question[];
+  coveredQuestionCount: number;
+  questionRangeLabel: string;
+};
+
 export function chooseQuestions(
   availableQuestions: Question[],
   count: number,
@@ -38,6 +46,40 @@ export function chooseQuestions(
     .sort((left, right) => left.sort - right.sort)
     .slice(0, Math.min(count, availableQuestions.length))
     .map(({ question }) => question);
+}
+
+export function createMockTestSets(
+  availableQuestions: Question[],
+  count: number = MOCK_QUESTION_COUNT,
+): MockTestSet[] {
+  if (availableQuestions.length === 0 || count <= 0) {
+    return [];
+  }
+
+  const sets: MockTestSet[] = [];
+
+  for (let startIndex = 0; startIndex < availableQuestions.length; startIndex += count) {
+    const coveredQuestions = availableQuestions.slice(startIndex, startIndex + count);
+    const usedQuestionIds = new Set(coveredQuestions.map((question) => question.id));
+    const fillerQuestions =
+      coveredQuestions.length < count && availableQuestions.length >= count
+        ? availableQuestions
+            .filter((question) => !usedQuestionIds.has(question.id))
+            .slice(0, count - coveredQuestions.length)
+        : [];
+    const setNumber = sets.length + 1;
+    const rangeEnd = Math.min(startIndex + coveredQuestions.length, availableQuestions.length);
+
+    sets.push({
+      id: `mock-${setNumber}`,
+      title: `Mock test ${setNumber}`,
+      questions: [...coveredQuestions, ...fillerQuestions],
+      coveredQuestionCount: coveredQuestions.length,
+      questionRangeLabel: `${startIndex + 1}-${rangeEnd} of ${availableQuestions.length}`,
+    });
+  }
+
+  return sets;
 }
 
 export function questionsForTopic(allQuestions: Question[], topicId: TopicId): Question[] {

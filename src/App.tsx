@@ -7,6 +7,7 @@ import {
   type ScoreSummary,
   calculateScore,
   chooseQuestions,
+  createMockTestSets,
   createAnswerMap,
   formatTime,
   questionsForTopic,
@@ -234,6 +235,7 @@ export default function App() {
     const wrongQuestionIds = new Set(progress.wrongQuestionIds);
     return questions.filter((question) => wrongQuestionIds.has(question.id));
   }, [progress.wrongQuestionIds]);
+  const mockTestSets = useMemo(() => createMockTestSets(questions), []);
 
   const currentQuestion = session?.questions[session.currentIndex];
   const isCompleted = Boolean(session?.completedAt && score);
@@ -273,7 +275,18 @@ export default function App() {
 
   function startMockTest() {
     const selectedQuestions = chooseQuestions(questions, MOCK_QUESTION_COUNT);
-    setSession(createSession("mock", "Timed mock test", selectedQuestions));
+    setSession(createSession("mock", "Random timed mock test", selectedQuestions));
+    setScore(null);
+  }
+
+  function startMockTestSet(testSetIndex: number) {
+    const testSet = mockTestSets[testSetIndex];
+
+    if (!testSet) {
+      return;
+    }
+
+    setSession(createSession("mock", testSet.title, testSet.questions));
     setScore(null);
   }
 
@@ -589,6 +602,42 @@ export default function App() {
             {wrongQuestions.length === 0 ? "No wrong questions yet" : "Review wrong questions"}
           </button>
         </article>
+      </section>
+
+      <section className="mock-bank-section" aria-labelledby="mock-bank-title">
+        <div className="section-heading">
+          <p className="eyebrow">Full question coverage</p>
+          <h2 id="mock-bank-title">{mockTestSets.length} numbered mock tests cover every question</h2>
+          <p>
+            Work through these in order to see the whole question bank. Each mock uses the real
+            45-minute timer and 24-question format; the final mock is topped up if needed so it still
+            feels like the real test.
+          </p>
+        </div>
+        <div className="mock-test-grid">
+          {mockTestSets.map((testSet, index) => (
+            <article className="card mock-test-card" key={testSet.id}>
+              <span className="mock-number">{index + 1}</span>
+              <div>
+                <h3>{testSet.title}</h3>
+                <p>
+                  Covers questions {testSet.questionRangeLabel}
+                  {testSet.coveredQuestionCount < MOCK_QUESTION_COUNT
+                    ? `, plus ${MOCK_QUESTION_COUNT - testSet.coveredQuestionCount} review questions`
+                    : ""}
+                  .
+                </p>
+              </div>
+              <button
+                className="secondary-button"
+                type="button"
+                onClick={() => startMockTestSet(index)}
+              >
+                Start {testSet.title.toLowerCase()}
+              </button>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="topics-section" aria-labelledby="topics-title">

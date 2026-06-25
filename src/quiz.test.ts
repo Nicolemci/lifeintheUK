@@ -5,6 +5,7 @@ import {
   calculateScore,
   chooseQuestions,
   createAnswerMap,
+  createMockTestSets,
   formatTime,
   questionsForTopic,
 } from "./quiz";
@@ -59,6 +60,24 @@ describe("quiz helpers", () => {
     expect(valuesQuestions.map((question) => question.id)).toEqual(["one", "three"]);
   });
 
+  it("creates enough mock test sets to cover every question", () => {
+    const sets = createMockTestSets(sampleQuestions, 2);
+    const coveredIds = new Set(sets.flatMap((set) => set.questions.slice(0, set.coveredQuestionCount).map((question) => question.id)));
+
+    expect(sets).toHaveLength(2);
+    expect(sets[0].questions.map((question) => question.id)).toEqual(["one", "two"]);
+    expect(sets[1].questions.map((question) => question.id)).toEqual(["three", "one"]);
+    expect(coveredIds).toEqual(new Set(["one", "two", "three"]));
+  });
+
+  it("does not pad a mock test when there are fewer questions than the target size", () => {
+    const sets = createMockTestSets(sampleQuestions, 24);
+
+    expect(sets).toHaveLength(1);
+    expect(sets[0].questions).toHaveLength(sampleQuestions.length);
+    expect(sets[0].coveredQuestionCount).toBe(sampleQuestions.length);
+  });
+
   it("calculates score, pass status, and wrong question ids", () => {
     const answers = {
       one: 0,
@@ -101,5 +120,15 @@ describe("quiz helpers", () => {
       expect(question.correctIndex).toBeGreaterThanOrEqual(0);
       expect(question.correctIndex).toBeLessThan(question.options.length);
     });
+  });
+
+  it("creates full-bank mock tests that cover every stored question at least once", () => {
+    const sets = createMockTestSets(questions);
+    const coveredIds = new Set(sets.flatMap((set) => set.questions.slice(0, set.coveredQuestionCount).map((question) => question.id)));
+
+    expect(sets.length).toBe(Math.ceil(questions.length / 24));
+    expect(sets.slice(0, -1).every((set) => set.questions.length === 24)).toBe(true);
+    expect(sets.at(-1)?.questions.length).toBe(24);
+    expect(coveredIds.size).toBe(questions.length);
   });
 });

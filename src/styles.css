@@ -398,6 +398,10 @@ button {
   margin-top: 16px;
 }
 
+.mock-bank-section {
+  margin: 32px 0;
+}
+
 .section-heading {
   margin-bottom: 16px;
 }
@@ -407,6 +411,47 @@ button {
   color: var(--navy);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   letter-spacing: -0.04em;
+}
+
+.section-heading p:not(.eyebrow) {
+  max-width: 760px;
+  color: var(--muted);
+}
+
+.mock-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mock-test-card {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding: 22px;
+}
+
+.mock-number {
+  display: inline-grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(135deg, var(--navy), var(--union-red));
+  font-size: 1.2rem;
+  font-weight: 1000;
+}
+
+.mock-test-card h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 1.2rem;
+}
+
+.mock-test-card p {
+  margin-bottom: 0;
+  color: var(--muted);
 }
 
 .topic-grid {
@@ -631,6 +676,7 @@ button {
   .hero,
   .login-layout,
   .mode-grid,
+  .mock-test-grid,
   .topic-grid,
   .quiz-layout {
     grid-template-columns: 1fr;
