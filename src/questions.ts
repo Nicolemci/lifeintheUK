@@ -1,3 +1,5 @@
+import { handbookQuestions } from "./handbookQuestions";
+
 export type TopicId = "values" | "history" | "government" | "everyday-life";
 
 export type Question = {
@@ -33,7 +35,7 @@ export const topics: Array<{ id: TopicId; name: string; description: string }> =
   },
 ];
 
-export const questions: Question[] = [
+const starterQuestions: Question[] = [
   {
     id: "values-001",
     topicId: "values",
@@ -371,3 +373,5 @@ export const questions: Question[] = [
     explanation: "Eligible voters should keep their electoral registration up to date when they move address.",
   },
 ];
+
+export const questions: Question[] = [...starterQuestions, ...handbookQuestions];

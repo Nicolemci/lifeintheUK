@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Question } from "./questions";
+import { questions, type Question } from "./questions";
 import {
   PASS_PERCENTAGE,
   calculateScore,
@@ -89,5 +89,17 @@ describe("quiz helpers", () => {
     expect(formatTime(2700)).toBe("45:00");
     expect(formatTime(61)).toBe("1:01");
     expect(formatTime(-4)).toBe("0:00");
+  });
+
+  it("keeps the full question bank valid", () => {
+    const ids = new Set(questions.map((question) => question.id));
+
+    expect(questions.length).toBeGreaterThan(100);
+    expect(ids.size).toBe(questions.length);
+    questions.forEach((question) => {
+      expect(question.options).toHaveLength(4);
+      expect(question.correctIndex).toBeGreaterThanOrEqual(0);
+      expect(question.correctIndex).toBeLessThan(question.options.length);
+    });
   });
 });
