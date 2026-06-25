@@ -1,6 +1,15 @@
 :root {
-  color: #172033;
-  background: #f3f6fb;
+  --navy: #071f4d;
+  --royal-blue: #174ea6;
+  --union-red: #c8102e;
+  --deep-red: #8f1028;
+  --parchment: #fff8ea;
+  --cream: #f9f1df;
+  --ink: #14213d;
+  --muted: #596579;
+  --panel: rgba(255, 252, 246, 0.92);
+  color: var(--ink);
+  background: var(--cream);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
@@ -17,8 +26,20 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(21, 101, 216, 0.18), transparent 30rem),
-    linear-gradient(180deg, #f8fbff 0%, #edf2f8 100%);
+    linear-gradient(135deg, transparent 0 45%, rgba(200, 16, 46, 0.08) 45% 48%, transparent 48% 100%),
+    linear-gradient(45deg, transparent 0 45%, rgba(23, 78, 166, 0.1) 45% 48%, transparent 48% 100%),
+    radial-gradient(circle at top left, rgba(200, 16, 46, 0.18), transparent 26rem),
+    radial-gradient(circle at top right, rgba(7, 31, 77, 0.16), transparent 28rem),
+    linear-gradient(180deg, #fff8ea 0%, #f2ead8 100%);
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 10px;
+  background: linear-gradient(90deg, var(--navy) 0 35%, white 35% 42%, var(--union-red) 42% 58%, white 58% 65%, var(--navy) 65%);
+  content: "";
 }
 
 button {
@@ -32,20 +53,61 @@ button {
 }
 
 .card {
-  border: 1px solid rgba(83, 101, 132, 0.16);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(7, 31, 77, 0.16);
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 20px 60px rgba(41, 53, 77, 0.08);
+  background: var(--panel);
+  box-shadow: 0 20px 60px rgba(7, 31, 77, 0.12);
+}
+
+.card::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--navy), var(--union-red), var(--royal-blue));
+  content: "";
 }
 
 .eyebrow,
 .topic-label {
   margin: 0 0 8px;
-  color: #2455b8;
+  color: var(--royal-blue);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.british-kicker {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 14px;
+  border: 1px solid rgba(7, 31, 77, 0.16);
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.74);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(7, 31, 77, 0.08);
+}
+
+.british-kicker::before {
+  width: 22px;
+  height: 14px;
+  border-radius: 3px;
+  background:
+    linear-gradient(33deg, transparent 0 42%, white 42% 48%, var(--union-red) 48% 55%, white 55% 61%, transparent 61%),
+    linear-gradient(147deg, transparent 0 42%, white 42% 48%, var(--union-red) 48% 55%, white 55% 61%, transparent 61%),
+    linear-gradient(90deg, transparent 0 42%, white 42% 45%, var(--union-red) 45% 55%, white 55% 58%, transparent 58%),
+    linear-gradient(0deg, transparent 0 38%, white 38% 43%, var(--union-red) 43% 57%, white 57% 62%, transparent 62%),
+    var(--navy);
+  box-shadow: 0 0 0 1px rgba(7, 31, 77, 0.12);
+  content: "";
 }
 
 .hero {
@@ -54,6 +116,29 @@ button {
   gap: 24px;
   align-items: stretch;
   margin-bottom: 24px;
+}
+
+.hero > div:first-child,
+.login-layout > div:first-child {
+  position: relative;
+}
+
+.hero > div:first-child::after,
+.login-layout > div:first-child::after {
+  display: block;
+  width: min(520px, 100%);
+  height: 54px;
+  margin-top: 28px;
+  border-bottom: 5px solid var(--navy);
+  background:
+    linear-gradient(to top, var(--navy) 0 26px, transparent 26px) 0 28px / 72px 26px repeat-x,
+    linear-gradient(to top, var(--union-red) 0 44px, transparent 44px) 66px 10px / 16px 44px no-repeat,
+    linear-gradient(to top, var(--navy) 0 38px, transparent 38px) 120px 16px / 54px 38px no-repeat,
+    radial-gradient(circle at 230px 22px, var(--union-red) 0 18px, transparent 19px),
+    linear-gradient(to top, var(--navy) 0 30px, transparent 30px) 292px 24px / 42px 30px no-repeat,
+    linear-gradient(to top, var(--navy) 0 48px, transparent 48px) 392px 6px / 24px 48px no-repeat;
+  opacity: 0.14;
+  content: "";
 }
 
 .login-layout {
@@ -67,7 +152,7 @@ button {
 .login-layout h1 {
   max-width: 760px;
   margin: 0;
-  color: #101827;
+  color: var(--navy);
   font-size: clamp(2.4rem, 7vw, 5.4rem);
   line-height: 0.95;
   letter-spacing: -0.075em;
@@ -75,7 +160,7 @@ button {
 
 .login-layout p {
   max-width: 620px;
-  color: #566174;
+  color: var(--muted);
   font-size: 1.08rem;
 }
 
@@ -86,44 +171,44 @@ button {
 }
 
 .login-card label {
-  color: #172033;
+  color: var(--ink);
   font-weight: 900;
 }
 
 .login-card input {
   width: 100%;
-  border: 2px solid #e3e9f3;
+  border: 2px solid rgba(7, 31, 77, 0.16);
   border-radius: 18px;
   padding: 14px 16px;
-  color: #172033;
-  background: #fbfcff;
+  color: var(--ink);
+  background: #fffdf8;
   font: inherit;
   font-weight: 700;
 }
 
 .login-card input:focus {
-  border-color: #174ec8;
-  box-shadow: 0 0 0 4px rgba(23, 78, 200, 0.12);
+  border-color: var(--royal-blue);
+  box-shadow: 0 0 0 4px rgba(23, 78, 166, 0.14);
   outline: none;
 }
 
 .form-error {
   margin: 0;
-  color: #b8291d;
+  color: var(--union-red);
   font-size: 0.92rem;
   font-weight: 800;
 }
 
 .login-note {
   margin: 0;
-  color: #697386;
+  color: var(--muted);
   font-size: 0.9rem;
 }
 
 .hero h1 {
   max-width: 780px;
   margin: 0;
-  color: #101827;
+  color: var(--navy);
   font-size: clamp(2.4rem, 7vw, 5.8rem);
   line-height: 0.95;
   letter-spacing: -0.075em;
@@ -131,7 +216,7 @@ button {
 
 .hero p {
   max-width: 680px;
-  color: #566174;
+  color: var(--muted);
   font-size: 1.08rem;
 }
 
@@ -164,18 +249,18 @@ button {
 
 .primary-button {
   color: white;
-  background: #174ec8;
-  box-shadow: 0 14px 32px rgba(23, 78, 200, 0.26);
+  background: linear-gradient(135deg, var(--union-red), var(--deep-red));
+  box-shadow: 0 14px 32px rgba(200, 16, 46, 0.28);
 }
 
 .secondary-button {
-  color: #174ec8;
-  background: #eaf0ff;
+  color: var(--navy);
+  background: #e8eefc;
 }
 
 .ghost-button {
-  color: #39465d;
-  background: #f4f6fa;
+  color: var(--navy);
+  background: rgba(7, 31, 77, 0.08);
 }
 
 .primary-button:hover,
@@ -197,17 +282,48 @@ button {
   flex-direction: column;
   justify-content: space-between;
   padding: 28px;
+  color: white;
+  background:
+    radial-gradient(circle at 90% 12%, rgba(255, 255, 255, 0.18), transparent 7rem),
+    linear-gradient(135deg, var(--navy), #0d347c 55%, var(--deep-red));
 }
 
 .score-card strong {
-  color: #101827;
+  color: white;
   font-size: 4rem;
   line-height: 1;
 }
 
 .score-card span {
-  color: #566174;
+  color: rgba(255, 255, 255, 0.76);
   font-weight: 700;
+}
+
+.score-card .eyebrow {
+  color: #ffffff;
+}
+
+.score-card .ghost-button {
+  color: white;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.royal-badge {
+  display: inline-grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  align-self: end;
+  border: 2px solid rgba(255, 255, 255, 0.54);
+  border-radius: 50%;
+  color: white;
+  background:
+    linear-gradient(45deg, transparent 43%, rgba(255, 255, 255, 0.7) 43% 48%, transparent 48%),
+    linear-gradient(-45deg, transparent 43%, rgba(255, 255, 255, 0.7) 43% 48%, transparent 48%),
+    rgba(200, 16, 46, 0.9);
+  font-weight: 1000;
+  letter-spacing: -0.05em;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
 }
 
 .profile-summary {
@@ -217,7 +333,7 @@ button {
 }
 
 .score-card .profile-summary .profile-name {
-  color: #101827;
+  color: #ffffff;
   font-size: 1.4rem;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -238,13 +354,13 @@ button {
 }
 
 .score-card dt {
-  color: #6b7485;
+  color: rgba(255, 255, 255, 0.68);
   font-size: 0.88rem;
 }
 
 .score-card dd {
   margin: 0;
-  color: #101827;
+  color: #ffffff;
   font-size: 1.5rem;
   font-weight: 900;
 }
@@ -270,12 +386,12 @@ button {
 .topic-card h3,
 .latest-score h2 {
   margin: 0;
-  color: #101827;
+  color: var(--navy);
 }
 
 .mode-card p,
 .topic-card p {
-  color: #5b6678;
+  color: var(--muted);
 }
 
 .topics-section {
@@ -288,7 +404,7 @@ button {
 
 .section-heading h2 {
   margin: 0;
-  color: #101827;
+  color: var(--navy);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   letter-spacing: -0.04em;
 }
@@ -304,7 +420,7 @@ button {
 
 .topic-card span {
   margin: auto 0 18px;
-  color: #2455b8;
+  color: var(--royal-blue);
   font-weight: 800;
 }
 
@@ -318,7 +434,7 @@ button {
 }
 
 .disclaimer {
-  color: #697386;
+  color: var(--muted);
   font-size: 0.92rem;
   text-align: center;
 }
@@ -342,21 +458,21 @@ button {
 .question-card h2,
 .results h1 {
   margin: 0;
-  color: #101827;
+  color: var(--navy);
   letter-spacing: -0.035em;
 }
 
 .quiz-header p {
   margin-bottom: 0;
-  color: #5b6678;
+  color: var(--muted);
 }
 
 .timer {
   min-width: 106px;
   border-radius: 999px;
   padding: 10px 16px;
-  color: #8a260b;
-  background: #fff0e8;
+  color: white;
+  background: var(--union-red);
   font-size: 1.25rem;
   font-weight: 900;
   text-align: center;
@@ -375,20 +491,20 @@ button {
   aspect-ratio: 1;
   border: 0;
   border-radius: 16px;
-  color: #46536a;
-  background: #f1f4f9;
+  color: var(--navy);
+  background: #f7efe0;
   cursor: pointer;
   font-weight: 800;
 }
 
 .question-pill.answered {
-  color: #174ec8;
-  background: #eaf0ff;
+  color: var(--royal-blue);
+  background: #e8eefc;
 }
 
 .question-pill.active {
   color: white;
-  background: #174ec8;
+  background: var(--navy);
 }
 
 .question-card {
@@ -405,11 +521,11 @@ button {
   display: flex;
   gap: 14px;
   align-items: center;
-  border: 2px solid #edf1f8;
+  border: 2px solid #eadfcc;
   border-radius: 18px;
   padding: 16px;
-  color: #172033;
-  background: white;
+  color: var(--ink);
+  background: #fffdf8;
   cursor: pointer;
   font-weight: 700;
   text-align: left;
@@ -423,15 +539,15 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: #2455b8;
-  background: #eaf0ff;
+  color: var(--navy);
+  background: #e8eefc;
   font-size: 0.9rem;
   font-weight: 900;
 }
 
 .answer-option.selected {
-  border-color: #174ec8;
-  background: #f7f9ff;
+  border-color: var(--royal-blue);
+  background: #f2f6ff;
 }
 
 .answer-option.correct {
@@ -440,7 +556,7 @@ button {
 }
 
 .answer-option.incorrect {
-  border-color: #ce3a2b;
+  border-color: var(--union-red);
   background: #fff3f0;
 }
 
@@ -451,8 +567,8 @@ button {
 .explanation {
   border-radius: 18px;
   padding: 16px;
-  color: #26405d;
-  background: #f1f7ff;
+  color: var(--navy);
+  background: #f0f5ff;
 }
 
 .question-actions {
@@ -473,7 +589,7 @@ button {
 
 .result-score {
   margin: 12px 0;
-  color: #174ec8;
+  color: var(--union-red);
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 900;
   letter-spacing: -0.05em;
@@ -486,10 +602,10 @@ button {
 }
 
 .review-item {
-  border: 1px solid #edf1f8;
+  border: 1px solid #eadfcc;
   border-radius: 22px;
   padding: 18px;
-  background: #fbfcff;
+  background: #fffdf8;
 }
 
 .review-item h2 {
@@ -507,7 +623,7 @@ button {
 }
 
 .review-incorrect {
-  color: #b8291d;
+  color: var(--union-red);
   font-weight: 800;
 }
 

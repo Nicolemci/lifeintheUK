@@ -513,7 +513,7 @@ export default function App() {
     <main className="app-shell">
       <section className="hero">
         <div>
-          <p className="eyebrow">Life in the UK test prep</p>
+          <p className="british-kicker">Life in the UK test prep</p>
           <h1>Mock tests, topic practice, and wrong-question revision in one place.</h1>
           <p>
             Train for the official test format with a 45-minute timer, practise by topic, and keep
@@ -535,6 +535,9 @@ export default function App() {
         </div>
         <div className="score-card card">
           <p className="eyebrow">Your progress</p>
+          <div className="royal-badge" aria-hidden="true">
+            UK
+          </div>
           <div className="profile-summary">
             <span>Signed in as</span>
             <strong className="profile-name">{currentUser.displayName}</strong>
@@ -666,7 +669,7 @@ function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
   return (
     <section className="login-layout" aria-labelledby="login-title">
       <div>
-        <p className="eyebrow">Life in the UK test prep</p>
+        <p className="british-kicker">Union-ready study</p>
         <h1 id="login-title">Sign in to save your progress.</h1>
         <p>
           Create a local study profile or return with the same name to continue your best score,
