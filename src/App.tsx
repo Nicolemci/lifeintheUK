@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { questions, topics, type Question, type TopicId } from "./questions";
 import {
   MOCK_DURATION_SECONDS,
@@ -28,7 +28,25 @@ type StoredProgress = {
   };
 };
 
-const STORAGE_KEY = "life-in-the-uk-prep-progress-v1";
+type AuthUser = {
+  id: string;
+  displayName: string;
+};
+
+type StoredUserProfile = AuthUser & {
+  createdAt: string;
+  lastLoginAt: string;
+  progress: StoredProgress;
+};
+
+type AuthState = {
+  user: AuthUser | null;
+  progress: StoredProgress;
+};
+
+const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
+const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
+const CURRENT_USER_STORAGE_KEY = "life-in-the-uk-prep-current-user-v1";
 
 const defaultProgress: StoredProgress = {
   wrongQuestionIds: [],
@@ -36,20 +54,124 @@ const defaultProgress: StoredProgress = {
   bestMockScore: 0,
 };
 
-function loadProgress(): StoredProgress {
+function loadLegacyProgress(): StoredProgress | null {
   try {
-    const savedProgress = window.localStorage.getItem(STORAGE_KEY);
-    return savedProgress ? { ...defaultProgress, ...JSON.parse(savedProgress) } : defaultProgress;
+    const savedProgress = window.localStorage.getItem(LEGACY_PROGRESS_KEY);
+    return savedProgress ? { ...defaultProgress, ...JSON.parse(savedProgress) } : null;
   } catch {
-    return defaultProgress;
+    return null;
   }
 }
 
-function saveProgress(progress: StoredProgress) {
+function normalizeProfileId(displayName: string): string {
+  return displayName.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function loadProfiles(): Record<string, StoredUserProfile> {
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    const savedProfiles = window.localStorage.getItem(USERS_STORAGE_KEY);
+    return savedProfiles ? JSON.parse(savedProfiles) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveProfiles(profiles: Record<string, StoredUserProfile>) {
+  try {
+    window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(profiles));
   } catch {
     // Progress storage is helpful but should not block quiz use in private browsing modes.
+  }
+}
+
+function toAuthUser(profile: StoredUserProfile): AuthUser {
+  return {
+    id: profile.id,
+    displayName: profile.displayName,
+  };
+}
+
+function loadInitialAuthState(): AuthState {
+  try {
+    const currentUserId = window.localStorage.getItem(CURRENT_USER_STORAGE_KEY);
+    const profiles = loadProfiles();
+    const profile = currentUserId ? profiles[currentUserId] : undefined;
+
+    if (profile) {
+      return {
+        user: toAuthUser(profile),
+        progress: { ...defaultProgress, ...profile.progress },
+      };
+    }
+  } catch {
+    return {
+      user: null,
+      progress: defaultProgress,
+    };
+  }
+
+  return {
+    user: null,
+    progress: defaultProgress,
+  };
+}
+
+function loginToLocalProfile(displayName: string): AuthState | null {
+  const trimmedName = displayName.trim();
+  const profileId = normalizeProfileId(trimmedName);
+
+  if (!profileId) {
+    return null;
+  }
+
+  const profiles = loadProfiles();
+  const existingProfile = profiles[profileId];
+  const now = new Date().toISOString();
+  const legacyProgress = Object.keys(profiles).length === 0 ? loadLegacyProgress() : null;
+  const progress = existingProfile?.progress ?? legacyProgress ?? defaultProgress;
+  const profile: StoredUserProfile = {
+    id: profileId,
+    displayName: trimmedName,
+    createdAt: existingProfile?.createdAt ?? now,
+    lastLoginAt: now,
+    progress: { ...defaultProgress, ...progress },
+  };
+
+  profiles[profileId] = profile;
+  saveProfiles(profiles);
+
+  try {
+    window.localStorage.setItem(CURRENT_USER_STORAGE_KEY, profile.id);
+  } catch {
+    // If the browser blocks storage, the app can still run for the current session.
+  }
+
+  return {
+    user: toAuthUser(profile),
+    progress: profile.progress,
+  };
+}
+
+function saveProgressForUser(userId: string, progress: StoredProgress) {
+  const profiles = loadProfiles();
+  const profile = profiles[userId];
+
+  if (!profile) {
+    return;
+  }
+
+  profiles[userId] = {
+    ...profile,
+    progress,
+  };
+  saveProfiles(profiles);
+}
+
+function clearCurrentUser() {
+  try {
+    window.localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
+  } catch {
+    // Storage errors should not prevent signing out of the in-memory session.
   }
 }
 
@@ -102,7 +224,9 @@ function createSession(
 }
 
 export default function App() {
-  const [progress, setProgress] = useState<StoredProgress>(() => loadProgress());
+  const [initialAuthState] = useState<AuthState>(() => loadInitialAuthState());
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(initialAuthState.user);
+  const [progress, setProgress] = useState<StoredProgress>(initialAuthState.progress);
   const [session, setSession] = useState<QuizSession | null>(null);
   const [score, setScore] = useState<ScoreSummary | null>(null);
 
@@ -116,8 +240,10 @@ export default function App() {
   const isPracticeMode = session?.mode === "topic" || session?.mode === "wrong";
 
   useEffect(() => {
-    saveProgress(progress);
-  }, [progress]);
+    if (currentUser) {
+      saveProgressForUser(currentUser.id, progress);
+    }
+  }, [currentUser, progress]);
 
   useEffect(() => {
     if (!session || session.mode !== "mock" || session.completedAt || session.secondsRemaining === undefined) {
@@ -218,6 +344,33 @@ export default function App() {
     setScore(null);
   }
 
+  function handleLogin(displayName: string) {
+    const authState = loginToLocalProfile(displayName);
+
+    if (!authState) {
+      return;
+    }
+
+    setCurrentUser(authState.user);
+    setProgress(authState.progress);
+    resetToHome();
+  }
+
+  function handleSignOut() {
+    clearCurrentUser();
+    setCurrentUser(null);
+    setProgress(defaultProgress);
+    resetToHome();
+  }
+
+  if (!currentUser) {
+    return (
+      <main className="app-shell">
+        <LoginView onLogin={handleLogin} />
+      </main>
+    );
+  }
+
   if (session && isCompleted && score) {
     return (
       <main className="app-shell">
@@ -227,6 +380,8 @@ export default function App() {
           onRetake={session.mode === "mock" ? startMockTest : undefined}
           onReviewWrong={wrongQuestions.length > 0 ? startWrongQuestionReview : undefined}
           onHome={resetToHome}
+          currentUser={currentUser}
+          onSignOut={handleSignOut}
         />
       </main>
     );
@@ -246,6 +401,7 @@ export default function App() {
               <h1 id="quiz-title">{session.title}</h1>
               <p>
                 Question {session.currentIndex + 1} of {session.questions.length} · {answeredCount} answered
+                {" · "}Signed in as {currentUser.displayName}
               </p>
             </div>
             <div className="quiz-header-actions">
@@ -256,6 +412,9 @@ export default function App() {
               ) : null}
               <button className="ghost-button" type="button" onClick={resetToHome}>
                 Exit
+              </button>
+              <button className="ghost-button" type="button" onClick={handleSignOut}>
+                Sign out
               </button>
             </div>
           </header>
@@ -376,6 +535,13 @@ export default function App() {
         </div>
         <div className="score-card card">
           <p className="eyebrow">Your progress</p>
+          <div className="profile-summary">
+            <span>Signed in as</span>
+            <strong className="profile-name">{currentUser.displayName}</strong>
+            <button className="ghost-button" type="button" onClick={handleSignOut}>
+              Sign out
+            </button>
+          </div>
           <strong>{progress.bestMockScore}%</strong>
           <span>Best mock score</span>
           <dl>
@@ -477,12 +643,75 @@ type ResultsViewProps = {
   onRetake?: () => void;
   onReviewWrong?: () => void;
   onHome: () => void;
+  currentUser: AuthUser;
+  onSignOut: () => void;
 };
 
-function ResultsView({ session, score, onRetake, onReviewWrong, onHome }: ResultsViewProps) {
+function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
+  const [displayName, setDisplayName] = useState("");
+  const [error, setError] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!displayName.trim()) {
+      setError("Enter your name to save progress.");
+      return;
+    }
+
+    setError("");
+    onLogin(displayName);
+  }
+
+  return (
+    <section className="login-layout" aria-labelledby="login-title">
+      <div>
+        <p className="eyebrow">Life in the UK test prep</p>
+        <h1 id="login-title">Sign in to save your progress.</h1>
+        <p>
+          Create a local study profile or return with the same name to continue your best score,
+          wrong-question list, and completed sessions on this browser.
+        </p>
+      </div>
+      <form className="card login-card" onSubmit={handleSubmit}>
+        <label htmlFor="display-name">Your name</label>
+        <input
+          id="display-name"
+          autoComplete="name"
+          placeholder="e.g. Nicole"
+          value={displayName}
+          onChange={(event) => setDisplayName(event.target.value)}
+        />
+        {error ? <p className="form-error">{error}</p> : null}
+        <button className="primary-button" type="submit">
+          Continue
+        </button>
+        <p className="login-note">
+          This first version saves profiles on this device only. A real email/password account would
+          need a backend service.
+        </p>
+      </form>
+    </section>
+  );
+}
+
+function ResultsView({
+  session,
+  score,
+  onRetake,
+  onReviewWrong,
+  onHome,
+  currentUser,
+  onSignOut,
+}: ResultsViewProps) {
   return (
     <section className="results card" aria-labelledby="results-title">
-      <p className="eyebrow">Session complete</p>
+      <div className="results-topline">
+        <p className="eyebrow">Session complete · {currentUser.displayName}</p>
+        <button className="ghost-button" type="button" onClick={onSignOut}>
+          Sign out
+        </button>
+      </div>
       <h1 id="results-title">{score.passed ? "You passed this session" : "Keep practising"}</h1>
       <p className="result-score">
         {score.correct}/{score.total} correct · {score.percentage}%
