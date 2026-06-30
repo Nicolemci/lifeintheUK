@@ -1,6 +1,7 @@
 import type { Question, TopicId } from "./questions";
 
 export const MOCK_QUESTION_COUNT = 24;
+export const MINIMUM_NUMBERED_MOCK_TESTS = 12;
 export const MOCK_DURATION_SECONDS = 45 * 60;
 export const PASS_PERCENTAGE = 75;
 
@@ -51,23 +52,47 @@ export function chooseQuestions(
 export function createMockTestSets(
   availableQuestions: Question[],
   count: number = MOCK_QUESTION_COUNT,
+  minimumSetCount = 0,
 ): MockTestSet[] {
   if (availableQuestions.length === 0 || count <= 0) {
     return [];
   }
 
-  const sets: MockTestSet[] = [];
+  if (availableQuestions.length < count) {
+    return [
+      {
+        id: "mock-1",
+        title: "Mock test 1",
+        questions: availableQuestions,
+        coveredQuestionCount: availableQuestions.length,
+        questionRangeLabel: `1-${availableQuestions.length} of ${availableQuestions.length}`,
+      },
+    ];
+  }
 
-  for (let startIndex = 0; startIndex < availableQuestions.length; startIndex += count) {
-    const coveredQuestions = availableQuestions.slice(startIndex, startIndex + count);
+  const sets: MockTestSet[] = [];
+  const setCount = Math.max(Math.ceil(availableQuestions.length / count), minimumSetCount);
+  const coverageChunkSize = Math.ceil(availableQuestions.length / setCount);
+
+  for (let setIndex = 0; setIndex < setCount; setIndex += 1) {
+    const startIndex = setIndex * coverageChunkSize;
+    const coveredQuestions = availableQuestions.slice(startIndex, startIndex + coverageChunkSize);
     const usedQuestionIds = new Set(coveredQuestions.map((question) => question.id));
-    const fillerQuestions =
-      coveredQuestions.length < count && availableQuestions.length >= count
-        ? availableQuestions
-            .filter((question) => !usedQuestionIds.has(question.id))
-            .slice(0, count - coveredQuestions.length)
-        : [];
-    const setNumber = sets.length + 1;
+    const fillerQuestions: Question[] = [];
+    let fillerIndex = (setIndex * count) % availableQuestions.length;
+
+    while (coveredQuestions.length + fillerQuestions.length < count) {
+      const candidateQuestion = availableQuestions[fillerIndex % availableQuestions.length];
+
+      if (!usedQuestionIds.has(candidateQuestion.id)) {
+        fillerQuestions.push(candidateQuestion);
+        usedQuestionIds.add(candidateQuestion.id);
+      }
+
+      fillerIndex += 1;
+    }
+
+    const setNumber = setIndex + 1;
     const rangeEnd = Math.min(startIndex + coveredQuestions.length, availableQuestions.length);
 
     sets.push({

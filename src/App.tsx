@@ -3,6 +3,7 @@ import { questions, topics, type Question, type TopicId } from "./questions";
 import {
   MOCK_DURATION_SECONDS,
   MOCK_QUESTION_COUNT,
+  MINIMUM_NUMBERED_MOCK_TESTS,
   type QuizSession,
   type ScoreSummary,
   calculateScore,
@@ -252,7 +253,10 @@ export default function App() {
     const wrongQuestionIds = new Set(progress.wrongQuestionIds);
     return questions.filter((question) => wrongQuestionIds.has(question.id));
   }, [progress.wrongQuestionIds]);
-  const mockTestSets = useMemo(() => createMockTestSets(questions), []);
+  const mockTestSets = useMemo(
+    () => createMockTestSets(questions, MOCK_QUESTION_COUNT, MINIMUM_NUMBERED_MOCK_TESTS),
+    [],
+  );
   const absenceSummary = useMemo(() => summarizeAbsences(progress.absences), [progress.absences]);
 
   const currentQuestion = session?.questions[session.currentIndex];
@@ -678,11 +682,10 @@ export default function App() {
       <section className="mock-bank-section" aria-labelledby="mock-bank-title">
         <div className="section-heading">
           <p className="eyebrow">Full question coverage</p>
-          <h2 id="mock-bank-title">{mockTestSets.length} numbered mock tests cover every question</h2>
+          <h2 id="mock-bank-title">{mockTestSets.length} full mock tests cover every question</h2>
           <p>
             Work through these in order to see the whole question bank. Each mock uses the real
-            45-minute timer and 24-question format; the final mock is topped up if needed so it still
-            feels like the real test.
+            45-minute timer and 24-question format, with review questions mixed in where needed.
           </p>
         </div>
         <div className="mock-test-grid">
@@ -692,7 +695,7 @@ export default function App() {
               <div>
                 <h3>{testSet.title}</h3>
                 <p>
-                  Covers questions {testSet.questionRangeLabel}
+                  Introduces questions {testSet.questionRangeLabel}
                   {testSet.coveredQuestionCount < MOCK_QUESTION_COUNT
                     ? `, plus ${MOCK_QUESTION_COUNT - testSet.coveredQuestionCount} review questions`
                     : ""}

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { questions, type Question } from "./questions";
 import {
+  MINIMUM_NUMBERED_MOCK_TESTS,
   PASS_PERCENTAGE,
   calculateScore,
   chooseQuestions,
@@ -129,6 +130,16 @@ describe("quiz helpers", () => {
     expect(sets.length).toBe(Math.ceil(questions.length / 24));
     expect(sets.slice(0, -1).every((set) => set.questions.length === 24)).toBe(true);
     expect(sets.at(-1)?.questions.length).toBe(24);
+    expect(coveredIds.size).toBe(questions.length);
+  });
+
+  it("creates more than 10 full numbered mock tests covering every stored question", () => {
+    const sets = createMockTestSets(questions, 24, MINIMUM_NUMBERED_MOCK_TESTS);
+    const coveredIds = new Set(sets.flatMap((set) => set.questions.slice(0, set.coveredQuestionCount).map((question) => question.id)));
+
+    expect(sets.length).toBeGreaterThan(10);
+    expect(sets).toHaveLength(MINIMUM_NUMBERED_MOCK_TESTS);
+    expect(sets.every((set) => set.questions.length === 24)).toBe(true);
     expect(coveredIds.size).toBe(questions.length);
   });
 });
