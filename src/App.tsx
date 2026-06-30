@@ -55,6 +55,8 @@ type AuthState = {
   progress: StoredProgress;
 };
 
+type AppTab = "study" | "absence";
+
 const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
 const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
 const CURRENT_USER_STORAGE_KEY = "life-in-the-uk-prep-current-user-v1";
@@ -242,6 +244,7 @@ export default function App() {
   const [progress, setProgress] = useState<StoredProgress>(initialAuthState.progress);
   const [session, setSession] = useState<QuizSession | null>(null);
   const [score, setScore] = useState<ScoreSummary | null>(null);
+  const [activeTab, setActiveTab] = useState<AppTab>("study");
 
   const wrongQuestions = useMemo(() => {
     const wrongQuestionIds = new Set(progress.wrongQuestionIds);
@@ -368,6 +371,7 @@ export default function App() {
   function resetToHome() {
     setSession(null);
     setScore(null);
+    setActiveTab("study");
   }
 
   function handleLogin(displayName: string) {
@@ -386,7 +390,14 @@ export default function App() {
     clearCurrentUser();
     setCurrentUser(null);
     setProgress(defaultProgress);
+    setActiveTab("study");
     resetToHome();
+  }
+
+  function switchTab(tab: AppTab) {
+    setSession(null);
+    setScore(null);
+    setActiveTab(tab);
   }
 
   function addAbsence(absence: Omit<AbsenceRecord, "id">) {
@@ -555,8 +566,33 @@ export default function App() {
     );
   }
 
+  if (activeTab === "absence") {
+    return (
+      <main className="app-shell">
+        <AppTabs
+          activeTab={activeTab}
+          currentUser={currentUser}
+          onChange={switchTab}
+          onSignOut={handleSignOut}
+        />
+        <AbsenceTracker
+          absences={progress.absences}
+          summary={absenceSummary}
+          onAddAbsence={addAbsence}
+          onDeleteAbsence={deleteAbsence}
+        />
+      </main>
+    );
+  }
+
   return (
     <main className="app-shell">
+      <AppTabs
+        activeTab={activeTab}
+        currentUser={currentUser}
+        onChange={switchTab}
+        onSignOut={handleSignOut}
+      />
       <section className="hero">
         <div>
           <p className="british-kicker">Life in the UK test prep</p>
@@ -605,13 +641,6 @@ export default function App() {
           </dl>
         </div>
       </section>
-
-      <AbsenceTracker
-        absences={progress.absences}
-        summary={absenceSummary}
-        onAddAbsence={addAbsence}
-        onDeleteAbsence={deleteAbsence}
-      />
 
       <section className="mode-grid" aria-label="Study modes">
         <article className="card mode-card">
@@ -784,6 +813,46 @@ function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
         </p>
       </form>
     </section>
+  );
+}
+
+type AppTabsProps = {
+  activeTab: AppTab;
+  currentUser: AuthUser;
+  onChange: (tab: AppTab) => void;
+  onSignOut: () => void;
+};
+
+function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) {
+  return (
+    <nav className="app-tabs card" aria-label="Main app sections">
+      <div className="tab-group" role="tablist" aria-label="Choose app section">
+        <button
+          className={["tab-button", activeTab === "study" ? "active" : ""].filter(Boolean).join(" ")}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "study"}
+          onClick={() => onChange("study")}
+        >
+          Study
+        </button>
+        <button
+          className={["tab-button", activeTab === "absence" ? "active" : ""].filter(Boolean).join(" ")}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "absence"}
+          onClick={() => onChange("absence")}
+        >
+          Away tracker
+        </button>
+      </div>
+      <div className="tab-profile">
+        <span>{currentUser.displayName}</span>
+        <button className="ghost-button" type="button" onClick={onSignOut}>
+          Sign out
+        </button>
+      </div>
+    </nav>
   );
 }
 

@@ -229,6 +229,45 @@ button {
   align-items: center;
 }
 
+.app-tabs {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 12px;
+}
+
+.tab-group,
+.tab-profile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.tab-button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 18px;
+  color: var(--navy);
+  background: rgba(7, 31, 77, 0.08);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.tab-button.active {
+  color: white;
+  background: linear-gradient(135deg, var(--navy), var(--royal-blue));
+  box-shadow: 0 12px 28px rgba(7, 31, 77, 0.2);
+}
+
+.tab-profile span {
+  color: var(--muted);
+  font-weight: 900;
+}
+
 .primary-button,
 .secondary-button,
 .ghost-button {
@@ -840,6 +879,7 @@ button {
 
   .quiz-header,
   .results-topline,
+  .app-tabs,
   .latest-score {
     align-items: flex-start;
     flex-direction: column;
