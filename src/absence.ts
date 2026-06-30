@@ -39,7 +39,33 @@ function diffDays(startDate: Date, endDate: Date): number {
 }
 
 function isValidDateInput(date: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(parseDateOnly(date).getTime());
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return false;
+  }
+
+  return toDateInputValue(parseDateOnly(date)) === date;
+}
+
+export function isoDateToDisplay(date: string): string {
+  if (!isValidDateInput(date)) {
+    return date;
+  }
+
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+}
+
+export function displayDateToIso(date: string): string | null {
+  const match = date.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const [, day, month, year] = match;
+  const isoDate = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+
+  return isValidDateInput(isoDate) ? isoDate : null;
 }
 
 export function countAbsenceDays(absence: Pick<AbsenceRecord, "departedOn" | "returnedOn">): number {

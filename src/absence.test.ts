@@ -3,10 +3,24 @@ import {
   type AbsenceRecord,
   countAbsenceDays,
   countAbsenceDaysWithin,
+  displayDateToIso,
+  isoDateToDisplay,
   summarizeAbsences,
 } from "./absence";
 
 describe("absence helpers", () => {
+  it("converts between saved ISO dates and dd/mm/yyyy display dates", () => {
+    expect(isoDateToDisplay("2026-07-05")).toBe("05/07/2026");
+    expect(displayDateToIso("05/07/2026")).toBe("2026-07-05");
+    expect(displayDateToIso("5/7/2026")).toBe("2026-07-05");
+  });
+
+  it("rejects invalid dd/mm/yyyy dates", () => {
+    expect(displayDateToIso("31/02/2026")).toBeNull();
+    expect(displayDateToIso("2026-02-01")).toBeNull();
+    expect(displayDateToIso("hello")).toBeNull();
+  });
+
   it("does not count departure or return dates as days away", () => {
     expect(countAbsenceDays({ departedOn: "2026-06-01", returnedOn: "2026-06-01" })).toBe(0);
     expect(countAbsenceDays({ departedOn: "2026-06-01", returnedOn: "2026-06-02" })).toBe(0);

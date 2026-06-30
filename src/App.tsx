@@ -19,6 +19,8 @@ import {
   type AbsenceRecord,
   countAbsenceDays,
   createAbsenceId,
+  displayDateToIso,
+  isoDateToDisplay,
   summarizeAbsences,
 } from "./absence";
 import "./styles.css";
@@ -863,33 +865,27 @@ type AbsenceTrackerProps = {
   onDeleteAbsence: (absenceId: string) => void;
 };
 
-function formatDateForDisplay(dateValue: string): string {
-  const [year, month, day] = dateValue.split("-").map(Number);
-
-  if (!year || !month || !day) {
-    return dateValue;
-  }
-
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(Date.UTC(year, month - 1, day)));
-}
-
 function AbsenceTracker({ absences, summary, onAddAbsence, onDeleteAbsence }: AbsenceTrackerProps) {
   const [destination, setDestination] = useState("");
   const [reason, setReason] = useState("Holiday");
-  const [departedOn, setDepartedOn] = useState("");
-  const [returnedOn, setReturnedOn] = useState("");
+  const [departedOnInput, setDepartedOnInput] = useState("");
+  const [returnedOnInput, setReturnedOnInput] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!destination.trim() || !departedOn || !returnedOn) {
+    if (!destination.trim() || !departedOnInput || !returnedOnInput) {
       setError("Add a destination plus departure and return dates.");
+      return;
+    }
+
+    const departedOn = displayDateToIso(departedOnInput);
+    const returnedOn = displayDateToIso(returnedOnInput);
+
+    if (!departedOn || !returnedOn) {
+      setError("Enter dates in dd/mm/yyyy format, for example 05/07/2026.");
       return;
     }
 
@@ -908,8 +904,8 @@ function AbsenceTracker({ absences, summary, onAddAbsence, onDeleteAbsence }: Ab
 
     setDestination("");
     setReason("Holiday");
-    setDepartedOn("");
-    setReturnedOn("");
+    setDepartedOnInput("");
+    setReturnedOnInput("");
     setNotes("");
     setError("");
   }
@@ -950,17 +946,19 @@ function AbsenceTracker({ absences, summary, onAddAbsence, onDeleteAbsence }: Ab
             <label>
               Left the UK
               <input
-                type="date"
-                value={departedOn}
-                onChange={(event) => setDepartedOn(event.target.value)}
+                inputMode="numeric"
+                placeholder="dd/mm/yyyy"
+                value={departedOnInput}
+                onChange={(event) => setDepartedOnInput(event.target.value)}
               />
             </label>
             <label>
               Returned to the UK
               <input
-                type="date"
-                value={returnedOn}
-                onChange={(event) => setReturnedOn(event.target.value)}
+                inputMode="numeric"
+                placeholder="dd/mm/yyyy"
+                value={returnedOnInput}
+                onChange={(event) => setReturnedOnInput(event.target.value)}
               />
             </label>
           </div>
@@ -1025,8 +1023,8 @@ function AbsenceTracker({ absences, summary, onAddAbsence, onDeleteAbsence }: Ab
                     <p className="topic-label">{absence.reason}</p>
                     <h4>{absence.destination}</h4>
                     <p>
-                      {formatDateForDisplay(absence.departedOn)} to{" "}
-                      {formatDateForDisplay(absence.returnedOn)} · {absenceDays} full day
+                      {isoDateToDisplay(absence.departedOn)} to{" "}
+                      {isoDateToDisplay(absence.returnedOn)} · {absenceDays} full day
                       {absenceDays === 1 ? "" : "s"} away
                     </p>
                     {absence.notes ? <p>{absence.notes}</p> : null}
