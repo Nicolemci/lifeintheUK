@@ -122,6 +122,11 @@ describe("quiz helpers", () => {
       expect(question.correctIndex).toBeLessThan(question.options.length);
       if (question.optionExplanations) {
         expect(question.optionExplanations).toHaveLength(question.options.length);
+        question.optionExplanations.forEach((explanation) => {
+          if (explanation !== undefined) {
+            expect(explanation.length).toBeGreaterThan(0);
+          }
+        });
       }
     });
   });

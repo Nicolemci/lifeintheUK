@@ -925,7 +925,7 @@ function getOptionExplanation(question: Question, optionIndex: number): string {
     return question.explanation;
   }
 
-  return `"${question.options[optionIndex]}" is not the answer to this question. It may still be useful for Life in the UK revision, but the key fact here is: ${question.explanation}`;
+  return `"${question.options[optionIndex]}" is not the answer to this question.`;
 }
 
 function AnswerFeedback({
@@ -940,9 +940,12 @@ function AnswerFeedback({
   }
 
   const answeredCorrectly = selectedAnswer === question.correctIndex;
-  const wrongOptions = question.options
+  const sourcedWrongOptions = question.options
     .map((option, optionIndex) => ({ option, optionIndex }))
-    .filter(({ optionIndex }) => optionIndex !== question.correctIndex);
+    .filter(
+      ({ optionIndex }) =>
+        optionIndex !== question.correctIndex && Boolean(question.optionExplanations?.[optionIndex]),
+    );
 
   return (
     <div className="explanation" role="status">
@@ -954,16 +957,18 @@ function AnswerFeedback({
           {question.explanation}
         </p>
       ) : null}
-      <details className="option-explanations">
-        <summary>Explain the other answer choices</summary>
-        <ul>
-          {wrongOptions.map(({ option, optionIndex }) => (
-            <li key={option}>
-              <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
-            </li>
-          ))}
-        </ul>
-      </details>
+      {sourcedWrongOptions.length > 0 ? (
+        <details className="option-explanations">
+          <summary>Explain the other answer choices mentioned in the handbook</summary>
+          <ul>
+            {sourcedWrongOptions.map(({ option, optionIndex }) => (
+              <li key={option}>
+                <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
     </div>
   );
 }
