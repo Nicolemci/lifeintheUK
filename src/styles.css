@@ -371,6 +371,142 @@ button {
   gap: 18px;
 }
 
+.absence-section {
+  margin: 32px 0;
+}
+
+.absence-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.absence-form {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.absence-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.absence-form input,
+.absence-form select,
+.absence-form textarea {
+  width: 100%;
+  border: 2px solid rgba(7, 31, 77, 0.16);
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: var(--ink);
+  background: #fffdf8;
+  font: inherit;
+  font-weight: 700;
+}
+
+.absence-form textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.absence-form input:focus,
+.absence-form select:focus,
+.absence-form textarea:focus {
+  border-color: var(--royal-blue);
+  box-shadow: 0 0 0 4px rgba(23, 78, 166, 0.14);
+  outline: none;
+}
+
+.absence-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.absence-stat {
+  padding: 18px;
+}
+
+.absence-stat span {
+  color: var(--royal-blue);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.absence-stat strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--navy);
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.absence-stat p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.absence-list {
+  margin-top: 18px;
+  padding: 24px;
+}
+
+.absence-list-heading,
+.absence-item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.absence-list-heading h3,
+.absence-item h4 {
+  margin: 0;
+  color: var(--navy);
+}
+
+.absence-list-heading span,
+.absence-item p,
+.empty-state,
+.absence-disclaimer {
+  color: var(--muted);
+}
+
+.absence-items {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.absence-item {
+  border: 1px solid #eadfcc;
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(255, 253, 248, 0.74);
+}
+
+.absence-item p {
+  margin: 6px 0 0;
+}
+
+.absence-disclaimer {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+}
+
 .mode-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-bottom: 32px;
@@ -676,10 +812,15 @@ button {
   .hero,
   .login-layout,
   .mode-grid,
+  .absence-layout,
   .mock-test-grid,
   .topic-grid,
   .quiz-layout {
     grid-template-columns: 1fr;
+  }
+
+  .absence-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .question-map {
@@ -706,5 +847,18 @@ button {
 
   .question-map {
     grid-template-columns: repeat(6, minmax(38px, 1fr));
+  }
+
+  .form-grid,
+  .absence-summary,
+  .absence-list-heading,
+  .absence-item {
+    grid-template-columns: 1fr;
+  }
+
+  .absence-list-heading,
+  .absence-item {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

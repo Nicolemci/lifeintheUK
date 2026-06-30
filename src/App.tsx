@@ -12,12 +12,22 @@ import {
   formatTime,
   questionsForTopic,
 } from "./quiz";
+import {
+  ILR_ROLLING_12_MONTHS_GUIDE_LIMIT,
+  NATURALISATION_LAST_12_MONTHS_LIMIT,
+  NATURALISATION_LAST_5_YEARS_LIMIT,
+  type AbsenceRecord,
+  countAbsenceDays,
+  createAbsenceId,
+  summarizeAbsences,
+} from "./absence";
 import "./styles.css";
 
 type StoredProgress = {
   wrongQuestionIds: string[];
   completedSessions: number;
   bestMockScore: number;
+  absences: AbsenceRecord[];
   latestScore?: {
     mode: QuizSession["mode"];
     title: string;
@@ -53,6 +63,7 @@ const defaultProgress: StoredProgress = {
   wrongQuestionIds: [],
   completedSessions: 0,
   bestMockScore: 0,
+  absences: [],
 };
 
 function loadLegacyProgress(): StoredProgress | null {
@@ -196,6 +207,7 @@ function updateProgress(
     completedSessions: progress.completedSessions + 1,
     bestMockScore:
       session.mode === "mock" ? Math.max(progress.bestMockScore, score.percentage) : progress.bestMockScore,
+    absences: progress.absences,
     latestScore: {
       mode: session.mode,
       title: session.title,
@@ -236,6 +248,7 @@ export default function App() {
     return questions.filter((question) => wrongQuestionIds.has(question.id));
   }, [progress.wrongQuestionIds]);
   const mockTestSets = useMemo(() => createMockTestSets(questions), []);
+  const absenceSummary = useMemo(() => summarizeAbsences(progress.absences), [progress.absences]);
 
   const currentQuestion = session?.questions[session.currentIndex];
   const isCompleted = Boolean(session?.completedAt && score);
@@ -374,6 +387,26 @@ export default function App() {
     setCurrentUser(null);
     setProgress(defaultProgress);
     resetToHome();
+  }
+
+  function addAbsence(absence: Omit<AbsenceRecord, "id">) {
+    setProgress((currentProgress) => ({
+      ...currentProgress,
+      absences: [
+        {
+          ...absence,
+          id: createAbsenceId(),
+        },
+        ...currentProgress.absences,
+      ].sort((left, right) => right.departedOn.localeCompare(left.departedOn)),
+    }));
+  }
+
+  function deleteAbsence(absenceId: string) {
+    setProgress((currentProgress) => ({
+      ...currentProgress,
+      absences: currentProgress.absences.filter((absence) => absence.id !== absenceId),
+    }));
   }
 
   if (!currentUser) {
@@ -573,6 +606,13 @@ export default function App() {
         </div>
       </section>
 
+      <AbsenceTracker
+        absences={progress.absences}
+        summary={absenceSummary}
+        onAddAbsence={addAbsence}
+        onDeleteAbsence={deleteAbsence}
+      />
+
       <section className="mode-grid" aria-label="Study modes">
         <article className="card mode-card">
           <p className="eyebrow">Mock test</p>
@@ -743,6 +783,203 @@ function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
           need a backend service.
         </p>
       </form>
+    </section>
+  );
+}
+
+type AbsenceTrackerProps = {
+  absences: AbsenceRecord[];
+  summary: ReturnType<typeof summarizeAbsences>;
+  onAddAbsence: (absence: Omit<AbsenceRecord, "id">) => void;
+  onDeleteAbsence: (absenceId: string) => void;
+};
+
+function formatDateForDisplay(dateValue: string): string {
+  const [year, month, day] = dateValue.split("-").map(Number);
+
+  if (!year || !month || !day) {
+    return dateValue;
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+function AbsenceTracker({ absences, summary, onAddAbsence, onDeleteAbsence }: AbsenceTrackerProps) {
+  const [destination, setDestination] = useState("");
+  const [reason, setReason] = useState("Holiday");
+  const [departedOn, setDepartedOn] = useState("");
+  const [returnedOn, setReturnedOn] = useState("");
+  const [notes, setNotes] = useState("");
+  const [error, setError] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!destination.trim() || !departedOn || !returnedOn) {
+      setError("Add a destination plus departure and return dates.");
+      return;
+    }
+
+    if (returnedOn < departedOn) {
+      setError("Return date must be the same as or after the departure date.");
+      return;
+    }
+
+    onAddAbsence({
+      destination: destination.trim(),
+      reason,
+      departedOn,
+      returnedOn,
+      notes: notes.trim() || undefined,
+    });
+
+    setDestination("");
+    setReason("Holiday");
+    setDepartedOn("");
+    setReturnedOn("");
+    setNotes("");
+    setError("");
+  }
+
+  return (
+    <section className="absence-section" aria-labelledby="absence-title">
+      <div className="section-heading">
+        <p className="eyebrow">Away from the UK</p>
+        <h2 id="absence-title">Track days outside the UK</h2>
+        <p>
+          Add trips abroad to monitor full days away from the UK. Departure and return dates are not
+          counted as absence days, matching common Home Office absence-counting guidance.
+        </p>
+      </div>
+
+      <div className="absence-layout">
+        <form className="card absence-form" onSubmit={handleSubmit}>
+          <div className="form-grid">
+            <label>
+              Destination
+              <input
+                placeholder="e.g. France"
+                value={destination}
+                onChange={(event) => setDestination(event.target.value)}
+              />
+            </label>
+            <label>
+              Reason
+              <select value={reason} onChange={(event) => setReason(event.target.value)}>
+                <option>Holiday</option>
+                <option>Family visit</option>
+                <option>Work</option>
+                <option>Study</option>
+                <option>Medical</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              Left the UK
+              <input
+                type="date"
+                value={departedOn}
+                onChange={(event) => setDepartedOn(event.target.value)}
+              />
+            </label>
+            <label>
+              Returned to the UK
+              <input
+                type="date"
+                value={returnedOn}
+                onChange={(event) => setReturnedOn(event.target.value)}
+              />
+            </label>
+          </div>
+          <label>
+            Notes
+            <textarea
+              placeholder="Optional details, e.g. family wedding or work trip"
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
+            />
+          </label>
+          {error ? <p className="form-error">{error}</p> : null}
+          <button className="primary-button" type="submit">
+            Add absence
+          </button>
+        </form>
+
+        <div className="absence-summary">
+          <article className="card absence-stat">
+            <span>Total away</span>
+            <strong>{summary.totalDaysAway}</strong>
+            <p>full days outside the UK</p>
+          </article>
+          <article className="card absence-stat">
+            <span>Last 12 months</span>
+            <strong>{summary.last12MonthsDays}</strong>
+            <p>
+              of {NATURALISATION_LAST_12_MONTHS_LIMIT} days for naturalisation guidance
+            </p>
+          </article>
+          <article className="card absence-stat">
+            <span>Last 5 years</span>
+            <strong>{summary.last5YearsDays}</strong>
+            <p>of {NATURALISATION_LAST_5_YEARS_LIMIT} days for naturalisation guidance</p>
+          </article>
+          <article className="card absence-stat">
+            <span>ILR guide</span>
+            <strong>{summary.last12MonthsDays}</strong>
+            <p>of {ILR_ROLLING_12_MONTHS_GUIDE_LIMIT} days in the latest 12-month window</p>
+          </article>
+        </div>
+      </div>
+
+      <div className="card absence-list">
+        <div className="absence-list-heading">
+          <h3>Recorded absences</h3>
+          <span>
+            {summary.absenceCount} trip{summary.absenceCount === 1 ? "" : "s"} · longest{" "}
+            {summary.longestAbsenceDays} days
+          </span>
+        </div>
+        {absences.length === 0 ? (
+          <p className="empty-state">No absences recorded yet.</p>
+        ) : (
+          <div className="absence-items">
+            {absences.map((absence) => {
+              const absenceDays = countAbsenceDays(absence);
+
+              return (
+                <article className="absence-item" key={absence.id}>
+                  <div>
+                    <p className="topic-label">{absence.reason}</p>
+                    <h4>{absence.destination}</h4>
+                    <p>
+                      {formatDateForDisplay(absence.departedOn)} to{" "}
+                      {formatDateForDisplay(absence.returnedOn)} · {absenceDays} full day
+                      {absenceDays === 1 ? "" : "s"} away
+                    </p>
+                    {absence.notes ? <p>{absence.notes}</p> : null}
+                  </div>
+                  <button
+                    className="ghost-button"
+                    type="button"
+                    onClick={() => onDeleteAbsence(absence.id)}
+                  >
+                    Delete
+                  </button>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <p className="absence-disclaimer">
+        This tracker is for study and planning only. Immigration rules can vary by route and date, so
+        always check the latest official guidance or get regulated advice before applying.
+      </p>
     </section>
   );
 }
