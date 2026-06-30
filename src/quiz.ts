@@ -16,6 +16,8 @@ export type QuizSession = {
   answers: AnswerMap;
   currentIndex: number;
   secondsRemaining?: number;
+  mockTestId?: string;
+  immediateFeedback?: boolean;
   startedAt: number;
   completedAt?: number;
 };

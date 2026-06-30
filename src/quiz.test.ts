@@ -120,6 +120,9 @@ describe("quiz helpers", () => {
       expect(question.options).toHaveLength(4);
       expect(question.correctIndex).toBeGreaterThanOrEqual(0);
       expect(question.correctIndex).toBeLessThan(question.options.length);
+      if (question.optionExplanations) {
+        expect(question.optionExplanations).toHaveLength(question.options.length);
+      }
     });
   });
 

@@ -10,6 +10,7 @@ export type Question = {
   options: string[];
   correctIndex: number;
   explanation: string;
+  optionExplanations?: string[];
 };
 
 export const topics: Array<{ id: TopicId; name: string; description: string }> = [

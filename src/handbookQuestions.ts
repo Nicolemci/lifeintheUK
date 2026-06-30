@@ -23,6 +23,11 @@ function q(
     options,
     correctIndex,
     explanation,
+    optionExplanations: options.map((option, optionIndex) =>
+      optionIndex === correctIndex
+        ? explanation
+        : `"${option}" is not the answer to this question. It may be a real Life in the UK topic or a plausible distractor, but this question is asking about: ${prompt} The key point is: ${explanation}`,
+    ),
   };
 }
 

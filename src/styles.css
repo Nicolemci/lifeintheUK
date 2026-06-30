@@ -629,6 +629,23 @@ button {
   color: var(--muted);
 }
 
+.mock-result {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 10px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--muted);
+  background: rgba(7, 31, 77, 0.08);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.mock-result.taken {
+  color: #176c49;
+  background: #effbf5;
+}
+
 .topic-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -789,6 +806,26 @@ button {
   padding: 16px;
   color: var(--navy);
   background: #f0f5ff;
+}
+
+.explanation p {
+  margin-bottom: 0;
+}
+
+.option-explanations {
+  margin-top: 12px;
+}
+
+.option-explanations summary {
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.option-explanations ul {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-left: 20px;
 }
 
 .question-actions {

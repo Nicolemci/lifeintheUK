@@ -31,6 +31,17 @@ type StoredProgress = {
   completedSessions: number;
   bestMockScore: number;
   absences: AbsenceRecord[];
+  mockTestResults: Record<
+    string,
+    {
+      title: string;
+      correct: number;
+      total: number;
+      percentage: number;
+      passed: boolean;
+      completedAt: string;
+    }
+  >;
   latestScore?: {
     mode: QuizSession["mode"];
     title: string;
@@ -69,6 +80,7 @@ const defaultProgress: StoredProgress = {
   completedSessions: 0,
   bestMockScore: 0,
   absences: [],
+  mockTestResults: {},
 };
 
 function loadLegacyProgress(): StoredProgress | null {
@@ -198,6 +210,7 @@ function updateProgress(
   score: ScoreSummary,
 ): StoredProgress {
   const wrongQuestionIds = new Set(progress.wrongQuestionIds);
+  const completedAt = new Date().toISOString();
 
   session.questions.forEach((question) => {
     if (session.answers[question.id] === question.correctIndex) {
@@ -213,6 +226,20 @@ function updateProgress(
     bestMockScore:
       session.mode === "mock" ? Math.max(progress.bestMockScore, score.percentage) : progress.bestMockScore,
     absences: progress.absences,
+    mockTestResults:
+      session.mode === "mock" && session.mockTestId
+        ? {
+            ...progress.mockTestResults,
+            [session.mockTestId]: {
+              title: session.title,
+              correct: score.correct,
+              total: score.total,
+              percentage: score.percentage,
+              passed: score.passed,
+              completedAt,
+            },
+          }
+        : progress.mockTestResults,
     latestScore: {
       mode: session.mode,
       title: session.title,
@@ -220,7 +247,7 @@ function updateProgress(
       total: score.total,
       percentage: score.percentage,
       passed: score.passed,
-      completedAt: new Date().toISOString(),
+      completedAt,
     },
   };
 }
@@ -229,6 +256,7 @@ function createSession(
   mode: QuizSession["mode"],
   title: string,
   sessionQuestions: Question[],
+  options: Pick<QuizSession, "mockTestId" | "immediateFeedback"> = {},
 ): QuizSession {
   return {
     mode,
@@ -237,6 +265,7 @@ function createSession(
     answers: createAnswerMap(sessionQuestions),
     currentIndex: 0,
     secondsRemaining: mode === "mock" ? MOCK_DURATION_SECONDS : undefined,
+    ...options,
     startedAt: Date.now(),
   };
 }
@@ -262,6 +291,7 @@ export default function App() {
   const currentQuestion = session?.questions[session.currentIndex];
   const isCompleted = Boolean(session?.completedAt && score);
   const isPracticeMode = session?.mode === "topic" || session?.mode === "wrong";
+  const isImmediateFeedbackMode = isPracticeMode || Boolean(session?.immediateFeedback);
 
   useEffect(() => {
     if (currentUser) {
@@ -308,7 +338,12 @@ export default function App() {
       return;
     }
 
-    setSession(createSession("mock", testSet.title, testSet.questions));
+    setSession(
+      createSession("mock", testSet.title, testSet.questions, {
+        mockTestId: testSet.id,
+        immediateFeedback: true,
+      }),
+    );
     setScore(null);
   }
 
@@ -333,8 +368,9 @@ export default function App() {
       return;
     }
 
-    const alreadyAnsweredInPractice = isPracticeMode && session.answers[currentQuestion.id] !== undefined;
-    if (alreadyAnsweredInPractice) {
+    const alreadyAnsweredWithFeedback =
+      isImmediateFeedbackMode && session.answers[currentQuestion.id] !== undefined;
+    if (alreadyAnsweredWithFeedback) {
       return;
     }
 
@@ -435,12 +471,25 @@ export default function App() {
   }
 
   if (session && isCompleted && score) {
+    const retakeMock = () => {
+      if (session.mockTestId) {
+        const mockTestIndex = mockTestSets.findIndex((testSet) => testSet.id === session.mockTestId);
+
+        if (mockTestIndex >= 0) {
+          startMockTestSet(mockTestIndex);
+          return;
+        }
+      }
+
+      startMockTest();
+    };
+
     return (
       <main className="app-shell">
         <ResultsView
           session={session}
           score={score}
-          onRetake={session.mode === "mock" ? startMockTest : undefined}
+          onRetake={session.mode === "mock" ? retakeMock : undefined}
           onReviewWrong={wrongQuestions.length > 0 ? startWrongQuestionReview : undefined}
           onHome={resetToHome}
           currentUser={currentUser}
@@ -453,7 +502,7 @@ export default function App() {
   if (session && currentQuestion) {
     const answeredCount = Object.values(session.answers).filter((answer) => answer !== undefined).length;
     const selectedAnswer = session.answers[currentQuestion.id];
-    const showExplanation = isPracticeMode && selectedAnswer !== undefined;
+    const showExplanation = isImmediateFeedbackMode && selectedAnswer !== undefined;
 
     return (
       <main className="app-shell">
@@ -535,12 +584,7 @@ export default function App() {
             </div>
 
             {showExplanation ? (
-              <div className="explanation" role="status">
-                <strong>
-                  {selectedAnswer === currentQuestion.correctIndex ? "Correct." : "Not quite."}
-                </strong>{" "}
-                {currentQuestion.explanation}
-              </div>
+              <AnswerFeedback question={currentQuestion} selectedAnswer={selectedAnswer} />
             ) : null}
 
             <footer className="question-actions">
@@ -689,28 +733,37 @@ export default function App() {
           </p>
         </div>
         <div className="mock-test-grid">
-          {mockTestSets.map((testSet, index) => (
-            <article className="card mock-test-card" key={testSet.id}>
-              <span className="mock-number">{index + 1}</span>
-              <div>
-                <h3>{testSet.title}</h3>
-                <p>
-                  Introduces questions {testSet.questionRangeLabel}
-                  {testSet.coveredQuestionCount < MOCK_QUESTION_COUNT
-                    ? `, plus ${MOCK_QUESTION_COUNT - testSet.coveredQuestionCount} review questions`
-                    : ""}
-                  .
-                </p>
-              </div>
-              <button
-                className="secondary-button"
-                type="button"
-                onClick={() => startMockTestSet(index)}
-              >
-                Start {testSet.title.toLowerCase()}
-              </button>
-            </article>
-          ))}
+          {mockTestSets.map((testSet, index) => {
+            const latestResult = progress.mockTestResults[testSet.id];
+
+            return (
+              <article className="card mock-test-card" key={testSet.id}>
+                <span className="mock-number">{index + 1}</span>
+                <div>
+                  <h3>{testSet.title}</h3>
+                  <p>
+                    Introduces questions {testSet.questionRangeLabel}
+                    {testSet.coveredQuestionCount < MOCK_QUESTION_COUNT
+                      ? `, plus ${MOCK_QUESTION_COUNT - testSet.coveredQuestionCount} review questions`
+                      : ""}
+                    .
+                  </p>
+                  <p className={latestResult ? "mock-result taken" : "mock-result"}>
+                    {latestResult
+                      ? `Last score: ${latestResult.percentage}% (${latestResult.correct}/${latestResult.total})`
+                      : "Not taken yet"}
+                  </p>
+                </div>
+                <button
+                  className="secondary-button"
+                  type="button"
+                  onClick={() => startMockTestSet(index)}
+                >
+                  Start {testSet.title.toLowerCase()}
+                </button>
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -858,6 +911,60 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
         </button>
       </div>
     </nav>
+  );
+}
+
+function getOptionExplanation(question: Question, optionIndex: number): string {
+  const authoredExplanation = question.optionExplanations?.[optionIndex];
+
+  if (authoredExplanation) {
+    return authoredExplanation;
+  }
+
+  if (optionIndex === question.correctIndex) {
+    return question.explanation;
+  }
+
+  return `"${question.options[optionIndex]}" is not the answer to this question. It may still be useful for Life in the UK revision, but the key fact here is: ${question.explanation}`;
+}
+
+function AnswerFeedback({
+  question,
+  selectedAnswer,
+}: {
+  question: Question;
+  selectedAnswer: number | undefined;
+}) {
+  if (selectedAnswer === undefined) {
+    return null;
+  }
+
+  const answeredCorrectly = selectedAnswer === question.correctIndex;
+  const wrongOptions = question.options
+    .map((option, optionIndex) => ({ option, optionIndex }))
+    .filter(({ optionIndex }) => optionIndex !== question.correctIndex);
+
+  return (
+    <div className="explanation" role="status">
+      <strong>{answeredCorrectly ? "Correct." : "Not quite."}</strong>{" "}
+      {getOptionExplanation(question, selectedAnswer)}
+      {!answeredCorrectly ? (
+        <p>
+          Correct answer: <strong>{question.options[question.correctIndex]}</strong>.{" "}
+          {question.explanation}
+        </p>
+      ) : null}
+      <details className="option-explanations">
+        <summary>Explain the other answer choices</summary>
+        <ul>
+          {wrongOptions.map(({ option, optionIndex }) => (
+            <li key={option}>
+              <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
+            </li>
+          ))}
+        </ul>
+      </details>
+    </div>
   );
 }
 
