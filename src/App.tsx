@@ -24,6 +24,7 @@ import {
   isoDateToDisplay,
   summarizeAbsences,
 } from "./absence";
+import { handbookReaderSections } from "./handbookReaderContent";
 import "./styles.css";
 
 type StoredProgress = {
@@ -70,7 +71,7 @@ type AuthState = {
   progress: StoredProgress;
 };
 
-type AppTab = "study" | "absence";
+type AppTab = "study" | "handbook" | "absence";
 
 const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
 const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
@@ -653,6 +654,20 @@ export default function App() {
     );
   }
 
+  if (activeTab === "handbook") {
+    return (
+      <main className="app-shell">
+        <AppTabs
+          activeTab={activeTab}
+          currentUser={currentUser}
+          onChange={switchTab}
+          onSignOut={handleSignOut}
+        />
+        <HandbookReader />
+      </main>
+    );
+  }
+
   return (
     <main className="app-shell">
       <AppTabs
@@ -921,6 +936,15 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
           Study
         </button>
         <button
+          className={["tab-button", activeTab === "handbook" ? "active" : ""].filter(Boolean).join(" ")}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "handbook"}
+          onClick={() => onChange("handbook")}
+        >
+          Handbook
+        </button>
+        <button
           className={["tab-button", activeTab === "absence" ? "active" : ""].filter(Boolean).join(" ")}
           type="button"
           role="tab"
@@ -937,6 +961,47 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
         </button>
       </div>
     </nav>
+  );
+}
+
+function HandbookReader() {
+  return (
+    <section className="handbook-reader" aria-labelledby="handbook-title">
+      <div className="reader-hero card">
+        <p className="british-kicker">Styled PDF reader</p>
+        <h1 id="handbook-title">Life in the UK handbook</h1>
+        <p>
+          Read the key handbook material in the same British-themed style as the rest of the app.
+          These sections are structured from the uploaded PDF to support revision before mock tests.
+        </p>
+      </div>
+
+      <div className="reader-layout">
+        <aside className="reader-index card" aria-label="Handbook sections">
+          <p className="eyebrow">Contents</p>
+          {handbookReaderSections.map((section) => (
+            <a href={`#${section.id}`} key={section.id}>
+              {section.title}
+            </a>
+          ))}
+        </aside>
+
+        <div className="reader-sections">
+          {handbookReaderSections.map((section) => (
+            <article className="card reader-section" id={section.id} key={section.id}>
+              <p className="eyebrow">{section.kicker}</p>
+              <h2>{section.title}</h2>
+              <p>{section.summary}</p>
+              <ul>
+                {section.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 

@@ -567,6 +567,90 @@ button {
   margin-bottom: 32px;
 }
 
+.handbook-reader {
+  display: grid;
+  gap: 20px;
+}
+
+.reader-hero {
+  padding: 32px;
+}
+
+.reader-hero h1 {
+  max-width: 780px;
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(2.2rem, 6vw, 4.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+}
+
+.reader-hero p:not(.british-kicker) {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.reader-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.reader-index {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+
+.reader-index a {
+  border-radius: 14px;
+  padding: 10px 12px;
+  color: var(--navy);
+  background: rgba(7, 31, 77, 0.06);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.reader-index a:hover {
+  background: #e8eefc;
+}
+
+.reader-sections {
+  display: grid;
+  gap: 16px;
+}
+
+.reader-section {
+  scroll-margin-top: 24px;
+  padding: 26px;
+}
+
+.reader-section h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  letter-spacing: -0.035em;
+}
+
+.reader-section p {
+  color: var(--muted);
+}
+
+.reader-section ul {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding-left: 22px;
+}
+
+.reader-section li {
+  color: var(--ink);
+}
+
 .mode-card,
 .topic-card,
 .latest-score {
@@ -905,10 +989,15 @@ button {
   .login-layout,
   .mode-grid,
   .absence-layout,
+  .reader-layout,
   .mock-test-grid,
   .topic-grid,
   .quiz-layout {
     grid-template-columns: 1fr;
+  }
+
+  .reader-index {
+    position: static;
   }
 
   .absence-summary {
