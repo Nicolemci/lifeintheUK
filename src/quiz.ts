@@ -1,7 +1,7 @@
 import type { Question, TopicId } from "./questions";
 
 export const MOCK_QUESTION_COUNT = 24;
-export const MINIMUM_NUMBERED_MOCK_TESTS = 12;
+export const MINIMUM_NUMBERED_MOCK_TESTS = 45;
 export const MOCK_DURATION_SECONDS = 45 * 60;
 export const PASS_PERCENTAGE = 75;
 

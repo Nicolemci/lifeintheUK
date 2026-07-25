@@ -1,4 +1,5 @@
 import { handbookQuestions } from "./handbookQuestions";
+import { getHandbookOptionFact } from "./handbookOptionFacts";
 
 export type TopicId = "values" | "history" | "government" | "everyday-life";
 
@@ -375,4 +376,18 @@ const starterQuestions: Question[] = [
   },
 ];
 
-export const questions: Question[] = [...starterQuestions, ...handbookQuestions];
+function withSourceBackedOptionExplanations(question: Question): Question {
+  return {
+    ...question,
+    optionExplanations: question.options.map((option, optionIndex) => {
+      return (
+        question.optionExplanations?.[optionIndex] ??
+        (optionIndex === question.correctIndex ? question.explanation : getHandbookOptionFact(option))
+      );
+    }),
+  };
+}
+
+export const questions: Question[] = [...starterQuestions, ...handbookQuestions].map(
+  withSourceBackedOptionExplanations,
+);

@@ -1,4 +1,5 @@
 import type { Question, TopicId } from "./questions";
+import { getHandbookOptionFact } from "./handbookOptionFacts";
 
 const topicNames: Record<TopicId, string> = {
   values: "UK values and society",
@@ -24,7 +25,7 @@ function q(
     correctIndex,
     explanation,
     optionExplanations: options.map((_, optionIndex) =>
-      optionIndex === correctIndex ? explanation : undefined,
+      optionIndex === correctIndex ? explanation : getHandbookOptionFact(options[optionIndex]),
     ),
   };
 }

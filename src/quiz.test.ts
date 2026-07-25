@@ -131,6 +131,16 @@ describe("quiz helpers", () => {
     });
   });
 
+  it("adds source-backed explanations for relevant wrong alternatives", () => {
+    const magnaCartaQuestion = questions.find((question) =>
+      question.prompt.includes("limited the power of the monarch"),
+    );
+
+    expect(magnaCartaQuestion?.optionExplanations?.[0]).toContain("Domesday Book");
+    expect(magnaCartaQuestion?.optionExplanations?.[2]).toContain("1707");
+    expect(magnaCartaQuestion?.optionExplanations?.[3]).toContain("1832");
+  });
+
   it("creates full-bank mock tests that cover every stored question at least once", () => {
     const sets = createMockTestSets(questions);
     const coveredIds = new Set(sets.flatMap((set) => set.questions.slice(0, set.coveredQuestionCount).map((question) => question.id)));
