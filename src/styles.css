@@ -280,6 +280,7 @@ button {
   padding: 0 20px;
   cursor: pointer;
   font-weight: 800;
+  text-decoration: none;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
@@ -572,6 +573,11 @@ button {
   gap: 20px;
 }
 
+.test-info-section {
+  display: grid;
+  gap: 20px;
+}
+
 .reader-hero {
   padding: 32px;
 }
@@ -648,6 +654,85 @@ button {
 }
 
 .reader-section li {
+  color: var(--ink);
+}
+
+.test-info-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.75fr) minmax(0, 1.25fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.centre-card,
+.test-info-card {
+  padding: 24px;
+}
+
+.centre-card h2,
+.test-info-card h2 {
+  margin: 0;
+  color: var(--navy);
+}
+
+.centre-card p,
+.test-info-card p {
+  color: var(--muted);
+}
+
+.centre-card form {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.centre-card label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.centre-card input {
+  width: 100%;
+  border: 2px solid rgba(7, 31, 77, 0.16);
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: var(--ink);
+  background: #fffdf8;
+  font: inherit;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.centre-card input:focus {
+  border-color: var(--royal-blue);
+  box-shadow: 0 0 0 4px rgba(23, 78, 166, 0.14);
+  outline: none;
+}
+
+.centre-message {
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: var(--navy);
+  background: #f0f5ff;
+  font-weight: 800;
+}
+
+.test-info-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.test-info-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding-left: 20px;
+}
+
+.test-info-card li {
   color: var(--ink);
 }
 
@@ -990,6 +1075,7 @@ button {
   .mode-grid,
   .absence-layout,
   .reader-layout,
+  .test-info-grid,
   .mock-test-grid,
   .topic-grid,
   .quiz-layout {
@@ -998,6 +1084,10 @@ button {
 
   .reader-index {
     position: static;
+  }
+
+  .test-info-cards {
+    grid-template-columns: 1fr;
   }
 
   .absence-summary {

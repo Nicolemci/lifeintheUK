@@ -25,6 +25,7 @@ import {
   summarizeAbsences,
 } from "./absence";
 import { handbookReaderSections } from "./handbookReaderContent";
+import { officialTestInfoSections } from "./testInfoContent";
 import "./styles.css";
 
 type StoredProgress = {
@@ -71,7 +72,7 @@ type AuthState = {
   progress: StoredProgress;
 };
 
-type AppTab = "study" | "handbook" | "absence";
+type AppTab = "study" | "test-info" | "handbook" | "absence";
 
 const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
 const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
@@ -668,6 +669,20 @@ export default function App() {
     );
   }
 
+  if (activeTab === "test-info") {
+    return (
+      <main className="app-shell">
+        <AppTabs
+          activeTab={activeTab}
+          currentUser={currentUser}
+          onChange={switchTab}
+          onSignOut={handleSignOut}
+        />
+        <OfficialTestInfo />
+      </main>
+    );
+  }
+
   return (
     <main className="app-shell">
       <AppTabs
@@ -936,6 +951,15 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
           Study
         </button>
         <button
+          className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "test-info"}
+          onClick={() => onChange("test-info")}
+        >
+          Test info
+        </button>
+        <button
           className={["tab-button", activeTab === "handbook" ? "active" : ""].filter(Boolean).join(" ")}
           type="button"
           role="tab"
@@ -990,6 +1014,93 @@ function HandbookReader() {
           {handbookReaderSections.map((section) => (
             <article className="card reader-section" id={section.id} key={section.id}>
               <p className="eyebrow">{section.kicker}</p>
+              <h2>{section.title}</h2>
+              <p>{section.summary}</p>
+              <ul>
+                {section.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OfficialTestInfo() {
+  const [postcode, setPostcode] = useState("");
+  const [centreMessage, setCentreMessage] = useState("");
+
+  function handleCentreSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const trimmedPostcode = postcode.trim().toUpperCase();
+
+    if (!trimmedPostcode) {
+      setCentreMessage("Enter your postcode, then use the official booking service to choose the nearest centre.");
+      return;
+    }
+
+    setCentreMessage(
+      `Use ${trimmedPostcode} on the official GOV.UK booking service to see and choose nearby Life in the UK test centres.`,
+    );
+  }
+
+  return (
+    <section className="test-info-section" aria-labelledby="test-info-title">
+      <div className="reader-hero card">
+        <p className="british-kicker">Official GOV.UK guide</p>
+        <h1 id="test-info-title">Life in the UK Test information</h1>
+        <p>
+          Key official details about booking, preparing, ID, test centres and exemptions. Always use
+          GOV.UK for the latest booking rules.
+        </p>
+        <div className="hero-actions">
+          <a
+            className="primary-button"
+            href="https://www.gov.uk/life-in-the-uk-test"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Open GOV.UK booking page
+          </a>
+        </div>
+      </div>
+
+      <div className="test-info-grid">
+        <article className="card centre-card">
+          <p className="eyebrow">Nearest centres</p>
+          <h2>Find a test centre</h2>
+          <p>
+            GOV.UK says there are over 30 test centres in the UK. You choose the centre when you book
+            through the official service.
+          </p>
+          <form onSubmit={handleCentreSearch}>
+            <label>
+              Your postcode
+              <input
+                autoComplete="postal-code"
+                placeholder="e.g. SW1A 1AA"
+                value={postcode}
+                onChange={(event) => setPostcode(event.target.value)}
+              />
+            </label>
+            <button className="secondary-button" type="submit">
+              Prepare centre search
+            </button>
+          </form>
+          {centreMessage ? <p className="centre-message">{centreMessage}</p> : null}
+          <p className="absence-disclaimer">
+            This app does not book tests or check live centre availability. Use GOV.UK to see current
+            nearest centres and appointment times.
+          </p>
+        </article>
+
+        <div className="test-info-cards">
+          {officialTestInfoSections.map((section) => (
+            <article className="card test-info-card" key={section.id}>
               <h2>{section.title}</h2>
               <p>{section.summary}</p>
               <ul>
