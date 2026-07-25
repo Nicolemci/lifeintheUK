@@ -59,6 +59,8 @@ const handbookOptionFacts: Record<string, string> = {
     "The English Civil War began in 1642 between Parliament's supporters, the Roundheads, and the king's supporters, the Cavaliers.",
   "edinburgh":
     "Edinburgh is the capital city of Scotland and is listed in the handbook among Scotland's cities.",
+  "florence nightingale":
+    "Florence Nightingale improved conditions in military hospitals during the Crimean War and is often regarded as the founder of modern nursing.",
   "glorious revolution":
     "The Glorious Revolution of 1688 brought William and Mary to the throne and strengthened Parliament's power over the monarch.",
   "good friday agreement":
@@ -79,6 +81,8 @@ const handbookOptionFacts: Record<string, string> = {
     "The Hundred Years War was a long medieval conflict with France that actually lasted 116 years.",
   "industrial revolution":
     "The Industrial Revolution was the rapid development of industry in Britain in the 18th and 19th centuries, driven by machinery and steam power.",
+  "jane austen":
+    "Jane Austen was an English novelist whose books include Pride and Prejudice and Sense and Sensibility.",
   "king james bible":
     "The King James Bible, or Authorised Version, was a new English translation of the Bible produced during King James I's reign.",
   "magna carta":
@@ -117,7 +121,7 @@ const handbookOptionFacts: Record<string, string> = {
     "The Wars of the Roses began in 1455 between the Houses of Lancaster and York and ended at Bosworth Field in 1485.",
 };
 
-function normalizeOption(option: string): string {
+export function normalizeHandbookOption(option: string): string {
   return option
     .toLowerCase()
     .replace(/^the\s+/, "")
@@ -127,5 +131,5 @@ function normalizeOption(option: string): string {
 }
 
 export function getHandbookOptionFact(option: string): string | undefined {
-  return handbookOptionFacts[normalizeOption(option)];
+  return handbookOptionFacts[normalizeHandbookOption(option)];
 }

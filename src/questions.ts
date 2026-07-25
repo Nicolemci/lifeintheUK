@@ -1,5 +1,5 @@
 import { handbookQuestions } from "./handbookQuestions";
-import { getHandbookOptionFact } from "./handbookOptionFacts";
+import { getHandbookOptionFact, normalizeHandbookOption } from "./handbookOptionFacts";
 
 export type TopicId = "values" | "history" | "government" | "everyday-life";
 
@@ -376,18 +376,32 @@ const starterQuestions: Question[] = [
   },
 ];
 
+const baseQuestions: Question[] = [...starterQuestions, ...handbookQuestions];
+
+const correctAnswerFacts = new Map<string, string>();
+
+baseQuestions.forEach((question) => {
+  const correctOption = question.options[question.correctIndex];
+  const explanation = question.optionExplanations?.[question.correctIndex] ?? question.explanation;
+  const normalizedOption = normalizeHandbookOption(correctOption);
+
+  if (!correctAnswerFacts.has(normalizedOption)) {
+    correctAnswerFacts.set(normalizedOption, explanation);
+  }
+});
+
 function withSourceBackedOptionExplanations(question: Question): Question {
   return {
     ...question,
     optionExplanations: question.options.map((option, optionIndex) => {
       return (
         question.optionExplanations?.[optionIndex] ??
-        (optionIndex === question.correctIndex ? question.explanation : getHandbookOptionFact(option))
+        (optionIndex === question.correctIndex
+          ? question.explanation
+          : getHandbookOptionFact(option) ?? correctAnswerFacts.get(normalizeHandbookOption(option)))
       );
     }),
   };
 }
 
-export const questions: Question[] = [...starterQuestions, ...handbookQuestions].map(
-  withSourceBackedOptionExplanations,
-);
+export const questions: Question[] = baseQuestions.map(withSourceBackedOptionExplanations);

@@ -151,6 +151,16 @@ describe("quiz helpers", () => {
     expect(walesCapitalQuestion?.optionExplanations?.[3]).toContain("city in England");
   });
 
+  it("reuses correct-answer facts to explain relevant wrong options", () => {
+    const wspuQuestion = questions.find((question) =>
+      question.prompt.includes("Women's Social and Political Union"),
+    );
+
+    expect(wspuQuestion?.optionExplanations?.[1]).toContain("modern nursing");
+    expect(wspuQuestion?.optionExplanations?.[3]).toContain("Pride and Prejudice");
+    expect(wspuQuestion?.optionExplanations?.[2]).toBeUndefined();
+  });
+
   it("creates full-bank mock tests that cover every stored question at least once", () => {
     const sets = createMockTestSets(questions);
     const coveredIds = new Set(sets.flatMap((set) => set.questions.slice(0, set.coveredQuestionCount).map((question) => question.id)));
