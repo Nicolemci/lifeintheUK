@@ -97,17 +97,9 @@ button {
 }
 
 .british-kicker::before {
-  width: 22px;
-  height: 14px;
-  border-radius: 3px;
-  background:
-    linear-gradient(33deg, transparent 0 42%, white 42% 48%, var(--union-red) 48% 55%, white 55% 61%, transparent 61%),
-    linear-gradient(147deg, transparent 0 42%, white 42% 48%, var(--union-red) 48% 55%, white 55% 61%, transparent 61%),
-    linear-gradient(90deg, transparent 0 42%, white 42% 45%, var(--union-red) 45% 55%, white 55% 58%, transparent 58%),
-    linear-gradient(0deg, transparent 0 38%, white 38% 43%, var(--union-red) 43% 57%, white 57% 62%, transparent 62%),
-    var(--navy);
-  box-shadow: 0 0 0 1px rgba(7, 31, 77, 0.12);
-  content: "";
+  font-size: 1rem;
+  line-height: 1;
+  content: "🇬🇧";
 }
 
 .hero {
@@ -356,13 +348,9 @@ button {
   align-self: end;
   border: 2px solid rgba(255, 255, 255, 0.54);
   border-radius: 50%;
-  color: white;
-  background:
-    linear-gradient(45deg, transparent 43%, rgba(255, 255, 255, 0.7) 43% 48%, transparent 48%),
-    linear-gradient(-45deg, transparent 43%, rgba(255, 255, 255, 0.7) 43% 48%, transparent 48%),
-    rgba(200, 16, 46, 0.9);
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 2rem;
   font-weight: 1000;
-  letter-spacing: -0.05em;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
 }
 

@@ -716,7 +716,7 @@ export default function App() {
         <div className="score-card card">
           <p className="eyebrow">Your progress</p>
           <div className="royal-badge" aria-hidden="true">
-            UK
+            🇬🇧
           </div>
           <div className="profile-summary">
             <span>Signed in as</span>
@@ -901,7 +901,7 @@ function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
   return (
     <section className="login-layout" aria-labelledby="login-title">
       <div>
-        <p className="british-kicker">Union-ready study</p>
+        <p className="british-kicker">Life in the UK test</p>
         <h1 id="login-title">Sign in to save your progress.</h1>
         <p>
           Create a local study profile or return with the same name to continue your best score,
