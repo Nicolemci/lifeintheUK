@@ -26,6 +26,7 @@ import {
 } from "./absence";
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
+import { buildStudyGuide } from "./handbookStudyGuide";
 import "./styles.css";
 
 type StoredProgress = {
@@ -1017,53 +1018,41 @@ function UKLandmarkSkyline() {
 }
 
 function HandbookReader() {
-  const [pages, setPages] = useState<Array<{ page: number; text: string }>>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [readerError, setReaderError] = useState("");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    fetch("/handbook-pages.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Could not load handbook");
-        }
-
-        return response.json() as Promise<{ pages: Array<{ page: number; text: string }> }>;
-      })
-      .then((data) => {
-        if (!cancelled) {
-          setPages(data.pages);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setReaderError("The handbook text could not be loaded.");
-        }
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+  const guideSections = useMemo(() => buildStudyGuide(questions), []);
   const normalizedQuery = searchQuery.trim().toLowerCase();
-  const visiblePages = normalizedQuery
-    ? pages.filter((page) => page.text.toLowerCase().includes(normalizedQuery))
-    : pages;
+  const visibleSections = guideSections
+    .map((section) => ({
+      ...section,
+      facts: normalizedQuery
+        ? section.facts.filter(
+            (fact) =>
+              fact.heading.toLowerCase().includes(normalizedQuery) ||
+              fact.detail.toLowerCase().includes(normalizedQuery),
+          )
+        : section.facts,
+    }))
+    .filter(
+      (section) =>
+        section.facts.length > 0 ||
+        section.title.toLowerCase().includes(normalizedQuery) ||
+        section.introduction.toLowerCase().includes(normalizedQuery),
+    );
+  const visibleFactCount = visibleSections.reduce((total, section) => total + section.facts.length, 0);
+  const totalFactCount = guideSections.reduce((total, section) => total + section.facts.length, 0);
 
   return (
     <section className="handbook-reader" aria-labelledby="handbook-title">
       <div className="reader-hero card">
-        <p className="british-kicker">Complete text reader</p>
-        <h1 id="handbook-title">Life in the UK handbook</h1>
+        <p className="british-kicker">Detailed revision guide</p>
+        <h1 id="handbook-title">Life in the UK key knowledge</h1>
         <p>
-          Read all text from the uploaded 98-page PDF in the same British-themed style as the app.
-          Pictures are intentionally omitted.
+          A detailed, structured guide to the important facts from “Values and principles” onward:
+          dates, people, wars, laws, government, culture and everyday life—without copying the
+          handbook word for word.
         </p>
         <label className="reader-search">
-          Search the handbook
+          Search the study guide
           <input
             type="search"
             placeholder="e.g. Magna Carta, Parliament, Florence Nightingale"
@@ -1075,39 +1064,41 @@ function HandbookReader() {
 
       <div className="reader-layout">
         <aside className="reader-index card" aria-label="Handbook sections">
-          <p className="eyebrow">Pages</p>
-          <a href="#handbook-page-4">Values and principles</a>
-          <a href="#handbook-page-8">What is the UK?</a>
-          <a href="#handbook-page-10">British history</a>
-          <a href="#handbook-page-43">Modern society</a>
-          <a href="#handbook-page-72">Government and law</a>
-          <a href="#handbook-page-96">Summary and key facts</a>
+          <p className="eyebrow">Contents</p>
+          {guideSections.map((section) => (
+            <a href={`#guide-${section.id}`} key={section.id}>
+              {section.title}
+            </a>
+          ))}
           <p className="reader-page-count">
             {normalizedQuery
-              ? `${visiblePages.length} matching page${visiblePages.length === 1 ? "" : "s"}`
-              : `${pages.length || 98} pages`}
+              ? `${visibleFactCount} matching fact${visibleFactCount === 1 ? "" : "s"}`
+              : `${totalFactCount} key facts`}
           </p>
         </aside>
 
         <div className="reader-sections">
-          {readerError ? <p className="form-error">{readerError}</p> : null}
-          {!readerError && pages.length === 0 ? <p className="empty-state">Loading handbook…</p> : null}
-          {pages.length > 0 && visiblePages.length === 0 ? (
+          {visibleSections.length === 0 ? (
             <article className="card reader-section">
-              <h2>No matching pages</h2>
+              <h2>No matching facts</h2>
               <p>Try a different search term.</p>
             </article>
           ) : null}
-          {visiblePages.map((page) => (
+          {visibleSections.map((section) => (
             <article
-              className="card reader-section handbook-page"
-              id={`handbook-page-${page.page}`}
-              key={page.page}
+              className="card reader-section guide-section"
+              id={`guide-${section.id}`}
+              key={section.id}
             >
-              <p className="eyebrow">Page {page.page} of {pages.length}</p>
-              <div className="handbook-page-text">
-                {page.text.split("\n").map((line, index) => (
-                  <p key={`${page.page}-${index}`}>{line}</p>
+              <p className="eyebrow">{section.chapter}</p>
+              <h2>{section.title}</h2>
+              <p>{section.introduction}</p>
+              <div className="guide-facts">
+                {section.facts.map((fact) => (
+                  <section className="guide-fact" key={fact.id}>
+                    <h3>{fact.heading}</h3>
+                    <p>{fact.detail}</p>
+                  </section>
                 ))}
               </div>
             </article>
