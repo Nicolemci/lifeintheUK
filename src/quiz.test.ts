@@ -141,6 +141,16 @@ describe("quiz helpers", () => {
     expect(magnaCartaQuestion?.optionExplanations?.[3]).toContain("1832");
   });
 
+  it("adds city explanations for capital-city distractors", () => {
+    const walesCapitalQuestion = questions.find((question) =>
+      question.prompt.includes("capital of Wales"),
+    );
+
+    expect(walesCapitalQuestion?.optionExplanations?.[0]).toContain("capital city of Scotland");
+    expect(walesCapitalQuestion?.optionExplanations?.[2]).toContain("capital city of Northern Ireland");
+    expect(walesCapitalQuestion?.optionExplanations?.[3]).toContain("city in England");
+  });
+
   it("creates full-bank mock tests that cover every stored question at least once", () => {
     const sets = createMockTestSets(questions);
     const coveredIds = new Set(sets.flatMap((set) => set.questions.slice(0, set.coveredQuestionCount).map((question) => question.id)));

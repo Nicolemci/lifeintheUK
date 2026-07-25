@@ -698,11 +698,11 @@ export default function App() {
           <div className="score-highlights">
             <div>
               <strong>{progress.bestMockScore}%</strong>
-              <span>Best mock score</span>
+              <span>Best test score</span>
             </div>
             <div>
               <strong>{averageMockScore === null ? "N/A" : `${averageMockScore}%`}</strong>
-              <span>Average mock score</span>
+              <span>Average test score</span>
             </div>
           </div>
           <dl>
@@ -966,12 +966,9 @@ function AnswerFeedback({
   }
 
   const answeredCorrectly = selectedAnswer === question.correctIndex;
-  const sourcedWrongOptions = question.options
+  const wrongOptions = question.options
     .map((option, optionIndex) => ({ option, optionIndex }))
-    .filter(
-      ({ optionIndex }) =>
-        optionIndex !== question.correctIndex && Boolean(question.optionExplanations?.[optionIndex]),
-    );
+    .filter(({ optionIndex }) => optionIndex !== question.correctIndex);
 
   return (
     <div className="explanation" role="status">
@@ -983,18 +980,16 @@ function AnswerFeedback({
           {question.explanation}
         </p>
       ) : null}
-      {sourcedWrongOptions.length > 0 ? (
-        <details className="option-explanations">
-          <summary>Explain the other answer choices mentioned in the handbook</summary>
-          <ul>
-            {sourcedWrongOptions.map(({ option, optionIndex }) => (
-              <li key={option}>
-                <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
-              </li>
-            ))}
-          </ul>
-        </details>
-      ) : null}
+      <details className="option-explanations">
+        <summary>Explain the incorrect answer choices</summary>
+        <ul>
+          {wrongOptions.map(({ option, optionIndex }) => (
+            <li key={option}>
+              <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
+            </li>
+          ))}
+        </ul>
+      </details>
     </div>
   );
 }

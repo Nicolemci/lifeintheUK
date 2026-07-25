@@ -35,6 +35,8 @@ const handbookOptionFacts: Record<string, string> = {
     "The Boer War took place in South Africa from 1899 to 1902 between Britain and Dutch settlers known as Boers.",
   "book of common prayer":
     "The Book of Common Prayer was written during Edward VI's reign for use in the Church of England.",
+  "cardiff":
+    "Cardiff is the capital city of Wales and is listed in the handbook among UK capital cities.",
   "chartists":
     "The Chartists campaigned in the 1830s and 1840s for democratic reforms including wider voting rights, secret ballots and paid MPs.",
   "concorde":
@@ -55,6 +57,8 @@ const handbookOptionFacts: Record<string, string> = {
     "The Emancipation Act 1833 abolished slavery throughout the British Empire.",
   "english civil war":
     "The English Civil War began in 1642 between Parliament's supporters, the Roundheads, and the king's supporters, the Cavaliers.",
+  "edinburgh":
+    "Edinburgh is the capital city of Scotland and is listed in the handbook among Scotland's cities.",
   "glorious revolution":
     "The Glorious Revolution of 1688 brought William and Mary to the throne and strengthened Parliament's power over the monarch.",
   "good friday agreement":
@@ -79,12 +83,16 @@ const handbookOptionFacts: Record<string, string> = {
     "The King James Bible, or Authorised Version, was a new English translation of the Bible produced during King James I's reign.",
   "magna carta":
     "Magna Carta was agreed in 1215 and limited the king's powers while establishing that even the monarch was subject to law.",
+  "manchester":
+    "Manchester is listed in the handbook as a city in England; it is not a UK national capital.",
   "national health service":
     "The National Health Service was established in 1948 and provides healthcare free at the point of use.",
   "nhs":
     "The National Health Service was established in 1948 and provides healthcare free at the point of use.",
   "northern ireland assembly":
     "The Northern Ireland Assembly was established after the Belfast/Good Friday Agreement and has elected MLAs.",
+  "belfast":
+    "Belfast is the capital city of Northern Ireland and is listed in the handbook among UK capital cities.",
   "overseas territories":
     "British overseas territories, such as St Helena and the Falkland Islands, are linked to the UK but are not part of it.",
   "reform act":
