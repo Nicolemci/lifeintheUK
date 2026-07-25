@@ -26,6 +26,7 @@ import {
 } from "./absence";
 import { handbookReaderSections } from "./handbookReaderContent";
 import { officialTestInfoSections } from "./testInfoContent";
+import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import "./styles.css";
 
 type StoredProgress = {
@@ -1032,20 +1033,50 @@ function HandbookReader() {
 function OfficialTestInfo() {
   const [postcode, setPostcode] = useState("");
   const [centreMessage, setCentreMessage] = useState("");
+  const [nearbyCentres, setNearbyCentres] = useState<NearbyTestCentre[]>([]);
+  const [isSearchingCentres, setIsSearchingCentres] = useState(false);
 
-  function handleCentreSearch(event: FormEvent<HTMLFormElement>) {
+  async function handleCentreSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const trimmedPostcode = postcode.trim().toUpperCase();
+    const trimmedPostcode = postcode.trim().toUpperCase().replace(/\s+/g, " ");
 
     if (!trimmedPostcode) {
-      setCentreMessage("Enter your postcode, then use the official booking service to choose the nearest centre.");
+      setCentreMessage("Enter a valid UK postcode.");
+      setNearbyCentres([]);
       return;
     }
 
-    setCentreMessage(
-      `Use ${trimmedPostcode} on the official GOV.UK booking service to see and choose nearby Life in the UK test centres.`,
-    );
+    setIsSearchingCentres(true);
+    setCentreMessage("");
+    setNearbyCentres([]);
+
+    try {
+      const response = await fetch(
+        `https://api.postcodes.io/postcodes/${encodeURIComponent(trimmedPostcode)}`,
+      );
+
+      if (!response.ok) {
+        throw new Error("Postcode not found");
+      }
+
+      const data: { result?: { latitude?: number; longitude?: number } } = await response.json();
+      const latitude = data.result?.latitude;
+      const longitude = data.result?.longitude;
+
+      if (latitude === undefined || longitude === undefined) {
+        throw new Error("Postcode coordinates unavailable");
+      }
+
+      setNearbyCentres(findClosestTestCentres(latitude, longitude, 5));
+      setCentreMessage(`Indicative closest centres to ${trimmedPostcode}.`);
+    } catch {
+      setCentreMessage(
+        "We could not find that postcode. Check it and try again, or use the official booking service.",
+      );
+    } finally {
+      setIsSearchingCentres(false);
+    }
   }
 
   return (
@@ -1088,13 +1119,28 @@ function OfficialTestInfo() {
               />
             </label>
             <button className="secondary-button" type="submit">
-              Prepare centre search
+              {isSearchingCentres ? "Finding centres…" : "View closest centres"}
             </button>
           </form>
           {centreMessage ? <p className="centre-message">{centreMessage}</p> : null}
+          {nearbyCentres.length > 0 ? (
+            <ol className="nearby-centres">
+              {nearbyCentres.map((centre) => (
+                <li key={centre.city}>
+                  <div>
+                    <strong>{centre.city}</strong>
+                    <span>{centre.venue}</span>
+                    <span>{centre.address}</span>
+                  </div>
+                  <b>{centre.distanceMiles} mi</b>
+                </li>
+              ))}
+            </ol>
+          ) : null}
           <p className="absence-disclaimer">
-            This app does not book tests or check live centre availability. Use GOV.UK to see current
-            nearest centres and appointment times.
+            Distances are approximate and centre details can change. This app does not book tests or
+            check live availability. Confirm the exact five options, address and appointment times
+            in the official GOV.UK booking service.
           </p>
         </article>
 
