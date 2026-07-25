@@ -37,6 +37,8 @@ const handbookOptionFacts: Record<string, string> = {
     "The Book of Common Prayer was written during Edward VI's reign for use in the Church of England.",
   "cardiff":
     "Cardiff is the capital city of Wales and is listed in the handbook among UK capital cities.",
+  "cardiff bay":
+    "Cardiff Bay is where the Senedd is located; the Welsh Assembly meets there, not the UK Parliament.",
   "chartists":
     "The Chartists campaigned in the 1830s and 1840s for democratic reforms including wider voting rights, secret ballots and paid MPs.",
   "concorde":
@@ -97,6 +99,10 @@ const handbookOptionFacts: Record<string, string> = {
     "The Northern Ireland Assembly was established after the Belfast/Good Friday Agreement and has elected MLAs.",
   "belfast":
     "Belfast is the capital city of Northern Ireland and is listed in the handbook among UK capital cities.",
+  "buckingham palace":
+    "Buckingham Palace is associated with the monarch and Royal Family; it is not where the UK Parliament sits.",
+  "chequers":
+    "Chequers is the Prime Minister's country house outside London.",
   "overseas territories":
     "British overseas territories, such as St Helena and the Falkland Islands, are linked to the UK but are not part of it.",
   "reform act":
@@ -105,6 +111,8 @@ const handbookOptionFacts: Record<string, string> = {
     "The Restoration happened in 1660 when Parliament invited Charles II to return as king after the period without a monarch.",
   "scottish parliament":
     "The Scottish Parliament was established in 1999, sits in Edinburgh and can pass laws on devolved matters.",
+  "senedd":
+    "The Senedd is the building in Cardiff Bay where members of the Welsh Assembly meet.",
   "spanish armada":
     "The Spanish Armada was defeated in 1588 during Elizabeth I's reign.",
   "statute of rhuddlan":
@@ -113,6 +121,14 @@ const handbookOptionFacts: Record<string, string> = {
     "The suffragettes campaigned for women's voting rights; women over 30 gained the vote in 1918 and equal voting age followed in 1928.",
   "treaty of union":
     "The Treaty of Union is the Scottish name for the Act of Union 1707, which created the Kingdom of Great Britain.",
+  "holyrood":
+    "Holyrood is the area in Edinburgh where the Scottish Parliament building is located.",
+  "stormont":
+    "Stormont is in Belfast and is where members of the Northern Ireland Assembly meet.",
+  "westminster":
+    "Westminster is where the UK Parliament sits in London.",
+  "10 downing street":
+    "10 Downing Street is the official home of the Prime Minister in central London.",
   "union flag":
     "The Union Flag, often called the Union Jack, combines crosses associated with England, Scotland and Ireland.",
   "welsh assembly":

@@ -151,6 +151,16 @@ describe("quiz helpers", () => {
     expect(walesCapitalQuestion?.optionExplanations?.[3]).toContain("city in England");
   });
 
+  it("adds devolved parliament location explanations", () => {
+    const parliamentQuestion = questions.find((question) =>
+      question.prompt.includes("UK Parliament sit"),
+    );
+
+    expect(parliamentQuestion?.optionExplanations?.[0]).toContain("Senedd");
+    expect(parliamentQuestion?.optionExplanations?.[1]).toContain("Northern Ireland Assembly");
+    expect(parliamentQuestion?.optionExplanations?.[3]).toContain("Scottish Parliament");
+  });
+
   it("reuses correct-answer facts to explain relevant wrong options", () => {
     const wspuQuestion = questions.find((question) =>
       question.prompt.includes("Women's Social and Political Union"),
