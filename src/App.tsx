@@ -940,7 +940,7 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
   );
 }
 
-function getOptionExplanation(question: Question, optionIndex: number): string {
+function getOptionExplanation(question: Question, optionIndex: number): string | undefined {
   const authoredExplanation = question.optionExplanations?.[optionIndex];
 
   if (authoredExplanation) {
@@ -951,7 +951,7 @@ function getOptionExplanation(question: Question, optionIndex: number): string {
     return question.explanation;
   }
 
-  return `"${question.options[optionIndex]}" is not the answer to this question.`;
+  return undefined;
 }
 
 function AnswerFeedback({
@@ -966,30 +966,36 @@ function AnswerFeedback({
   }
 
   const answeredCorrectly = selectedAnswer === question.correctIndex;
-  const wrongOptions = question.options
+  const selectedExplanation = getOptionExplanation(question, selectedAnswer);
+  const relevantWrongOptions = question.options
     .map((option, optionIndex) => ({ option, optionIndex }))
-    .filter(({ optionIndex }) => optionIndex !== question.correctIndex);
+    .filter(
+      ({ optionIndex }) =>
+        optionIndex !== question.correctIndex && Boolean(getOptionExplanation(question, optionIndex)),
+    );
 
   return (
     <div className="explanation" role="status">
       <strong>{answeredCorrectly ? "Correct." : "Not quite."}</strong>{" "}
-      {getOptionExplanation(question, selectedAnswer)}
+      {selectedExplanation ?? "That is not the correct answer for this question."}
       {!answeredCorrectly ? (
         <p>
           Correct answer: <strong>{question.options[question.correctIndex]}</strong>.{" "}
           {question.explanation}
         </p>
       ) : null}
-      <details className="option-explanations">
-        <summary>Explain the incorrect answer choices</summary>
-        <ul>
-          {wrongOptions.map(({ option, optionIndex }) => (
-            <li key={option}>
-              <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
-            </li>
-          ))}
-        </ul>
-      </details>
+      {relevantWrongOptions.length > 0 ? (
+        <details className="option-explanations">
+          <summary>Relevant other answers from the handbook</summary>
+          <ul>
+            {relevantWrongOptions.map(({ option, optionIndex }) => (
+              <li key={option}>
+                <strong>{option}</strong>: {getOptionExplanation(question, optionIndex)}
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
     </div>
   );
 }
