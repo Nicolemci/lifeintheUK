@@ -24,7 +24,6 @@ import {
   isoDateToDisplay,
   summarizeAbsences,
 } from "./absence";
-import { handbookReaderSections } from "./handbookReaderContent";
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import "./styles.css";
@@ -713,6 +712,7 @@ export default function App() {
               Revise wrong questions ({wrongQuestions.length})
             </button>
           </div>
+          <UKLandmarkSkyline />
         </div>
         <div className="score-card card">
           <p className="eyebrow">Your progress</p>
@@ -908,6 +908,7 @@ function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
           Create a local study profile or return with the same name to continue your best score,
           wrong-question list, and completed sessions on this browser.
         </p>
+        <UKLandmarkSkyline />
       </div>
       <form className="card login-card" onSubmit={handleSubmit}>
         <label htmlFor="display-name">Your name</label>
@@ -989,39 +990,126 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
   );
 }
 
+function UKLandmarkSkyline() {
+  return (
+    <svg
+      className="uk-landmark-skyline"
+      viewBox="0 0 720 150"
+      role="img"
+      aria-label="UK landmarks including the London Eye, Elizabeth Tower, Tower Bridge and Edinburgh Castle"
+    >
+      <g className="skyline-blue">
+        <circle cx="160" cy="70" r="52" fill="none" strokeWidth="8" />
+        <circle cx="160" cy="70" r="6" />
+        <path d="M160 18v104M108 70h104M123 33l74 74M197 33l-74 74" fill="none" strokeWidth="3" />
+        <path d="M135 126h50l-12-46h-26z" />
+        <path d="M285 130V37h43v93zM292 37l14-22 15 22z" />
+        <circle cx="306" cy="59" r="10" className="skyline-clock" />
+        <path d="M298 59h8v-7M314 59h-8v8" fill="none" strokeWidth="2" />
+        <path d="M380 130V62h34v68zM476 130V62h34v68zM371 62h52l-8-12h-36zM467 62h52l-8-12h-36z" />
+        <path d="M414 80h63v15h-63zM397 95c18 20 79 20 97 0" fill="none" strokeWidth="7" />
+        <path d="M565 130V78h98v52zM575 78V60h18v18M635 78V57h18v21M603 78V47h22v31" />
+        <path d="M552 130h126" fill="none" strokeWidth="8" />
+      </g>
+      <path className="skyline-red" d="M75 131h610" fill="none" strokeWidth="5" />
+    </svg>
+  );
+}
+
 function HandbookReader() {
+  const [pages, setPages] = useState<Array<{ page: number; text: string }>>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [readerError, setReaderError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/handbook-pages.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Could not load handbook");
+        }
+
+        return response.json() as Promise<{ pages: Array<{ page: number; text: string }> }>;
+      })
+      .then((data) => {
+        if (!cancelled) {
+          setPages(data.pages);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setReaderError("The handbook text could not be loaded.");
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const visiblePages = normalizedQuery
+    ? pages.filter((page) => page.text.toLowerCase().includes(normalizedQuery))
+    : pages;
+
   return (
     <section className="handbook-reader" aria-labelledby="handbook-title">
       <div className="reader-hero card">
-        <p className="british-kicker">Styled PDF reader</p>
+        <p className="british-kicker">Complete text reader</p>
         <h1 id="handbook-title">Life in the UK handbook</h1>
         <p>
-          Read the key handbook material in the same British-themed style as the rest of the app.
-          These sections are structured from the uploaded PDF to support revision before mock tests.
+          Read all text from the uploaded 98-page PDF in the same British-themed style as the app.
+          Pictures are intentionally omitted.
         </p>
+        <label className="reader-search">
+          Search the handbook
+          <input
+            type="search"
+            placeholder="e.g. Magna Carta, Parliament, Florence Nightingale"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+        </label>
       </div>
 
       <div className="reader-layout">
         <aside className="reader-index card" aria-label="Handbook sections">
-          <p className="eyebrow">Contents</p>
-          {handbookReaderSections.map((section) => (
-            <a href={`#${section.id}`} key={section.id}>
-              {section.title}
-            </a>
-          ))}
+          <p className="eyebrow">Pages</p>
+          <a href="#handbook-page-4">Values and principles</a>
+          <a href="#handbook-page-8">What is the UK?</a>
+          <a href="#handbook-page-10">British history</a>
+          <a href="#handbook-page-43">Modern society</a>
+          <a href="#handbook-page-72">Government and law</a>
+          <a href="#handbook-page-96">Summary and key facts</a>
+          <p className="reader-page-count">
+            {normalizedQuery
+              ? `${visiblePages.length} matching page${visiblePages.length === 1 ? "" : "s"}`
+              : `${pages.length || 98} pages`}
+          </p>
         </aside>
 
         <div className="reader-sections">
-          {handbookReaderSections.map((section) => (
-            <article className="card reader-section" id={section.id} key={section.id}>
-              <p className="eyebrow">{section.kicker}</p>
-              <h2>{section.title}</h2>
-              <p>{section.summary}</p>
-              <ul>
-                {section.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
+          {readerError ? <p className="form-error">{readerError}</p> : null}
+          {!readerError && pages.length === 0 ? <p className="empty-state">Loading handbook…</p> : null}
+          {pages.length > 0 && visiblePages.length === 0 ? (
+            <article className="card reader-section">
+              <h2>No matching pages</h2>
+              <p>Try a different search term.</p>
+            </article>
+          ) : null}
+          {visiblePages.map((page) => (
+            <article
+              className="card reader-section handbook-page"
+              id={`handbook-page-${page.page}`}
+              key={page.page}
+            >
+              <p className="eyebrow">Page {page.page} of {pages.length}</p>
+              <div className="handbook-page-text">
+                {page.text.split("\n").map((line, index) => (
+                  <p key={`${page.page}-${index}`}>{line}</p>
                 ))}
-              </ul>
+              </div>
             </article>
           ))}
         </div>
