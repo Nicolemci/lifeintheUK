@@ -30,6 +30,7 @@ type StoredProgress = {
   wrongQuestionIds: string[];
   completedSessions: number;
   bestMockScore: number;
+  mockScoreHistory: number[];
   absences: AbsenceRecord[];
   mockTestResults: Record<
     string,
@@ -79,6 +80,7 @@ const defaultProgress: StoredProgress = {
   wrongQuestionIds: [],
   completedSessions: 0,
   bestMockScore: 0,
+  mockScoreHistory: [],
   absences: [],
   mockTestResults: {},
 };
@@ -204,6 +206,19 @@ function clearCurrentUser() {
   }
 }
 
+function getAverageMockScore(progress: StoredProgress): number | null {
+  const scores =
+    progress.mockScoreHistory.length > 0
+      ? progress.mockScoreHistory
+      : Object.values(progress.mockTestResults).map((result) => result.percentage);
+
+  if (scores.length === 0) {
+    return null;
+  }
+
+  return Math.round(scores.reduce((total, score) => total + score, 0) / scores.length);
+}
+
 function updateProgress(
   progress: StoredProgress,
   session: QuizSession,
@@ -225,6 +240,8 @@ function updateProgress(
     completedSessions: progress.completedSessions + 1,
     bestMockScore:
       session.mode === "mock" ? Math.max(progress.bestMockScore, score.percentage) : progress.bestMockScore,
+    mockScoreHistory:
+      session.mode === "mock" ? [...progress.mockScoreHistory, score.percentage] : progress.mockScoreHistory,
     absences: progress.absences,
     mockTestResults:
       session.mode === "mock" && session.mockTestId
@@ -287,6 +304,7 @@ export default function App() {
     [],
   );
   const absenceSummary = useMemo(() => summarizeAbsences(progress.absences), [progress.absences]);
+  const averageMockScore = useMemo(() => getAverageMockScore(progress), [progress]);
 
   const currentQuestion = session?.questions[session.currentIndex];
   const isCompleted = Boolean(session?.completedAt && score);
@@ -677,8 +695,16 @@ export default function App() {
               Sign out
             </button>
           </div>
-          <strong>{progress.bestMockScore}%</strong>
-          <span>Best mock score</span>
+          <div className="score-highlights">
+            <div>
+              <strong>{progress.bestMockScore}%</strong>
+              <span>Best mock score</span>
+            </div>
+            <div>
+              <strong>{averageMockScore === null ? "N/A" : `${averageMockScore}%`}</strong>
+              <span>Average mock score</span>
+            </div>
+          </div>
           <dl>
             <div>
               <dt>Sessions completed</dt>

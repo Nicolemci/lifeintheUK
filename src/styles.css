@@ -378,6 +378,22 @@ button {
   letter-spacing: -0.02em;
 }
 
+.score-highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: end;
+}
+
+.score-highlights div {
+  display: grid;
+  gap: 8px;
+}
+
+.score-highlights div:last-child strong {
+  font-size: 2.4rem;
+}
+
 .score-card dl {
   display: grid;
   gap: 12px;
