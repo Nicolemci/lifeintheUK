@@ -27,6 +27,7 @@ import {
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import { buildStudyGuide } from "./handbookStudyGuide";
+import SupabaseTest from "./components/SupabaseTest";
 import "./styles.css";
 
 type StoredProgress = {
@@ -73,7 +74,7 @@ type AuthState = {
   progress: StoredProgress;
 };
 
-type AppTab = "study" | "test-info" | "handbook" | "absence";
+type AppTab = "study" | "test-info" | "handbook" | "absence" | "supabase-test";
 
 const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
 const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
@@ -684,6 +685,20 @@ export default function App() {
     );
   }
 
+  if (activeTab === "supabase-test") {
+    return (
+      <main className="app-shell">
+        <AppTabs
+          activeTab={activeTab}
+          currentUser={currentUser}
+          onChange={switchTab}
+          onSignOut={handleSignOut}
+        />
+        <SupabaseTest />
+      </main>
+    );
+  }
+
   return (
     <main className="app-shell">
       <AppTabs
@@ -979,6 +994,17 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
           onClick={() => onChange("absence")}
         >
           Away tracker
+        </button>
+        <button
+          className={["tab-button", activeTab === "supabase-test" ? "active" : ""]
+            .filter(Boolean)
+            .join(" ")}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "supabase-test"}
+          onClick={() => onChange("supabase-test")}
+        >
+          Supabase test
         </button>
       </div>
       <div className="tab-profile">
