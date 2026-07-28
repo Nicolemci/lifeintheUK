@@ -9,7 +9,6 @@ import {
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { FREE_MOCK_TEST_LIMIT, type PremiumPlanId } from "../config/premium";
-import { getSupabaseClient } from "../lib/supabase";
 
 type PremiumAccessRow = {
   plan: PremiumPlanId;
@@ -31,6 +30,11 @@ type PremiumContextValue = {
 };
 
 const PremiumContext = createContext<PremiumContextValue | undefined>(undefined);
+
+async function loadSupabaseClient() {
+  const { getSupabaseClient } = await import("../lib/supabase");
+  return getSupabaseClient();
+}
 
 function isActiveAccess(row: PremiumAccessRow, now: number): boolean {
   if (row.is_lifetime || row.plan === "lifetime") {
@@ -59,7 +63,7 @@ export function PremiumProvider() {
     setError(null);
 
     try {
-      const supabase = getSupabaseClient();
+      const supabase = await loadSupabaseClient();
       const [premiumResult, mockCountResult] = await Promise.all([
         supabase
           .from("premium_access")
@@ -105,7 +109,8 @@ export function PremiumProvider() {
         throw new Error("You must be logged in to save a mock test.");
       }
 
-      const { error: insertError } = await getSupabaseClient().from("mock_tests").insert({
+      const supabase = await loadSupabaseClient();
+      const { error: insertError } = await supabase.from("mock_tests").insert({
         user_id: user.id,
         score,
       });

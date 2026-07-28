@@ -1,5 +1,4 @@
 import type { PremiumPlanId } from "../config/premium";
-import { getSupabaseClient } from "./supabase";
 
 type CheckoutResponse = {
   url?: unknown;
@@ -7,6 +6,7 @@ type CheckoutResponse = {
 };
 
 export async function createCheckoutSession(plan: PremiumPlanId): Promise<string> {
+  const { getSupabaseClient } = await import("./supabase");
   const {
     data: { session },
     error: sessionError,
