@@ -1,4 +1,13 @@
-import { type FormEvent, lazy, Suspense, useEffect, useMemo, useState } from "react";
+import {
+  type FormEvent,
+  lazy,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { questions, topics, type Question, type TopicId } from "./questions";
 import {
   MOCK_DURATION_SECONDS,
@@ -29,6 +38,8 @@ import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import { buildStudyGuide } from "./handbookStudyGuide";
 import { useAuth } from "./auth/AuthContext";
 import LogoutButton from "./auth/LogoutButton";
+import { FREE_MOCK_TEST_LIMIT } from "./config/premium";
+import { usePremium } from "./premium/PremiumContext";
 import "./styles.css";
 
 const SupabaseTest = lazy(() => import("./components/SupabaseTest"));
@@ -220,6 +231,15 @@ function createSession(
 
 export default function App() {
   const { user: supabaseUser } = useAuth();
+  const navigate = useNavigate();
+  const {
+    loading: premiumLoading,
+    error: premiumError,
+    hasPremium,
+    freeMockTestsRemaining,
+    canStartMockTest,
+    recordMockTest,
+  } = usePremium();
   const currentUser = useMemo<AuthUser>(
     () => ({
       id: supabaseUser?.id ?? "",
@@ -233,6 +253,9 @@ export default function App() {
   const [session, setSession] = useState<QuizSession | null>(null);
   const [score, setScore] = useState<ScoreSummary | null>(null);
   const [activeTab, setActiveTab] = useState<AppTab>("study");
+  const [sessionSaveError, setSessionSaveError] = useState("");
+  const [savingSession, setSavingSession] = useState(false);
+  const completionInProgress = useRef(false);
 
   const wrongQuestions = useMemo(() => {
     const wrongQuestionIds = new Set(progress.wrongQuestionIds);
@@ -257,12 +280,18 @@ export default function App() {
   }, [currentUser, progress]);
 
   useEffect(() => {
-    if (!session || session.mode !== "mock" || session.completedAt || session.secondsRemaining === undefined) {
+    if (
+      !session ||
+      session.mode !== "mock" ||
+      session.completedAt ||
+      session.secondsRemaining === undefined ||
+      sessionSaveError
+    ) {
       return;
     }
 
     if (session.secondsRemaining <= 0) {
-      finishSession(session);
+      void finishSession(session);
       return;
     }
 
@@ -282,13 +311,40 @@ export default function App() {
     return () => window.clearTimeout(timerId);
   }, [session]);
 
+  function prepareMockTestStart(): boolean {
+    if (premiumLoading || premiumError) {
+      return false;
+    }
+
+    if (!canStartMockTest) {
+      navigate("/pricing", {
+        state: {
+          upgradeReason: "mock-limit",
+        },
+      });
+      return false;
+    }
+
+    setSessionSaveError("");
+    completionInProgress.current = false;
+    return true;
+  }
+
   function startMockTest() {
+    if (!prepareMockTestStart()) {
+      return;
+    }
+
     const selectedQuestions = chooseQuestions(questions, MOCK_QUESTION_COUNT);
     setSession(createSession("mock", "Random timed mock test", selectedQuestions));
     setScore(null);
   }
 
   function startMockTestSet(testSetIndex: number) {
+    if (!prepareMockTestStart()) {
+      return;
+    }
+
     const testSet = mockTestSets[testSetIndex];
 
     if (!testSet) {
@@ -351,25 +407,51 @@ export default function App() {
     });
   }
 
-  function finishSession(sessionToFinish = session) {
-    if (!sessionToFinish || sessionToFinish.completedAt) {
+  async function finishSession(sessionToFinish = session) {
+    if (
+      !sessionToFinish ||
+      sessionToFinish.completedAt ||
+      completionInProgress.current
+    ) {
       return;
     }
 
+    completionInProgress.current = true;
+    setSavingSession(true);
+    setSessionSaveError("");
     const finalScore = calculateScore(sessionToFinish.questions, sessionToFinish.answers);
     const completedSession = {
       ...sessionToFinish,
       completedAt: Date.now(),
     };
 
-    setScore(finalScore);
-    setSession(completedSession);
-    setProgress((currentProgress) => updateProgress(currentProgress, completedSession, finalScore));
+    try {
+      if (sessionToFinish.mode === "mock") {
+        await recordMockTest(finalScore.percentage);
+      }
+
+      setScore(finalScore);
+      setSession(completedSession);
+      setProgress((currentProgress) =>
+        updateProgress(currentProgress, completedSession, finalScore),
+      );
+    } catch (saveError) {
+      setSessionSaveError(
+        saveError instanceof Error
+          ? `Your test could not be saved: ${saveError.message}`
+          : "Your test could not be saved. Please try again.",
+      );
+      completionInProgress.current = false;
+    } finally {
+      setSavingSession(false);
+    }
   }
 
   function resetToHome() {
     setSession(null);
     setScore(null);
+    setSessionSaveError("");
+    completionInProgress.current = false;
     setActiveTab("study");
   }
 
@@ -513,6 +595,8 @@ export default function App() {
               <AnswerFeedback question={currentQuestion} selectedAnswer={selectedAnswer} />
             ) : null}
 
+            {sessionSaveError ? <p className="form-error session-save-error">{sessionSaveError}</p> : null}
+
             <footer className="question-actions">
               <button
                 className="secondary-button"
@@ -531,8 +615,13 @@ export default function App() {
                   Next question
                 </button>
               ) : (
-                <button className="primary-button" type="button" onClick={() => finishSession()}>
-                  Finish session
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={() => void finishSession()}
+                  disabled={savingSession}
+                >
+                  {savingSession ? "Saving result…" : sessionSaveError ? "Try saving again" : "Finish session"}
                 </button>
               )}
             </footer>
@@ -617,7 +706,12 @@ export default function App() {
             revising questions you miss until they are cleared from your list.
           </p>
           <div className="hero-actions">
-            <button className="primary-button" type="button" onClick={startMockTest}>
+            <button
+              className="primary-button"
+              type="button"
+              onClick={startMockTest}
+              disabled={premiumLoading || Boolean(premiumError)}
+            >
               Start timed mock test
             </button>
             <button
@@ -628,6 +722,9 @@ export default function App() {
             >
               Revise wrong questions ({wrongQuestions.length})
             </button>
+            <Link className="secondary-button" to="/pricing">
+              Premium plans
+            </Link>
           </div>
           <UKLandmarkSkyline />
         </div>
@@ -660,9 +757,25 @@ export default function App() {
               <dt>Wrong-question bank</dt>
               <dd>{wrongQuestions.length}</dd>
             </div>
+            <div>
+              <dt>Access</dt>
+              <dd className="access-status">{hasPremium ? "Premium" : "Free"}</dd>
+            </div>
+            {!hasPremium ? (
+              <div>
+                <dt>Free mock tests left</dt>
+                <dd>{freeMockTestsRemaining}</dd>
+              </div>
+            ) : null}
           </dl>
         </div>
       </section>
+
+      {premiumError ? (
+        <p className="form-error premium-load-error">
+          Premium status could not be loaded: {premiumError}
+        </p>
+      ) : null}
 
       <section className="mode-grid" aria-label="Study modes">
         <article className="card mode-card">
@@ -672,7 +785,12 @@ export default function App() {
             Answer {MOCK_QUESTION_COUNT} randomly selected questions in 45 minutes. You need 75% to
             pass, matching the real Life in the UK test threshold.
           </p>
-          <button className="primary-button" type="button" onClick={startMockTest}>
+          <button
+            className="primary-button"
+            type="button"
+            onClick={startMockTest}
+            disabled={premiumLoading || Boolean(premiumError)}
+          >
             Start mock
           </button>
         </article>
@@ -702,6 +820,9 @@ export default function App() {
           <p>
             Work through these in order to see the whole question bank. Each mock uses the real
             45-minute timer and 24-question format, with review questions mixed in where needed.
+            {!hasPremium
+              ? ` Free accounts can complete ${FREE_MOCK_TEST_LIMIT} mock tests in total.`
+              : " Your Premium access includes unlimited mock tests."}
           </p>
         </div>
         <div className="mock-test-grid">
@@ -730,6 +851,7 @@ export default function App() {
                   className="secondary-button"
                   type="button"
                   onClick={() => startMockTestSet(index)}
+                  disabled={premiumLoading || Boolean(premiumError)}
                 >
                   Start {testSet.title.toLowerCase()}
                 </button>
@@ -816,6 +938,9 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
         >
           Study
         </button>
+        <Link className="tab-button" to="/pricing">
+          Premium
+        </Link>
         <button
           className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}
           type="button"

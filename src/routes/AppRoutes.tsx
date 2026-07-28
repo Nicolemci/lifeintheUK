@@ -5,6 +5,10 @@ import LoginPage from "../auth/LoginPage";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import ResetPasswordPage from "../auth/ResetPasswordPage";
 import SignUpPage from "../auth/SignUpPage";
+import PaymentCancelledPage from "../premium/PaymentCancelledPage";
+import PaymentSuccessPage from "../premium/PaymentSuccessPage";
+import { PremiumProvider } from "../premium/PremiumContext";
+import PricingPage from "../premium/PricingPage";
 
 export default function AppRoutes() {
   return (
@@ -15,7 +19,12 @@ export default function AppRoutes() {
       <Route path="/reset-password" element={<ResetPasswordPage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/*" element={<App />} />
+        <Route element={<PremiumProvider />}>
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/payment-success" element={<PaymentSuccessPage />} />
+          <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
+          <Route path="/*" element={<App />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
