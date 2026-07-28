@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { type FormEvent, lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { questions, topics, type Question, type TopicId } from "./questions";
 import {
   MOCK_DURATION_SECONDS,
@@ -27,8 +27,9 @@ import {
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import { buildStudyGuide } from "./handbookStudyGuide";
-import SupabaseTest from "./components/SupabaseTest";
 import "./styles.css";
+
+const SupabaseTest = lazy(() => import("./components/SupabaseTest"));
 
 type StoredProgress = {
   wrongQuestionIds: string[];
@@ -694,7 +695,9 @@ export default function App() {
           onChange={switchTab}
           onSignOut={handleSignOut}
         />
-        <SupabaseTest />
+        <Suspense fallback={<p className="empty-state">Loading Supabase connection check…</p>}>
+          <SupabaseTest />
+        </Suspense>
       </main>
     );
   }
