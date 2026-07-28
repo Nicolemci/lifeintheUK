@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
-import { getSupabaseClient } from "../lib/supabase";
 
 type AuthContextValue = {
   session: Session | null;
@@ -29,6 +28,11 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : "An unexpected authentication error occurred.";
 }
 
+async function loadSupabaseClient() {
+  const { getSupabaseClient } = await import("../lib/supabase");
+  return getSupabaseClient();
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,9 +41,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
+    let unsubscribe = () => {};
 
-    try {
-      const supabase = getSupabaseClient();
+    void loadSupabaseClient()
+      .then(async (supabase) => {
+        if (!mounted) {
+          return;
+        }
+
       const {
         data: { subscription },
       } = supabase.auth.onAuthStateChange((event, nextSession) => {
@@ -56,46 +65,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setIsPasswordRecovery(false);
         }
       });
+        unsubscribe = () => subscription.unsubscribe();
 
-      void supabase.auth
-        .getSession()
-        .then(({ data, error: sessionError }) => {
-          if (!mounted) {
-            return;
-          }
+        const { data, error: sessionError } = await supabase.auth.getSession();
 
-          if (sessionError) {
-            setError(sessionError.message);
-          } else {
-            setSession(data.session);
-          }
-        })
-        .catch((sessionError: unknown) => {
-          if (mounted) {
-            setError(errorMessage(sessionError));
-          }
-        })
-        .finally(() => {
-          if (mounted) {
-            setLoading(false);
-          }
-        });
+        if (!mounted) {
+          return;
+        }
 
-      return () => {
-        mounted = false;
-        subscription.unsubscribe();
-      };
-    } catch (configurationError) {
-      setError(errorMessage(configurationError));
-      setLoading(false);
-      return () => {
-        mounted = false;
-      };
-    }
+        if (sessionError) {
+          setError(sessionError.message);
+        } else {
+          setSession(data.session);
+        }
+      })
+      .catch((configurationError: unknown) => {
+        if (mounted) {
+          setError(errorMessage(configurationError));
+        }
+      })
+      .finally(() => {
+        if (mounted) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
+      unsubscribe();
+    };
   }, []);
 
   const signUp = useCallback(async (email: string, password: string) => {
-    const supabase = getSupabaseClient();
+    const supabase = await loadSupabaseClient();
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
@@ -114,7 +116,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { error: signInError } = await getSupabaseClient().auth.signInWithPassword({
+    const supabase = await loadSupabaseClient();
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -125,7 +128,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const sendPasswordReset = useCallback(async (email: string) => {
-    const { error: resetError } = await getSupabaseClient().auth.resetPasswordForEmail(email, {
+    const supabase = await loadSupabaseClient();
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
 
@@ -135,7 +139,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updatePassword = useCallback(async (password: string) => {
-    const { error: updateError } = await getSupabaseClient().auth.updateUser({
+    const supabase = await loadSupabaseClient();
+    const { error: updateError } = await supabase.auth.updateUser({
       password,
     });
 
@@ -147,7 +152,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
-    const { error: signOutError } = await getSupabaseClient().auth.signOut();
+    const supabase = await loadSupabaseClient();
+    const { error: signOutError } = await supabase.auth.signOut();
 
     if (signOutError) {
       throw signOutError;
