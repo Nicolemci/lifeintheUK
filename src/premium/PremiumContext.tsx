@@ -10,17 +10,30 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { FREE_MOCK_TEST_LIMIT, type PremiumPlanId } from "../config/premium";
 
-type PremiumAccessRow = {
+export type PremiumAccessRow = {
   plan: PremiumPlanId;
   expires_at: string | null;
   is_lifetime: boolean;
 };
 
+export type DerivedPremiumStatus = {
+  hasPremium: boolean;
+  isLifetime: boolean;
+  isExpired: boolean;
+  activePlan: PremiumPlanId | null;
+  latestPlan: PremiumPlanId | null;
+  expiresAt: string | null;
+};
+
 type PremiumContextValue = {
+  isLoggedIn: boolean;
   loading: boolean;
   error: string | null;
   hasPremium: boolean;
+  isLifetime: boolean;
+  isExpired: boolean;
   activePlan: PremiumPlanId | null;
+  latestPlan: PremiumPlanId | null;
   expiresAt: string | null;
   completedMockTests: number;
   freeMockTestsRemaining: number;
@@ -36,24 +49,48 @@ async function loadSupabaseClient() {
   return getSupabaseClient();
 }
 
-function isActiveAccess(row: PremiumAccessRow, now: number): boolean {
-  if (row.is_lifetime || row.plan === "lifetime") {
-    return true;
+export function derivePremiumStatus(
+  access: PremiumAccessRow | null,
+  now: number = Date.now(),
+): DerivedPremiumStatus {
+  if (!access) {
+    return {
+      hasPremium: false,
+      isLifetime: false,
+      isExpired: false,
+      activePlan: null,
+      latestPlan: null,
+      expiresAt: null,
+    };
   }
 
-  return row.expires_at !== null && new Date(row.expires_at).getTime() > now;
+  const isLifetime = access.is_lifetime === true || access.plan === "lifetime";
+  const expiryTime =
+    access.expires_at === null ? Number.NaN : new Date(access.expires_at).getTime();
+  const hasUnexpiredAccess = Number.isFinite(expiryTime) && expiryTime > now;
+  const hasPremium = isLifetime || hasUnexpiredAccess;
+
+  return {
+    hasPremium,
+    isLifetime,
+    isExpired: !isLifetime && access.expires_at !== null && !hasUnexpiredAccess,
+    activePlan: hasPremium ? access.plan : null,
+    latestPlan: access.plan,
+    expiresAt: access.expires_at,
+  };
 }
 
 export function PremiumProvider() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeAccess, setActiveAccess] = useState<PremiumAccessRow | null>(null);
+  const [latestAccess, setLatestAccess] = useState<PremiumAccessRow | null>(null);
   const [completedMockTests, setCompletedMockTests] = useState(0);
+  const [entitlementNow, setEntitlementNow] = useState(Date.now());
 
   const refreshPremiumStatus = useCallback(async () => {
     if (!user) {
-      setActiveAccess(null);
+      setLatestAccess(null);
       setCompletedMockTests(0);
       setLoading(false);
       return;
@@ -84,9 +121,9 @@ export function PremiumProvider() {
         throw mockCountResult.error;
       }
 
-      const now = Date.now();
       const accessRows = (premiumResult.data ?? []) as PremiumAccessRow[];
-      setActiveAccess(accessRows.find((row) => isActiveAccess(row, now)) ?? null);
+      setLatestAccess(accessRows[0] ?? null);
+      setEntitlementNow(Date.now());
       setCompletedMockTests(mockCountResult.count ?? 0);
     } catch (statusError) {
       setError(
@@ -102,6 +139,27 @@ export function PremiumProvider() {
   useEffect(() => {
     void refreshPremiumStatus();
   }, [refreshPremiumStatus]);
+
+  useEffect(() => {
+    if (!latestAccess?.expires_at || latestAccess.is_lifetime) {
+      return;
+    }
+
+    const expiryTime = new Date(latestAccess.expires_at).getTime();
+    const remainingMilliseconds = expiryTime - Date.now();
+
+    if (remainingMilliseconds <= 0) {
+      return;
+    }
+
+    const maximumTimerDelay = 2_147_000_000;
+    const timer = window.setTimeout(
+      () => setEntitlementNow(Date.now()),
+      Math.min(remainingMilliseconds + 1000, maximumTimerDelay),
+    );
+
+    return () => window.clearTimeout(timer);
+  }, [latestAccess, entitlementNow]);
 
   const recordMockTest = useCallback(
     async (score: number) => {
@@ -129,21 +187,30 @@ export function PremiumProvider() {
       0,
       FREE_MOCK_TEST_LIMIT - completedMockTests,
     );
-    const hasPremium = activeAccess !== null;
+    const premiumStatus = derivePremiumStatus(latestAccess, entitlementNow);
 
     return {
+      isLoggedIn: user !== null,
       loading,
       error,
-      hasPremium,
-      activePlan: activeAccess?.plan ?? null,
-      expiresAt: activeAccess?.expires_at ?? null,
+      ...premiumStatus,
       completedMockTests,
       freeMockTestsRemaining,
-      canStartMockTest: hasPremium || completedMockTests < FREE_MOCK_TEST_LIMIT,
+      canStartMockTest:
+        premiumStatus.hasPremium || completedMockTests < FREE_MOCK_TEST_LIMIT,
       refreshPremiumStatus,
       recordMockTest,
     };
-  }, [loading, error, activeAccess, completedMockTests, refreshPremiumStatus, recordMockTest]);
+  }, [
+    user,
+    loading,
+    error,
+    latestAccess,
+    entitlementNow,
+    completedMockTests,
+    refreshPremiumStatus,
+    recordMockTest,
+  ]);
 
   return (
     <PremiumContext.Provider value={value}>

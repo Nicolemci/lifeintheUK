@@ -7,6 +7,8 @@ import ResetPasswordPage from "../auth/ResetPasswordPage";
 import SignUpPage from "../auth/SignUpPage";
 import PaymentCancelledPage from "../premium/PaymentCancelledPage";
 import PaymentSuccessPage from "../premium/PaymentSuccessPage";
+import PremiumGuard from "../premium/PremiumGuard";
+import PremiumHomePage from "../premium/PremiumHomePage";
 import { PremiumProvider } from "../premium/PremiumContext";
 import PricingPage from "../premium/PricingPage";
 
@@ -23,6 +25,9 @@ export default function AppRoutes() {
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/payment-success" element={<PaymentSuccessPage />} />
           <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
+          <Route element={<PremiumGuard />}>
+            <Route path="/premium" element={<PremiumHomePage />} />
+          </Route>
           <Route path="/*" element={<App />} />
         </Route>
       </Route>

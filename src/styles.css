@@ -883,6 +883,64 @@ button {
   background: var(--union-red);
 }
 
+.premium-guard-page,
+.premium-home-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+.premium-guard-card,
+.premium-home-card {
+  width: min(720px, 100%);
+  padding: 32px;
+}
+
+.premium-guard-card h1,
+.premium-home-card h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  letter-spacing: -0.05em;
+}
+
+.premium-guard-card p:not(.eyebrow),
+.premium-home-card > p:not(.british-kicker) {
+  color: var(--muted);
+}
+
+.premium-guard-card.error {
+  border-color: rgba(200, 16, 46, 0.4);
+  background: #fff3f0;
+}
+
+.premium-home-card dl {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.premium-home-card dl div {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  border-bottom: 1px solid #eadfcc;
+  padding-bottom: 10px;
+}
+
+.premium-home-card dt {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.premium-home-card dd {
+  margin: 0;
+  color: var(--navy);
+  font-weight: 900;
+  text-align: right;
+}
+
 .reader-hero {
   padding: 32px;
 }

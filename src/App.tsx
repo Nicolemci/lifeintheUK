@@ -926,6 +926,8 @@ type AppTabsProps = {
 };
 
 function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
+  const { loading, hasPremium } = usePremium();
+
   return (
     <nav className="app-tabs card" aria-label="Main app sections">
       <div className="tab-group" role="tablist" aria-label="Choose app section">
@@ -938,8 +940,8 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
         >
           Study
         </button>
-        <Link className="tab-button" to="/pricing">
-          Premium
+        <Link className="tab-button" to={hasPremium ? "/premium" : "/pricing"}>
+          {loading ? "Premium…" : hasPremium ? "Premium area" : "Upgrade"}
         </Link>
         <button
           className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}

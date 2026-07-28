@@ -5,16 +5,27 @@ import { createCheckoutSession } from "../lib/checkout";
 import { usePremium } from "./PremiumContext";
 
 type PricingLocationState = {
-  upgradeReason?: "mock-limit";
+  upgradeReason?: "mock-limit" | "expired" | "premium-required";
 };
 
 export default function PricingPage() {
   const location = useLocation();
-  const { loading, error: statusError, hasPremium, completedMockTests } = usePremium();
+  const {
+    loading,
+    error: statusError,
+    hasPremium,
+    isExpired,
+    completedMockTests,
+  } = usePremium();
   const [purchasingPlan, setPurchasingPlan] = useState<PremiumPlanId | null>(null);
   const [checkoutError, setCheckoutError] = useState("");
   const showLimitMessage =
     (location.state as PricingLocationState | null)?.upgradeReason === "mock-limit";
+  const showExpiredMessage =
+    (location.state as PricingLocationState | null)?.upgradeReason === "expired" ||
+    isExpired;
+  const showPremiumRequiredMessage =
+    (location.state as PricingLocationState | null)?.upgradeReason === "premium-required";
 
   async function buyPlan(plan: PremiumPlanId) {
     setPurchasingPlan(plan);
@@ -51,8 +62,26 @@ export default function PricingPage() {
         </section>
       ) : null}
 
+      {showExpiredMessage ? (
+        <section className="card upgrade-notice" role="alert">
+          <p className="eyebrow">Premium expired</p>
+          <h2>Your previous Premium access has ended.</h2>
+          <p>Choose a new plan below to restore unlimited access.</p>
+        </section>
+      ) : null}
+
+      {showPremiumRequiredMessage ? (
+        <section className="card upgrade-notice" role="alert">
+          <p className="eyebrow">Premium feature</p>
+          <h2>This area requires active Premium access.</h2>
+          <p>Choose a plan below to unlock all Premium features.</p>
+        </section>
+      ) : null}
+
       {hasPremium ? (
-        <p className="form-success pricing-status">Premium access is already active.</p>
+        <div className="form-success pricing-status">
+          Premium access is active. <Link to="/premium">Open Premium area</Link>
+        </div>
       ) : null}
       {statusError ? <p className="form-error pricing-status">{statusError}</p> : null}
       {checkoutError ? <p className="form-error pricing-status">{checkoutError}</p> : null}
@@ -91,8 +120,8 @@ export default function PricingPage() {
       </section>
 
       <p className="pricing-footnote">
-        Completed free mock tests: {completedMockTests} of {FREE_MOCK_TEST_LIMIT}. Premium is
-        activated only after payment is confirmed by the upcoming secure Stripe webhook stage.
+        Completed free mock tests: {completedMockTests} of {FREE_MOCK_TEST_LIMIT}. Premium access
+        is activated only after Stripe confirms payment through the verified webhook.
       </p>
     </main>
   );
