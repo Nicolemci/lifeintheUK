@@ -60,11 +60,11 @@ export function getSupabaseClient(): SupabaseClient {
 export async function verifySupabaseConnection(signal?: AbortSignal): Promise<void> {
   getSupabaseClient();
   const { url, publishableKey } = validateSupabaseConfig();
-  const response = await fetch(`${url}/rest/v1/`, {
+  const response = await fetch(`${url}/auth/v1/health`, {
     method: "GET",
     headers: {
       apikey: publishableKey,
-      Accept: "application/openapi+json",
+      Accept: "application/json",
     },
     signal,
   });

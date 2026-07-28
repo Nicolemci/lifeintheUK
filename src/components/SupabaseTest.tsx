@@ -49,8 +49,8 @@ export default function SupabaseTest() {
         <p className="british-kicker">Infrastructure check</p>
         <h1 id="supabase-test-title">Supabase connection</h1>
         <p>
-          This check validates the Vite environment configuration and connects to the Supabase REST
-          API without creating users or querying application tables.
+          This check validates the Vite environment configuration and connects to Supabase's public
+          health endpoint without authenticating users or querying application tables.
         </p>
       </div>
 
