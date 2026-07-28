@@ -110,6 +110,7 @@ export default async function createCheckoutSession(
     };
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: "payment",
+      customer_creation: "always",
       client_reference_id: user.id,
       customer_email: user.email,
       line_items: [

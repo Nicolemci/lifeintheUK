@@ -18,5 +18,8 @@ Alternatively, review the migration and run it once through the Supabase SQL Edi
 - Every application table has Row Level Security enabled.
 - Authenticated users can access only rows owned by their `auth.uid()`.
 - `premium_access` intentionally has an owner-only `SELECT` policy and no browser write policies.
-- Future Stripe webhook code must write premium access using a trusted server environment and the Supabase service-role key.
+- The Stripe webhook writes Premium access through the service-role-only
+  `grant_premium_access_from_stripe` RPC.
+- The RPC makes Checkout retries idempotent and prevents an older delayed event from replacing a
+  newer entitlement.
 - Never expose the service-role key in Vite or other browser code.

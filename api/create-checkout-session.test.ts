@@ -32,7 +32,7 @@ describe("Stripe Checkout function request validation", () => {
   it("requires a Supabase bearer token", async () => {
     const response = createResponse();
     await createCheckoutSession(
-      { method: "POST", headers: {}, body: { plan: "week" } } as unknown as VercelRequest,
+      { method: "POST", headers: {}, body: { plan: "one_week" } } as unknown as VercelRequest,
       response,
     );
 

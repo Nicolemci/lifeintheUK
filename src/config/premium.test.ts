@@ -12,7 +12,7 @@ describe("Premium configuration", () => {
 
   it("defines all four required plans and prices", () => {
     expect(PREMIUM_PLANS.map(({ id, price }) => ({ id, price }))).toEqual([
-      { id: "week", price: "£0.99" },
+      { id: "one_week", price: "£0.99" },
       { id: "two_weeks", price: "£1.99" },
       { id: "four_weeks", price: "£2.99" },
       { id: "lifetime", price: "£9.99" },
@@ -20,7 +20,7 @@ describe("Premium configuration", () => {
   });
 
   it("validates plan IDs before sending them to Stripe", () => {
-    expect(isPremiumPlanId("week")).toBe(true);
+    expect(isPremiumPlanId("one_week")).toBe(true);
     expect(isPremiumPlanId("lifetime")).toBe(true);
     expect(isPremiumPlanId("free")).toBe(false);
   });

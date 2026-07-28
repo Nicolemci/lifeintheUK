@@ -1,7 +1,7 @@
 export const FREE_MOCK_TEST_LIMIT = 5;
 
 export const PREMIUM_PLAN_IDS = [
-  "week",
+  "one_week",
   "two_weeks",
   "four_weeks",
   "lifetime",
@@ -25,7 +25,7 @@ const unlimitedFeatures = [
 
 export const PREMIUM_PLANS: PremiumPlan[] = [
   {
-    id: "week",
+    id: "one_week",
     title: "1 Week Access",
     price: "£0.99",
     duration: "7 days",
