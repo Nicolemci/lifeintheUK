@@ -317,7 +317,7 @@ export default function App() {
     }
 
     if (!canStartMockTest) {
-      navigate("/pricing", {
+      navigate("/upgrade", {
         state: {
           upgradeReason: "mock-limit",
         },

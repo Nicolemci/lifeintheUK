@@ -47,12 +47,29 @@ export type SaveMockTestInput = {
   durationSeconds: number;
 };
 
+export type MockTestHistoryItem = {
+  id: number;
+  score: number;
+  percentage: number;
+  completedAt: string;
+  durationSeconds: number;
+};
+
+type MockTestHistoryRow = {
+  id: number | string;
+  score: number | string;
+  percentage: number | string;
+  completed_at: string;
+  duration_seconds: number | string;
+};
+
 type ProgressContextValue = {
   loading: boolean;
   saving: boolean;
   error: string | null;
   stats: ProgressStats;
   wrongQuestionIds: string[];
+  mockTestHistory: MockTestHistoryItem[];
   refreshProgress: () => Promise<void>;
   saveQuestionAnswer: (input: SaveQuestionAnswerInput) => Promise<void>;
   saveMockTest: (input: SaveMockTestInput) => Promise<void>;
@@ -81,6 +98,18 @@ function asNumber(value: number | string | null): number {
   return Number.isFinite(number) ? number : 0;
 }
 
+export function normalizeMockTestHistoryRow(
+  row: MockTestHistoryRow,
+): MockTestHistoryItem {
+  return {
+    id: asNumber(row.id),
+    score: asNumber(row.score),
+    percentage: asNumber(row.percentage),
+    completedAt: row.completed_at,
+    durationSeconds: asNumber(row.duration_seconds),
+  };
+}
+
 export function normalizeProgressSummary(row?: ProgressSummaryRow | null): ProgressState {
   if (!row) {
     return emptyProgress;
@@ -104,10 +133,12 @@ export function ProgressProvider() {
   const [loading, setLoading] = useState(true);
   const [savingCount, setSavingCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [mockTestHistory, setMockTestHistory] = useState<MockTestHistoryItem[]>([]);
 
   const refreshProgress = useCallback(async () => {
     if (!user) {
       setProgress(emptyProgress);
+      setMockTestHistory([]);
       setLoading(false);
       return;
     }
@@ -117,16 +148,30 @@ export function ProgressProvider() {
 
     try {
       const supabase = await loadSupabaseClient();
-      const { data, error: summaryError } = await supabase.rpc(
-        "get_user_progress_summary",
-      );
+      const [summaryResult, historyResult] = await Promise.all([
+        supabase.rpc("get_user_progress_summary"),
+        supabase
+          .from("mock_tests")
+          .select("id, score, percentage, completed_at, duration_seconds")
+          .eq("user_id", user.id)
+          .order("completed_at", { ascending: false }),
+      ]);
 
-      if (summaryError) {
-        throw summaryError;
+      if (summaryResult.error) {
+        throw summaryResult.error;
       }
 
-      const rows = (data ?? []) as ProgressSummaryRow[];
+      if (historyResult.error) {
+        throw historyResult.error;
+      }
+
+      const rows = (summaryResult.data ?? []) as ProgressSummaryRow[];
       setProgress(normalizeProgressSummary(rows[0]));
+      setMockTestHistory(
+        ((historyResult.data ?? []) as MockTestHistoryRow[]).map(
+          normalizeMockTestHistoryRow,
+        ),
+      );
     } catch (summaryError) {
       setError(
         summaryError instanceof Error
@@ -213,17 +258,31 @@ export function ProgressProvider() {
 
       try {
         const supabase = await loadSupabaseClient();
-        const { error: insertError } = await supabase.from("mock_tests").insert({
-          user_id: user.id,
-          score,
-          percentage,
-          completed_at: completedAt,
-          duration_seconds: durationSeconds,
-        });
+        const { data: insertedRow, error: insertError } = await supabase
+          .from("mock_tests")
+          .insert({
+            user_id: user.id,
+            score,
+            percentage,
+            completed_at: completedAt,
+            duration_seconds: durationSeconds,
+          })
+          .select("id, score, percentage, completed_at, duration_seconds")
+          .single();
 
         if (insertError) {
           throw insertError;
         }
+
+        if (!insertedRow) {
+          throw new Error("Supabase did not return the saved mock test.");
+        }
+
+        const row = insertedRow as MockTestHistoryRow;
+        setMockTestHistory((currentHistory) => [
+          normalizeMockTestHistoryRow(row),
+          ...currentHistory,
+        ]);
 
         setProgress((current) => {
           const mockTestsCompleted = current.mockTestsCompleted + 1;
@@ -264,6 +323,7 @@ export function ProgressProvider() {
         bestScore: progress.bestScore,
       },
       wrongQuestionIds: progress.wrongQuestionIds,
+      mockTestHistory,
       refreshProgress,
       saveQuestionAnswer,
       saveMockTest,
@@ -273,6 +333,7 @@ export function ProgressProvider() {
       savingCount,
       error,
       progress,
+      mockTestHistory,
       refreshProgress,
       saveQuestionAnswer,
       saveMockTest,

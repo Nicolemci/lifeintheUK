@@ -11,6 +11,8 @@ import PremiumGuard from "../premium/PremiumGuard";
 import PremiumHomePage from "../premium/PremiumHomePage";
 import { PremiumProvider } from "../premium/PremiumContext";
 import PricingPage from "../premium/PricingPage";
+import UpgradePage from "../premium/UpgradePage";
+import MockResultsPage from "../progress/MockResultsPage";
 import { ProgressProvider } from "../progress/ProgressContext";
 
 export default function AppRoutes() {
@@ -25,6 +27,8 @@ export default function AppRoutes() {
         <Route element={<ProgressProvider />}>
           <Route element={<PremiumProvider />}>
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/upgrade" element={<UpgradePage />} />
+            <Route path="/results-history" element={<MockResultsPage />} />
             <Route path="/payment-success" element={<PaymentSuccessPage />} />
             <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
             <Route element={<PremiumGuard />}>

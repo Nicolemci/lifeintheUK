@@ -844,6 +844,136 @@ button {
   text-align: center;
 }
 
+.upgrade-page,
+.results-history-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.upgrade-hero {
+  margin-bottom: 24px;
+  padding: 32px;
+  text-align: center;
+}
+
+.upgrade-hero h1,
+.results-history-hero h1 {
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--navy);
+  font-size: clamp(2.3rem, 7vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+
+.upgrade-hero > p:not(.british-kicker),
+.results-history-hero > p:not(.british-kicker) {
+  max-width: 760px;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.upgrade-hero .hero-actions {
+  justify-content: center;
+}
+
+.upgrade-benefits {
+  margin-bottom: 32px;
+  padding: 26px;
+}
+
+.upgrade-benefits h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 2rem;
+}
+
+.upgrade-benefits ul {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.upgrade-benefits li {
+  border-radius: 16px;
+  padding: 14px;
+  color: var(--navy);
+  background: #f0f5ff;
+  font-weight: 900;
+  text-align: center;
+}
+
+.results-history-hero {
+  margin-bottom: 24px;
+}
+
+.results-history-hero .british-kicker {
+  margin-top: 20px;
+}
+
+.results-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.results-summary-grid article {
+  padding: 22px;
+}
+
+.results-summary-grid span {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.results-summary-grid strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--navy);
+  font-size: 2.5rem;
+}
+
+.results-history-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.result-history-card {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 22px;
+}
+
+.result-history-card h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 2.3rem;
+}
+
+.result-history-card p:not(.eyebrow),
+.result-history-card time {
+  color: var(--muted);
+}
+
+.results-history-error,
+.results-history-empty {
+  padding: 24px;
+}
+
+.results-history-empty h2 {
+  margin-top: 0;
+  color: var(--navy);
+}
+
 .payment-page {
   display: grid;
   min-height: 100vh;
@@ -1557,6 +1687,10 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .upgrade-benefits ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .pricing-card.featured {
     transform: none;
   }
@@ -1606,6 +1740,12 @@ button {
   }
 
   .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .upgrade-benefits ul,
+  .results-summary-grid,
+  .results-history-list {
     grid-template-columns: 1fr;
   }
 }
