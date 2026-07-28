@@ -537,6 +537,13 @@ button {
   background: #fff3f0;
 }
 
+.progress-saving {
+  margin: 10px 0 0;
+  color: var(--royal-blue);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
 .mode-grid,
 .topic-grid {
   display: grid;

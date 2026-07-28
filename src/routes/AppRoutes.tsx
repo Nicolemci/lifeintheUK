@@ -11,6 +11,7 @@ import PremiumGuard from "../premium/PremiumGuard";
 import PremiumHomePage from "../premium/PremiumHomePage";
 import { PremiumProvider } from "../premium/PremiumContext";
 import PricingPage from "../premium/PricingPage";
+import { ProgressProvider } from "../progress/ProgressContext";
 
 export default function AppRoutes() {
   return (
@@ -21,14 +22,16 @@ export default function AppRoutes() {
       <Route path="/reset-password" element={<ResetPasswordPage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route element={<PremiumProvider />}>
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/payment-success" element={<PaymentSuccessPage />} />
-          <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
-          <Route element={<PremiumGuard />}>
-            <Route path="/premium" element={<PremiumHomePage />} />
+        <Route element={<ProgressProvider />}>
+          <Route element={<PremiumProvider />}>
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/payment-success" element={<PaymentSuccessPage />} />
+            <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
+            <Route element={<PremiumGuard />}>
+              <Route path="/premium" element={<PremiumHomePage />} />
+            </Route>
+            <Route path="/*" element={<App />} />
           </Route>
-          <Route path="/*" element={<App />} />
         </Route>
       </Route>
 

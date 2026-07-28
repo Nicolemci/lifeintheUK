@@ -40,6 +40,7 @@ import { useAuth } from "./auth/AuthContext";
 import LogoutButton from "./auth/LogoutButton";
 import { FREE_MOCK_TEST_LIMIT } from "./config/premium";
 import { usePremium } from "./premium/PremiumContext";
+import { useProgress } from "./progress/ProgressContext";
 import "./styles.css";
 
 const SupabaseTest = lazy(() => import("./components/SupabaseTest"));
@@ -148,19 +149,6 @@ function saveProgressForUser(user: AuthUser, progress: StoredProgress) {
   saveProfiles(profiles);
 }
 
-function getAverageMockScore(progress: StoredProgress): number | null {
-  const scores =
-    progress.mockScoreHistory.length > 0
-      ? progress.mockScoreHistory
-      : Object.values(progress.mockTestResults).map((result) => result.percentage);
-
-  if (scores.length === 0) {
-    return null;
-  }
-
-  return Math.round(scores.reduce((total, score) => total + score, 0) / scores.length);
-}
-
 function updateProgress(
   progress: StoredProgress,
   session: QuizSession,
@@ -238,8 +226,16 @@ export default function App() {
     hasPremium,
     freeMockTestsRemaining,
     canStartMockTest,
-    recordMockTest,
   } = usePremium();
+  const {
+    loading: progressLoading,
+    saving: progressSaving,
+    error: progressError,
+    stats: cloudStats,
+    wrongQuestionIds: cloudWrongQuestionIds,
+    saveQuestionAnswer,
+    saveMockTest,
+  } = useProgress();
   const currentUser = useMemo<AuthUser>(
     () => ({
       id: supabaseUser?.id ?? "",
@@ -254,19 +250,22 @@ export default function App() {
   const [score, setScore] = useState<ScoreSummary | null>(null);
   const [activeTab, setActiveTab] = useState<AppTab>("study");
   const [sessionSaveError, setSessionSaveError] = useState("");
+  const [answerSaveError, setAnswerSaveError] = useState("");
+  const [savingAnswer, setSavingAnswer] = useState(false);
   const [savingSession, setSavingSession] = useState(false);
   const completionInProgress = useRef(false);
 
   const wrongQuestions = useMemo(() => {
-    const wrongQuestionIds = new Set(progress.wrongQuestionIds);
+    const wrongQuestionIds = new Set(
+      progressLoading ? progress.wrongQuestionIds : cloudWrongQuestionIds,
+    );
     return questions.filter((question) => wrongQuestionIds.has(question.id));
-  }, [progress.wrongQuestionIds]);
+  }, [progressLoading, progress.wrongQuestionIds, cloudWrongQuestionIds]);
   const mockTestSets = useMemo(
     () => createMockTestSets(questions, MOCK_QUESTION_COUNT, MINIMUM_NUMBERED_MOCK_TESTS),
     [],
   );
   const absenceSummary = useMemo(() => summarizeAbsences(progress.absences), [progress.absences]);
-  const averageMockScore = useMemo(() => getAverageMockScore(progress), [progress]);
 
   const currentQuestion = session?.questions[session.currentIndex];
   const isCompleted = Boolean(session?.completedAt && score);
@@ -285,7 +284,8 @@ export default function App() {
       session.mode !== "mock" ||
       session.completedAt ||
       session.secondsRemaining === undefined ||
-      sessionSaveError
+      sessionSaveError ||
+      savingAnswer
     ) {
       return;
     }
@@ -309,7 +309,7 @@ export default function App() {
     }, 1000);
 
     return () => window.clearTimeout(timerId);
-  }, [session]);
+  }, [session, sessionSaveError, savingAnswer]);
 
   function prepareMockTestStart(): boolean {
     if (premiumLoading || premiumError) {
@@ -326,6 +326,7 @@ export default function App() {
     }
 
     setSessionSaveError("");
+    setAnswerSaveError("");
     completionInProgress.current = false;
     return true;
   }
@@ -365,6 +366,7 @@ export default function App() {
     const selectedQuestions = questionsForTopic(questions, topicId);
     setSession(createSession("topic", topic?.name ?? "Topic practice", selectedQuestions));
     setScore(null);
+    setAnswerSaveError("");
   }
 
   function startWrongQuestionReview() {
@@ -374,10 +376,11 @@ export default function App() {
 
     setSession(createSession("wrong", "Wrong-question revision", wrongQuestions));
     setScore(null);
+    setAnswerSaveError("");
   }
 
-  function answerCurrentQuestion(optionIndex: number) {
-    if (!session || !currentQuestion || session.completedAt) {
+  async function answerCurrentQuestion(optionIndex: number) {
+    if (!session || !currentQuestion || session.completedAt || savingAnswer) {
       return;
     }
 
@@ -387,13 +390,31 @@ export default function App() {
       return;
     }
 
-    setSession({
-      ...session,
-      answers: {
-        ...session.answers,
-        [currentQuestion.id]: optionIndex,
-      },
-    });
+    setSavingAnswer(true);
+    setAnswerSaveError("");
+
+    try {
+      await saveQuestionAnswer({
+        questionId: currentQuestion.id,
+        correct: optionIndex === currentQuestion.correctIndex,
+        answeredAt: new Date().toISOString(),
+      });
+      setSession({
+        ...session,
+        answers: {
+          ...session.answers,
+          [currentQuestion.id]: optionIndex,
+        },
+      });
+    } catch (saveError) {
+      setAnswerSaveError(
+        saveError instanceof Error
+          ? `Your answer could not be saved: ${saveError.message}`
+          : "Your answer could not be saved. Please try again.",
+      );
+    } finally {
+      setSavingAnswer(false);
+    }
   }
 
   function goToQuestion(index: number) {
@@ -405,6 +426,7 @@ export default function App() {
       ...session,
       currentIndex: index,
     });
+    setAnswerSaveError("");
   }
 
   async function finishSession(sessionToFinish = session) {
@@ -419,15 +441,27 @@ export default function App() {
     completionInProgress.current = true;
     setSavingSession(true);
     setSessionSaveError("");
+    setAnswerSaveError("");
     const finalScore = calculateScore(sessionToFinish.questions, sessionToFinish.answers);
+    const completedAtMilliseconds = Date.now();
+    const completedAt = new Date(completedAtMilliseconds).toISOString();
+    const durationSeconds = Math.max(
+      0,
+      Math.round((completedAtMilliseconds - sessionToFinish.startedAt) / 1000),
+    );
     const completedSession = {
       ...sessionToFinish,
-      completedAt: Date.now(),
+      completedAt: completedAtMilliseconds,
     };
 
     try {
       if (sessionToFinish.mode === "mock") {
-        await recordMockTest(finalScore.percentage);
+        await saveMockTest({
+          score: finalScore.correct,
+          percentage: finalScore.percentage,
+          completedAt,
+          durationSeconds,
+        });
       }
 
       setScore(finalScore);
@@ -581,8 +615,8 @@ export default function App() {
                       .filter(Boolean)
                       .join(" ")}
                     type="button"
-                    onClick={() => answerCurrentQuestion(optionIndex)}
-                    disabled={showExplanation}
+                    onClick={() => void answerCurrentQuestion(optionIndex)}
+                    disabled={showExplanation || savingAnswer}
                   >
                     <span>{String.fromCharCode(65 + optionIndex)}</span>
                     {option}
@@ -595,6 +629,8 @@ export default function App() {
               <AnswerFeedback question={currentQuestion} selectedAnswer={selectedAnswer} />
             ) : null}
 
+            {savingAnswer ? <p className="progress-saving">Saving answer…</p> : null}
+            {answerSaveError ? <p className="form-error session-save-error">{answerSaveError}</p> : null}
             {sessionSaveError ? <p className="form-error session-save-error">{sessionSaveError}</p> : null}
 
             <footer className="question-actions">
@@ -740,18 +776,26 @@ export default function App() {
           </div>
           <div className="score-highlights">
             <div>
-              <strong>{progress.bestMockScore}%</strong>
+              <strong>{progressLoading ? "—" : `${cloudStats.bestScore}%`}</strong>
               <span>Best test score</span>
             </div>
             <div>
-              <strong>{averageMockScore === null ? "N/A" : `${averageMockScore}%`}</strong>
+              <strong>{progressLoading ? "—" : `${cloudStats.averageScore}%`}</strong>
               <span>Average test score</span>
             </div>
           </div>
           <dl>
             <div>
-              <dt>Sessions completed</dt>
-              <dd>{progress.completedSessions}</dd>
+              <dt>Total questions answered</dt>
+              <dd>{progressLoading ? "—" : cloudStats.totalQuestionsAnswered}</dd>
+            </div>
+            <div>
+              <dt>Accuracy</dt>
+              <dd>{progressLoading ? "—" : `${cloudStats.accuracyPercentage}%`}</dd>
+            </div>
+            <div>
+              <dt>Mock tests completed</dt>
+              <dd>{progressLoading ? "—" : cloudStats.mockTestsCompleted}</dd>
             </div>
             <div>
               <dt>Wrong-question bank</dt>
@@ -768,8 +812,15 @@ export default function App() {
               </div>
             ) : null}
           </dl>
+          {progressSaving ? <span className="progress-saving">Saving progress…</span> : null}
         </div>
       </section>
+
+      {progressError ? (
+        <p className="form-error premium-load-error">
+          Progress could not be synchronized: {progressError}
+        </p>
+      ) : null}
 
       {premiumError ? (
         <p className="form-error premium-load-error">

@@ -9,6 +9,7 @@ import {
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { FREE_MOCK_TEST_LIMIT, type PremiumPlanId } from "../config/premium";
+import { useProgress } from "../progress/ProgressContext";
 
 export type PremiumAccessRow = {
   plan: PremiumPlanId;
@@ -39,7 +40,6 @@ type PremiumContextValue = {
   freeMockTestsRemaining: number;
   canStartMockTest: boolean;
   refreshPremiumStatus: () => Promise<void>;
-  recordMockTest: (score: number) => Promise<void>;
 };
 
 const PremiumContext = createContext<PremiumContextValue | undefined>(undefined);
@@ -82,16 +82,19 @@ export function derivePremiumStatus(
 
 export function PremiumProvider() {
   const { user } = useAuth();
+  const {
+    loading: progressLoading,
+    error: progressError,
+    stats: progressStats,
+  } = useProgress();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [latestAccess, setLatestAccess] = useState<PremiumAccessRow | null>(null);
-  const [completedMockTests, setCompletedMockTests] = useState(0);
   const [entitlementNow, setEntitlementNow] = useState(Date.now());
 
   const refreshPremiumStatus = useCallback(async () => {
     if (!user) {
       setLatestAccess(null);
-      setCompletedMockTests(0);
       setLoading(false);
       return;
     }
@@ -101,30 +104,19 @@ export function PremiumProvider() {
 
     try {
       const supabase = await loadSupabaseClient();
-      const [premiumResult, mockCountResult] = await Promise.all([
-        supabase
-          .from("premium_access")
-          .select("plan, expires_at, is_lifetime")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false }),
-        supabase
-          .from("mock_tests")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id),
-      ]);
+      const premiumResult = await supabase
+        .from("premium_access")
+        .select("plan, expires_at, is_lifetime")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
 
       if (premiumResult.error) {
         throw premiumResult.error;
       }
 
-      if (mockCountResult.error) {
-        throw mockCountResult.error;
-      }
-
       const accessRows = (premiumResult.data ?? []) as PremiumAccessRow[];
       setLatestAccess(accessRows[0] ?? null);
       setEntitlementNow(Date.now());
-      setCompletedMockTests(mockCountResult.count ?? 0);
     } catch (statusError) {
       setError(
         statusError instanceof Error
@@ -161,28 +153,8 @@ export function PremiumProvider() {
     return () => window.clearTimeout(timer);
   }, [latestAccess, entitlementNow]);
 
-  const recordMockTest = useCallback(
-    async (score: number) => {
-      if (!user) {
-        throw new Error("You must be logged in to save a mock test.");
-      }
-
-      const supabase = await loadSupabaseClient();
-      const { error: insertError } = await supabase.from("mock_tests").insert({
-        user_id: user.id,
-        score,
-      });
-
-      if (insertError) {
-        throw insertError;
-      }
-
-      setCompletedMockTests((currentCount) => currentCount + 1);
-    },
-    [user],
-  );
-
   const value = useMemo<PremiumContextValue>(() => {
+    const completedMockTests = progressStats.mockTestsCompleted;
     const freeMockTestsRemaining = Math.max(
       0,
       FREE_MOCK_TEST_LIMIT - completedMockTests,
@@ -191,25 +163,25 @@ export function PremiumProvider() {
 
     return {
       isLoggedIn: user !== null,
-      loading,
-      error,
+      loading: loading || progressLoading,
+      error: error ?? progressError,
       ...premiumStatus,
       completedMockTests,
       freeMockTestsRemaining,
       canStartMockTest:
         premiumStatus.hasPremium || completedMockTests < FREE_MOCK_TEST_LIMIT,
       refreshPremiumStatus,
-      recordMockTest,
     };
   }, [
     user,
     loading,
     error,
+    progressLoading,
+    progressError,
+    progressStats.mockTestsCompleted,
     latestAccess,
     entitlementNow,
-    completedMockTests,
     refreshPremiumStatus,
-    recordMockTest,
   ]);
 
   return (

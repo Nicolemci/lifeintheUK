@@ -22,4 +22,8 @@ Alternatively, review the migration and run it once through the Supabase SQL Edi
   `grant_premium_access_from_stripe` RPC.
 - The RPC makes Checkout retries idempotent and prevents an older delayed event from replacing a
   newer entitlement.
+- `get_user_progress_summary` calculates dashboard metrics and latest wrong-question IDs for
+  `auth.uid()` in one RLS-protected database call.
+- Each answer is appended to `quiz_progress`; each completed mock stores correct-answer score,
+  percentage, completion time, and duration.
 - Never expose the service-role key in Vite or other browser code.

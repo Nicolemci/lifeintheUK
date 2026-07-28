@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import migrationSql from "../supabase/migrations/20260728154400_create_core_schema.sql?raw";
 import webhookMigrationSql from "../supabase/migrations/20260728162000_add_stripe_webhook_grant.sql?raw";
+import progressMigrationSql from "../supabase/migrations/20260728163500_add_progress_metrics.sql?raw";
 
 const migration = migrationSql.toLowerCase();
 const webhookMigration = webhookMigrationSql.toLowerCase();
+const progressMigration = progressMigrationSql.toLowerCase();
 
 const tables = ["profiles", "premium_access", "quiz_progress", "mock_tests", "bookmarks"];
 
@@ -58,5 +60,23 @@ describe("Supabase core schema migration", () => {
     );
     expect(webhookMigration).toContain("from public, anon, authenticated");
     expect(webhookMigration).toContain("to service_role");
+  });
+
+  it("stores complete mock-test metrics", () => {
+    expect(progressMigration).toContain("add column percentage smallint");
+    expect(progressMigration).toContain("add column duration_seconds integer");
+    expect(progressMigration).toContain("mock_tests_score_correct_answers");
+    expect(progressMigration).toContain("mock_tests_duration_non_negative");
+  });
+
+  it("adds an authenticated cross-device progress summary", () => {
+    expect(progressMigration).toContain("function public.get_user_progress_summary");
+    expect(progressMigration).toContain("total_questions_answered bigint");
+    expect(progressMigration).toContain("accuracy_percentage integer");
+    expect(progressMigration).toContain("mock_tests_completed bigint");
+    expect(progressMigration).toContain("average_score integer");
+    expect(progressMigration).toContain("wrong_question_ids text[]");
+    expect(progressMigration).toContain("where user_id = (select auth.uid())");
+    expect(progressMigration).toContain("to authenticated");
   });
 });
