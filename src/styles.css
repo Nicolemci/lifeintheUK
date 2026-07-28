@@ -193,10 +193,129 @@ button {
   font-weight: 800;
 }
 
+.form-success {
+  margin: 0;
+  border-radius: 14px;
+  padding: 12px;
+  color: #176c49;
+  background: #effbf5;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
 .login-note {
   margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.auth-page {
+  display: grid;
+  width: min(1050px, calc(100% - 32px));
+  min-height: 100vh;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 36px;
+  align-items: center;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.auth-intro h1 {
+  max-width: 650px;
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(2.5rem, 7vw, 5.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+}
+
+.auth-intro > p {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.auth-brand {
+  text-decoration: none;
+}
+
+.auth-card {
+  padding: 28px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.auth-form input {
+  width: 100%;
+  border: 2px solid rgba(7, 31, 77, 0.16);
+  border-radius: 16px;
+  padding: 13px 14px;
+  color: var(--ink);
+  background: #fffdf8;
+  font: inherit;
+}
+
+.auth-form input:focus {
+  border-color: var(--royal-blue);
+  box-shadow: 0 0 0 4px rgba(23, 78, 166, 0.14);
+  outline: none;
+}
+
+.auth-footer {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.auth-footer a {
+  color: var(--royal-blue);
+  font-weight: 900;
+}
+
+.auth-notice {
+  margin: 0;
+  border-radius: 14px;
+  padding: 12px;
+  color: var(--navy);
+  background: #f0f5ff;
+}
+
+.auth-status-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  color: var(--navy);
+}
+
+.auth-status-card {
+  width: min(620px, 100%);
+  padding: 28px;
+}
+
+.auth-status-card h1 {
+  margin: 0;
+}
+
+.logout-control {
+  display: grid;
+  gap: 6px;
+}
+
+.logout-control small {
+  max-width: 240px;
 }
 
 .hero h1 {
@@ -1179,6 +1298,7 @@ button {
 }
 
 @media (max-width: 900px) {
+  .auth-page,
   .hero,
   .login-layout,
   .mode-grid,

@@ -51,7 +51,13 @@ export function validateSupabaseConfig(
 export function getSupabaseClient(): SupabaseClient {
   if (!client) {
     const config = validateSupabaseConfig();
-    client = createClient(config.url, config.publishableKey);
+    client = createClient(config.url, config.publishableKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+      },
+    });
   }
 
   return client;

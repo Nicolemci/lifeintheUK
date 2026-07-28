@@ -27,6 +27,8 @@ import {
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import { buildStudyGuide } from "./handbookStudyGuide";
+import { useAuth } from "./auth/AuthContext";
+import LogoutButton from "./auth/LogoutButton";
 import "./styles.css";
 
 const SupabaseTest = lazy(() => import("./components/SupabaseTest"));
@@ -70,16 +72,10 @@ type StoredUserProfile = AuthUser & {
   progress: StoredProgress;
 };
 
-type AuthState = {
-  user: AuthUser | null;
-  progress: StoredProgress;
-};
-
 type AppTab = "study" | "test-info" | "handbook" | "absence" | "supabase-test";
 
 const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
 const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
-const CURRENT_USER_STORAGE_KEY = "life-in-the-uk-prep-current-user-v1";
 
 const defaultProgress: StoredProgress = {
   wrongQuestionIds: [],
@@ -99,10 +95,6 @@ function loadLegacyProgress(): StoredProgress | null {
   }
 }
 
-function normalizeProfileId(displayName: string): string {
-  return displayName.trim().toLowerCase().replace(/\s+/g, " ");
-}
-
 function loadProfiles(): Record<string, StoredUserProfile> {
   try {
     const savedProfiles = window.localStorage.getItem(USERS_STORAGE_KEY);
@@ -120,95 +112,29 @@ function saveProfiles(profiles: Record<string, StoredUserProfile>) {
   }
 }
 
-function toAuthUser(profile: StoredUserProfile): AuthUser {
-  return {
-    id: profile.id,
-    displayName: profile.displayName,
-  };
-}
-
-function loadInitialAuthState(): AuthState {
-  try {
-    const currentUserId = window.localStorage.getItem(CURRENT_USER_STORAGE_KEY);
-    const profiles = loadProfiles();
-    const profile = currentUserId ? profiles[currentUserId] : undefined;
-
-    if (profile) {
-      return {
-        user: toAuthUser(profile),
-        progress: { ...defaultProgress, ...profile.progress },
-      };
-    }
-  } catch {
-    return {
-      user: null,
-      progress: defaultProgress,
-    };
-  }
-
-  return {
-    user: null,
-    progress: defaultProgress,
-  };
-}
-
-function loginToLocalProfile(displayName: string): AuthState | null {
-  const trimmedName = displayName.trim();
-  const profileId = normalizeProfileId(trimmedName);
-
-  if (!profileId) {
-    return null;
-  }
-
+function loadProgressForUser(user: AuthUser): StoredProgress {
   const profiles = loadProfiles();
-  const existingProfile = profiles[profileId];
-  const now = new Date().toISOString();
+  const existingProfile = profiles[user.id];
   const legacyProgress = Object.keys(profiles).length === 0 ? loadLegacyProgress() : null;
-  const progress = existingProfile?.progress ?? legacyProgress ?? defaultProgress;
-  const profile: StoredUserProfile = {
-    id: profileId,
-    displayName: trimmedName,
+
+  return {
+    ...defaultProgress,
+    ...(existingProfile?.progress ?? legacyProgress ?? {}),
+  };
+}
+
+function saveProgressForUser(user: AuthUser, progress: StoredProgress) {
+  const profiles = loadProfiles();
+  const existingProfile = profiles[user.id];
+  const now = new Date().toISOString();
+
+  profiles[user.id] = {
+    ...user,
     createdAt: existingProfile?.createdAt ?? now,
     lastLoginAt: now,
-    progress: { ...defaultProgress, ...progress },
-  };
-
-  profiles[profileId] = profile;
-  saveProfiles(profiles);
-
-  try {
-    window.localStorage.setItem(CURRENT_USER_STORAGE_KEY, profile.id);
-  } catch {
-    // If the browser blocks storage, the app can still run for the current session.
-  }
-
-  return {
-    user: toAuthUser(profile),
-    progress: profile.progress,
-  };
-}
-
-function saveProgressForUser(userId: string, progress: StoredProgress) {
-  const profiles = loadProfiles();
-  const profile = profiles[userId];
-
-  if (!profile) {
-    return;
-  }
-
-  profiles[userId] = {
-    ...profile,
     progress,
   };
   saveProfiles(profiles);
-}
-
-function clearCurrentUser() {
-  try {
-    window.localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
-  } catch {
-    // Storage errors should not prevent signing out of the in-memory session.
-  }
 }
 
 function getAverageMockScore(progress: StoredProgress): number | null {
@@ -293,9 +219,17 @@ function createSession(
 }
 
 export default function App() {
-  const [initialAuthState] = useState<AuthState>(() => loadInitialAuthState());
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(initialAuthState.user);
-  const [progress, setProgress] = useState<StoredProgress>(initialAuthState.progress);
+  const { user: supabaseUser } = useAuth();
+  const currentUser = useMemo<AuthUser>(
+    () => ({
+      id: supabaseUser?.id ?? "",
+      displayName: supabaseUser?.email ?? "Your account",
+    }),
+    [supabaseUser?.id, supabaseUser?.email],
+  );
+  const [progress, setProgress] = useState<StoredProgress>(() =>
+    currentUser.id ? loadProgressForUser(currentUser) : defaultProgress,
+  );
   const [session, setSession] = useState<QuizSession | null>(null);
   const [score, setScore] = useState<ScoreSummary | null>(null);
   const [activeTab, setActiveTab] = useState<AppTab>("study");
@@ -317,8 +251,8 @@ export default function App() {
   const isImmediateFeedbackMode = isPracticeMode || Boolean(session?.immediateFeedback);
 
   useEffect(() => {
-    if (currentUser) {
-      saveProgressForUser(currentUser.id, progress);
+    if (currentUser.id) {
+      saveProgressForUser(currentUser, progress);
     }
   }, [currentUser, progress]);
 
@@ -439,26 +373,6 @@ export default function App() {
     setActiveTab("study");
   }
 
-  function handleLogin(displayName: string) {
-    const authState = loginToLocalProfile(displayName);
-
-    if (!authState) {
-      return;
-    }
-
-    setCurrentUser(authState.user);
-    setProgress(authState.progress);
-    resetToHome();
-  }
-
-  function handleSignOut() {
-    clearCurrentUser();
-    setCurrentUser(null);
-    setProgress(defaultProgress);
-    setActiveTab("study");
-    resetToHome();
-  }
-
   function switchTab(tab: AppTab) {
     setSession(null);
     setScore(null);
@@ -485,14 +399,6 @@ export default function App() {
     }));
   }
 
-  if (!currentUser) {
-    return (
-      <main className="app-shell">
-        <LoginView onLogin={handleLogin} />
-      </main>
-    );
-  }
-
   if (session && isCompleted && score) {
     const retakeMock = () => {
       if (session.mockTestId) {
@@ -516,7 +422,6 @@ export default function App() {
           onReviewWrong={wrongQuestions.length > 0 ? startWrongQuestionReview : undefined}
           onHome={resetToHome}
           currentUser={currentUser}
-          onSignOut={handleSignOut}
         />
       </main>
     );
@@ -548,9 +453,7 @@ export default function App() {
               <button className="ghost-button" type="button" onClick={resetToHome}>
                 Exit
               </button>
-              <button className="ghost-button" type="button" onClick={handleSignOut}>
-                Sign out
-              </button>
+              <LogoutButton />
             </div>
           </header>
 
@@ -646,7 +549,6 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <AbsenceTracker
           absences={progress.absences}
@@ -665,7 +567,6 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <HandbookReader />
       </main>
@@ -679,7 +580,6 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <OfficialTestInfo />
       </main>
@@ -693,7 +593,6 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <Suspense fallback={<p className="empty-state">Loading Supabase connection check…</p>}>
           <SupabaseTest />
@@ -708,7 +607,6 @@ export default function App() {
         activeTab={activeTab}
         currentUser={currentUser}
         onChange={switchTab}
-        onSignOut={handleSignOut}
       />
       <section className="hero">
         <div>
@@ -741,9 +639,7 @@ export default function App() {
           <div className="profile-summary">
             <span>Signed in as</span>
             <strong className="profile-name">{currentUser.displayName}</strong>
-            <button className="ghost-button" type="button" onClick={handleSignOut}>
-              Sign out
-            </button>
+            <LogoutButton />
           </div>
           <div className="score-highlights">
             <div>
@@ -899,66 +795,15 @@ type ResultsViewProps = {
   onReviewWrong?: () => void;
   onHome: () => void;
   currentUser: AuthUser;
-  onSignOut: () => void;
 };
-
-function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
-  const [displayName, setDisplayName] = useState("");
-  const [error, setError] = useState("");
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (!displayName.trim()) {
-      setError("Enter your name to save progress.");
-      return;
-    }
-
-    setError("");
-    onLogin(displayName);
-  }
-
-  return (
-    <section className="login-layout" aria-labelledby="login-title">
-      <div>
-        <p className="british-kicker">Life in the UK test</p>
-        <h1 id="login-title">Sign in to save your progress.</h1>
-        <p>
-          Create a local study profile or return with the same name to continue your best score,
-          wrong-question list, and completed sessions on this browser.
-        </p>
-        <UKLandmarkSkyline />
-      </div>
-      <form className="card login-card" onSubmit={handleSubmit}>
-        <label htmlFor="display-name">Your name</label>
-        <input
-          id="display-name"
-          autoComplete="name"
-          placeholder="e.g. Nicole"
-          value={displayName}
-          onChange={(event) => setDisplayName(event.target.value)}
-        />
-        {error ? <p className="form-error">{error}</p> : null}
-        <button className="primary-button" type="submit">
-          Continue
-        </button>
-        <p className="login-note">
-          This first version saves profiles on this device only. A real email/password account would
-          need a backend service.
-        </p>
-      </form>
-    </section>
-  );
-}
 
 type AppTabsProps = {
   activeTab: AppTab;
   currentUser: AuthUser;
   onChange: (tab: AppTab) => void;
-  onSignOut: () => void;
 };
 
-function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) {
+function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
   return (
     <nav className="app-tabs card" aria-label="Main app sections">
       <div className="tab-group" role="tablist" aria-label="Choose app section">
@@ -1012,9 +857,7 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
       </div>
       <div className="tab-profile">
         <span>{currentUser.displayName}</span>
-        <button className="ghost-button" type="button" onClick={onSignOut}>
-          Sign out
-        </button>
+        <LogoutButton />
       </div>
     </nav>
   );
@@ -1530,15 +1373,12 @@ function ResultsView({
   onReviewWrong,
   onHome,
   currentUser,
-  onSignOut,
 }: ResultsViewProps) {
   return (
     <section className="results card" aria-labelledby="results-title">
       <div className="results-topline">
         <p className="eyebrow">Session complete · {currentUser.displayName}</p>
-        <button className="ghost-button" type="button" onClick={onSignOut}>
-          Sign out
-        </button>
+        <LogoutButton />
       </div>
       <h1 id="results-title">{score.passed ? "You passed this session" : "Keep practising"}</h1>
       <p className="result-score">
