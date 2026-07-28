@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 import migrationSql from "../supabase/migrations/20260728154400_create_core_schema.sql?raw";
 import webhookMigrationSql from "../supabase/migrations/20260728162000_add_stripe_webhook_grant.sql?raw";
 import progressMigrationSql from "../supabase/migrations/20260728163500_add_progress_metrics.sql?raw";
+import adminMigrationSql from "../supabase/migrations/20260728170000_add_question_admin.sql?raw";
 
 const migration = migrationSql.toLowerCase();
 const webhookMigration = webhookMigrationSql.toLowerCase();
 const progressMigration = progressMigrationSql.toLowerCase();
+const adminMigration = adminMigrationSql.toLowerCase();
 
 const tables = ["profiles", "premium_access", "quiz_progress", "mock_tests", "bookmarks"];
 
@@ -78,5 +80,41 @@ describe("Supabase core schema migration", () => {
     expect(progressMigration).toContain("wrong_question_ids text[]");
     expect(progressMigration).toContain("where user_id = (select auth.uid())");
     expect(progressMigration).toContain("to authenticated");
+  });
+
+  it("creates admin, category, question, and immutable audit tables", () => {
+    expect(adminMigration).toContain("create table public.admin_users");
+    expect(adminMigration).toContain("create table public.question_categories");
+    expect(adminMigration).toContain("create table public.questions");
+    expect(adminMigration).toContain("create table public.question_audit_log");
+    expect(adminMigration).toContain("create trigger questions_write_audit_log");
+  });
+
+  it("enables RLS and separates learner and administrator question access", () => {
+    expect(adminMigration).toContain("alter table public.admin_users enable row level security");
+    expect(adminMigration).toContain(
+      "alter table public.question_categories enable row level security",
+    );
+    expect(adminMigration).toContain("alter table public.questions enable row level security");
+    expect(adminMigration).toContain(
+      "alter table public.question_audit_log enable row level security",
+    );
+    expect(adminMigration).toContain(
+      'create policy "authenticated users can read published questions"',
+    );
+    expect(adminMigration).toContain('create policy "admins can manage all questions"');
+    expect(adminMigration).toContain("status = 'published'");
+    expect(adminMigration).toContain("(select public.is_admin())");
+  });
+
+  it("keeps admin grants and audit writes server controlled", () => {
+    expect(adminMigration).toContain(
+      "revoke insert, update, delete on public.admin_users from anon, authenticated",
+    );
+    expect(adminMigration).toContain(
+      "revoke insert, update, delete on public.question_audit_log from anon, authenticated",
+    );
+    expect(adminMigration).toContain("security definer");
+    expect(adminMigration).toContain("insert into public.admin_users");
   });
 });

@@ -1,5 +1,9 @@
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import App from "../App";
+import { AdminProvider } from "../admin/AdminContext";
+import AdminGuard from "../admin/AdminGuard";
+import AdminLoginPage from "../admin/AdminLoginPage";
 import ForgotPasswordPage from "../auth/ForgotPasswordPage";
 import LoginPage from "../auth/LoginPage";
 import ProtectedRoute from "../auth/ProtectedRoute";
@@ -15,6 +19,8 @@ import UpgradePage from "../premium/UpgradePage";
 import MockResultsPage from "../progress/MockResultsPage";
 import { ProgressProvider } from "../progress/ProgressContext";
 
+const AdminQuestionsPage = lazy(() => import("../admin/AdminQuestionsPage"));
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -22,6 +28,21 @@ export default function AppRoutes() {
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+
+      <Route element={<AdminProvider />}>
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route element={<AdminGuard />}>
+          <Route
+            path="/admin/questions"
+            element={
+              <Suspense fallback={<p className="empty-state">Loading admin dashboard…</p>}>
+                <AdminQuestionsPage />
+              </Suspense>
+            }
+          />
+          <Route path="/admin" element={<Navigate to="/admin/questions" replace />} />
+        </Route>
+      </Route>
 
       <Route element={<ProtectedRoute />}>
         <Route element={<ProgressProvider />}>
