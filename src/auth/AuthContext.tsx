@@ -15,7 +15,7 @@ type AuthContextValue = {
   loading: boolean;
   error: string | null;
   isPasswordRecovery: boolean;
-  signUp: (email: string, password: string) => Promise<{ requiresEmailConfirmation: boolean }>;
+  signUp: (email: string, password: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   sendPasswordReset: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
@@ -98,21 +98,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signUp = useCallback(async (email: string, password: string) => {
     const supabase = await loadSupabaseClient();
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin,
-      },
-    });
+    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
 
     if (signUpError) {
       throw signUpError;
     }
 
-    return {
-      requiresEmailConfirmation: data.session === null,
-    };
+    if (!data.session) {
+      throw new Error(
+        "Account creation requires immediate sessions. Disable Confirm email in Supabase Authentication settings, then try again.",
+      );
+    }
+
+    setSession(data.session);
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {

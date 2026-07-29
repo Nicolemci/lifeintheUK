@@ -63,19 +63,19 @@ export default function AppRoutes() {
           </Route>
         </Route>
 
-        <Route element={<ProtectedRoute />}>
-          <Route element={<ProgressProvider />}>
-            <Route element={<PremiumProvider />}>
+        <Route element={<ProgressProvider />}>
+          <Route element={<PremiumProvider />}>
+            <Route path="/upgrade" element={<UpgradePage />} />
+            <Route path="/results-history" element={<MockResultsPage />} />
+            <Route element={<ProtectedRoute />}>
               <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/upgrade" element={<UpgradePage />} />
-              <Route path="/results-history" element={<MockResultsPage />} />
               <Route path="/payment-success" element={<PaymentSuccessPage />} />
               <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
               <Route element={<PremiumGuard />}>
                 <Route path="/premium" element={<PremiumHomePage />} />
               </Route>
-              <Route path="/*" element={<App />} />
             </Route>
+            <Route path="/*" element={<App />} />
           </Route>
         </Route>
 

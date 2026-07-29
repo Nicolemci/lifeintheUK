@@ -63,3 +63,18 @@ The admin dashboard imports and exports JSON in this shape:
 
 Categories must exist before importing. Imports upsert by `external_id`, and the question audit
 trigger records each created or updated row.
+
+## Frictionless signup setting
+
+The onboarding flow requires an active session immediately after email/password signup. In the
+Supabase Dashboard:
+
+1. Open **Authentication → Providers → Email**.
+2. Turn off **Confirm email**.
+
+The application deliberately treats a signup without a returned session as a configuration error
+and does not show an email-confirmation flow.
+
+Anonymous answers and the first five anonymous mock tests are stored in localStorage. After signup
+or login, `migrate_anonymous_progress` transfers that browser batch atomically into the user's
+Supabase progress and clears the local copy. The migration ID prevents duplicate imports on retry.

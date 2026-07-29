@@ -8,6 +8,15 @@ import {
 } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import {
+  addAnonymousAnswer,
+  addAnonymousMockTest,
+  clearAnonymousProgress,
+  loadAnonymousProgress,
+  saveAnonymousProgress,
+  summarizeAnonymousProgress,
+  type AnonymousProgress,
+} from "./anonymousProgress";
 
 export type ProgressStats = {
   totalQuestionsAnswered: number;
@@ -127,18 +136,82 @@ export function normalizeProgressSummary(row?: ProgressSummaryRow | null): Progr
   };
 }
 
+function progressStateFromAnonymous(progress: AnonymousProgress): ProgressState {
+  return summarizeAnonymousProgress(progress);
+}
+
+function mockHistoryFromAnonymous(progress: AnonymousProgress): MockTestHistoryItem[] {
+  return progress.mockTests.map((mockTest) => ({
+    id: -mockTest.localId,
+    score: mockTest.score,
+    percentage: mockTest.percentage,
+    completedAt: mockTest.completedAt,
+    durationSeconds: mockTest.durationSeconds,
+  }));
+}
+
+function applyAnswerToProgress(
+  current: ProgressState,
+  questionId: string,
+  correct: boolean,
+): ProgressState {
+  const totalQuestionsAnswered = current.totalQuestionsAnswered + 1;
+  const correctAnswers = current.correctAnswers + (correct ? 1 : 0);
+  const wrongQuestionIds = new Set(current.wrongQuestionIds);
+
+  if (correct) {
+    wrongQuestionIds.delete(questionId);
+  } else {
+    wrongQuestionIds.add(questionId);
+  }
+
+  return {
+    ...current,
+    totalQuestionsAnswered,
+    correctAnswers,
+    accuracyPercentage: Math.round((correctAnswers / totalQuestionsAnswered) * 100),
+    wrongQuestionIds: Array.from(wrongQuestionIds),
+  };
+}
+
+function applyMockToProgress(current: ProgressState, percentage: number): ProgressState {
+  const mockTestsCompleted = current.mockTestsCompleted + 1;
+  const mockScoreTotal = current.mockScoreTotal + percentage;
+
+  return {
+    ...current,
+    mockTestsCompleted,
+    mockScoreTotal,
+    averageScore: Math.round(mockScoreTotal / mockTestsCompleted),
+    bestScore: Math.max(current.bestScore, percentage),
+  };
+}
+
 export function ProgressProvider() {
-  const { user } = useAuth();
-  const [progress, setProgress] = useState<ProgressState>(emptyProgress);
+  const { user, loading: authLoading } = useAuth();
+  const [anonymousProgress, setAnonymousProgress] = useState<AnonymousProgress>(() =>
+    loadAnonymousProgress(),
+  );
+  const [progress, setProgress] = useState<ProgressState>(() =>
+    progressStateFromAnonymous(loadAnonymousProgress()),
+  );
   const [loading, setLoading] = useState(true);
   const [savingCount, setSavingCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [mockTestHistory, setMockTestHistory] = useState<MockTestHistoryItem[]>([]);
 
   const refreshProgress = useCallback(async () => {
+    if (authLoading) {
+      setLoading(true);
+      return;
+    }
+
     if (!user) {
-      setProgress(emptyProgress);
-      setMockTestHistory([]);
+      const localProgress = loadAnonymousProgress();
+      setAnonymousProgress(localProgress);
+      setProgress(progressStateFromAnonymous(localProgress));
+      setMockTestHistory(mockHistoryFromAnonymous(localProgress));
+      setError(null);
       setLoading(false);
       return;
     }
@@ -148,6 +221,27 @@ export function ProgressProvider() {
 
     try {
       const supabase = await loadSupabaseClient();
+      const localProgress = loadAnonymousProgress();
+
+      if (localProgress.answers.length > 0 || localProgress.mockTests.length > 0) {
+        const { error: migrationError } = await supabase.rpc(
+          "migrate_anonymous_progress",
+          {
+            p_migration_id: localProgress.migrationId,
+            p_answers: localProgress.answers,
+            p_mock_tests: localProgress.mockTests.map(({ localId: _localId, ...mockTest }) => mockTest),
+          },
+        );
+
+        if (migrationError) {
+          throw migrationError;
+        }
+
+        clearAnonymousProgress();
+        const clearedProgress = loadAnonymousProgress();
+        setAnonymousProgress(clearedProgress);
+      }
+
       const [summaryResult, historyResult] = await Promise.all([
         supabase.rpc("get_user_progress_summary"),
         supabase
@@ -181,7 +275,7 @@ export function ProgressProvider() {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [user, authLoading]);
 
   useEffect(() => {
     void refreshProgress();
@@ -189,47 +283,39 @@ export function ProgressProvider() {
 
   const saveQuestionAnswer = useCallback(
     async ({ questionId, correct, answeredAt }: SaveQuestionAnswerInput) => {
-      if (!user) {
-        throw new Error("You must be logged in to save question progress.");
-      }
-
       setSavingCount((count) => count + 1);
       setError(null);
 
       try {
+        const answer = {
+          questionId,
+          correct,
+          answeredAt: answeredAt ?? new Date().toISOString(),
+        };
+
+        if (!user) {
+          setAnonymousProgress((current) => {
+            const next = addAnonymousAnswer(current, answer);
+            saveAnonymousProgress(next);
+            return next;
+          });
+          setProgress((current) => applyAnswerToProgress(current, questionId, correct));
+          return;
+        }
+
         const supabase = await loadSupabaseClient();
         const { error: insertError } = await supabase.from("quiz_progress").insert({
           user_id: user.id,
           question_id: questionId,
           correct,
-          answered_at: answeredAt ?? new Date().toISOString(),
+          answered_at: answer.answeredAt,
         });
 
         if (insertError) {
           throw insertError;
         }
 
-        setProgress((current) => {
-          const totalQuestionsAnswered = current.totalQuestionsAnswered + 1;
-          const correctAnswers = current.correctAnswers + (correct ? 1 : 0);
-          const wrongQuestionIds = new Set(current.wrongQuestionIds);
-
-          if (correct) {
-            wrongQuestionIds.delete(questionId);
-          } else {
-            wrongQuestionIds.add(questionId);
-          }
-
-          return {
-            ...current,
-            totalQuestionsAnswered,
-            correctAnswers,
-            accuracyPercentage: Math.round(
-              (correctAnswers / totalQuestionsAnswered) * 100,
-            ),
-            wrongQuestionIds: Array.from(wrongQuestionIds),
-          };
-        });
+        setProgress((current) => applyAnswerToProgress(current, questionId, correct));
       } catch (saveError) {
         const message =
           saveError instanceof Error ? saveError.message : "Unable to save your answer.";
@@ -249,14 +335,37 @@ export function ProgressProvider() {
       completedAt,
       durationSeconds,
     }: SaveMockTestInput) => {
-      if (!user) {
-        throw new Error("You must be logged in to save a mock test.");
-      }
-
       setSavingCount((count) => count + 1);
       setError(null);
 
       try {
+        if (!user) {
+          const localMockTest = {
+            localId: Date.now(),
+            score,
+            percentage,
+            completedAt,
+            durationSeconds,
+          };
+          setAnonymousProgress((current) => {
+            const next = addAnonymousMockTest(current, localMockTest);
+            saveAnonymousProgress(next);
+            return next;
+          });
+          setMockTestHistory((currentHistory) => [
+            {
+              id: -localMockTest.localId,
+              score,
+              percentage,
+              completedAt,
+              durationSeconds,
+            },
+            ...currentHistory,
+          ]);
+          setProgress((current) => applyMockToProgress(current, percentage));
+          return;
+        }
+
         const supabase = await loadSupabaseClient();
         const { data: insertedRow, error: insertError } = await supabase
           .from("mock_tests")
@@ -284,18 +393,7 @@ export function ProgressProvider() {
           ...currentHistory,
         ]);
 
-        setProgress((current) => {
-          const mockTestsCompleted = current.mockTestsCompleted + 1;
-          const mockScoreTotal = current.mockScoreTotal + percentage;
-
-          return {
-            ...current,
-            mockTestsCompleted,
-            mockScoreTotal,
-            averageScore: Math.round(mockScoreTotal / mockTestsCompleted),
-            bestScore: Math.max(current.bestScore, percentage),
-          };
-        });
+        setProgress((current) => applyMockToProgress(current, percentage));
       } catch (saveError) {
         const message =
           saveError instanceof Error

@@ -239,7 +239,7 @@ export default function App() {
   const currentUser = useMemo<AuthUser>(
     () => ({
       id: supabaseUser?.id ?? "",
-      displayName: supabaseUser?.email ?? "Your account",
+      displayName: supabaseUser?.email ?? "Guest",
     }),
     [supabaseUser?.id, supabaseUser?.email],
   );
@@ -569,7 +569,13 @@ export default function App() {
               <button className="ghost-button" type="button" onClick={resetToHome}>
                 Exit
               </button>
-              <LogoutButton />
+              {supabaseUser ? (
+                <LogoutButton />
+              ) : (
+                <Link className="ghost-button" to="/login">
+                  Log in
+                </Link>
+              )}
             </div>
           </header>
 
@@ -758,7 +764,7 @@ export default function App() {
             >
               Revise wrong questions ({wrongQuestions.length})
             </button>
-            <Link className="secondary-button" to="/pricing">
+            <Link className="secondary-button" to={supabaseUser ? "/pricing" : "/upgrade"}>
               Premium plans
             </Link>
           </div>
@@ -770,9 +776,20 @@ export default function App() {
             🇬🇧
           </div>
           <div className="profile-summary">
-            <span>Signed in as</span>
+            <span>{supabaseUser ? "Signed in as" : "Browsing as"}</span>
             <strong className="profile-name">{currentUser.displayName}</strong>
-            <LogoutButton />
+            {supabaseUser ? (
+              <LogoutButton />
+            ) : (
+              <div className="guest-account-actions">
+                <Link className="ghost-button" to="/login">
+                  Log in
+                </Link>
+                <Link className="ghost-button" to="/sign-up">
+                  Create account
+                </Link>
+              </div>
+            )}
           </div>
           <div className="score-highlights">
             <div>
@@ -978,6 +995,7 @@ type AppTabsProps = {
 
 function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
   const { loading, hasPremium } = usePremium();
+  const { user } = useAuth();
 
   return (
     <nav className="app-tabs card" aria-label="Main app sections">
@@ -991,7 +1009,10 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
         >
           Study
         </button>
-        <Link className="tab-button" to={hasPremium ? "/premium" : "/pricing"}>
+        <Link
+          className="tab-button"
+          to={hasPremium ? "/premium" : user ? "/pricing" : "/upgrade"}
+        >
           {loading ? "Premium…" : hasPremium ? "Premium area" : "Upgrade"}
         </Link>
         <button
@@ -1035,7 +1056,16 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
       </div>
       <div className="tab-profile">
         <span>{currentUser.displayName}</span>
-        <LogoutButton />
+        {user ? (
+          <LogoutButton />
+        ) : (
+          <>
+            <Link to="/login">Log in</Link>
+            <Link className="secondary-button" to="/sign-up">
+              Create account
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
@@ -1552,11 +1582,19 @@ function ResultsView({
   onHome,
   currentUser,
 }: ResultsViewProps) {
+  const { user } = useAuth();
+
   return (
     <section className="results card" aria-labelledby="results-title">
       <div className="results-topline">
         <p className="eyebrow">Session complete · {currentUser.displayName}</p>
-        <LogoutButton />
+        {user ? (
+          <LogoutButton />
+        ) : (
+          <Link className="ghost-button" to="/login">
+            Log in
+          </Link>
+        )}
       </div>
       <h1 id="results-title">{score.passed ? "You passed this session" : "Keep practising"}</h1>
       <p className="result-score">

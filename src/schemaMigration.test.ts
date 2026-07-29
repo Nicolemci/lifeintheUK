@@ -3,11 +3,13 @@ import migrationSql from "../supabase/migrations/20260728154400_create_core_sche
 import webhookMigrationSql from "../supabase/migrations/20260728162000_add_stripe_webhook_grant.sql?raw";
 import progressMigrationSql from "../supabase/migrations/20260728163500_add_progress_metrics.sql?raw";
 import adminMigrationSql from "../supabase/migrations/20260728170000_add_question_admin.sql?raw";
+import anonymousMigrationSql from "../supabase/migrations/20260729153500_add_anonymous_progress_migration.sql?raw";
 
 const migration = migrationSql.toLowerCase();
 const webhookMigration = webhookMigrationSql.toLowerCase();
 const progressMigration = progressMigrationSql.toLowerCase();
 const adminMigration = adminMigrationSql.toLowerCase();
+const anonymousMigration = anonymousMigrationSql.toLowerCase();
 
 const tables = ["profiles", "premium_access", "quiz_progress", "mock_tests", "bookmarks"];
 
@@ -116,5 +118,18 @@ describe("Supabase core schema migration", () => {
     );
     expect(adminMigration).toContain("security definer");
     expect(adminMigration).toContain("insert into public.admin_users");
+  });
+
+  it("adds an atomic idempotent anonymous progress migration", () => {
+    expect(anonymousMigration).toContain(
+      "create table public.anonymous_progress_migrations",
+    );
+    expect(anonymousMigration).toContain(
+      "function public.migrate_anonymous_progress",
+    );
+    expect(anonymousMigration).toContain("on conflict do nothing");
+    expect(anonymousMigration).toContain("insert into public.quiz_progress");
+    expect(anonymousMigration).toContain("insert into public.mock_tests");
+    expect(anonymousMigration).toContain("to authenticated");
   });
 });

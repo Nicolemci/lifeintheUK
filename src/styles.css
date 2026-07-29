@@ -381,6 +381,11 @@ button {
   font-weight: 900;
 }
 
+.tab-profile > a:not(.secondary-button) {
+  color: var(--navy);
+  font-weight: 900;
+}
+
 .primary-button,
 .secondary-button,
 .ghost-button {
@@ -486,6 +491,12 @@ button {
   font-size: 1.4rem;
   line-height: 1.15;
   letter-spacing: -0.02em;
+}
+
+.guest-account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .score-highlights {
@@ -907,6 +918,30 @@ button {
   background: #f0f5ff;
   font-weight: 900;
   text-align: center;
+}
+
+.upgrade-account {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+  gap: 30px;
+  align-items: start;
+  margin-bottom: 32px;
+  padding: 28px;
+}
+
+.upgrade-account h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 2rem;
+}
+
+.upgrade-account p {
+  color: var(--muted);
+}
+
+.upgrade-account a {
+  color: var(--royal-blue);
+  font-weight: 900;
 }
 
 .results-history-hero {
@@ -2252,6 +2287,10 @@ button {
   .admin-filters,
   .upgrade-benefits ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .upgrade-account {
+    grid-template-columns: 1fr;
   }
 
   .category-creator form,

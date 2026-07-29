@@ -1,23 +1,37 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usePremium } from "./PremiumContext";
 
 export default function PaymentSuccessPage() {
   const navigate = useNavigate();
-  const [secondsRemaining, setSecondsRemaining] = useState(5);
+  const { hasPremium, error, refreshPremiumStatus } = usePremium();
+  const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
-    const redirectTimer = window.setTimeout(() => {
+    if (hasPremium) {
       navigate("/", { replace: true });
-    }, 5000);
-    const countdownTimer = window.setInterval(() => {
-      setSecondsRemaining((current) => Math.max(0, current - 1));
+      return;
+    }
+
+    let checking = false;
+    const pollTimer = window.setInterval(() => {
+      if (!checking) {
+        checking = true;
+        void refreshPremiumStatus().finally(() => {
+          checking = false;
+        });
+      }
     }, 1000);
+    const timeoutTimer = window.setTimeout(() => {
+      window.clearInterval(pollTimer);
+      setTimedOut(true);
+    }, 20_000);
 
     return () => {
-      window.clearTimeout(redirectTimer);
-      window.clearInterval(countdownTimer);
+      window.clearInterval(pollTimer);
+      window.clearTimeout(timeoutTimer);
     };
-  }, [navigate]);
+  }, [hasPremium, navigate, refreshPremiumStatus]);
 
   return (
     <main className="payment-page">
@@ -27,10 +41,14 @@ export default function PaymentSuccessPage() {
         </span>
         <p className="eyebrow">Payment successful</p>
         <h1>Thank you for your purchase</h1>
-        <p>Premium access is being activated.</p>
-        <p>You will return to the application in {secondsRemaining} seconds.</p>
+        <p>
+          {timedOut
+            ? "Payment was received, but Premium activation is taking longer than expected."
+            : "Premium access is being activated. You will return to the application automatically."}
+        </p>
+        {error ? <p className="form-error">{error}</p> : null}
         <Link className="primary-button" to="/">
-          Return now
+          {timedOut ? "Return and check again" : "Return now"}
         </Link>
       </section>
     </main>
