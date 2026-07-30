@@ -2413,9 +2413,11 @@ button {
     flex-direction: column;
     gap: 20px;
     padding: 20px 18px 28px;
-    color: var(--ink);
-    background: #fffaf1;
-    box-shadow: -18px 0 48px rgba(7, 31, 77, 0.22);
+    color: white;
+    background:
+      radial-gradient(circle at 90% 12%, rgba(255, 255, 255, 0.18), transparent 7rem),
+      linear-gradient(135deg, var(--navy), #0d347c 55%, var(--deep-red));
+    box-shadow: -18px 0 48px rgba(7, 31, 77, 0.35);
     transform: translateX(105%);
     transition: transform 220ms ease;
     pointer-events: none;
@@ -2434,13 +2436,15 @@ button {
   }
 
   .mobile-nav-drawer-header strong {
-    color: var(--navy);
+    color: white;
     font-size: 1.15rem;
   }
 
   .mobile-nav-close {
     min-height: 40px;
     padding: 0 14px;
+    color: white;
+    background: rgba(255, 255, 255, 0.16);
   }
 
   .mobile-nav-links {
@@ -2454,6 +2458,14 @@ button {
   .mobile-nav-links .tab-button {
     width: 100%;
     justify-content: flex-start;
+    color: white;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .mobile-nav-links .tab-button.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 10px 24px rgba(7, 31, 77, 0.28);
   }
 
   .mobile-nav-drawer .tab-profile {
@@ -2461,11 +2473,22 @@ button {
     gap: 12px;
     margin-top: auto;
     padding-top: 18px;
-    border-top: 1px solid rgba(7, 31, 77, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
   }
 
   .mobile-nav-drawer .tab-profile span {
     overflow-wrap: anywhere;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .mobile-nav-drawer .tab-profile > a:not(.secondary-button) {
+    color: white;
+  }
+
+  .mobile-nav-drawer .tab-profile .secondary-button,
+  .mobile-nav-drawer .tab-profile .ghost-button {
+    color: white;
+    background: rgba(255, 255, 255, 0.16);
   }
 
   .question-map {
