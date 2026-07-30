@@ -1616,26 +1616,6 @@ button {
   flex: 1 0 auto;
 }
 
-.company-links {
-  margin: 28px 0 18px;
-}
-
-.company-links-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 18px;
-}
-
-.company-links-nav a {
-  color: var(--navy);
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.company-links-nav a:hover {
-  text-decoration: underline;
-}
-
 .site-footer {
   flex-shrink: 0;
   border-top: 8px solid var(--union-red);
