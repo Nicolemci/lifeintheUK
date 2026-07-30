@@ -1073,27 +1073,14 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
 
 function UKLandmarkSkyline() {
   return (
-    <svg
+    <img
       className="uk-landmark-skyline"
-      viewBox="0 0 720 150"
-      role="img"
-      aria-label="UK landmarks including the London Eye, Elizabeth Tower, Tower Bridge and Edinburgh Castle"
-    >
-      <g className="skyline-blue">
-        <circle cx="160" cy="70" r="52" fill="none" strokeWidth="8" />
-        <circle cx="160" cy="70" r="6" />
-        <path d="M160 18v104M108 70h104M123 33l74 74M197 33l-74 74" fill="none" strokeWidth="3" />
-        <path d="M135 126h50l-12-46h-26z" />
-        <path d="M285 130V37h43v93zM292 37l14-22 15 22z" />
-        <circle cx="306" cy="59" r="10" className="skyline-clock" />
-        <path d="M298 59h8v-7M314 59h-8v8" fill="none" strokeWidth="2" />
-        <path d="M380 130V62h34v68zM476 130V62h34v68zM371 62h52l-8-12h-36zM467 62h52l-8-12h-36z" />
-        <path d="M414 80h63v15h-63zM397 95c18 20 79 20 97 0" fill="none" strokeWidth="7" />
-        <path d="M565 130V78h98v52zM575 78V60h18v18M635 78V57h18v21M603 78V47h22v31" />
-        <path d="M552 130h126" fill="none" strokeWidth="8" />
-      </g>
-      <path className="skyline-red" d="M75 131h610" fill="none" strokeWidth="5" />
-    </svg>
+      src="/london-skyline.png"
+      alt="London landmarks including the London Eye, Elizabeth Tower, Tower Bridge and the Tower of London"
+      width={1000}
+      height={667}
+      decoding="async"
+    />
   );
 }
 
