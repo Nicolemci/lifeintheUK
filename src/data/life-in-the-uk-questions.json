@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Life in the UK — Practice Test Question Bank",
-    "version": "1.2",
+    "version": "1.3",
     "source": "Based on 'Life in the UK: A guide for new residents' (3rd Edition) plus current official facts (King Charles III, 2024 Labour government, Brexit, 27 EU states).",
     "notes_for_cursor": [
       "Each question has a stable integer `id`. Do not renumber existing ids if you add questions; append new ones.",
@@ -35,8 +35,9 @@
       "Your role in the community"
     ],
     "batch2_added": 100,
-    "total_questions": 360,
-    "batch3_added": 90
+    "total_questions": 410,
+    "batch3_added": 90,
+    "batch4_added": 50
   },
   "questions": [
     {
@@ -5078,6 +5079,706 @@
       "answer": "Participation in community life",
       "answerIndex": 0,
       "explanation": "The fundamental principles are democracy, the rule of law, individual liberty, tolerance of different faiths and beliefs, and participation in community life.\n\nA state-controlled press contradicts the UK's free press, and the other options are not British values."
+    },
+    {
+      "id": 361,
+      "category": "Arts and culture",
+      "question": "Which Scottish painter is best known for portraits and the work 'The Origin of Painting'?",
+      "options": [
+        "David Allan",
+        "Joseph Turner",
+        "John Constable",
+        "Henry Moore"
+      ],
+      "answer": "David Allan",
+      "answerIndex": 0,
+      "explanation": "David Allan was a Scottish portrait painter known for 'The Origin of Painting'.\n\nJoseph Turner was a landscape painter, John Constable painted Dedham Vale, and Henry Moore was a sculptor."
+    },
+    {
+      "id": 362,
+      "category": "Arts and culture",
+      "question": "Which artist is considered to have raised the profile of landscape painting, and gives his name to a major art prize?",
+      "options": [
+        "Joseph Turner",
+        "Thomas Gainsborough",
+        "Lucian Freud",
+        "David Hockney"
+      ],
+      "answer": "Joseph Turner",
+      "answerIndex": 0,
+      "explanation": "Joseph Turner was an influential landscape painter, and the Turner Prize is named after him.\n\nGainsborough was a portrait painter, Lucian Freud is known for portraits, and David Hockney for pop art."
+    },
+    {
+      "id": 363,
+      "category": "Arts and culture",
+      "question": "The Pre-Raphaelites were a group of artists active in which period?",
+      "options": [
+        "The second half of the 19th century",
+        "The Middle Ages",
+        "The 1960s",
+        "The 18th century"
+      ],
+      "answer": "The second half of the 19th century",
+      "answerIndex": 0,
+      "explanation": "The Pre-Raphaelites (including Holman Hunt, Dante Gabriel Rossetti and Sir John Millais) painted detailed pictures on religious or literary themes in the second half of the 19th century.\n\nThe 1960s relates to pop art (David Hockney)."
+    },
+    {
+      "id": 364,
+      "category": "Arts and culture",
+      "question": "Sir John Lavery was a successful portrait painter from which part of the UK?",
+      "options": [
+        "Northern Ireland",
+        "Wales",
+        "Scotland",
+        "England"
+      ],
+      "answer": "Northern Ireland",
+      "answerIndex": 0,
+      "explanation": "Sir John Lavery was a Northern Irish portrait painter whose work included painting the Royal Family.\n\nJohn Petts was a Welsh artist, and David Allan a Scottish painter — so those nations relate to other artists."
+    },
+    {
+      "id": 365,
+      "category": "Arts and culture",
+      "question": "John Petts was a Welsh artist best known for what?",
+      "options": [
+        "Engravings and stained glass",
+        "Bronze sculptures",
+        "Landscape oil paintings",
+        "Pop art"
+      ],
+      "answer": "Engravings and stained glass",
+      "answerIndex": 0,
+      "explanation": "John Petts, a Welsh artist, is best known for engravings and stained glass.\n\nBronze sculptures relate to Henry Moore, and pop art to David Hockney."
+    },
+    {
+      "id": 366,
+      "category": "Arts and culture",
+      "question": "Lucian Freud, a German-born British artist, is best known for what?",
+      "options": [
+        "Portraits",
+        "Stained glass",
+        "Landscapes",
+        "Abstract sculpture"
+      ],
+      "answer": "Portraits",
+      "answerIndex": 0,
+      "explanation": "Lucian Freud is best known for his portraits.\n\nStained glass relates to John Petts, landscapes to Turner and Constable, and abstract sculpture to Henry Moore."
+    },
+    {
+      "id": 367,
+      "category": "Arts and culture",
+      "question": "David Hockney was an important contributor to which 1960s art movement?",
+      "options": [
+        "Pop art",
+        "The Pre-Raphaelites",
+        "Impressionism",
+        "Cubism"
+      ],
+      "answer": "Pop art",
+      "answerIndex": 0,
+      "explanation": "David Hockney contributed to the 'pop art' movement of the 1960s.\n\nThe Pre-Raphaelites were a 19th-century group.\n\nImpressionism and Cubism are movements not attributed to Hockney in the handbook."
+    },
+    {
+      "id": 368,
+      "category": "Arts and culture",
+      "question": "Which of these is a modern British architect who has worked on major projects worldwide?",
+      "options": [
+        "Dame Zaha Hadid",
+        "Sir Christopher Wren",
+        "Inigo Jones",
+        "Robert Adam"
+      ],
+      "answer": "Dame Zaha Hadid",
+      "answerIndex": 0,
+      "explanation": "Modern British architects include Sir Norman Foster, Lord (Richard) Rogers and Dame Zaha Hadid.\n\nSir Christopher Wren, Inigo Jones and Robert Adam were architects of earlier centuries."
+    },
+    {
+      "id": 369,
+      "category": "Arts and culture",
+      "question": "Which garden designer often worked with the architect Edwin Lutyens on colourful gardens?",
+      "options": [
+        "Gertrude Jekyll",
+        "Lancelot 'Capability' Brown",
+        "Clarice Cliff",
+        "Mary Quant"
+      ],
+      "answer": "Gertrude Jekyll",
+      "answerIndex": 0,
+      "explanation": "Gertrude Jekyll designed colourful gardens, often working with Edwin Lutyens.\n\n'Capability' Brown designed natural-looking landscapes in an earlier era.\n\nClarice Cliff and Mary Quant were designers in ceramics and fashion."
+    },
+    {
+      "id": 370,
+      "category": "Arts and culture",
+      "question": "Which annual event showcases garden design from Britain and around the world?",
+      "options": [
+        "The Chelsea Flower Show",
+        "The Edinburgh Fringe",
+        "The Proms",
+        "The Turner Prize"
+      ],
+      "answer": "The Chelsea Flower Show",
+      "answerIndex": 0,
+      "explanation": "The annual Chelsea Flower Show showcases garden design.\n\nThe Edinburgh Fringe features theatre and comedy, the Proms is classical music, and the Turner Prize is for contemporary art."
+    },
+    {
+      "id": 371,
+      "category": "Arts and culture",
+      "question": "Thomas Chippendale was an 18th-century British designer of what?",
+      "options": [
+        "Furniture",
+        "Art Deco ceramics",
+        "Fashion",
+        "Stained glass"
+      ],
+      "answer": "Furniture",
+      "answerIndex": 0,
+      "explanation": "Thomas Chippendale designed furniture in the 18th century.\n\nClarice Cliff designed Art Deco ceramics, and figures like Mary Quant designed fashion — so those relate to other designers."
+    },
+    {
+      "id": 372,
+      "category": "Arts and culture",
+      "question": "Which of these is a leading British fashion designer of recent years?",
+      "options": [
+        "Vivienne Westwood",
+        "Thomas Chippendale",
+        "Clarice Cliff",
+        "Sir Terence Conran"
+      ],
+      "answer": "Vivienne Westwood",
+      "answerIndex": 0,
+      "explanation": "Leading recent fashion designers include Mary Quant, Alexander McQueen and Vivienne Westwood.\n\nThomas Chippendale designed furniture, Clarice Cliff designed ceramics, and Sir Terence Conran was an interior designer."
+    },
+    {
+      "id": 373,
+      "category": "Arts and culture",
+      "question": "Which British writers have won the Nobel Prize in Literature?",
+      "options": [
+        "William Golding, Seamus Heaney and Harold Pinter",
+        "Agatha Christie and Ian Fleming",
+        "Charles Dickens and Jane Austen",
+        "J K Rowling and J R R Tolkien"
+      ],
+      "answer": "William Golding, Seamus Heaney and Harold Pinter",
+      "answerIndex": 0,
+      "explanation": "The novelist Sir William Golding, poet Seamus Heaney and playwright Harold Pinter won the Nobel Prize in Literature.\n\nAgatha Christie, Ian Fleming, Dickens, Austen, Rowling and Tolkien are famous but did not win it."
+    },
+    {
+      "id": 374,
+      "category": "Arts and culture",
+      "question": "The Man Booker Prize, awarded since 1968, is given for what?",
+      "options": [
+        "The best fiction novel",
+        "The best album",
+        "The best contemporary art",
+        "The best play"
+      ],
+      "answer": "The best fiction novel",
+      "answerIndex": 0,
+      "explanation": "The Man Booker Prize is awarded annually for the best fiction novel.\n\nThe Mercury Music Prize is for albums, the Turner Prize for contemporary art, and the Laurence Olivier Awards for theatre."
+    },
+    {
+      "id": 375,
+      "category": "Arts and culture",
+      "question": "Which author wrote Treasure Island and Dr Jekyll and Mr Hyde?",
+      "options": [
+        "Robert Louis Stevenson",
+        "Thomas Hardy",
+        "Evelyn Waugh",
+        "Graham Greene"
+      ],
+      "answer": "Robert Louis Stevenson",
+      "answerIndex": 0,
+      "explanation": "Robert Louis Stevenson wrote Treasure Island, Kidnapped and Dr Jekyll and Mr Hyde.\n\nThomas Hardy wrote Far from the Madding Crowd, Evelyn Waugh wrote Brideshead Revisited, and Graham Greene wrote Brighton Rock."
+    },
+    {
+      "id": 376,
+      "category": "Arts and culture",
+      "question": "Which author's best-known novels focus on rural society, including Far from the Madding Crowd?",
+      "options": [
+        "Thomas Hardy",
+        "Charles Dickens",
+        "Jane Austen",
+        "Sir Kingsley Amis"
+      ],
+      "answer": "Thomas Hardy",
+      "answerIndex": 0,
+      "explanation": "Thomas Hardy wrote about rural society in works such as Far from the Madding Crowd and Jude the Obscure.\n\nDickens wrote about urban life, Austen about marriage and family, and Kingsley Amis wrote Lucky Jim."
+    },
+    {
+      "id": 377,
+      "category": "Arts and culture",
+      "question": "Which novel is Evelyn Waugh perhaps best known for?",
+      "options": [
+        "Brideshead Revisited",
+        "Lucky Jim",
+        "Brighton Rock",
+        "Great Expectations"
+      ],
+      "answer": "Brideshead Revisited",
+      "answerIndex": 0,
+      "explanation": "Evelyn Waugh is best known for Brideshead Revisited.\n\nLucky Jim was written by Sir Kingsley Amis, Brighton Rock by Graham Greene, and Great Expectations by Charles Dickens."
+    },
+    {
+      "id": 378,
+      "category": "Arts and culture",
+      "question": "Which Anglo-Saxon poem tells of its hero's battles against monsters?",
+      "options": [
+        "Beowulf",
+        "The Canterbury Tales",
+        "Paradise Lost",
+        "Sir Gawain and the Green Knight"
+      ],
+      "answer": "Beowulf",
+      "answerIndex": 0,
+      "explanation": "Beowulf is an Anglo-Saxon poem about a hero's battles against monsters.\n\nThe Canterbury Tales and Sir Gawain and the Green Knight are from the Middle Ages, and Paradise Lost is by John Milton."
+    },
+    {
+      "id": 379,
+      "category": "Arts and culture",
+      "question": "The medieval poem 'Sir Gawain and the Green Knight' concerns a knight at whose court?",
+      "options": [
+        "King Arthur",
+        "King Henry V",
+        "King Alfred",
+        "King Richard III"
+      ],
+      "answer": "King Arthur",
+      "answerIndex": 0,
+      "explanation": "Sir Gawain and the Green Knight concerns a knight at the court of King Arthur.\n\nThe other kings are real historical or legendary figures but are not linked to this poem in the handbook."
+    },
+    {
+      "id": 380,
+      "category": "Arts and culture",
+      "question": "Which poet wrote 'The Daffodils' ('I wander'd lonely as a cloud')?",
+      "options": [
+        "William Wordsworth",
+        "William Blake",
+        "Lord Byron",
+        "Wilfred Owen"
+      ],
+      "answer": "William Wordsworth",
+      "answerIndex": 0,
+      "explanation": "William Wordsworth wrote 'The Daffodils', inspired by nature.\n\nWilliam Blake wrote 'The Tyger', Lord Byron wrote 'She Walks in Beauty', and Wilfred Owen wrote about the First World War."
+    },
+    {
+      "id": 381,
+      "category": "Arts and culture",
+      "question": "The poem beginning 'Tyger! Tyger! Burning bright' was written by whom?",
+      "options": [
+        "William Blake",
+        "William Wordsworth",
+        "Lord Byron",
+        "Robert Browning"
+      ],
+      "answer": "William Blake",
+      "answerIndex": 0,
+      "explanation": "William Blake wrote 'The Tyger'.\n\nWordsworth wrote 'The Daffodils', Byron wrote 'She Walks in Beauty', and Robert Browning wrote 'Home Thoughts from Abroad'."
+    },
+    {
+      "id": 382,
+      "category": "Arts and culture",
+      "question": "Wilfred Owen and Siegfried Sassoon are especially known for writing about what?",
+      "options": [
+        "Their experiences in the First World War",
+        "The Scottish Highlands",
+        "Rural romance",
+        "The Industrial Revolution"
+      ],
+      "answer": "Their experiences in the First World War",
+      "answerIndex": 0,
+      "explanation": "Wilfred Owen (who wrote 'Anthem for Doomed Youth') and Siegfried Sassoon wrote about their First World War experiences.\n\nThe Scottish landscape relates to Sir Walter Scott, and nature to Wordsworth."
+    },
+    {
+      "id": 383,
+      "category": "Arts and culture",
+      "question": "Where are many famous British poets buried or commemorated?",
+      "options": [
+        "Poets' Corner in Westminster Abbey",
+        "The Tower of London",
+        "Tate Modern",
+        "The Globe Theatre"
+      ],
+      "answer": "Poets' Corner in Westminster Abbey",
+      "answerIndex": 0,
+      "explanation": "Many poets are buried or commemorated in Poets' Corner in Westminster Abbey.\n\nThe Tower of London holds the Crown Jewels, Tate Modern is an art gallery, and the Globe is a theatre linked to Shakespeare."
+    },
+    {
+      "id": 384,
+      "category": "Arts and culture",
+      "question": "Who wrote the music for shows including Cats and The Phantom of the Opera?",
+      "options": [
+        "Andrew Lloyd Webber",
+        "Gilbert and Sullivan",
+        "Benjamin Britten",
+        "Sir Edward Elgar"
+      ],
+      "answer": "Andrew Lloyd Webber",
+      "answerIndex": 0,
+      "explanation": "Andrew Lloyd Webber wrote Cats, The Phantom of the Opera and (with Tim Rice) Jesus Christ Superstar and Evita.\n\nGilbert and Sullivan wrote 19th-century comic operas, and Britten and Elgar were classical composers."
+    },
+    {
+      "id": 385,
+      "category": "Arts and culture",
+      "question": "In a traditional British pantomime, the 'Dame' is what?",
+      "options": [
+        "A woman character played by a man",
+        "A pantomime horse",
+        "The villain",
+        "The narrator"
+      ],
+      "answer": "A woman character played by a man",
+      "answerIndex": 0,
+      "explanation": "The Dame is a traditional pantomime character, a woman played by a man.\n\nPantomimes also often feature a pantomime horse or cow played by two actors, but the Dame specifically refers to the man-played woman."
+    },
+    {
+      "id": 386,
+      "category": "Arts and culture",
+      "question": "The Brit Awards are given in which field?",
+      "options": [
+        "Music",
+        "Film",
+        "Theatre",
+        "Literature"
+      ],
+      "answer": "Music",
+      "answerIndex": 0,
+      "explanation": "The Brit Awards are annual music awards (e.g. best British group and solo artist).\n\nFilm awards are the BAFTAs, theatre awards the Laurence Olivier Awards, and literature the Man Booker Prize."
+    },
+    {
+      "id": 387,
+      "category": "Leisure",
+      "question": "Which of these is a well-known British music festival?",
+      "options": [
+        "Glastonbury",
+        "The Chelsea Flower Show",
+        "Royal Ascot",
+        "The Edinburgh Fringe"
+      ],
+      "answer": "Glastonbury",
+      "answerIndex": 0,
+      "explanation": "Famous music festivals include Glastonbury, the Isle of Wight Festival and the V Festival.\n\nThe Chelsea Flower Show is about gardens, Royal Ascot is horse racing, and the Edinburgh Fringe is theatre and comedy."
+    },
+    {
+      "id": 388,
+      "category": "Sport",
+      "question": "Who was the first person to sail single-handed around the world, in 1966/67?",
+      "options": [
+        "Sir Francis Chichester",
+        "Sir Robin Knox-Johnston",
+        "Dame Ellen MacArthur",
+        "Sir Steve Redgrave"
+      ],
+      "answer": "Sir Francis Chichester",
+      "answerIndex": 0,
+      "explanation": "Sir Francis Chichester was the first to sail single-handed around the world (1966/67).\n\nSir Robin Knox-Johnston was first to do so non-stop.\n\nDame Ellen MacArthur later became the fastest to do it single-handed."
+    },
+    {
+      "id": 389,
+      "category": "Sport",
+      "question": "Sir Robin Knox-Johnston was the first person to sail around the world single-handed in what way?",
+      "options": [
+        "Without stopping (non-stop)",
+        "The fastest",
+        "In a team",
+        "Using only sails made in Britain"
+      ],
+      "answer": "Without stopping (non-stop)",
+      "answerIndex": 0,
+      "explanation": "Sir Robin Knox-Johnston was the first to sail around the world single-handed without stopping.\n\nBeing the first single-handed relates to Sir Francis Chichester, and the fastest to Dame Ellen MacArthur."
+    },
+    {
+      "id": 390,
+      "category": "Sport",
+      "question": "The most famous UK sailing event is held where?",
+      "options": [
+        "Cowes, on the Isle of Wight",
+        "Aintree, near Liverpool",
+        "St Andrews, in Scotland",
+        "Wimbledon, in London"
+      ],
+      "answer": "Cowes, on the Isle of Wight",
+      "answerIndex": 0,
+      "explanation": "The most famous sailing event is held at Cowes on the Isle of Wight.\n\nAintree hosts the Grand National (horse racing), St Andrews is the home of golf, and Wimbledon hosts tennis."
+    },
+    {
+      "id": 391,
+      "category": "Sport",
+      "question": "There is a popular yearly rowing race on the Thames between which two universities?",
+      "options": [
+        "Oxford and Cambridge",
+        "London and Manchester",
+        "Edinburgh and Glasgow",
+        "Durham and York"
+      ],
+      "answer": "Oxford and Cambridge",
+      "answerIndex": 0,
+      "explanation": "The annual Boat Race on the Thames is rowed between Oxford and Cambridge Universities.\n\nThe other pairings are distractors and do not match the handbook."
+    },
+    {
+      "id": 392,
+      "category": "Sport",
+      "question": "Which of these is a recent British Formula 1 World Champion?",
+      "options": [
+        "Lewis Hamilton",
+        "Andy Murray",
+        "Sir Chris Hoy",
+        "Bradley Wiggins"
+      ],
+      "answer": "Lewis Hamilton",
+      "answerIndex": 0,
+      "explanation": "Recent British Formula 1 World Champions include Damon Hill, Lewis Hamilton and Jenson Button.\n\nAndy Murray is a tennis player, and Chris Hoy and Bradley Wiggins are cyclists."
+    },
+    {
+      "id": 393,
+      "category": "Sport",
+      "question": "In which year did motor-car racing start in the UK?",
+      "options": [
+        "1902",
+        "1966",
+        "1948",
+        "1990"
+      ],
+      "answer": "1902",
+      "answerIndex": 0,
+      "explanation": "Motor-car racing in the UK started in 1902. 1966 relates to England winning the football World Cup, and 1948 to the UK hosting the Olympics — so those years relate to other sporting facts."
+    },
+    {
+      "id": 394,
+      "category": "Sport",
+      "question": "How many ski centres are there in Scotland, according to the handbook?",
+      "options": [
+        "Five",
+        "Fifteen",
+        "Two",
+        "Ten"
+      ],
+      "answer": "Five",
+      "answerIndex": 0,
+      "explanation": "There are five ski centres in Scotland, as well as Europe's longest dry ski slope near Edinburgh.\n\n'15' is relevant to the number of national parks in England, Wales and Scotland."
+    },
+    {
+      "id": 395,
+      "category": "Sport",
+      "question": "David Weir is a Paralympian who competes in what?",
+      "options": [
+        "Wheelchair racing",
+        "Swimming",
+        "Cycling",
+        "Sailing"
+      ],
+      "answer": "Wheelchair racing",
+      "answerIndex": 0,
+      "explanation": "David Weir is a wheelchair-racing Paralympian who won six gold medals over two Games and the London Marathon six times.\n\nSwimming relates to Ellie Simmonds, and sailing to Ellen MacArthur."
+    },
+    {
+      "id": 396,
+      "category": "Places of interest",
+      "question": "The National Trust is helped to run by roughly how many volunteers?",
+      "options": [
+        "More than 61,000",
+        "About 6,000",
+        "About 600",
+        "About 610,000"
+      ],
+      "answer": "More than 61,000",
+      "answerIndex": 0,
+      "explanation": "The National Trust, founded in 1895 by three volunteers, now has more than 61,000 volunteers.\n\nThe other figures are distractors and do not match the handbook."
+    },
+    {
+      "id": 397,
+      "category": "The UK today",
+      "question": "Which of these is a UK coin denomination?",
+      "options": [
+        "50p",
+        "£5",
+        "£20",
+        "£100"
+      ],
+      "answer": "50p",
+      "answerIndex": 0,
+      "explanation": "UK coins are 1p, 2p, 5p, 10p, 20p, 50p, £1 and £2. £5 and £20 are banknotes, not coins — so those relate to notes.\n\nThere is no £100 note in general circulation."
+    },
+    {
+      "id": 398,
+      "category": "The UK today",
+      "question": "Which of these is a UK banknote denomination?",
+      "options": [
+        "£50",
+        "£2",
+        "£100",
+        "£1"
+      ],
+      "answer": "£50",
+      "answerIndex": 0,
+      "explanation": "UK notes are £5, £10, £20 and £50. £1 and £2 are coins — so those relate to coins.\n\nThere is no standard £100 note."
+    },
+    {
+      "id": 399,
+      "category": "Government and constitution",
+      "question": "How often does the cabinet usually meet?",
+      "options": [
+        "Weekly",
+        "Monthly",
+        "Once a year",
+        "Every five years"
+      ],
+      "answer": "Weekly",
+      "answerIndex": 0,
+      "explanation": "The cabinet usually meets weekly to make important decisions about government policy.\n\n'Every five years' relates to how often general elections must be held at the latest, not cabinet meetings."
+    },
+    {
+      "id": 400,
+      "category": "Government and constitution",
+      "question": "Which cabinet minister is responsible for relations with foreign countries?",
+      "options": [
+        "The Foreign Secretary",
+        "The Home Secretary",
+        "The Chancellor of the Exchequer",
+        "The Speaker"
+      ],
+      "answer": "The Foreign Secretary",
+      "answerIndex": 0,
+      "explanation": "The Foreign Secretary manages relationships with foreign countries.\n\nThe Home Secretary handles crime, policing and immigration, and the Chancellor handles the economy.\n\nThe Speaker chairs Commons debates."
+    },
+    {
+      "id": 401,
+      "category": "A global power",
+      "question": "Florence Nightingale established a training school for nurses at which London hospital?",
+      "options": [
+        "St Thomas' Hospital",
+        "Great Ormond Street",
+        "Guy's Hospital",
+        "Stoke Mandeville"
+      ],
+      "answer": "St Thomas' Hospital",
+      "answerIndex": 0,
+      "explanation": "Florence Nightingale established the Nightingale Training School for nurses at St Thomas' Hospital in London.\n\nStoke Mandeville is relevant to the origins of the Paralympic Games."
+    },
+    {
+      "id": 402,
+      "category": "Customs and traditions",
+      "question": "When do UK bank holidays (other than religious ones) generally fall?",
+      "options": [
+        "Early May, late May or early June, and August",
+        "Only in December",
+        "Every Friday",
+        "In February and October"
+      ],
+      "answer": "Early May, late May or early June, and August",
+      "answerIndex": 0,
+      "explanation": "Bank holidays with no religious significance fall at the beginning of May, in late May or early June, and in August (with an extra one in Northern Ireland in July).\n\nThey are not weekly or restricted to December."
+    },
+    {
+      "id": 403,
+      "category": "Sport",
+      "question": "The Millennium Stadium, a major UK sporting venue, is in which city?",
+      "options": [
+        "Cardiff",
+        "London",
+        "Glasgow",
+        "Manchester"
+      ],
+      "answer": "Cardiff",
+      "answerIndex": 0,
+      "explanation": "The Millennium Stadium is in Cardiff.\n\nWembley Stadium is in London.\n\nGlasgow has the SECC as a music venue, and Manchester is a distractor here."
+    },
+    {
+      "id": 404,
+      "category": "Arts and culture",
+      "question": "Which composer was strongly influenced by traditional English folk music?",
+      "options": [
+        "Ralph Vaughan Williams",
+        "George Frederick Handel",
+        "Henry Purcell",
+        "Benjamin Britten"
+      ],
+      "answer": "Ralph Vaughan Williams",
+      "answerIndex": 0,
+      "explanation": "Ralph Vaughan Williams was strongly influenced by traditional English folk music.\n\nHandel wrote Messiah, Purcell was an organist at Westminster Abbey, and Britten wrote operas such as Peter Grimes."
+    },
+    {
+      "id": 405,
+      "category": "Arts and culture",
+      "question": "Sir William Walton wrote marches for the coronations of which monarchs?",
+      "options": [
+        "King George VI and Queen Elizabeth II",
+        "Queen Victoria and Edward VII",
+        "King Charles II and James II",
+        "King Henry VIII and Edward VI"
+      ],
+      "answer": "King George VI and Queen Elizabeth II",
+      "answerIndex": 0,
+      "explanation": "Sir William Walton wrote coronation marches for King George VI and Queen Elizabeth II, and is also known for Façade and Belshazzar's Feast.\n\nThe other monarchs are from earlier eras."
+    },
+    {
+      "id": 406,
+      "category": "A global power",
+      "question": "Which poet, known as 'The Bard', wrote in the Scots language?",
+      "options": [
+        "Robert Burns",
+        "Dylan Thomas",
+        "William Wordsworth",
+        "John Milton"
+      ],
+      "answer": "Robert Burns",
+      "answerIndex": 0,
+      "explanation": "Robert Burns, 'The Bard', wrote in Scots, English with Scottish words, and standard English, and wrote 'Auld Lang Syne'.\n\nDylan Thomas was Welsh, and Wordsworth and Milton were English poets."
+    },
+    {
+      "id": 407,
+      "category": "The 20th century",
+      "question": "Which Scottish physician was a co-discoverer of insulin, used to treat diabetes?",
+      "options": [
+        "John MacLeod",
+        "Alexander Fleming",
+        "Alan Turing",
+        "Francis Crick"
+      ],
+      "answer": "John MacLeod",
+      "answerIndex": 0,
+      "explanation": "John MacLeod, a Scottish physician, was a co-discoverer of insulin.\n\nAlexander Fleming discovered penicillin, Alan Turing devised the Turing machine, and Francis Crick helped discover the structure of DNA."
+    },
+    {
+      "id": 408,
+      "category": "The 20th century",
+      "question": "The structure of the DNA molecule was discovered in which year, through work at British universities?",
+      "options": [
+        "1953",
+        "1928",
+        "1990",
+        "1996"
+      ],
+      "answer": "1953",
+      "answerIndex": 0,
+      "explanation": "The structure of DNA was discovered in 1953; Francis Crick, one of those awarded the Nobel Prize, was British. 1928 relates to penicillin, 1990 to the first web transfer, and 1996 to Dolly the sheep."
+    },
+    {
+      "id": 409,
+      "category": "The 20th century",
+      "question": "Sir Peter Mansfield was a co-inventor of which medical scanner?",
+      "options": [
+        "The MRI scanner",
+        "The X-ray machine",
+        "The ultrasound scanner",
+        "The ECG machine"
+      ],
+      "answer": "The MRI scanner",
+      "answerIndex": 0,
+      "explanation": "Sir Peter Mansfield co-invented the MRI (magnetic resonance imaging) scanner, which produces non-invasive images of internal organs.\n\nThe other technologies are not the one attributed to him in the handbook."
+    },
+    {
+      "id": 410,
+      "category": "The 20th century",
+      "question": "The radio telescope built by Sir Bernard Lovell is located where?",
+      "options": [
+        "Jodrell Bank, in Cheshire",
+        "Greenwich, in London",
+        "Stratford, in East London",
+        "Enfield, in north London"
+      ],
+      "answer": "Jodrell Bank, in Cheshire",
+      "answerIndex": 0,
+      "explanation": "Sir Bernard Lovell built the radio telescope at Jodrell Bank in Cheshire, for many years the biggest in the world.\n\nEnfield relates to the first ATM, and Stratford to the 2012 Olympic site."
     }
   ]
 }
