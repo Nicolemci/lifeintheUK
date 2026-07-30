@@ -54,7 +54,6 @@ export const PREMIUM_PLANS: PremiumPlan[] = [
     features: [
       "Lifetime Premium access",
       ...unlimitedFeatures,
-      "All future Premium features included",
     ],
   },
 ];
