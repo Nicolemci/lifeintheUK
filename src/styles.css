@@ -712,37 +712,6 @@ button {
   gap: 20px;
 }
 
-.supabase-test-section {
-  display: grid;
-  gap: 20px;
-}
-
-.connection-card {
-  max-width: 760px;
-  padding: 28px;
-}
-
-.connection-card h2 {
-  margin: 0;
-  color: var(--navy);
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
-}
-
-.connection-card p:not(.eyebrow) {
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-
-.connection-card.connected {
-  border-color: rgba(31, 143, 95, 0.45);
-  background: #effbf5;
-}
-
-.connection-card.error {
-  border-color: rgba(200, 16, 46, 0.4);
-  background: #fff3f0;
-}
-
 .pricing-page {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
