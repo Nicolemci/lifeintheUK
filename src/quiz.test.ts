@@ -16,6 +16,7 @@ const sampleQuestions: Question[] = [
     id: "one",
     topicId: "values",
     topic: "Values",
+    category: "Values and principles",
     prompt: "Question one",
     options: ["A", "B", "C", "D"],
     correctIndex: 0,
@@ -25,6 +26,7 @@ const sampleQuestions: Question[] = [
     id: "two",
     topicId: "history",
     topic: "History",
+    category: "Early Britain",
     prompt: "Question two",
     options: ["A", "B", "C", "D"],
     correctIndex: 1,
@@ -34,6 +36,7 @@ const sampleQuestions: Question[] = [
     id: "three",
     topicId: "values",
     topic: "Values",
+    category: "Values and principles",
     prompt: "Question three",
     options: ["A", "B", "C", "D"],
     correctIndex: 2,
@@ -131,44 +134,45 @@ describe("quiz helpers", () => {
     });
   });
 
-  it("adds source-backed explanations for relevant wrong alternatives", () => {
+  it("includes cross-topic explanations for Magna Carta distractors", () => {
     const magnaCartaQuestion = questions.find((question) =>
-      question.prompt.includes("limited the power of the monarch"),
+      question.prompt.includes("Magna Carta"),
     );
 
-    expect(magnaCartaQuestion?.optionExplanations?.[0]).toContain("Domesday Book");
-    expect(magnaCartaQuestion?.optionExplanations?.[2]).toContain("1707");
-    expect(magnaCartaQuestion?.optionExplanations?.[3]).toContain("1832");
+    expect(magnaCartaQuestion?.explanation).toContain("subject to the law");
+    expect(magnaCartaQuestion?.explanation).toContain("Education Act 1944");
+    expect(magnaCartaQuestion?.explanation).toContain("NHS");
   });
 
-  it("adds city explanations for capital-city distractors", () => {
+  it("explains capital-city distractors for Wales", () => {
     const walesCapitalQuestion = questions.find((question) =>
-      question.prompt.includes("capital of Wales"),
+      question.prompt.includes("capital city of Wales"),
     );
 
-    expect(walesCapitalQuestion?.optionExplanations?.[0]).toContain("capital city of Scotland");
-    expect(walesCapitalQuestion?.optionExplanations?.[2]).toContain("capital city of Northern Ireland");
-    expect(walesCapitalQuestion?.optionExplanations?.[3]).toContain("city in England");
+    expect(walesCapitalQuestion?.explanation).toContain("Cardiff");
+    expect(walesCapitalQuestion?.explanation).toContain("Edinburgh");
+    expect(walesCapitalQuestion?.explanation).toContain("Belfast");
   });
 
-  it("adds devolved parliament location explanations", () => {
+  it("explains devolved parliament location distractors", () => {
     const parliamentQuestion = questions.find((question) =>
       question.prompt.includes("UK Parliament sit"),
     );
 
-    expect(parliamentQuestion?.optionExplanations?.[0]).toContain("Senedd");
-    expect(parliamentQuestion?.optionExplanations?.[1]).toContain("Northern Ireland Assembly");
-    expect(parliamentQuestion?.optionExplanations?.[3]).toContain("Scottish Parliament");
+    expect(parliamentQuestion?.explanation).toContain("Westminster");
+    expect(parliamentQuestion?.explanation).toContain("Holyrood");
+    expect(parliamentQuestion?.explanation).toContain("Stormont");
+    expect(parliamentQuestion?.explanation).toContain("Senedd");
   });
 
-  it("reuses correct-answer facts to explain relevant wrong options", () => {
+  it("explains WSPU distractors with related historical figures", () => {
     const wspuQuestion = questions.find((question) =>
       question.prompt.includes("Women's Social and Political Union"),
     );
 
-    expect(wspuQuestion?.optionExplanations?.[1]).toContain("modern nursing");
-    expect(wspuQuestion?.optionExplanations?.[3]).toContain("Pride and Prejudice");
-    expect(wspuQuestion?.optionExplanations?.[2]).toBeUndefined();
+    expect(wspuQuestion?.explanation).toContain("Emmeline Pankhurst");
+    expect(wspuQuestion?.explanation).toContain("Florence Nightingale");
+    expect(wspuQuestion?.explanation).toContain("Jane Austen");
   });
 
   it("creates full-bank mock tests that cover every stored question at least once", () => {

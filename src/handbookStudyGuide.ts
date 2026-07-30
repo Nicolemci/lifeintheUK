@@ -15,18 +15,8 @@ export type StudyGuideSection = {
 };
 
 type SectionDefinition = Omit<StudyGuideSection, "facts"> & {
-  matches: (question: Question) => boolean;
+  categories: string[];
 };
-
-function handbookNumber(question: Question, area: string): number | null {
-  const match = question.id.match(new RegExp(`^handbook-${area}-(\\d+)$`));
-  return match ? Number(match[1]) : null;
-}
-
-function numberInRange(question: Question, area: string, start: number, end: number): boolean {
-  const number = handbookNumber(question, area);
-  return number !== null && number >= start && number <= end;
-}
 
 const definitions: SectionDefinition[] = [
   {
@@ -35,7 +25,7 @@ const definitions: SectionDefinition[] = [
     title: "Values, principles and becoming a resident",
     introduction:
       "Fundamental British values, rights, responsibilities, citizenship requirements and the Life in the UK test.",
-    matches: (question) => question.topicId === "values",
+    categories: ["Values and principles"],
   },
   {
     id: "what-is-the-uk",
@@ -43,7 +33,7 @@ const definitions: SectionDefinition[] = [
     title: "What is the UK?",
     introduction:
       "The four nations, Great Britain, Crown dependencies, overseas territories and the location of Parliament.",
-    matches: (question) => numberInRange(question, "everyday", 1, 4),
+    categories: ["What is the UK"],
   },
   {
     id: "early-britain",
@@ -51,7 +41,7 @@ const definitions: SectionDefinition[] = [
     title: "Early Britain: Stone Age to the Normans",
     introduction:
       "Prehistoric Britain, the Romans, Anglo-Saxons, Christianity, Vikings and the Norman Conquest.",
-    matches: (question) => numberInRange(question, "history", 1, 13),
+    categories: ["Early Britain"],
   },
   {
     id: "middle-ages",
@@ -59,7 +49,7 @@ const definitions: SectionDefinition[] = [
     title: "The Middle Ages",
     introduction:
       "Medieval wars, Magna Carta, Parliament, the Black Death, English language and the Wars of the Roses.",
-    matches: (question) => numberInRange(question, "history", 14, 22),
+    categories: ["The Middle Ages"],
   },
   {
     id: "tudors-stuarts",
@@ -67,7 +57,7 @@ const definitions: SectionDefinition[] = [
     title: "The Tudors and Stuarts",
     introduction:
       "Religious change, Henry VIII, Elizabeth I, Shakespeare, the Civil War, Cromwell, Restoration and Glorious Revolution.",
-    matches: (question) => numberInRange(question, "history", 23, 39),
+    categories: ["The Tudors and Stuarts"],
   },
   {
     id: "global-power",
@@ -75,15 +65,21 @@ const definitions: SectionDefinition[] = [
     title: "A global power",
     introduction:
       "Union, Enlightenment, Industrial Revolution, slavery and abolition, empire, democratic reform and Victorian Britain.",
-    matches: (question) => numberInRange(question, "history", 40, 56),
+    categories: ["A global power"],
   },
   {
     id: "twentieth-century",
     chapter: "Chapter 3",
-    title: "The 20th century and Britain since 1945",
-    introduction:
-      "World wars, Ireland, welfare reform, migration, inventions, governments, devolution and recent events.",
-    matches: (question) => numberInRange(question, "history", 57, 78),
+    title: "The 20th century",
+    introduction: "World wars, Ireland, welfare reform, migration, inventions and major 20th-century events.",
+    categories: ["The 20th century"],
+  },
+  {
+    id: "britain-since-1945",
+    chapter: "Chapter 3",
+    title: "Britain since 1945",
+    introduction: "Post-war Britain, governments, devolution, the EU/Brexit and recent political change.",
+    categories: ["Britain since 1945"],
   },
   {
     id: "arts-culture",
@@ -91,7 +87,7 @@ const definitions: SectionDefinition[] = [
     title: "Arts, culture and literature",
     introduction:
       "Music, theatre, art, architecture, books, poetry and major cultural awards and festivals.",
-    matches: (question) => numberInRange(question, "everyday", 5, 18),
+    categories: ["Arts and culture"],
   },
   {
     id: "customs-leisure",
@@ -99,7 +95,7 @@ const definitions: SectionDefinition[] = [
     title: "Customs, festivals and leisure",
     introduction:
       "Religious festivals, national traditions, food, cinema, television, pets and everyday leisure.",
-    matches: (question) => numberInRange(question, "everyday", 19, 32),
+    categories: ["Customs and traditions", "Leisure"],
   },
   {
     id: "places-religion-sport",
@@ -107,15 +103,15 @@ const definitions: SectionDefinition[] = [
     title: "Places, religion, sport and the UK today",
     introduction:
       "Landmarks, churches, patron saints, major sports, capitals, languages, population and equality.",
-    matches: (question) => numberInRange(question, "everyday", 33, 54),
+    categories: ["Places of interest", "Religion", "Sport", "The UK today"],
   },
   {
     id: "constitution-democracy",
     chapter: "Chapter 5",
-    title: "Democracy, constitution and Parliament",
+    title: "Democracy, constitution and Government",
     introduction:
       "The constitution, monarchy, Commons, Lords, Speaker, elections and fundamental rights.",
-    matches: (question) => numberInRange(question, "government", 1, 17),
+    categories: ["Government and constitution"],
   },
   {
     id: "law-tax-courts",
@@ -123,15 +119,7 @@ const definitions: SectionDefinition[] = [
     title: "Rights, taxation, driving, law and courts",
     introduction:
       "Personal freedoms, forced marriage, PAYE, National Insurance, driving rules, criminal and civil law, police and courts.",
-    matches: (question) => numberInRange(question, "government", 18, 32),
-  },
-  {
-    id: "government-devolution",
-    chapter: "Chapter 5",
-    title: "Government, devolution and voting",
-    introduction:
-      "Prime Minister, cabinet, opposition, civil service, devolved administrations, Hansard and elections.",
-    matches: (question) => numberInRange(question, "government", 33, 44),
+    categories: ["The law and courts", "Rights, tax and driving"],
   },
   {
     id: "international-community",
@@ -139,7 +127,7 @@ const definitions: SectionDefinition[] = [
     title: "International institutions and community life",
     introduction:
       "The Commonwealth, United Nations, NATO, jury service, schools, political participation, volunteering and the environment.",
-    matches: (question) => numberInRange(question, "government", 45, 54),
+    categories: ["International institutions", "Your role in the community"],
   },
 ];
 
@@ -153,8 +141,9 @@ function toFact(question: Question): StudyGuideFact {
 
 export function buildStudyGuide(allQuestions: Question[]): StudyGuideSection[] {
   const assigned = new Set<string>();
-  const sections = definitions.map(({ matches, ...definition }) => {
-    const sectionQuestions = allQuestions.filter((question) => matches(question));
+  const sections = definitions.map(({ categories, ...definition }) => {
+    const categorySet = new Set(categories);
+    const sectionQuestions = allQuestions.filter((question) => categorySet.has(question.category));
     sectionQuestions.forEach((question) => assigned.add(question.id));
 
     return {
