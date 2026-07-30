@@ -61,17 +61,7 @@ function parseBody(request) {
 }
 
 module.exports = async function createCheckoutSession(request, response) {
-  console.info("[create-checkout-session] Request received", {
-    method: request.method,
-    hasAuthorization: Boolean(request.headers.authorization),
-    origin: request.headers.origin || null,
-    forwardedHost: request.headers["x-forwarded-host"] || null,
-  });
-
   if (request.method !== "POST") {
-    console.warn("[create-checkout-session] Rejected non-POST method", {
-      method: request.method,
-    });
     response.setHeader("Allow", "POST");
     return response.status(405).json({ error: "Method not allowed." });
   }
@@ -79,26 +69,17 @@ module.exports = async function createCheckoutSession(request, response) {
   const accessToken = getBearerToken(request);
 
   if (!accessToken) {
-    console.warn("[create-checkout-session] Missing bearer token");
     return response.status(401).json({ error: "Authentication is required." });
   }
 
   const { plan } = parseBody(request);
 
   if (typeof plan !== "string" || !isPremiumPlanId(plan)) {
-    console.warn("[create-checkout-session] Invalid plan", { plan });
     return response.status(400).json({ error: "A valid Premium plan is required." });
   }
 
   try {
     const config = getStripeServerConfig();
-    console.info("[create-checkout-session] Config loaded", {
-      plan,
-      priceId: config.priceIds[plan],
-      supabaseHost: new URL(config.supabaseUrl).host,
-      secretKeyPrefix: config.secretKey.slice(0, 7),
-    });
-
     const supabase = createClient(config.supabaseUrl, config.supabasePublishableKey, {
       auth: {
         persistSession: false,
@@ -116,11 +97,6 @@ module.exports = async function createCheckoutSession(request, response) {
       });
       return response.status(401).json({ error: "Your session is invalid or has expired." });
     }
-
-    console.info("[create-checkout-session] Authenticated user", {
-      userId: user.id,
-      hasEmail: Boolean(user.email),
-    });
 
     const stripe = new Stripe(config.secretKey);
     const origin = getRequestOrigin(request);
@@ -150,13 +126,6 @@ module.exports = async function createCheckoutSession(request, response) {
     if (!checkoutSession.url) {
       throw new Error("Stripe did not return a Checkout URL.");
     }
-
-    console.info("[create-checkout-session] Checkout Session created", {
-      userId: user.id,
-      plan,
-      checkoutSessionId: checkoutSession.id,
-      origin,
-    });
 
     return response.status(200).json({ url: checkoutSession.url });
   } catch (error) {

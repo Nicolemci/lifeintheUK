@@ -62,23 +62,3 @@ export function getSupabaseClient(): SupabaseClient {
 
   return client;
 }
-
-export async function verifySupabaseConnection(signal?: AbortSignal): Promise<void> {
-  getSupabaseClient();
-  const { url, publishableKey } = validateSupabaseConfig();
-  const response = await fetch(`${url}/auth/v1/health`, {
-    method: "GET",
-    headers: {
-      apikey: publishableKey,
-      Accept: "application/json",
-    },
-    signal,
-  });
-
-  if (!response.ok) {
-    const responseText = await response.text();
-    throw new Error(
-      `Supabase connection failed (${response.status} ${response.statusText})${responseText ? `: ${responseText}` : ""}`,
-    );
-  }
-}

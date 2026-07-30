@@ -5,11 +5,6 @@ const { buildPremiumGrant } = require("./_lib/premiumGrant");
 const { getStripeWebhookConfig } = require("./_lib/stripeConfig");
 
 module.exports = async function stripeWebhook(request, response) {
-  console.info("[stripe-webhook] Request received", {
-    method: request.method,
-    hasSignature: Boolean(request.headers["stripe-signature"]),
-  });
-
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
     return response.status(405).json({ error: "Method not allowed." });
@@ -33,7 +28,6 @@ module.exports = async function stripeWebhook(request, response) {
     : signatureHeader;
 
   if (!signature) {
-    console.warn("[stripe-webhook] Missing Stripe signature header");
     return response.status(400).json({ error: "Missing Stripe signature." });
   }
 
@@ -56,11 +50,6 @@ module.exports = async function stripeWebhook(request, response) {
     return response.status(400).json({ error: "Invalid Stripe signature." });
   }
 
-  console.info("[stripe-webhook] Event verified", {
-    eventId: event.id,
-    type: event.type,
-  });
-
   if (event.type !== "checkout.session.completed") {
     return response.status(200).json({
       received: true,
@@ -71,11 +60,6 @@ module.exports = async function stripeWebhook(request, response) {
   const session = event.data.object;
 
   if (session.payment_status !== "paid") {
-    console.info("[stripe-webhook] Ignoring unpaid completed session", {
-      eventId: event.id,
-      checkoutSessionId: session.id,
-      paymentStatus: session.payment_status,
-    });
     return response.status(200).json({
       received: true,
       handled: false,
@@ -122,14 +106,6 @@ module.exports = async function stripeWebhook(request, response) {
     if (grantError) {
       throw grantError;
     }
-
-    console.info("[stripe-webhook] Premium access granted", {
-      eventId: event.id,
-      checkoutSessionId: grant.stripeCheckoutSessionId,
-      userId: grant.userId,
-      plan: grant.plan,
-      applied,
-    });
 
     return response.status(200).json({
       received: true,
