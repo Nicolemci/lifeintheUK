@@ -1,5 +1,5 @@
 import type Stripe from "stripe";
-import { isPremiumPlanId, type PremiumPlanId } from "../../src/config/premium";
+import { isPremiumPlanId, type PremiumPlanId } from "./plans";
 
 const PLAN_DURATION_DAYS: Partial<Record<PremiumPlanId, number>> = {
   one_week: 7,

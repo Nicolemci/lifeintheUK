@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
+import { getErrorMessage, logApiFailure } from "./_lib/httpError";
 import { buildPremiumGrant } from "./_lib/premiumGrant";
 import { getStripeWebhookConfig } from "./_lib/stripeConfig";
 
@@ -31,6 +32,11 @@ function getStripeSignature(request: VercelRequest): string | null {
 }
 
 export default async function stripeWebhook(request: VercelRequest, response: VercelResponse) {
+  console.info("[stripe-webhook] Request received", {
+    method: request.method,
+    hasSignature: Boolean(request.headers["stripe-signature"]),
+  });
+
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
     return response.status(405).json({ error: "Method not allowed." });
@@ -41,13 +47,17 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
   try {
     serverConfig = getStripeWebhookConfig();
   } catch (configurationError) {
-    console.error("Stripe webhook configuration error:", configurationError);
-    return response.status(500).json({ error: "Webhook is not configured." });
+    logApiFailure("stripe-webhook", configurationError, { stage: "config" });
+    return response.status(500).json({
+      error: "Webhook is not configured.",
+      details: getErrorMessage(configurationError, "Missing webhook environment variables"),
+    });
   }
 
   const signature = getStripeSignature(request);
 
   if (!signature) {
+    console.warn("[stripe-webhook] Missing Stripe signature header");
     return response.status(400).json({ error: "Missing Stripe signature." });
   }
 
@@ -62,9 +72,14 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
       serverConfig.webhookSecret,
     );
   } catch (signatureError) {
-    console.warn("Stripe webhook signature verification failed:", signatureError);
+    logApiFailure("stripe-webhook", signatureError, { stage: "signature" });
     return response.status(400).json({ error: "Invalid Stripe signature." });
   }
+
+  console.info("[stripe-webhook] Event verified", {
+    eventId: event.id,
+    type: event.type,
+  });
 
   if (event.type !== "checkout.session.completed") {
     return response.status(200).json({
@@ -76,7 +91,7 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
   const session = event.data.object;
 
   if (session.payment_status !== "paid") {
-    console.info("Ignoring completed Checkout Session that is not paid.", {
+    console.info("[stripe-webhook] Ignoring unpaid completed session", {
       eventId: event.id,
       checkoutSessionId: session.id,
       paymentStatus: session.payment_status,
@@ -92,10 +107,10 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
   try {
     grant = buildPremiumGrant(session, event.created);
   } catch (metadataError) {
-    console.error("Stripe Checkout Session metadata validation failed:", {
+    logApiFailure("stripe-webhook", metadataError, {
+      stage: "metadata",
       eventId: event.id,
       checkoutSessionId: session.id,
-      error: metadataError,
     });
     return response.status(400).json({ error: "Invalid Checkout Session metadata." });
   }
@@ -128,7 +143,7 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
       throw grantError;
     }
 
-    console.info("Processed paid Stripe Checkout Session.", {
+    console.info("[stripe-webhook] Premium access granted", {
       eventId: event.id,
       checkoutSessionId: grant.stripeCheckoutSessionId,
       userId: grant.userId,
@@ -142,11 +157,15 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
       applied: applied === true,
     });
   } catch (databaseError) {
-    console.error("Unable to grant Premium access:", {
+    logApiFailure("stripe-webhook", databaseError, {
+      stage: "grant_premium_access_from_stripe",
       eventId: event.id,
       checkoutSessionId: grant.stripeCheckoutSessionId,
-      error: databaseError,
+      userId: grant.userId,
     });
-    return response.status(500).json({ error: "Premium access could not be granted." });
+    return response.status(500).json({
+      error: "Premium access could not be granted.",
+      details: getErrorMessage(databaseError, "Unknown database error"),
+    });
   }
 }

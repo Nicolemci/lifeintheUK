@@ -23,6 +23,25 @@ describe("Stripe server configuration", () => {
     });
   });
 
+  it("accepts abbreviated STRIPE_PRICE_1_WEEK style aliases", () => {
+    expect(
+      getStripeServerConfig({
+        STRIPE_SECRET_KEY: "sk_test_example",
+        STRIPE_PRICE_1_WEEK: "price_week_alias",
+        STRIPE_PRICE_2_WEEKS: "price_two_alias",
+        STRIPE_PRICE_4_WEEKS: "price_four_alias",
+        STRIPE_PRICE_LIFETIME: "price_lifetime",
+        VITE_SUPABASE_URL: "https://example.supabase.co",
+        VITE_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_example",
+      }).priceIds,
+    ).toEqual({
+      one_week: "price_week_alias",
+      two_weeks: "price_two_alias",
+      four_weeks: "price_four_alias",
+      lifetime: "price_lifetime",
+    });
+  });
+
   it("reports every missing server variable", () => {
     expect(() => getStripeServerConfig({})).toThrow("STRIPE_SECRET_KEY");
     expect(() => getStripeServerConfig({})).toThrow("STRIPE_PRICE_LIFETIME");

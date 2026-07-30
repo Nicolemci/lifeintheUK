@@ -3,7 +3,21 @@ import type { PremiumPlanId } from "../config/premium";
 type CheckoutResponse = {
   url?: unknown;
   error?: unknown;
+  details?: unknown;
+  code?: unknown;
 };
+
+function extractErrorMessage(payload: CheckoutResponse, fallback: string): string {
+  if (typeof payload.error === "string" && payload.error.trim()) {
+    if (typeof payload.details === "string" && payload.details.trim()) {
+      return `${payload.error} (${payload.details})`;
+    }
+
+    return payload.error;
+  }
+
+  return fallback;
+}
 
 export async function createCheckoutSession(plan: PremiumPlanId): Promise<string> {
   const { getSupabaseClient } = await import("./supabase");
@@ -28,11 +42,23 @@ export async function createCheckoutSession(plan: PremiumPlanId): Promise<string
     },
     body: JSON.stringify({ plan }),
   });
-  const data = (await response.json().catch(() => ({}))) as CheckoutResponse;
+
+  const rawBody = await response.text();
+  let data: CheckoutResponse = {};
+
+  if (rawBody) {
+    try {
+      data = JSON.parse(rawBody) as CheckoutResponse;
+    } catch {
+      throw new Error(
+        `Unable to start Stripe Checkout. The API returned a non-JSON response (${response.status}).`,
+      );
+    }
+  }
 
   if (!response.ok) {
     throw new Error(
-      typeof data.error === "string" ? data.error : "Unable to start Stripe Checkout.",
+      extractErrorMessage(data, "Unable to start Stripe Checkout."),
     );
   }
 
