@@ -116,35 +116,23 @@ button {
   height: auto;
   margin-top: 22px;
   overflow: visible;
-  color: #2f3a49;
   filter: drop-shadow(0 12px 18px rgba(7, 31, 77, 0.08));
 }
 
-.skyline-backdrop {
-  fill: #f7f1e6;
+.skyline-blue {
+  fill: var(--navy);
+  stroke: var(--navy);
+  opacity: 0.28;
 }
 
-.skyline-landmarks {
-  color: #2f3a49;
+.skyline-blue .skyline-clock {
+  fill: var(--parchment);
+  opacity: 1;
 }
 
-.skyline-outline {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.skyline-cutout {
-  fill: #f7f1e6;
-}
-
-.skyline-ground {
-  stroke: #e06b6b;
-  stroke-width: 3;
-  stroke-linecap: round;
-  opacity: 0.95;
+.skyline-red {
+  stroke: var(--union-red);
+  opacity: 0.24;
 }
 
 .login-layout {
