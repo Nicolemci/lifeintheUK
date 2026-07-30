@@ -1,6 +1,8 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { createRequire } from "node:module";
 import { describe, expect, it, vi } from "vitest";
-import createCheckoutSession from "./create-checkout-session";
+
+const require = createRequire(import.meta.url);
+const createCheckoutSession = require("./create-checkout-session.js");
 
 function createResponse() {
   const response = {
@@ -10,20 +12,13 @@ function createResponse() {
   };
   response.status.mockReturnValue(response);
   response.json.mockReturnValue(response);
-  return response as unknown as VercelResponse & {
-    setHeader: ReturnType<typeof vi.fn>;
-    status: ReturnType<typeof vi.fn>;
-    json: ReturnType<typeof vi.fn>;
-  };
+  return response;
 }
 
 describe("Stripe Checkout function request validation", () => {
   it("accepts POST requests only", async () => {
     const response = createResponse();
-    await createCheckoutSession(
-      { method: "GET", headers: {} } as unknown as VercelRequest,
-      response,
-    );
+    await createCheckoutSession({ method: "GET", headers: {} }, response);
 
     expect(response.status).toHaveBeenCalledWith(405);
     expect(response.setHeader).toHaveBeenCalledWith("Allow", "POST");
@@ -32,7 +27,7 @@ describe("Stripe Checkout function request validation", () => {
   it("requires a Supabase bearer token", async () => {
     const response = createResponse();
     await createCheckoutSession(
-      { method: "POST", headers: {}, body: { plan: "one_week" } } as unknown as VercelRequest,
+      { method: "POST", headers: {}, body: { plan: "one_week" } },
       response,
     );
 
@@ -46,7 +41,7 @@ describe("Stripe Checkout function request validation", () => {
         method: "POST",
         headers: { authorization: "Bearer example-token" },
         body: { plan: "free" },
-      } as unknown as VercelRequest,
+      },
       response,
     );
 

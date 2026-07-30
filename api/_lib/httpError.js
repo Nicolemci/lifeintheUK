@@ -1,16 +1,10 @@
-export type ApiErrorBody = {
-  error: string;
-  code?: string;
-  details?: string;
-};
-
-export function getErrorMessage(error: unknown, fallback: string): string {
+function getErrorMessage(error, fallback) {
   if (error instanceof Error && error.message.trim()) {
     return error.message;
   }
 
   if (typeof error === "object" && error !== null) {
-    const maybeMessage = (error as { message?: unknown }).message;
+    const maybeMessage = error.message;
     if (typeof maybeMessage === "string" && maybeMessage.trim()) {
       return maybeMessage;
     }
@@ -23,19 +17,15 @@ export function getErrorMessage(error: unknown, fallback: string): string {
   return fallback;
 }
 
-export function logApiFailure(
-  scope: string,
-  error: unknown,
-  context: Record<string, unknown> = {},
-): void {
+function logApiFailure(scope, error, context = {}) {
   const message = getErrorMessage(error, "Unknown error");
   const details =
     typeof error === "object" && error !== null
       ? {
-          name: (error as { name?: unknown }).name,
-          code: (error as { code?: unknown }).code,
-          type: (error as { type?: unknown }).type,
-          statusCode: (error as { statusCode?: unknown }).statusCode,
+          name: error.name,
+          code: error.code,
+          type: error.type,
+          statusCode: error.statusCode,
           raw: error,
         }
       : { raw: error };
@@ -45,3 +35,8 @@ export function logApiFailure(
     details,
   });
 }
+
+module.exports = {
+  getErrorMessage,
+  logApiFailure,
+};

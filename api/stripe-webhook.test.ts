@@ -1,14 +1,19 @@
+import { createRequire } from "node:module";
 import { Readable } from "node:stream";
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import stripeWebhook from "./stripe-webhook";
+
+const require = createRequire(import.meta.url);
+const stripeWebhook = require("./stripe-webhook.js");
 
 const webhookSecret = "whsec_test_example";
 const originalEnvironment = { ...process.env };
 
-function createRequest(payload: string, signature?: string): VercelRequest {
-  const request = Readable.from([Buffer.from(payload)]) as unknown as VercelRequest;
+function createRequest(payload: string, signature?: string) {
+  const request = Readable.from([Buffer.from(payload)]) as Readable & {
+    method?: string;
+    headers: Record<string, string>;
+  };
   request.method = "POST";
   request.headers = signature ? { "stripe-signature": signature } : {};
   return request;
@@ -22,10 +27,7 @@ function createResponse() {
   };
   response.status.mockReturnValue(response);
   response.json.mockReturnValue(response);
-  return response as unknown as VercelResponse & {
-    status: ReturnType<typeof vi.fn>;
-    json: ReturnType<typeof vi.fn>;
-  };
+  return response;
 }
 
 beforeEach(() => {

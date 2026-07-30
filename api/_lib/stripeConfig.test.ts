@@ -1,5 +1,8 @@
+import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
-import { getStripeServerConfig, getStripeWebhookConfig } from "./stripeConfig";
+
+const require = createRequire(import.meta.url);
+const { getStripeServerConfig, getStripeWebhookConfig } = require("./stripeConfig.js");
 
 const validEnvironment = {
   STRIPE_SECRET_KEY: "sk_test_example",
