@@ -1,5 +1,8 @@
+import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
-import { isPremiumPlanId } from "./plans";
+
+const require = createRequire(import.meta.url);
+const { isPremiumPlanId } = require("./plans.js");
 
 describe("server Premium plan allow-list", () => {
   it("accepts only known plan IDs", () => {

@@ -1,23 +1,12 @@
-import type Stripe from "stripe";
-import { isPremiumPlanId, type PremiumPlanId } from "./plans";
+const { isPremiumPlanId } = require("./plans");
 
-const PLAN_DURATION_DAYS: Partial<Record<PremiumPlanId, number>> = {
+const PLAN_DURATION_DAYS = {
   one_week: 7,
   two_weeks: 14,
   four_weeks: 28,
 };
 
-export type PremiumGrant = {
-  userId: string;
-  plan: PremiumPlanId;
-  purchaseDate: string;
-  expiresAt: string | null;
-  isLifetime: boolean;
-  stripeCheckoutSessionId: string;
-  stripeCustomerId: string;
-};
-
-function getStripeCustomerId(customer: Stripe.Checkout.Session["customer"]): string | null {
+function getStripeCustomerId(customer) {
   if (typeof customer === "string") {
     return customer;
   }
@@ -25,16 +14,13 @@ function getStripeCustomerId(customer: Stripe.Checkout.Session["customer"]): str
   return customer?.id ?? null;
 }
 
-function isUuid(value: string): boolean {
+function isUuid(value) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
     value,
   );
 }
 
-export function buildPremiumGrant(
-  session: Stripe.Checkout.Session,
-  paidAtUnixSeconds: number,
-): PremiumGrant {
+function buildPremiumGrant(session, paidAtUnixSeconds) {
   if (session.payment_status !== "paid") {
     throw new Error(`Checkout Session ${session.id} is not paid.`);
   }
@@ -82,3 +68,7 @@ export function buildPremiumGrant(
     stripeCustomerId: customerId,
   };
 }
+
+module.exports = {
+  buildPremiumGrant,
+};

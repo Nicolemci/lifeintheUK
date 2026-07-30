@@ -1,37 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import Stripe from "stripe";
-import { getErrorMessage, logApiFailure } from "./_lib/httpError";
-import { buildPremiumGrant } from "./_lib/premiumGrant";
-import { getStripeWebhookConfig } from "./_lib/stripeConfig";
+const { createClient } = require("@supabase/supabase-js");
+const Stripe = require("stripe");
+const { getErrorMessage, logApiFailure } = require("./_lib/httpError");
+const { buildPremiumGrant } = require("./_lib/premiumGrant");
+const { getStripeWebhookConfig } = require("./_lib/stripeConfig");
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-async function readRawBody(request: VercelRequest): Promise<Buffer> {
-  const chunks: Buffer[] = [];
-
-  for await (const chunk of request) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-  }
-
-  return Buffer.concat(chunks);
-}
-
-function getStripeSignature(request: VercelRequest): string | null {
-  const signature = request.headers["stripe-signature"];
-
-  if (Array.isArray(signature)) {
-    return signature[0] ?? null;
-  }
-
-  return signature ?? null;
-}
-
-export default async function stripeWebhook(request: VercelRequest, response: VercelResponse) {
+module.exports = async function stripeWebhook(request, response) {
   console.info("[stripe-webhook] Request received", {
     method: request.method,
     hasSignature: Boolean(request.headers["stripe-signature"]),
@@ -42,7 +15,7 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
     return response.status(405).json({ error: "Method not allowed." });
   }
 
-  let serverConfig: ReturnType<typeof getStripeWebhookConfig>;
+  let serverConfig;
 
   try {
     serverConfig = getStripeWebhookConfig();
@@ -54,18 +27,25 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
     });
   }
 
-  const signature = getStripeSignature(request);
+  const signatureHeader = request.headers["stripe-signature"];
+  const signature = Array.isArray(signatureHeader)
+    ? signatureHeader[0]
+    : signatureHeader;
 
   if (!signature) {
     console.warn("[stripe-webhook] Missing Stripe signature header");
     return response.status(400).json({ error: "Missing Stripe signature." });
   }
 
-  let event: Stripe.Event;
+  let event;
 
   try {
     const stripe = new Stripe(serverConfig.secretKey);
-    const rawBody = await readRawBody(request);
+    const chunks = [];
+    for await (const chunk of request) {
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    }
+    const rawBody = Buffer.concat(chunks);
     event = stripe.webhooks.constructEvent(
       rawBody,
       signature,
@@ -102,7 +82,7 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
     });
   }
 
-  let grant: ReturnType<typeof buildPremiumGrant>;
+  let grant;
 
   try {
     grant = buildPremiumGrant(session, event.created);
@@ -168,4 +148,11 @@ export default async function stripeWebhook(request: VercelRequest, response: Ve
       details: getErrorMessage(databaseError, "Unknown database error"),
     });
   }
-}
+};
+
+// Disable Vercel body parsing so Stripe signature verification receives the raw body.
+module.exports.config = {
+  api: {
+    bodyParser: false,
+  },
+};

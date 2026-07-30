@@ -1,14 +1,13 @@
-import type Stripe from "stripe";
+import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
-import { buildPremiumGrant } from "./premiumGrant";
+
+const require = createRequire(import.meta.url);
+const { buildPremiumGrant } = require("./premiumGrant.js");
 
 const userId = "7b26ba2e-98f4-4d79-a523-7f31e16cb6f4";
 const paidAt = Date.UTC(2026, 6, 28, 12, 0, 0) / 1000;
 
-function checkoutSession(
-  plan: string,
-  overrides: Partial<Stripe.Checkout.Session> = {},
-): Stripe.Checkout.Session {
+function checkoutSession(plan: string, overrides: Record<string, unknown> = {}) {
   return {
     id: "cs_test_example",
     object: "checkout.session",
@@ -20,7 +19,7 @@ function checkoutSession(
       plan,
     },
     ...overrides,
-  } as Stripe.Checkout.Session;
+  };
 }
 
 describe("Premium webhook grants", () => {

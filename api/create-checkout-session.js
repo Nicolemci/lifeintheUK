@@ -1,18 +1,13 @@
-import { createClient } from "@supabase/supabase-js";
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import Stripe from "stripe";
-import { getErrorMessage, logApiFailure } from "./_lib/httpError";
-import { isPremiumPlanId } from "./_lib/plans";
-import { getStripeServerConfig } from "./_lib/stripeConfig";
+const { createClient } = require("@supabase/supabase-js");
+const Stripe = require("stripe");
+const { getErrorMessage, logApiFailure } = require("./_lib/httpError");
+const { isPremiumPlanId } = require("./_lib/plans");
+const { getStripeServerConfig } = require("./_lib/stripeConfig");
 
-type CheckoutRequestBody = {
-  plan?: unknown;
-};
-
-function getBearerToken(request: VercelRequest): string | null {
+function getBearerToken(request) {
   const authorization = request.headers.authorization;
 
-  if (!authorization?.startsWith("Bearer ")) {
+  if (!authorization || !authorization.startsWith("Bearer ")) {
     return null;
   }
 
@@ -20,14 +15,13 @@ function getBearerToken(request: VercelRequest): string | null {
   return token || null;
 }
 
-function getRequestOrigin(request: VercelRequest): string {
+function getRequestOrigin(request) {
   const originHeader = request.headers.origin;
   const origin = Array.isArray(originHeader) ? originHeader[0] : originHeader;
 
   if (origin) {
     try {
       const parsedOrigin = new URL(origin);
-
       const isHttps = parsedOrigin.protocol === "https:";
       const isLocalDevelopment =
         parsedOrigin.protocol === "http:" &&
@@ -53,28 +47,25 @@ function getRequestOrigin(request: VercelRequest): string {
   return "http://localhost:5173";
 }
 
-function parseBody(request: VercelRequest): CheckoutRequestBody {
+function parseBody(request) {
   if (typeof request.body === "string") {
     try {
-      return JSON.parse(request.body) as CheckoutRequestBody;
+      return JSON.parse(request.body);
     } catch (error) {
       logApiFailure("create-checkout-session", error, { stage: "parseBody" });
       return {};
     }
   }
 
-  return (request.body ?? {}) as CheckoutRequestBody;
+  return request.body || {};
 }
 
-export default async function createCheckoutSession(
-  request: VercelRequest,
-  response: VercelResponse,
-) {
+module.exports = async function createCheckoutSession(request, response) {
   console.info("[create-checkout-session] Request received", {
     method: request.method,
     hasAuthorization: Boolean(request.headers.authorization),
-    origin: request.headers.origin ?? null,
-    forwardedHost: request.headers["x-forwarded-host"] ?? null,
+    origin: request.headers.origin || null,
+    forwardedHost: request.headers["x-forwarded-host"] || null,
   });
 
   if (request.method !== "POST") {
@@ -120,7 +111,7 @@ export default async function createCheckoutSession(
     } = await supabase.auth.getUser(accessToken);
 
     if (userError || !user) {
-      logApiFailure("create-checkout-session", userError ?? "No user returned", {
+      logApiFailure("create-checkout-session", userError || "No user returned", {
         stage: "supabase.auth.getUser",
       });
       return response.status(401).json({ error: "Your session is invalid or has expired." });
@@ -179,4 +170,4 @@ export default async function createCheckoutSession(
       details: getErrorMessage(error, "Unknown checkout failure"),
     });
   }
-}
+};

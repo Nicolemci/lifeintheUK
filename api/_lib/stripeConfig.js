@@ -1,37 +1,8 @@
-import type { PremiumPlanId } from "./plans";
+const { isPremiumPlanId } = require("./plans");
 
-export type StripeServerEnvironment = {
-  STRIPE_SECRET_KEY?: string;
-  STRIPE_PRICE_ONE_WEEK?: string;
-  STRIPE_PRICE_1_WEEK?: string;
-  STRIPE_PRICE_TWO_WEEKS?: string;
-  STRIPE_PRICE_2_WEEKS?: string;
-  STRIPE_PRICE_FOUR_WEEKS?: string;
-  STRIPE_PRICE_4_WEEKS?: string;
-  STRIPE_PRICE_LIFETIME?: string;
-  STRIPE_WEBHOOK_SECRET?: string;
-  VITE_SUPABASE_URL?: string;
-  VITE_SUPABASE_PUBLISHABLE_KEY?: string;
-  SUPABASE_SERVICE_ROLE_KEY?: string;
-};
-
-export type StripeServerConfig = {
-  secretKey: string;
-  supabaseUrl: string;
-  supabasePublishableKey: string;
-  priceIds: Record<PremiumPlanId, string>;
-};
-
-export type StripeWebhookConfig = {
-  secretKey: string;
-  webhookSecret: string;
-  supabaseUrl: string;
-  supabaseServiceRoleKey: string;
-};
-
-function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
+function firstNonEmpty(...values) {
   for (const value of values) {
-    const trimmed = value?.trim();
+    const trimmed = typeof value === "string" ? value.trim() : "";
     if (trimmed) {
       return trimmed;
     }
@@ -40,9 +11,7 @@ function firstNonEmpty(...values: Array<string | undefined>): string | undefined
   return undefined;
 }
 
-export function getStripeServerConfig(
-  environment: StripeServerEnvironment = process.env,
-): StripeServerConfig {
+function getStripeServerConfig(environment = process.env) {
   const values = {
     STRIPE_SECRET_KEY: firstNonEmpty(environment.STRIPE_SECRET_KEY),
     STRIPE_PRICE_ONE_WEEK: firstNonEmpty(
@@ -59,7 +28,9 @@ export function getStripeServerConfig(
     ),
     STRIPE_PRICE_LIFETIME: firstNonEmpty(environment.STRIPE_PRICE_LIFETIME),
     VITE_SUPABASE_URL: firstNonEmpty(environment.VITE_SUPABASE_URL),
-    VITE_SUPABASE_PUBLISHABLE_KEY: firstNonEmpty(environment.VITE_SUPABASE_PUBLISHABLE_KEY),
+    VITE_SUPABASE_PUBLISHABLE_KEY: firstNonEmpty(
+      environment.VITE_SUPABASE_PUBLISHABLE_KEY,
+    ),
   };
   const missingVariables = Object.entries(values)
     .filter(([, value]) => !value)
@@ -75,21 +46,19 @@ export function getStripeServerConfig(
   }
 
   return {
-    secretKey: values.STRIPE_SECRET_KEY!,
-    supabaseUrl: values.VITE_SUPABASE_URL!,
-    supabasePublishableKey: values.VITE_SUPABASE_PUBLISHABLE_KEY!,
+    secretKey: values.STRIPE_SECRET_KEY,
+    supabaseUrl: values.VITE_SUPABASE_URL,
+    supabasePublishableKey: values.VITE_SUPABASE_PUBLISHABLE_KEY,
     priceIds: {
-      one_week: values.STRIPE_PRICE_ONE_WEEK!,
-      two_weeks: values.STRIPE_PRICE_TWO_WEEKS!,
-      four_weeks: values.STRIPE_PRICE_FOUR_WEEKS!,
-      lifetime: values.STRIPE_PRICE_LIFETIME!,
+      one_week: values.STRIPE_PRICE_ONE_WEEK,
+      two_weeks: values.STRIPE_PRICE_TWO_WEEKS,
+      four_weeks: values.STRIPE_PRICE_FOUR_WEEKS,
+      lifetime: values.STRIPE_PRICE_LIFETIME,
     },
   };
 }
 
-export function getStripeWebhookConfig(
-  environment: StripeServerEnvironment = process.env,
-): StripeWebhookConfig {
+function getStripeWebhookConfig(environment = process.env) {
   const values = {
     STRIPE_SECRET_KEY: firstNonEmpty(environment.STRIPE_SECRET_KEY),
     STRIPE_WEBHOOK_SECRET: firstNonEmpty(environment.STRIPE_WEBHOOK_SECRET),
@@ -110,9 +79,15 @@ export function getStripeWebhookConfig(
   }
 
   return {
-    secretKey: values.STRIPE_SECRET_KEY!,
-    webhookSecret: values.STRIPE_WEBHOOK_SECRET!,
-    supabaseUrl: values.VITE_SUPABASE_URL!,
-    supabaseServiceRoleKey: values.SUPABASE_SERVICE_ROLE_KEY!,
+    secretKey: values.STRIPE_SECRET_KEY,
+    webhookSecret: values.STRIPE_WEBHOOK_SECRET,
+    supabaseUrl: values.VITE_SUPABASE_URL,
+    supabaseServiceRoleKey: values.SUPABASE_SERVICE_ROLE_KEY,
   };
 }
+
+module.exports = {
+  getStripeServerConfig,
+  getStripeWebhookConfig,
+  isPremiumPlanId,
+};
