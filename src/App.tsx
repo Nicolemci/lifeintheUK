@@ -1073,14 +1073,121 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
 
 function UKLandmarkSkyline() {
   return (
-    <img
+    <svg
       className="uk-landmark-skyline"
-      src="/london-skyline.png"
-      alt="London landmarks including the London Eye, Elizabeth Tower, Tower Bridge and the Tower of London"
-      width={1000}
-      height={666}
-      decoding="async"
-    />
+      viewBox="0 0 760 168"
+      role="img"
+      aria-label="London landmarks including the London Eye, Elizabeth Tower, Tower Bridge and the Tower of London"
+    >
+      <rect className="skyline-backdrop" x="0" y="0" width="760" height="168" rx="18" />
+
+      <g className="skyline-landmarks" fill="currentColor" stroke="none">
+        {/* London Eye */}
+        <g transform="translate(78 18)">
+          <circle cx="70" cy="70" r="58" className="skyline-outline" />
+          <circle cx="70" cy="70" r="50" className="skyline-cutout" />
+          <circle cx="70" cy="70" r="8" />
+          <g className="skyline-outline">
+            <path d="M70 20v100M20 70h100M35 35l70 70M105 35l-70 70M28 52h84M28 88h84M52 28v84M88 28v84" />
+          </g>
+          {/* Capsules */}
+          <g>
+            <rect x="64" y="14" width="12" height="10" rx="2" />
+            <rect x="102" y="30" width="12" height="10" rx="2" />
+            <rect x="116" y="64" width="12" height="10" rx="2" />
+            <rect x="102" y="98" width="12" height="10" rx="2" />
+            <rect x="64" y="116" width="12" height="10" rx="2" />
+            <rect x="26" y="98" width="12" height="10" rx="2" />
+            <rect x="12" y="64" width="12" height="10" rx="2" />
+            <rect x="26" y="30" width="12" height="10" rx="2" />
+          </g>
+          {/* Support A-frame */}
+          <path d="M54 128L70 78l16 50H54z" />
+          <path d="M58 128h24v8H58z" />
+          <rect x="48" y="134" width="44" height="6" rx="1" className="skyline-cutout" />
+        </g>
+
+        {/* Elizabeth Tower / Big Ben */}
+        <g transform="translate(250 16)">
+          <path d="M28 140V48h40v92H28z" />
+          <path d="M34 48V28h28v20H34z" />
+          <path d="M40 28l8-16 8 16H40z" />
+          <rect x="46" y="10" width="4" height="8" />
+          {/* Clock face */}
+          <circle cx="48" cy="62" r="14" className="skyline-cutout" />
+          <circle cx="48" cy="62" r="11" />
+          <circle cx="48" cy="62" r="8" className="skyline-cutout" />
+          <path d="M48 62v-6M48 62h5" className="skyline-outline" strokeWidth="2" />
+          {/* Windows */}
+          <g className="skyline-cutout">
+            <rect x="36" y="86" width="6" height="12" rx="1" />
+            <rect x="46" y="86" width="6" height="12" rx="1" />
+            <rect x="56" y="86" width="6" height="12" rx="1" />
+            <rect x="36" y="106" width="6" height="12" rx="1" />
+            <rect x="46" y="106" width="6" height="12" rx="1" />
+            <rect x="56" y="106" width="6" height="12" rx="1" />
+            <rect x="36" y="126" width="6" height="8" rx="1" />
+            <rect x="46" y="126" width="6" height="8" rx="1" />
+            <rect x="56" y="126" width="6" height="8" rx="1" />
+          </g>
+        </g>
+
+        {/* Tower Bridge */}
+        <g transform="translate(360 34)">
+          <path d="M24 106V42h36v64H24zM140 106V42h36v64h-36z" />
+          <path d="M18 42h48l-8-14H26zM134 42h48l-8-14h-32z" />
+          {/* Upper walkways */}
+          <path d="M60 54h80v10H60z" />
+          <path d="M60 68h80v6H60z" className="skyline-cutout" />
+          {/* Road deck / bascules */}
+          <path d="M60 88h80v10H60z" />
+          {/* Suspension cables */}
+          <path
+            className="skyline-outline"
+            d="M42 56c28 34 88 34 116 0M42 92c22-18 76-18 116 0"
+            fill="none"
+            strokeWidth="4"
+          />
+          {/* Tower windows */}
+          <g className="skyline-cutout">
+            <rect x="32" y="56" width="8" height="14" rx="1" />
+            <rect x="44" y="56" width="8" height="14" rx="1" />
+            <rect x="32" y="78" width="8" height="14" rx="1" />
+            <rect x="44" y="78" width="8" height="14" rx="1" />
+            <rect x="148" y="56" width="8" height="14" rx="1" />
+            <rect x="160" y="56" width="8" height="14" rx="1" />
+            <rect x="148" y="78" width="8" height="14" rx="1" />
+            <rect x="160" y="78" width="8" height="14" rx="1" />
+          </g>
+          <path d="M0 106h200" className="skyline-outline" fill="none" strokeWidth="6" />
+        </g>
+
+        {/* Tower of London */}
+        <g transform="translate(590 48)">
+          <path d="M8 92V44h124v48H8z" />
+          {/* Three towers */}
+          <path d="M14 44V24h22v20H14zM58 44V14h28v30H58zM108 44V24h22v20h-22z" />
+          <path d="M18 24l6-10 6 10H18zM66 14l7-12 7 12H66zM112 24l6-10 6 10h-12z" />
+          {/* Flags */}
+          <path d="M24 8v6h10zM73 0v6h10zM118 8v6h10z" />
+          {/* Battlements */}
+          <path d="M36 44h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6" className="skyline-cutout" />
+          {/* Windows + gate */}
+          <g className="skyline-cutout">
+            <rect x="20" y="52" width="8" height="12" rx="3" />
+            <rect x="36" y="52" width="8" height="12" rx="3" />
+            <rect x="66" y="36" width="8" height="12" rx="3" />
+            <rect x="80" y="36" width="8" height="12" rx="3" />
+            <rect x="112" y="52" width="8" height="12" rx="3" />
+            <rect x="20" y="70" width="8" height="12" rx="3" />
+            <rect x="112" y="70" width="8" height="12" rx="3" />
+            <path d="M58 92V68c0-8 24-8 24 0v24H58z" />
+          </g>
+        </g>
+      </g>
+
+      <path className="skyline-ground" d="M36 152h688" fill="none" />
+    </svg>
   );
 }
 
