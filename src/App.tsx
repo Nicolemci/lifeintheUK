@@ -33,6 +33,7 @@ import {
 } from "./absence";
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
+import { explanationParagraphs } from "./explanationParagraphs";
 import { buildStudyGuide } from "./handbookStudyGuide";
 import { useAuth } from "./auth/AuthContext";
 import LogoutButton from "./auth/LogoutButton";
@@ -1224,7 +1225,9 @@ function HandbookReader() {
                 {section.facts.map((fact) => (
                   <section className="guide-fact" key={fact.id}>
                     <h3>{fact.heading}</h3>
-                    <p>{fact.detail}</p>
+                    <div className="guide-fact-detail">
+                      <ExplanationBody explanation={fact.detail} />
+                    </div>
                   </section>
                 ))}
               </div>
@@ -1382,6 +1385,18 @@ function getOptionExplanation(question: Question, optionIndex: number): string |
   return undefined;
 }
 
+function ExplanationBody({ explanation }: { explanation: string }) {
+  const paragraphs = explanationParagraphs(explanation);
+
+  return (
+    <>
+      {paragraphs.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+    </>
+  );
+}
+
 function AnswerFeedback({
   question,
   selectedAnswer,
@@ -1394,6 +1409,8 @@ function AnswerFeedback({
   }
 
   const answeredCorrectly = selectedAnswer === question.correctIndex;
+  const explanationParagraphsList = explanationParagraphs(question.explanation);
+  const [leadParagraph, ...followOnParagraphs] = explanationParagraphsList;
   const selectedExplanation = getOptionExplanation(question, selectedAnswer);
   const relevantWrongOptions = question.options
     .map((option, optionIndex) => ({ option, optionIndex }))
@@ -1404,14 +1421,29 @@ function AnswerFeedback({
 
   return (
     <div className="explanation" role="status">
-      <strong>{answeredCorrectly ? "Correct." : "Not quite."}</strong>{" "}
-      {selectedExplanation ?? "That is not the correct answer for this question."}
-      {!answeredCorrectly ? (
-        <p>
-          Correct answer: <strong>{question.options[question.correctIndex]}</strong>.{" "}
-          {question.explanation}
-        </p>
-      ) : null}
+      {answeredCorrectly ? (
+        <>
+          <p>
+            <strong>Correct.</strong> {leadParagraph}
+          </p>
+          {followOnParagraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </>
+      ) : (
+        <>
+          <p>
+            <strong>Not quite.</strong>{" "}
+            {selectedExplanation && selectedExplanation !== question.explanation
+              ? selectedExplanation
+              : "That is not the correct answer for this question."}
+          </p>
+          <p>
+            Correct answer: <strong>{question.options[question.correctIndex]}</strong>.
+          </p>
+          <ExplanationBody explanation={question.explanation} />
+        </>
+      )}
       {relevantWrongOptions.length > 0 ? (
         <details className="option-explanations">
           <summary>Relevant other answers from the handbook</summary>
@@ -1682,7 +1714,9 @@ function ResultsView({
                 {selectedAnswer === undefined ? "Not answered" : question.options[selectedAnswer]}
               </p>
               {!answeredCorrectly ? <p>Correct answer: {question.options[question.correctIndex]}</p> : null}
-              <p>{question.explanation}</p>
+              <div className="review-explanation">
+                <ExplanationBody explanation={question.explanation} />
+              </div>
             </article>
           );
         })}

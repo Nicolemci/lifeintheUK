@@ -7,7 +7,7 @@
       "Each question has a stable integer `id`. Do not renumber existing ids if you add questions; append new ones.",
       "`answerIndex` is the 0-based index of the correct option in `options`.",
       "`answer` duplicates the correct option text for convenience/validation.",
-      "`explanation` always (a) confirms/contextualises the correct answer, then (b) explains any distractor that is itself the correct answer to a DIFFERENT topic, telling the learner what that fact is relevant to. This is the requested cross-reference behaviour.",
+      "`explanation` is multi-paragraph: first paragraph confirms the correct answer; each following paragraph explains a distractor / related topic. Render with paragraph breaks.",
       "`category` groups questions by handbook chapter so you can build category-filtered or full-random 24-question mock exams.",
       "Official real test format for reference: 24 questions, 45 minutes, pass mark 75% (18/24 correct). You can hard-code that in the exam engine.",
       "To build a mock exam, randomly draw 24 questions across categories, shuffle `options` per render, and recompute the correct index after shuffling (or shuffle a copy and track the answer text)."
@@ -50,7 +50,7 @@
       ],
       "answer": "The rule of law",
       "answerIndex": 0,
-      "explanation": "The fundamental principles are democracy, the rule of law, individual liberty, tolerance of those with different faiths and beliefs, and participation in community life. 'A written constitution' is wrong here and is relevant to a different topic: the UK's constitution is famously unwritten (uncodified). 'State religion for all' misstates religion in the UK — the Church of England is the established church in England, but everyone has the legal right to choose their religion or none."
+      "explanation": "The fundamental principles are democracy, the rule of law, individual liberty, tolerance of those with different faiths and beliefs, and participation in community life.\n\n'A written constitution' is wrong here and is relevant to a different topic: the UK's constitution is famously unwritten (uncodified).\n\n'State religion for all' misstates religion in the UK — the Church of England is the established church in England, but everyone has the legal right to choose their religion or none."
     },
     {
       "id": 2,
@@ -64,7 +64,7 @@
       ],
       "answer": "Give loyalty to the UK and uphold its democratic values",
       "answerIndex": 0,
-      "explanation": "The pledge is to give loyalty to the United Kingdom, respect its rights and freedoms, uphold its democratic values, and observe its laws faithfully. The UK does not require renouncing other nationalities. Military service is not compulsory. There is no annual 'citizenship tax'; general income tax and National Insurance are separate topics covered under tax and rights."
+      "explanation": "The pledge is to give loyalty to the United Kingdom, respect its rights and freedoms, uphold its democratic values, and observe its laws faithfully.\n\nThe UK does not require renouncing other nationalities.\n\nMilitary service is not compulsory.\n\nThere is no annual 'citizenship tax'; general income tax and National Insurance are separate topics covered under tax and rights."
     },
     {
       "id": 3,
@@ -78,7 +78,7 @@
       ],
       "answer": "24",
       "answerIndex": 0,
-      "explanation": "The test consists of 24 questions and lasts 45 minutes. '18' is the number of correct answers needed to pass (the 75% pass mark), so it is relevant to the pass threshold, not the number of questions. '45' is relevant to the time limit in minutes, not the question count."
+      "explanation": "The test consists of 24 questions and lasts 45 minutes.\n\n'18' is the number of correct answers needed to pass (the 75% pass mark), so it is relevant to the pass threshold, not the number of questions.\n\n'45' is relevant to the time limit in minutes, not the question count."
     },
     {
       "id": 4,
@@ -92,7 +92,7 @@
       ],
       "answer": "Freedom of speech",
       "answerIndex": 0,
-      "explanation": "The UK offers freedom of belief and religion, freedom of speech, freedom from unfair discrimination, a right to a fair trial, and a right to join in electing a government. Freedom from tax is not a right — paying income tax and National Insurance is a duty covered under the tax topic. Guaranteed jobs and free housing are not offered."
+      "explanation": "The UK offers freedom of belief and religion, freedom of speech, freedom from unfair discrimination, a right to a fair trial, and a right to join in electing a government.\n\nFreedom from tax is not a right — paying income tax and National Insurance is a duty covered under the tax topic.\n\nGuaranteed jobs and free housing are not offered."
     },
     {
       "id": 5,
@@ -106,7 +106,7 @@
       ],
       "answer": "England, Scotland, Wales and Northern Ireland",
       "answerIndex": 0,
-      "explanation": "The UK is England, Scotland, Wales and Northern Ireland. 'England, Scotland and Wales' is the definition of Great Britain, so it is relevant to a question about what Great Britain means. The Republic of Ireland is an independent country, not part of the UK. The Isle of Man is a Crown dependency linked to the UK but not part of it."
+      "explanation": "The UK is England, Scotland, Wales and Northern Ireland.\n\n'England, Scotland and Wales' is the definition of Great Britain, so it is relevant to a question about what Great Britain means.\n\nThe Republic of Ireland is an independent country, not part of the UK.\n\nThe Isle of Man is a Crown dependency linked to the UK but not part of it."
     },
     {
       "id": 6,
@@ -120,7 +120,7 @@
       ],
       "answer": "England, Scotland and Wales",
       "answerIndex": 0,
-      "explanation": "'Great Britain' refers only to England, Scotland and Wales — not Northern Ireland. 'England, Scotland, Wales and Northern Ireland' is the full United Kingdom, which is a separate definition. The Crown dependencies (Channel Islands, Isle of Man) are linked to but not part of the UK or Great Britain."
+      "explanation": "'Great Britain' refers only to England, Scotland and Wales — not Northern Ireland.\n\n'England, Scotland, Wales and Northern Ireland' is the full United Kingdom, which is a separate definition.\n\nThe Crown dependencies (Channel Islands, Isle of Man) are linked to but not part of the UK or Great Britain."
     },
     {
       "id": 7,
@@ -134,7 +134,7 @@
       ],
       "answer": "The Channel Islands and the Isle of Man",
       "answerIndex": 0,
-      "explanation": "The Channel Islands and the Isle of Man are Crown dependencies with their own governments, linked to the UK but not part of it. The Falkland Islands and St Helena are British overseas territories — a different category relevant to a question about overseas territories. Scotland and Wales are constituent countries of the UK with devolved powers."
+      "explanation": "The Channel Islands and the Isle of Man are Crown dependencies with their own governments, linked to the UK but not part of it.\n\nThe Falkland Islands and St Helena are British overseas territories — a different category relevant to a question about overseas territories.\n\nScotland and Wales are constituent countries of the UK with devolved powers."
     },
     {
       "id": 8,
@@ -148,7 +148,7 @@
       ],
       "answer": "Westminster",
       "answerIndex": 0,
-      "explanation": "The UK Parliament sits at Westminster in London. Holyrood is relevant to the Scottish Parliament in Edinburgh. Stormont is relevant to the Northern Ireland Assembly in Belfast. Cardiff Bay (the Senedd) is relevant to the Welsh Parliament/Assembly."
+      "explanation": "The UK Parliament sits at Westminster in London.\n\nHolyrood is relevant to the Scottish Parliament in Edinburgh.\n\nStormont is relevant to the Northern Ireland Assembly in Belfast.\n\nCardiff Bay (the Senedd) is relevant to the Welsh Parliament/Assembly."
     },
     {
       "id": 9,
@@ -162,7 +162,7 @@
       ],
       "answer": "Wiltshire",
       "answerIndex": 0,
-      "explanation": "Stonehenge, a Stone Age monument, stands in Wiltshire. Dorset is relevant to Maiden Castle, an impressive Iron Age hill fort. Suffolk is relevant to the Anglo-Saxon burial site at Sutton Hoo. Orkney is relevant to Skara Brae, the best-preserved prehistoric village in northern Europe."
+      "explanation": "Stonehenge, a Stone Age monument, stands in Wiltshire.\n\nDorset is relevant to Maiden Castle, an impressive Iron Age hill fort.\n\nSuffolk is relevant to the Anglo-Saxon burial site at Sutton Hoo.\n\nOrkney is relevant to Skara Brae, the best-preserved prehistoric village in northern Europe."
     },
     {
       "id": 10,
@@ -176,7 +176,7 @@
       ],
       "answer": "A preserved prehistoric village on Orkney",
       "answerIndex": 0,
-      "explanation": "Skara Brae on Orkney is the best-preserved prehistoric village in northern Europe, from the end of the Stone Age. A Roman fort on Hadrian's Wall points to Housesteads or Vindolanda. A Norman castle in Wales points to Conwy or Caernarvon. An Iron Age hill fort in Dorset is Maiden Castle."
+      "explanation": "Skara Brae on Orkney is the best-preserved prehistoric village in northern Europe, from the end of the Stone Age.\n\nA Roman fort on Hadrian's Wall points to Housesteads or Vindolanda.\n\nA Norman castle in Wales points to Conwy or Caernarvon.\n\nAn Iron Age hill fort in Dorset is Maiden Castle."
     },
     {
       "id": 11,
@@ -190,7 +190,7 @@
       ],
       "answer": "Claudius",
       "answerIndex": 0,
-      "explanation": "Emperor Claudius led the successful invasion in AD 43. Julius Caesar led an earlier unsuccessful invasion in 55 BC — relevant to the first Roman attempt. Hadrian is relevant to Hadrian's Wall, built to keep out the Picts. Boudicca was not a Roman at all — she was the queen of the Iceni who fought against the Romans."
+      "explanation": "Emperor Claudius led the successful invasion in AD 43.\n\nJulius Caesar led an earlier unsuccessful invasion in 55 BC — relevant to the first Roman attempt.\n\nHadrian is relevant to Hadrian's Wall, built to keep out the Picts.\n\nBoudicca was not a Roman at all — she was the queen of the Iceni who fought against the Romans."
     },
     {
       "id": 12,
@@ -204,7 +204,7 @@
       ],
       "answer": "To keep out the Picts",
       "answerIndex": 0,
-      "explanation": "Hadrian's Wall was built to keep out the Picts (ancestors of the Scottish people). The Vikings came much later, from AD 789, and are relevant to Anglo-Saxon-era raids and the Danelaw. The Welsh border and London are not the purpose of Hadrian's Wall."
+      "explanation": "Hadrian's Wall was built to keep out the Picts (ancestors of the Scottish people).\n\nThe Vikings came much later, from AD 789, and are relevant to Anglo-Saxon-era raids and the Danelaw.\n\nThe Welsh border and London are not the purpose of Hadrian's Wall."
     },
     {
       "id": 13,
@@ -218,7 +218,7 @@
       ],
       "answer": "The Jutes, Angles and Saxons",
       "answerIndex": 0,
-      "explanation": "After the Romans left, Britain was invaded by the Jutes, Angles and Saxons, whose languages are the basis of modern English. The Normans invaded much later, in 1066. The Huguenots were French Protestant refugees who came peacefully between 1680 and 1720 — relevant to later migration, not invasion."
+      "explanation": "After the Romans left, Britain was invaded by the Jutes, Angles and Saxons, whose languages are the basis of modern English.\n\nThe Normans invaded much later, in 1066.\n\nThe Huguenots were French Protestant refugees who came peacefully between 1680 and 1720 — relevant to later migration, not invasion."
     },
     {
       "id": 14,
@@ -232,7 +232,7 @@
       ],
       "answer": "St Augustine",
       "answerIndex": 0,
-      "explanation": "St Augustine led missionaries from Rome and became the first Archbishop of Canterbury. St Patrick is relevant as the patron saint of Ireland. St Columba founded a monastery on Iona, off Scotland. St David is relevant as the patron saint of Wales."
+      "explanation": "St Augustine led missionaries from Rome and became the first Archbishop of Canterbury.\n\nSt Patrick is relevant as the patron saint of Ireland.\n\nSt Columba founded a monastery on Iona, off Scotland.\n\nSt David is relevant as the patron saint of Wales."
     },
     {
       "id": 15,
@@ -246,7 +246,7 @@
       ],
       "answer": "Alfred the Great",
       "answerIndex": 0,
-      "explanation": "King Alfred the Great united the Anglo-Saxon kingdoms and defeated the Vikings. William the Conqueror is relevant to the Norman Conquest of 1066. Cnut (Canute) was the first Danish king to rule England. Kenneth MacAlpin united the people in the north, and the term 'Scotland' began to be used for that country."
+      "explanation": "King Alfred the Great united the Anglo-Saxon kingdoms and defeated the Vikings.\n\nWilliam the Conqueror is relevant to the Norman Conquest of 1066.\n\nCnut (Canute) was the first Danish king to rule England.\n\nKenneth MacAlpin united the people in the north, and the term 'Scotland' began to be used for that country."
     },
     {
       "id": 16,
@@ -260,7 +260,7 @@
       ],
       "answer": "1066 — William, Duke of Normandy",
       "answerIndex": 0,
-      "explanation": "At the Battle of Hastings in 1066, William, Duke of Normandy defeated Harold, the Saxon king. '1215 — King John' is relevant to the Magna Carta. '1314 — Robert the Bruce' is relevant to the Battle of Bannockburn. '1415 — Henry V' is relevant to the Battle of Agincourt."
+      "explanation": "At the Battle of Hastings in 1066, William, Duke of Normandy defeated Harold, the Saxon king.\n\n'1215 — King John' is relevant to the Magna Carta.\n\n'1314 — Robert the Bruce' is relevant to the Battle of Bannockburn.\n\n'1415 — Henry V' is relevant to the Battle of Agincourt."
     },
     {
       "id": 17,
@@ -274,7 +274,7 @@
       ],
       "answer": "A record of towns, villages, land and ownership after the Norman Conquest",
       "answerIndex": 0,
-      "explanation": "William the Conqueror ordered the Domesday Book, listing towns, villages, landowners and animals. A charter limiting the king's power is the Magna Carta (1215). A translation of the Bible into English relates to the King James Bible. A diary of the Great Fire of London relates to Samuel Pepys."
+      "explanation": "William the Conqueror ordered the Domesday Book, listing towns, villages, landowners and animals.\n\nA charter limiting the king's power is the Magna Carta (1215).\n\nA translation of the Bible into English relates to the King James Bible.\n\nA diary of the Great Fire of London relates to Samuel Pepys."
     },
     {
       "id": 18,
@@ -288,7 +288,7 @@
       ],
       "answer": "Robert the Bruce",
       "answerIndex": 0,
-      "explanation": "At Bannockburn (1314), the Scots led by Robert the Bruce defeated the English, and Scotland remained unconquered. William the Conqueror is relevant to 1066. Henry V is relevant to the Battle of Agincourt (1415). Edward I is relevant to the Statute of Rhuddlan, which annexed Wales."
+      "explanation": "At Bannockburn (1314), the Scots led by Robert the Bruce defeated the English, and Scotland remained unconquered.\n\nWilliam the Conqueror is relevant to 1066.\n\nHenry V is relevant to the Battle of Agincourt (1415).\n\nEdward I is relevant to the Statute of Rhuddlan, which annexed Wales."
     },
     {
       "id": 19,
@@ -302,7 +302,7 @@
       ],
       "answer": "Annexed Wales to the Crown of England",
       "answerIndex": 0,
-      "explanation": "King Edward I's Statute of Rhuddlan (1284) annexed Wales to the Crown of England. Ending the Wars of the Roses relates to the Battle of Bosworth Field (1485). Establishing the Church of England relates to Henry VIII. Uniting England and Scotland relates to the Act of Union of 1707."
+      "explanation": "King Edward I's Statute of Rhuddlan (1284) annexed Wales to the Crown of England.\n\nEnding the Wars of the Roses relates to the Battle of Bosworth Field (1485).\n\nEstablishing the Church of England relates to Henry VIII.\n\nUniting England and Scotland relates to the Act of Union of 1707."
     },
     {
       "id": 20,
@@ -316,7 +316,7 @@
       ],
       "answer": "That even the king was subject to the law",
       "answerIndex": 0,
-      "explanation": "The Magna Carta established that even the king was subject to the law and restricted his power. Free secondary education relates to the Education Act 1944 (the Butler Act). The NHS was created in 1948. Universal suffrage developed much later, in the 19th and 20th centuries."
+      "explanation": "The Magna Carta established that even the king was subject to the law and restricted his power.\n\nFree secondary education relates to the Education Act 1944 (the Butler Act).\n\nThe NHS was created in 1948.\n\nUniversal suffrage developed much later, in the 19th and 20th centuries."
     },
     {
       "id": 21,
@@ -330,7 +330,7 @@
       ],
       "answer": "About one third",
       "answerIndex": 0,
-      "explanation": "The Black Death (1348) killed about one third of the population of England, with a similar proportion in Scotland and Wales, causing labour shortages and social change. The other fractions are distractors and do not correspond to the handbook figure."
+      "explanation": "The Black Death (1348) killed about one third of the population of England, with a similar proportion in Scotland and Wales, causing labour shortages and social change.\n\nThe other fractions are distractors and do not correspond to the handbook figure."
     },
     {
       "id": 22,
@@ -344,7 +344,7 @@
       ],
       "answer": "Geoffrey Chaucer",
       "answerIndex": 0,
-      "explanation": "Geoffrey Chaucer wrote The Canterbury Tales. William Shakespeare is relevant to the Elizabethan period and plays such as Hamlet. William Caxton was the first person in England to print books using a printing press — relevant to printing, not authorship. John Milton wrote Paradise Lost."
+      "explanation": "Geoffrey Chaucer wrote The Canterbury Tales.\n\nWilliam Shakespeare is relevant to the Elizabethan period and plays such as Hamlet.\n\nWilliam Caxton was the first person in England to print books using a printing press — relevant to printing, not authorship.\n\nJohn Milton wrote Paradise Lost."
     },
     {
       "id": 23,
@@ -358,7 +358,7 @@
       ],
       "answer": "Lancaster and York",
       "answerIndex": 0,
-      "explanation": "The Wars of the Roses were fought between the House of Lancaster (red rose) and the House of York (white rose). Tudor and Stuart are relevant to later royal dynasties. Whigs and Tories relate to early party politics after the Glorious Revolution. Cavaliers and Roundheads relate to the English Civil War."
+      "explanation": "The Wars of the Roses were fought between the House of Lancaster (red rose) and the House of York (white rose).\n\nTudor and Stuart are relevant to later royal dynasties.\n\nWhigs and Tories relate to early party politics after the Glorious Revolution.\n\nCavaliers and Roundheads relate to the English Civil War."
     },
     {
       "id": 24,
@@ -372,7 +372,7 @@
       ],
       "answer": "The Battle of Bosworth Field",
       "answerIndex": 0,
-      "explanation": "The Wars of the Roses ended at Bosworth Field (1485), where Richard III was killed and Henry Tudor became Henry VII. Hastings (1066) was the Norman Conquest. Bannockburn (1314) was a Scottish victory. Agincourt (1415) was an English victory over France in the Hundred Years War."
+      "explanation": "The Wars of the Roses ended at Bosworth Field (1485), where Richard III was killed and Henry Tudor became Henry VII.\n\nHastings (1066) was the Norman Conquest.\n\nBannockburn (1314) was a Scottish victory.\n\nAgincourt (1415) was an English victory over France in the Hundred Years War."
     },
     {
       "id": 25,
@@ -386,7 +386,7 @@
       ],
       "answer": "Six",
       "answerIndex": 0,
-      "explanation": "Henry VIII married six times and is famous for breaking away from the Church of Rome. The other numbers are distractors; the six wives in order were Catherine of Aragon, Anne Boleyn, Jane Seymour, Anne of Cleves, Catherine Howard and Catherine Parr."
+      "explanation": "Henry VIII married six times and is famous for breaking away from the Church of Rome.\n\nThe other numbers are distractors; the six wives in order were Catherine of Aragon, Anne Boleyn, Jane Seymour, Anne of Cleves, Catherine Howard and Catherine Parr."
     },
     {
       "id": 26,
@@ -400,7 +400,7 @@
       ],
       "answer": "The Pope refused to allow him to divorce",
       "answerIndex": 0,
-      "explanation": "Henry VIII established the Church of England after the Pope refused to allow him to divorce Catherine of Aragon. Uniting England and Scotland relates to the Act of Union 1707. The Crusades relate to the Middle Ages. The Spanish Armada (1588) was defeated under Elizabeth I."
+      "explanation": "Henry VIII established the Church of England after the Pope refused to allow him to divorce Catherine of Aragon.\n\nUniting England and Scotland relates to the Act of Union 1707.\n\nThe Crusades relate to the Middle Ages.\n\nThe Spanish Armada (1588) was defeated under Elizabeth I."
     },
     {
       "id": 27,
@@ -414,7 +414,7 @@
       ],
       "answer": "Anne Boleyn",
       "answerIndex": 0,
-      "explanation": "Anne Boleyn was Elizabeth I's mother. Catherine of Aragon was the mother of Mary I ('Bloody Mary'). Jane Seymour was the mother of Edward VI. Catherine Parr survived Henry and had no child who became monarch."
+      "explanation": "Anne Boleyn was Elizabeth I's mother.\n\nCatherine of Aragon was the mother of Mary I ('Bloody Mary').\n\nJane Seymour was the mother of Edward VI.\n\nCatherine Parr survived Henry and had no child who became monarch."
     },
     {
       "id": 28,
@@ -442,7 +442,7 @@
       ],
       "answer": "Sir Francis Drake",
       "answerIndex": 0,
-      "explanation": "Sir Francis Drake sailed the Golden Hind around the world and helped defeat the Spanish Armada. Captain James Cook is relevant to mapping the coast of Australia in the 18th century. Sir Francis Chichester is relevant to being the first person to sail single-handed around the world in 1966/67."
+      "explanation": "Sir Francis Drake sailed the Golden Hind around the world and helped defeat the Spanish Armada.\n\nCaptain James Cook is relevant to mapping the coast of Australia in the 18th century.\n\nSir Francis Chichester is relevant to being the first person to sail single-handed around the world in 1966/67."
     },
     {
       "id": 30,
@@ -456,7 +456,7 @@
       ],
       "answer": "James VI and I",
       "answerIndex": 0,
-      "explanation": "James VI of Scotland became James I of England and his reign produced the King James (Authorised) Version of the Bible. Henry VIII broke from Rome and established the Church of England. Charles II is relevant to the Restoration and the Habeas Corpus Act. Elizabeth I is relevant to the Spanish Armada."
+      "explanation": "James VI of Scotland became James I of England and his reign produced the King James (Authorised) Version of the Bible.\n\nHenry VIII broke from Rome and established the Church of England.\n\nCharles II is relevant to the Restoration and the Habeas Corpus Act.\n\nElizabeth I is relevant to the Spanish Armada."
     },
     {
       "id": 31,
@@ -470,7 +470,7 @@
       ],
       "answer": "Roundheads",
       "answerIndex": 0,
-      "explanation": "Parliament's supporters were the Roundheads; the king's supporters were the Cavaliers. Jacobites were supporters of the exiled James II and his descendants — relevant to later rebellions. Chartists campaigned for voting reform in the 1830s and 1840s."
+      "explanation": "Parliament's supporters were the Roundheads; the king's supporters were the Cavaliers.\n\nJacobites were supporters of the exiled James II and his descendants — relevant to later rebellions.\n\nChartists campaigned for voting reform in the 1830s and 1840s."
     },
     {
       "id": 32,
@@ -484,7 +484,7 @@
       ],
       "answer": "He was executed",
       "answerIndex": 0,
-      "explanation": "Charles I was executed in 1649 after Parliament won the Civil War, and England became a republic. Fleeing to France relates to James II after the Glorious Revolution. Signing the Magna Carta relates to King John in 1215."
+      "explanation": "Charles I was executed in 1649 after Parliament won the Civil War, and England became a republic.\n\nFleeing to France relates to James II after the Glorious Revolution.\n\nSigning the Magna Carta relates to King John in 1215."
     },
     {
       "id": 33,
@@ -498,7 +498,7 @@
       ],
       "answer": "Oliver Cromwell",
       "answerIndex": 0,
-      "explanation": "Oliver Cromwell became Lord Protector and ruled the republic until his death in 1658. Charles II is relevant to the Restoration of the monarchy in 1660. William of Orange relates to the Glorious Revolution of 1688. Robert Walpole was the first Prime Minister (from 1721)."
+      "explanation": "Oliver Cromwell became Lord Protector and ruled the republic until his death in 1658.\n\nCharles II is relevant to the Restoration of the monarchy in 1660.\n\nWilliam of Orange relates to the Glorious Revolution of 1688.\n\nRobert Walpole was the first Prime Minister (from 1721)."
     },
     {
       "id": 34,
@@ -512,7 +512,7 @@
       ],
       "answer": "Sir Christopher Wren",
       "answerIndex": 0,
-      "explanation": "Sir Christopher Wren designed the new St Paul's Cathedral after the Great Fire of 1666. Inigo Jones designed the Queen's House at Greenwich and the Banqueting House. Robert Adam is relevant to 18th-century designs such as the Royal Crescent in Bath. Sir Edwin Lutyens designed the Cenotaph and New Delhi."
+      "explanation": "Sir Christopher Wren designed the new St Paul's Cathedral after the Great Fire of 1666.\n\nInigo Jones designed the Queen's House at Greenwich and the Banqueting House.\n\nRobert Adam is relevant to 18th-century designs such as the Royal Crescent in Bath.\n\nSir Edwin Lutyens designed the Cenotaph and New Delhi."
     },
     {
       "id": 35,
@@ -526,7 +526,7 @@
       ],
       "answer": "That no one could be held prisoner unlawfully",
       "answerIndex": 0,
-      "explanation": "The Habeas Corpus Act (1679) guaranteed that no one could be held prisoner unlawfully and that every prisoner has a right to a court hearing. Universal voting rights developed in the 19th–20th centuries. Free trade relates to the repeal of the Corn Laws (1846). Equal pay for women relates to 1960s legislation."
+      "explanation": "The Habeas Corpus Act (1679) guaranteed that no one could be held prisoner unlawfully and that every prisoner has a right to a court hearing.\n\nUniversal voting rights developed in the 19th–20th centuries.\n\nFree trade relates to the repeal of the Corn Laws (1846).\n\nEqual pay for women relates to 1960s legislation."
     },
     {
       "id": 36,
@@ -540,7 +540,7 @@
       ],
       "answer": "William of Orange",
       "answerIndex": 0,
-      "explanation": "In 1688 William of Orange invaded without resistance and became William III, ruling jointly with Mary. Oliver Cromwell led the earlier republic. Bonnie Prince Charlie attempted a Jacobite rising in 1745. George I became king in 1714 as Anne's nearest Protestant relative."
+      "explanation": "In 1688 William of Orange invaded without resistance and became William III, ruling jointly with Mary.\n\nOliver Cromwell led the earlier republic.\n\nBonnie Prince Charlie attempted a Jacobite rising in 1745.\n\nGeorge I became king in 1714 as Anne's nearest Protestant relative."
     },
     {
       "id": 37,
@@ -554,7 +554,7 @@
       ],
       "answer": "Confirmed the rights of Parliament and the limits of the king's power",
       "answerIndex": 0,
-      "explanation": "The Bill of Rights (1689) confirmed the rights of Parliament and limited the monarch's power. Abolishing slavery relates to the Emancipation Act (1833). The NHS was created in 1948. Women first gained the vote in 1918 (age 30+)."
+      "explanation": "The Bill of Rights (1689) confirmed the rights of Parliament and limited the monarch's power.\n\nAbolishing slavery relates to the Emancipation Act (1833).\n\nThe NHS was created in 1948.\n\nWomen first gained the vote in 1918 (age 30+)."
     },
     {
       "id": 38,
@@ -568,7 +568,7 @@
       ],
       "answer": "Sir Robert Walpole",
       "answerIndex": 0,
-      "explanation": "Sir Robert Walpole was the first Prime Minister, serving from 1721 to 1742. Winston Churchill was wartime PM from 1940. Clement Attlee became PM in 1945 and created the NHS. William Pitt is a distractor here and not the correct answer to this question."
+      "explanation": "Sir Robert Walpole was the first Prime Minister, serving from 1721 to 1742.\n\nWinston Churchill was wartime PM from 1940.\n\nClement Attlee became PM in 1945 and created the NHS.\n\nWilliam Pitt is a distractor here and not the correct answer to this question."
     },
     {
       "id": 39,
@@ -582,7 +582,7 @@
       ],
       "answer": "The Kingdom of Great Britain",
       "answerIndex": 0,
-      "explanation": "The 1707 union of England and Scotland created the Kingdom of Great Britain. The United Kingdom of Great Britain and Ireland was created by the Act of Union of 1800 (effective 1801). The Commonwealth is a modern association of countries. The Irish Free State was created in 1922."
+      "explanation": "The 1707 union of England and Scotland created the Kingdom of Great Britain.\n\nThe United Kingdom of Great Britain and Ireland was created by the Act of Union of 1800 (effective 1801).\n\nThe Commonwealth is a modern association of countries.\n\nThe Irish Free State was created in 1922."
     },
     {
       "id": 40,
@@ -596,7 +596,7 @@
       ],
       "answer": "The Battle of Culloden",
       "answerIndex": 0,
-      "explanation": "Charles Edward Stuart (Bonnie Prince Charlie) was defeated at Culloden in 1746. Waterloo (1815) was the defeat of Napoleon by the Duke of Wellington. Trafalgar (1805) was Nelson's naval victory. The Battle of the Boyne (1690) was William III's victory over James II in Ireland."
+      "explanation": "Charles Edward Stuart (Bonnie Prince Charlie) was defeated at Culloden in 1746.\n\nWaterloo (1815) was the defeat of Napoleon by the Duke of Wellington.\n\nTrafalgar (1805) was Nelson's naval victory.\n\nThe Battle of the Boyne (1690) was William III's victory over James II in Ireland."
     },
     {
       "id": 41,
@@ -610,7 +610,7 @@
       ],
       "answer": "Robert Burns",
       "answerIndex": 0,
-      "explanation": "Robert Burns, known as 'The Bard', wrote 'Auld Lang Syne'. Sir Walter Scott wrote poems and novels set in Scotland. Dylan Thomas was a Welsh poet (Under Milk Wood). Robert Louis Stevenson was a Scottish novelist (Treasure Island), not the author of Auld Lang Syne."
+      "explanation": "Robert Burns, known as 'The Bard', wrote 'Auld Lang Syne'.\n\nSir Walter Scott wrote poems and novels set in Scotland.\n\nDylan Thomas was a Welsh poet (Under Milk Wood).\n\nRobert Louis Stevenson was a Scottish novelist (Treasure Island), not the author of Auld Lang Syne."
     },
     {
       "id": 42,
@@ -624,7 +624,7 @@
       ],
       "answer": "Adam Smith",
       "answerIndex": 0,
-      "explanation": "Adam Smith developed ideas about economics still referred to today. David Hume is relevant to ideas about human nature and philosophy. James Watt is relevant to work on steam power. Isaac Newton is relevant to gravity and light, from an earlier period."
+      "explanation": "Adam Smith developed ideas about economics still referred to today.\n\nDavid Hume is relevant to ideas about human nature and philosophy.\n\nJames Watt is relevant to work on steam power.\n\nIsaac Newton is relevant to gravity and light, from an earlier period."
     },
     {
       "id": 43,
@@ -638,7 +638,7 @@
       ],
       "answer": "Sake Dean Mahomet",
       "answerIndex": 0,
-      "explanation": "Sake Dean Mahomet opened the Hindoostane Coffee House, the first curry house in Britain, and introduced shampooing. Richard Arkwright is relevant to efficient factories in the Industrial Revolution. Isambard Kingdom Brunel was an engineer. Rudyard Kipling was an author born in India."
+      "explanation": "Sake Dean Mahomet opened the Hindoostane Coffee House, the first curry house in Britain, and introduced shampooing.\n\nRichard Arkwright is relevant to efficient factories in the Industrial Revolution.\n\nIsambard Kingdom Brunel was an engineer.\n\nRudyard Kipling was an author born in India."
     },
     {
       "id": 44,
@@ -652,7 +652,7 @@
       ],
       "answer": "1807",
       "answerIndex": 0,
-      "explanation": "In 1807 it became illegal to trade slaves in British ships or from British ports. In 1833 the Emancipation Act abolished slavery throughout the British Empire — so 1833 is relevant to the abolition of slavery itself. 1689 relates to the Bill of Rights. 1918 relates to some women gaining the vote."
+      "explanation": "In 1807 it became illegal to trade slaves in British ships or from British ports.\n\nIn 1833 the Emancipation Act abolished slavery throughout the British Empire — so 1833 is relevant to the abolition of slavery itself. 1689 relates to the Bill of Rights. 1918 relates to some women gaining the vote."
     },
     {
       "id": 45,
@@ -666,7 +666,7 @@
       ],
       "answer": "William Wilberforce",
       "answerIndex": 0,
-      "explanation": "William Wilberforce, an evangelical Christian and MP, helped turn opinion against the slave trade. William Beveridge is relevant to the 1942 report that shaped the welfare state. William Caxton introduced printing to England. William Gladstone is a distractor and not the correct answer here."
+      "explanation": "William Wilberforce, an evangelical Christian and MP, helped turn opinion against the slave trade.\n\nWilliam Beveridge is relevant to the 1942 report that shaped the welfare state.\n\nWilliam Caxton introduced printing to England.\n\nWilliam Gladstone is a distractor and not the correct answer here."
     },
     {
       "id": 46,
@@ -680,7 +680,7 @@
       ],
       "answer": "The Battle of Trafalgar",
       "answerIndex": 0,
-      "explanation": "Nelson led the fleet at the Battle of Trafalgar (1805) and was killed; Nelson's Column commemorates him. Waterloo (1815) was Wellington's land victory over Napoleon. The Battle of Britain (1940) was an aerial battle in WWII. The Battle of the Somme (1916) was in WWI."
+      "explanation": "Nelson led the fleet at the Battle of Trafalgar (1805) and was killed; Nelson's Column commemorates him.\n\nWaterloo (1815) was Wellington's land victory over Napoleon.\n\nThe Battle of Britain (1940) was an aerial battle in WWII.\n\nThe Battle of the Somme (1916) was in WWI."
     },
     {
       "id": 47,
@@ -694,7 +694,7 @@
       ],
       "answer": "The Duke of Wellington",
       "answerIndex": 0,
-      "explanation": "The Duke of Wellington, known as the Iron Duke, defeated Napoleon at Waterloo. Admiral Nelson won at sea at Trafalgar (1805). Winston Churchill led Britain in WWII. Oliver Cromwell led the 17th-century republic."
+      "explanation": "The Duke of Wellington, known as the Iron Duke, defeated Napoleon at Waterloo.\n\nAdmiral Nelson won at sea at Trafalgar (1805).\n\nWinston Churchill led Britain in WWII.\n\nOliver Cromwell led the 17th-century republic."
     },
     {
       "id": 48,
@@ -708,7 +708,7 @@
       ],
       "answer": "A diagonal white cross on a blue ground",
       "answerIndex": 0,
-      "explanation": "St Andrew (Scotland) is a diagonal white cross on a blue ground. A red cross on a white ground is the cross of St George (England). A diagonal red cross on a white ground is the cross of St Patrick (Ireland). A red dragon is the Welsh flag, which does not appear on the Union Flag."
+      "explanation": "St Andrew (Scotland) is a diagonal white cross on a blue ground.\n\nA red cross on a white ground is the cross of St George (England).\n\nA diagonal red cross on a white ground is the cross of St Patrick (Ireland).\n\nA red dragon is the Welsh flag, which does not appear on the Union Flag."
     },
     {
       "id": 49,
@@ -722,7 +722,7 @@
       ],
       "answer": "Wales was already united with England when the first Union Flag was created",
       "answerIndex": 0,
-      "explanation": "When the first Union Flag was created in 1606, the Principality of Wales was already united with England, so its dragon was not included. Wales does have its own flag showing a Welsh dragon. The other options are inventions and not supported by the handbook."
+      "explanation": "When the first Union Flag was created in 1606, the Principality of Wales was already united with England, so its dragon was not included.\n\nWales does have its own flag showing a Welsh dragon.\n\nThe other options are inventions and not supported by the handbook."
     },
     {
       "id": 50,
@@ -736,7 +736,7 @@
       ],
       "answer": "Almost 64 years",
       "answerIndex": 0,
-      "explanation": "Queen Victoria reigned from 1837 to 1901, almost 64 years. 'Exactly 60 years' is a distractor that echoes Queen Elizabeth II's Diamond Jubilee (60 years, celebrated in 2012), so it is relevant to Elizabeth II rather than Victoria."
+      "explanation": "Queen Victoria reigned from 1837 to 1901, almost 64 years.\n\n'Exactly 60 years' is a distractor that echoes Queen Elizabeth II's Diamond Jubilee (60 years, celebrated in 2012), so it is relevant to Elizabeth II rather than Victoria."
     },
     {
       "id": 51,
@@ -750,7 +750,7 @@
       ],
       "answer": "Florence Nightingale",
       "answerIndex": 0,
-      "explanation": "Florence Nightingale is regarded as the founder of modern nursing and worked in the Crimean War. Emmeline Pankhurst is relevant to the women's suffrage movement. Mary Peters is relevant to Olympic athletics. Mary Quant is relevant to fashion design."
+      "explanation": "Florence Nightingale is regarded as the founder of modern nursing and worked in the Crimean War.\n\nEmmeline Pankhurst is relevant to the women's suffrage movement.\n\nMary Peters is relevant to Olympic athletics.\n\nMary Quant is relevant to fashion design."
     },
     {
       "id": 52,
@@ -764,7 +764,7 @@
       ],
       "answer": "Voting reform",
       "answerIndex": 0,
-      "explanation": "The Chartists campaigned for voting reform, including votes for all men and paying MPs. Abolition of slavery relates to Wilberforce and the Emancipation Act. Free healthcare relates to the NHS (1948). Independence for India came in 1947."
+      "explanation": "The Chartists campaigned for voting reform, including votes for all men and paying MPs.\n\nAbolition of slavery relates to Wilberforce and the Emancipation Act.\n\nFree healthcare relates to the NHS (1948).\n\nIndependence for India came in 1947."
     },
     {
       "id": 53,
@@ -778,7 +778,7 @@
       ],
       "answer": "Emmeline Pankhurst",
       "answerIndex": 0,
-      "explanation": "Emmeline Pankhurst founded the WSPU in 1903, whose members were the first to be called suffragettes. Florence Nightingale is relevant to nursing. Jane Austen and Elizabeth Browning are relevant to literature and poetry, not the suffrage movement."
+      "explanation": "Emmeline Pankhurst founded the WSPU in 1903, whose members were the first to be called suffragettes.\n\nFlorence Nightingale is relevant to nursing.\n\nJane Austen and Elizabeth Browning are relevant to literature and poetry, not the suffrage movement."
     },
     {
       "id": 54,
@@ -806,7 +806,7 @@
       ],
       "answer": "About 60,000",
       "answerIndex": 0,
-      "explanation": "The Somme cost about 60,000 British casualties on the first day. 'About 300,000' is relevant to the number of men rescued at the Dunkirk evacuation in 1940. 'About 2 million' relates to the total number of British casualties in WWI overall."
+      "explanation": "The Somme cost about 60,000 British casualties on the first day.\n\n'About 300,000' is relevant to the number of men rescued at the Dunkirk evacuation in 1940.\n\n'About 2 million' relates to the total number of British casualties in WWI overall."
     },
     {
       "id": 56,
@@ -820,7 +820,7 @@
       ],
       "answer": "They remained part of the UK as Northern Ireland",
       "answerIndex": 0,
-      "explanation": "The six mainly Protestant northern counties remained in the UK as Northern Ireland. The rest of Ireland became the Irish Free State, later a republic (1949). Crown dependency and EU membership are unrelated to this division."
+      "explanation": "The six mainly Protestant northern counties remained in the UK as Northern Ireland.\n\nThe rest of Ireland became the Irish Free State, later a republic (1949).\n\nCrown dependency and EU membership are unrelated to this division."
     },
     {
       "id": 57,
@@ -834,7 +834,7 @@
       ],
       "answer": "Winston Churchill",
       "answerIndex": 0,
-      "explanation": "Winston Churchill became Prime Minister in May 1940. Clement Attlee became PM in 1945 and created the welfare state and NHS. Neville Chamberlain and David Lloyd George are distractors and not the correct answer to this question."
+      "explanation": "Winston Churchill became Prime Minister in May 1940.\n\nClement Attlee became PM in 1945 and created the welfare state and NHS.\n\nNeville Chamberlain and David Lloyd George are distractors and not the correct answer to this question."
     },
     {
       "id": 58,
@@ -848,7 +848,7 @@
       ],
       "answer": "Dunkirk",
       "answerIndex": 0,
-      "explanation": "More than 300,000 men were evacuated from the beaches around Dunkirk, giving rise to the phrase 'the Dunkirk spirit'. Normandy is relevant to the D-Day landings of 6 June 1944. The Somme relates to a WWI battle."
+      "explanation": "More than 300,000 men were evacuated from the beaches around Dunkirk, giving rise to the phrase 'the Dunkirk spirit'.\n\nNormandy is relevant to the D-Day landings of 6 June 1944.\n\nThe Somme relates to a WWI battle."
     },
     {
       "id": 59,
@@ -862,7 +862,7 @@
       ],
       "answer": "The Spitfire and the Hurricane",
       "answerIndex": 0,
-      "explanation": "The Spitfire and the Hurricane were the key fighters in the Battle of Britain (1940). The Harrier jump jet and Concorde are British aircraft but relevant to later 20th-century invention questions, not the Battle of Britain."
+      "explanation": "The Spitfire and the Hurricane were the key fighters in the Battle of Britain (1940).\n\nThe Harrier jump jet and Concorde are British aircraft but relevant to later 20th-century invention questions, not the Battle of Britain."
     },
     {
       "id": 60,
@@ -876,7 +876,7 @@
       ],
       "answer": "Sir Alexander Fleming",
       "answerIndex": 0,
-      "explanation": "Sir Alexander Fleming, a Scottish-born doctor, discovered penicillin in 1928. Sir Frank Whittle developed the jet engine. Sir Robert Watson-Watt developed radar. Sir Tim Berners-Lee invented the World Wide Web."
+      "explanation": "Sir Alexander Fleming, a Scottish-born doctor, discovered penicillin in 1928.\n\nSir Frank Whittle developed the jet engine.\n\nSir Robert Watson-Watt developed radar.\n\nSir Tim Berners-Lee invented the World Wide Web."
     },
     {
       "id": 61,
@@ -890,7 +890,7 @@
       ],
       "answer": "Sir Tim Berners-Lee",
       "answerIndex": 0,
-      "explanation": "Sir Tim Berners-Lee invented the World Wide Web; information was first transferred via the web on 25 December 1990. John Logie Baird developed the television. Alan Turing devised the theoretical Turing machine. James Goodfellow invented the cash-dispensing ATM."
+      "explanation": "Sir Tim Berners-Lee invented the World Wide Web; information was first transferred via the web on 25 December 1990.\n\nJohn Logie Baird developed the television.\n\nAlan Turing devised the theoretical Turing machine.\n\nJames Goodfellow invented the cash-dispensing ATM."
     },
     {
       "id": 62,
@@ -904,7 +904,7 @@
       ],
       "answer": "John Logie Baird",
       "answerIndex": 0,
-      "explanation": "The Scotsman John Logie Baird developed the television and made the first broadcast between London and Glasgow in 1932. Sir Christopher Cockerell invented the hovercraft. Sir Bernard Lovell built the radio telescope at Jodrell Bank. Sir Peter Mansfield co-invented the MRI scanner."
+      "explanation": "The Scotsman John Logie Baird developed the television and made the first broadcast between London and Glasgow in 1932.\n\nSir Christopher Cockerell invented the hovercraft.\n\nSir Bernard Lovell built the radio telescope at Jodrell Bank.\n\nSir Peter Mansfield co-invented the MRI scanner."
     },
     {
       "id": 63,
@@ -918,7 +918,7 @@
       ],
       "answer": "France",
       "answerIndex": 0,
-      "explanation": "Britain and France jointly developed Concorde, which first flew in 1969 and carried passengers from 1976 until it was retired in 2003. The other countries were not partners in the Concorde project."
+      "explanation": "Britain and France jointly developed Concorde, which first flew in 1969 and carried passengers from 1976 until it was retired in 2003.\n\nThe other countries were not partners in the Concorde project."
     },
     {
       "id": 64,
@@ -932,7 +932,7 @@
       ],
       "answer": "Clement Attlee",
       "answerIndex": 0,
-      "explanation": "Clement Attlee led the 1945 Labour government and introduced the welfare state. Winston Churchill lost the 1945 election but returned as PM in 1951. Harold Macmillan is relevant to the 1950s 'wind of change' speech. Tony Blair is relevant to the 1997 Labour government."
+      "explanation": "Clement Attlee led the 1945 Labour government and introduced the welfare state.\n\nWinston Churchill lost the 1945 election but returned as PM in 1951.\n\nHarold Macmillan is relevant to the 1950s 'wind of change' speech.\n\nTony Blair is relevant to the 1997 Labour government."
     },
     {
       "id": 65,
@@ -946,7 +946,7 @@
       ],
       "answer": "Aneurin (Nye) Bevan",
       "answerIndex": 0,
-      "explanation": "Aneurin (Nye) Bevan, the Minister for Health, led the establishment of the NHS in 1948. William Beveridge wrote the 1942 report that set out the welfare state. R A Butler is relevant to the Education Act 1944. Clement Attlee was the Prime Minister who oversaw these reforms."
+      "explanation": "Aneurin (Nye) Bevan, the Minister for Health, led the establishment of the NHS in 1948.\n\nWilliam Beveridge wrote the 1942 report that set out the welfare state.\n\nR A Butler is relevant to the Education Act 1944.\n\nClement Attlee was the Prime Minister who oversaw these reforms."
     },
     {
       "id": 66,
@@ -960,7 +960,7 @@
       ],
       "answer": "Want",
       "answerIndex": 0,
-      "explanation": "The five 'Giant Evils' were Want, Disease, Ignorance, Squalor and Idleness. Corruption, crime and pollution are not among the five and are distractors."
+      "explanation": "The five 'Giant Evils' were Want, Disease, Ignorance, Squalor and Idleness.\n\nCorruption, crime and pollution are not among the five and are distractors."
     },
     {
       "id": 67,
@@ -974,7 +974,7 @@
       ],
       "answer": "The Beveridge Report (1942)",
       "answerIndex": 0,
-      "explanation": "The Beveridge Report (1942) provided the basis of the modern welfare state. The Butler Act (Education Act 1944) introduced free secondary education. The Good Friday Agreement (1998) relates to peace in Northern Ireland. The Domesday Book is a Norman-era record."
+      "explanation": "The Beveridge Report (1942) provided the basis of the modern welfare state.\n\nThe Butler Act (Education Act 1944) introduced free secondary education.\n\nThe Good Friday Agreement (1998) relates to peace in Northern Ireland.\n\nThe Domesday Book is a Norman-era record."
     },
     {
       "id": 68,
@@ -988,7 +988,7 @@
       ],
       "answer": "Dylan Thomas",
       "answerIndex": 0,
-      "explanation": "Dylan Thomas, a Welsh poet, wrote 'Under Milk Wood' and the poem 'Do Not Go Gentle into That Good Night'. Robert Burns was a Scottish poet. Ted Hughes and Wilfred Owen were English poets; Owen is particularly associated with the First World War."
+      "explanation": "Dylan Thomas, a Welsh poet, wrote 'Under Milk Wood' and the poem 'Do Not Go Gentle into That Good Night'.\n\nRobert Burns was a Scottish poet.\n\nTed Hughes and Wilfred Owen were English poets; Owen is particularly associated with the First World War."
     },
     {
       "id": 69,
@@ -1002,7 +1002,7 @@
       ],
       "answer": "Margaret Thatcher",
       "answerIndex": 0,
-      "explanation": "Margaret Thatcher became the first woman Prime Minister in 1979 and was the longest-serving PM of the 20th century. Theresa May was a later woman PM but not the first. Emmeline Pankhurst was a suffragette, not a PM. Queen Victoria was a monarch, not a Prime Minister."
+      "explanation": "Margaret Thatcher became the first woman Prime Minister in 1979 and was the longest-serving PM of the 20th century.\n\nTheresa May was a later woman PM but not the first.\n\nEmmeline Pankhurst was a suffragette, not a PM.\n\nQueen Victoria was a monarch, not a Prime Minister."
     },
     {
       "id": 70,
@@ -1016,7 +1016,7 @@
       ],
       "answer": "The Falkland Islands",
       "answerIndex": 0,
-      "explanation": "Argentina invaded the Falkland Islands, a British overseas territory, in 1982, and a naval task force recovered them. The Channel Islands and Isle of Man are Crown dependencies. Orkney is part of Scotland. Only the Falklands fit this event."
+      "explanation": "Argentina invaded the Falkland Islands, a British overseas territory, in 1982, and a naval task force recovered them.\n\nThe Channel Islands and Isle of Man are Crown dependencies.\n\nOrkney is part of Scotland.\n\nOnly the Falklands fit this event."
     },
     {
       "id": 71,
@@ -1044,7 +1044,7 @@
       ],
       "answer": "Tony Blair",
       "answerIndex": 0,
-      "explanation": "Tony Blair led Labour to victory in 1997 and introduced devolution. Gordon Brown took over as PM in 2007. Keir Starmer led Labour to victory in 2024. Clement Attlee led the 1945 Labour government."
+      "explanation": "Tony Blair led Labour to victory in 1997 and introduced devolution.\n\nGordon Brown took over as PM in 2007.\n\nKeir Starmer led Labour to victory in 2024.\n\nClement Attlee led the 1945 Labour government."
     },
     {
       "id": 73,
@@ -1058,7 +1058,7 @@
       ],
       "answer": "A Conservative–Liberal Democrat coalition",
       "answerIndex": 0,
-      "explanation": "No party won a majority in 2010, so the Conservatives and Liberal Democrats formed a coalition, with David Cameron as PM. A Labour majority relates to 1997, 2001, 2005 and 2024. A Conservative majority relates to 2015 onwards."
+      "explanation": "No party won a majority in 2010, so the Conservatives and Liberal Democrats formed a coalition, with David Cameron as PM.\n\nA Labour majority relates to 1997, 2001, 2005 and 2024.\n\nA Conservative majority relates to 2015 onwards."
     },
     {
       "id": 74,
@@ -1072,7 +1072,7 @@
       ],
       "answer": "Sir Keir Starmer",
       "answerIndex": 0,
-      "explanation": "Sir Keir Starmer became PM after Labour won the 2024 election. Rishi Sunak and Boris Johnson were Conservative PMs during the 2015–2024 period. Tony Blair led the earlier Labour government from 1997."
+      "explanation": "Sir Keir Starmer became PM after Labour won the 2024 election.\n\nRishi Sunak and Boris Johnson were Conservative PMs during the 2015–2024 period.\n\nTony Blair led the earlier Labour government from 1997."
     },
     {
       "id": 75,
@@ -1086,7 +1086,7 @@
       ],
       "answer": "The BBC",
       "answerIndex": 0,
-      "explanation": "The Proms has been organised by the BBC since 1927. The National Trust preserves buildings and countryside. The Royal Society promotes science. BAFTA runs the British Academy Film Awards."
+      "explanation": "The Proms has been organised by the BBC since 1927.\n\nThe National Trust preserves buildings and countryside.\n\nThe Royal Society promotes science.\n\nBAFTA runs the British Academy Film Awards."
     },
     {
       "id": 76,
@@ -1100,7 +1100,7 @@
       ],
       "answer": "Gustav Holst",
       "answerIndex": 0,
-      "explanation": "Gustav Holst wrote 'The Planets'; he adapted 'Jupiter' as the tune for the hymn 'I Vow to Thee My Country'. Henry Purcell was the organist at Westminster Abbey. Edward Elgar wrote the Pomp and Circumstance Marches. Benjamin Britten wrote operas such as Peter Grimes."
+      "explanation": "Gustav Holst wrote 'The Planets'; he adapted 'Jupiter' as the tune for the hymn 'I Vow to Thee My Country'.\n\nHenry Purcell was the organist at Westminster Abbey.\n\nEdward Elgar wrote the Pomp and Circumstance Marches.\n\nBenjamin Britten wrote operas such as Peter Grimes."
     },
     {
       "id": 77,
@@ -1114,7 +1114,7 @@
       ],
       "answer": "Sir Edward Elgar",
       "answerIndex": 0,
-      "explanation": "Sir Edward Elgar composed the Pomp and Circumstance Marches, usually played at the Last Night of the Proms. Ralph Vaughan Williams was influenced by English folk music. William Walton wrote Façade and Belshazzar's Feast. Handel wrote the Water Music and Messiah."
+      "explanation": "Sir Edward Elgar composed the Pomp and Circumstance Marches, usually played at the Last Night of the Proms.\n\nRalph Vaughan Williams was influenced by English folk music.\n\nWilliam Walton wrote Façade and Belshazzar's Feast.\n\nHandel wrote the Water Music and Messiah."
     },
     {
       "id": 78,
@@ -1128,7 +1128,7 @@
       ],
       "answer": "The Mousetrap",
       "answerIndex": 0,
-      "explanation": "Agatha Christie's The Mousetrap has run in the West End since 1952 — the longest initial run of any show. Cats and The Phantom of the Opera are Andrew Lloyd Webber musicals. The Mikado is a Gilbert and Sullivan comic opera."
+      "explanation": "Agatha Christie's The Mousetrap has run in the West End since 1952 — the longest initial run of any show.\n\nCats and The Phantom of the Opera are Andrew Lloyd Webber musicals.\n\nThe Mikado is a Gilbert and Sullivan comic opera."
     },
     {
       "id": 79,
@@ -1142,7 +1142,7 @@
       ],
       "answer": "Contemporary art",
       "answerIndex": 0,
-      "explanation": "The Turner Prize, established in 1984 and named after Joseph Turner, celebrates contemporary art. Classical music relates to prizes like the Mercury Music Prize. Fiction writing relates to the Man Booker Prize. Film relates to the BAFTAs."
+      "explanation": "The Turner Prize, established in 1984 and named after Joseph Turner, celebrates contemporary art.\n\nClassical music relates to prizes like the Mercury Music Prize.\n\nFiction writing relates to the Man Booker Prize.\n\nFilm relates to the BAFTAs."
     },
     {
       "id": 80,
@@ -1156,7 +1156,7 @@
       ],
       "answer": "Henry Moore",
       "answerIndex": 0,
-      "explanation": "Henry Moore was an English sculptor known for large bronze abstract sculptures. John Constable painted landscapes (Dedham Vale). David Hockney is associated with the pop art movement. Thomas Gainsborough was a portrait painter."
+      "explanation": "Henry Moore was an English sculptor known for large bronze abstract sculptures.\n\nJohn Constable painted landscapes (Dedham Vale).\n\nDavid Hockney is associated with the pop art movement.\n\nThomas Gainsborough was a portrait painter."
     },
     {
       "id": 81,
@@ -1170,7 +1170,7 @@
       ],
       "answer": "Jane Austen",
       "answerIndex": 0,
-      "explanation": "Jane Austen wrote Pride and Prejudice and Sense and Sensibility. Charles Dickens wrote Oliver Twist and Great Expectations. Thomas Hardy wrote Far from the Madding Crowd. J K Rowling wrote the Harry Potter series."
+      "explanation": "Jane Austen wrote Pride and Prejudice and Sense and Sensibility.\n\nCharles Dickens wrote Oliver Twist and Great Expectations.\n\nThomas Hardy wrote Far from the Madding Crowd.\n\nJ K Rowling wrote the Harry Potter series."
     },
     {
       "id": 82,
@@ -1184,7 +1184,7 @@
       ],
       "answer": "Sir Arthur Conan Doyle",
       "answerIndex": 0,
-      "explanation": "Sir Arthur Conan Doyle created Sherlock Holmes. Agatha Christie wrote detective stories and The Mousetrap. Ian Fleming created James Bond. Robert Louis Stevenson wrote Treasure Island and Dr Jekyll and Mr Hyde."
+      "explanation": "Sir Arthur Conan Doyle created Sherlock Holmes.\n\nAgatha Christie wrote detective stories and The Mousetrap.\n\nIan Fleming created James Bond.\n\nRobert Louis Stevenson wrote Treasure Island and Dr Jekyll and Mr Hyde."
     },
     {
       "id": 83,
@@ -1198,7 +1198,7 @@
       ],
       "answer": "The Lord of the Rings by J R R Tolkien",
       "answerIndex": 0,
-      "explanation": "The Lord of the Rings by J R R Tolkien was voted the country's best-loved novel in 2003. The other novels are all real British works but were not the ones voted best-loved in that poll."
+      "explanation": "The Lord of the Rings by J R R Tolkien was voted the country's best-loved novel in 2003.\n\nThe other novels are all real British works but were not the ones voted best-loved in that poll."
     },
     {
       "id": 84,
@@ -1212,7 +1212,7 @@
       ],
       "answer": "Sir Edwin Lutyens",
       "answerIndex": 0,
-      "explanation": "Sir Edwin Lutyens designed the Cenotaph in Whitehall and New Delhi. Sir Christopher Wren designed St Paul's Cathedral. Inigo Jones designed the Banqueting House. Robert Adam is relevant to 18th-century interiors and the Royal Crescent in Bath."
+      "explanation": "Sir Edwin Lutyens designed the Cenotaph in Whitehall and New Delhi.\n\nSir Christopher Wren designed St Paul's Cathedral.\n\nInigo Jones designed the Banqueting House.\n\nRobert Adam is relevant to 18th-century interiors and the Royal Crescent in Bath."
     },
     {
       "id": 85,
@@ -1226,7 +1226,7 @@
       ],
       "answer": "Christmas Day",
       "answerIndex": 0,
-      "explanation": "Christmas Day (25 December) celebrates the birth of Jesus Christ. Boxing Day is 26 December. New Year's Day is 1 January. St George's Day (23 April) is the patron saint's day of England."
+      "explanation": "Christmas Day (25 December) celebrates the birth of Jesus Christ.\n\nBoxing Day is 26 December.\n\nNew Year's Day is 1 January.\n\nSt George's Day (23 April) is the patron saint's day of England."
     },
     {
       "id": 86,
@@ -1240,7 +1240,7 @@
       ],
       "answer": "Hindus and Sikhs",
       "answerIndex": 0,
-      "explanation": "Diwali, the Festival of Lights, is celebrated by Hindus and Sikhs, with a famous celebration in Leicester. Hanukkah is a Jewish festival. Eid al-Fitr and Eid ul Adha are Muslim festivals. Vaisakhi is a Sikh festival."
+      "explanation": "Diwali, the Festival of Lights, is celebrated by Hindus and Sikhs, with a famous celebration in Leicester.\n\nHanukkah is a Jewish festival.\n\nEid al-Fitr and Eid ul Adha are Muslim festivals.\n\nVaisakhi is a Sikh festival."
     },
     {
       "id": 87,
@@ -1254,7 +1254,7 @@
       ],
       "answer": "Eid al-Fitr",
       "answerIndex": 0,
-      "explanation": "Eid al-Fitr celebrates the end of Ramadan, when Muslims have fasted for a month. Eid ul Adha remembers the prophet Ibrahim's willingness to sacrifice his son. Vaisakhi is a Sikh festival. Hanukkah is a Jewish festival."
+      "explanation": "Eid al-Fitr celebrates the end of Ramadan, when Muslims have fasted for a month.\n\nEid ul Adha remembers the prophet Ibrahim's willingness to sacrifice his son.\n\nVaisakhi is a Sikh festival.\n\nHanukkah is a Jewish festival."
     },
     {
       "id": 88,
@@ -1268,7 +1268,7 @@
       ],
       "answer": "The failed Gunpowder Plot of 1605",
       "answerIndex": 0,
-      "explanation": "Bonfire Night marks the failure of Guy Fawkes and other Catholics to blow up Parliament in 1605. The end of WWI relates to Remembrance Day (11 November). The Battle of Trafalgar and the Great Fire of London are unrelated to 5 November."
+      "explanation": "Bonfire Night marks the failure of Guy Fawkes and other Catholics to blow up Parliament in 1605.\n\nThe end of WWI relates to Remembrance Day (11 November).\n\nThe Battle of Trafalgar and the Great Fire of London are unrelated to 5 November."
     },
     {
       "id": 89,
@@ -1282,7 +1282,7 @@
       ],
       "answer": "A poppy",
       "answerIndex": 0,
-      "explanation": "People wear poppies on Remembrance Day to commemorate those who died fighting for the UK and its allies. The daffodil is associated with Wales, the shamrock with Northern Ireland, and the thistle with Scotland — all relevant to national symbols on saints' days."
+      "explanation": "People wear poppies on Remembrance Day to commemorate those who died fighting for the UK and its allies.\n\nThe daffodil is associated with Wales, the shamrock with Northern Ireland, and the thistle with Scotland — all relevant to national symbols on saints' days."
     },
     {
       "id": 90,
@@ -1296,7 +1296,7 @@
       ],
       "answer": "Shrove Tuesday (Pancake Day)",
       "answerIndex": 0,
-      "explanation": "The day before Lent is Shrove Tuesday, or Pancake Day. Ash Wednesday is the day Lent begins. Boxing Day is the day after Christmas. Hogmanay is the Scottish name for New Year's Eve (31 December)."
+      "explanation": "The day before Lent is Shrove Tuesday, or Pancake Day.\n\nAsh Wednesday is the day Lent begins.\n\nBoxing Day is the day after Christmas.\n\nHogmanay is the Scottish name for New Year's Eve (31 December)."
     },
     {
       "id": 91,
@@ -1310,7 +1310,7 @@
       ],
       "answer": "Haggis",
       "answerIndex": 0,
-      "explanation": "Haggis is a traditional Scottish dish. Welsh cakes are associated with Wales. The Ulster fry is associated with Northern Ireland. Yorkshire pudding (with roast beef) is associated with England."
+      "explanation": "Haggis is a traditional Scottish dish.\n\nWelsh cakes are associated with Wales.\n\nThe Ulster fry is associated with Northern Ireland.\n\nYorkshire pudding (with roast beef) is associated with England."
     },
     {
       "id": 92,
@@ -1324,7 +1324,7 @@
       ],
       "answer": "Nick Park",
       "answerIndex": 0,
-      "explanation": "Nick Park won Oscars for animated films including those featuring Wallace and Gromit. Sir Alfred Hitchcock, Ridley Scott and Sir David Lean were live-action directors, not the creators of Wallace and Gromit."
+      "explanation": "Nick Park won Oscars for animated films including those featuring Wallace and Gromit.\n\nSir Alfred Hitchcock, Ridley Scott and Sir David Lean were live-action directors, not the creators of Wallace and Gromit."
     },
     {
       "id": 93,
@@ -1338,7 +1338,7 @@
       ],
       "answer": "The BBC",
       "answerIndex": 0,
-      "explanation": "TV licence money funds the BBC, the only wholly state-funded media organisation independent of government. The National Trust preserves buildings and countryside. ITV and other channels are funded mainly by advertising."
+      "explanation": "TV licence money funds the BBC, the only wholly state-funded media organisation independent of government.\n\nThe National Trust preserves buildings and countryside.\n\nITV and other channels are funded mainly by advertising."
     },
     {
       "id": 94,
@@ -1352,7 +1352,7 @@
       ],
       "answer": "18",
       "answerIndex": 0,
-      "explanation": "You must be 18 or over to buy alcohol in a pub. However, people aged 16 or over can drink wine or beer with a meal in a hotel or restaurant if accompanied by someone over 18 — so 16 is relevant to that specific exception."
+      "explanation": "You must be 18 or over to buy alcohol in a pub.\n\nHowever, people aged 16 or over can drink wine or beer with a meal in a hotel or restaurant if accompanied by someone over 18 — so 16 is relevant to that specific exception."
     },
     {
       "id": 95,
@@ -1366,7 +1366,7 @@
       ],
       "answer": "15",
       "answerIndex": 0,
-      "explanation": "There are 15 national parks in England, Wales and Scotland. '5' is a distractor that echoes the number of ski centres in Scotland, so it is relevant to skiing rather than national parks."
+      "explanation": "There are 15 national parks in England, Wales and Scotland.\n\n'5' is a distractor that echoes the number of ski centres in Scotland, so it is relevant to skiing rather than national parks."
     },
     {
       "id": 96,
@@ -1380,7 +1380,7 @@
       ],
       "answer": "Northern Ireland",
       "answerIndex": 0,
-      "explanation": "The Giant's Causeway, a formation of volcanic lava columns, is on the north-east coast of Northern Ireland. Cornwall is relevant to the Eden Project. Wales is relevant to Snowdonia, and Scotland to Loch Lomond and Edinburgh Castle."
+      "explanation": "The Giant's Causeway, a formation of volcanic lava columns, is on the north-east coast of Northern Ireland.\n\nCornwall is relevant to the Eden Project.\n\nWales is relevant to Snowdonia, and Scotland to Loch Lomond and Edinburgh Castle."
     },
     {
       "id": 97,
@@ -1394,7 +1394,7 @@
       ],
       "answer": "Cornwall",
       "answerIndex": 0,
-      "explanation": "The Eden Project, with its biome greenhouses, is in Cornwall. The Lake District is England's largest national park. Snowdonia is a national park in North Wales. Loch Lomond and the Trossachs is a national park in Scotland."
+      "explanation": "The Eden Project, with its biome greenhouses, is in Cornwall.\n\nThe Lake District is England's largest national park.\n\nSnowdonia is a national park in North Wales.\n\nLoch Lomond and the Trossachs is a national park in Scotland."
     },
     {
       "id": 98,
@@ -1408,7 +1408,7 @@
       ],
       "answer": "William the Conqueror",
       "answerIndex": 0,
-      "explanation": "The Tower of London was first built by William the Conqueror after 1066; the White Tower is a Norman keep. Tours are given by the Yeoman Warders (Beefeaters) and the Crown Jewels are kept there. The other figures did not build it."
+      "explanation": "The Tower of London was first built by William the Conqueror after 1066; the White Tower is a Norman keep.\n\nTours are given by the Yeoman Warders (Beefeaters) and the Crown Jewels are kept there.\n\nThe other figures did not build it."
     },
     {
       "id": 99,
@@ -1422,7 +1422,7 @@
       ],
       "answer": "Snowdonia",
       "answerIndex": 0,
-      "explanation": "Snowdon is in Snowdonia in North Wales. The Lake District (England's largest national park) contains Windermere and Wastwater. Loch Lomond and the Trossachs is in Scotland. The Peak District is a distractor here."
+      "explanation": "Snowdon is in Snowdonia in North Wales.\n\nThe Lake District (England's largest national park) contains Windermere and Wastwater.\n\nLoch Lomond and the Trossachs is in Scotland.\n\nThe Peak District is a distractor here."
     },
     {
       "id": 100,
@@ -1450,7 +1450,7 @@
       ],
       "answer": "The monarch",
       "answerIndex": 0,
-      "explanation": "The monarch is the head of the Church of England. The Archbishop of Canterbury is its spiritual leader. The Prime Minister usually advises on senior church appointments. The Moderator chairs the General Assembly of the Church of Scotland."
+      "explanation": "The monarch is the head of the Church of England.\n\nThe Archbishop of Canterbury is its spiritual leader.\n\nThe Prime Minister usually advises on senior church appointments.\n\nThe Moderator chairs the General Assembly of the Church of Scotland."
     },
     {
       "id": 102,
@@ -1464,7 +1464,7 @@
       ],
       "answer": "The Church of Scotland (Presbyterian)",
       "answerIndex": 0,
-      "explanation": "The Church of Scotland is a Presbyterian church, governed by ministers and elders, and led by the Moderator. The Church of England is the established church in England. There is no established church in Wales or Northern Ireland."
+      "explanation": "The Church of Scotland is a Presbyterian church, governed by ministers and elders, and led by the Moderator.\n\nThe Church of England is the established church in England.\n\nThere is no established church in Wales or Northern Ireland."
     },
     {
       "id": 103,
@@ -1492,7 +1492,7 @@
       ],
       "answer": "The thistle",
       "answerIndex": 0,
-      "explanation": "The thistle is associated with Scotland. The daffodil is associated with Wales, the rose with England, and the shamrock with Northern Ireland."
+      "explanation": "The thistle is associated with Scotland.\n\nThe daffodil is associated with Wales, the rose with England, and the shamrock with Northern Ireland."
     },
     {
       "id": 105,
@@ -1506,7 +1506,7 @@
       ],
       "answer": "1908, 1948 and 2012",
       "answerIndex": 0,
-      "explanation": "The UK hosted the Olympics in 1908, 1948 and 2012, with the main 2012 site in Stratford, East London. '1966' is a distractor that relates to England hosting and winning the football World Cup, not the Olympics."
+      "explanation": "The UK hosted the Olympics in 1908, 1948 and 2012, with the main 2012 site in Stratford, East London.\n\n'1966' is a distractor that relates to England hosting and winning the football World Cup, not the Olympics."
     },
     {
       "id": 106,
@@ -1520,7 +1520,7 @@
       ],
       "answer": "Sir Roger Bannister",
       "answerIndex": 0,
-      "explanation": "Sir Roger Bannister ran the first sub-four-minute mile in 1954. Sir Steve Redgrave won rowing golds in five Olympics. Mo Farah won distance-running golds in 2012. Sir Chris Hoy is a Scottish track cyclist."
+      "explanation": "Sir Roger Bannister ran the first sub-four-minute mile in 1954.\n\nSir Steve Redgrave won rowing golds in five Olympics.\n\nMo Farah won distance-running golds in 2012.\n\nSir Chris Hoy is a Scottish track cyclist."
     },
     {
       "id": 107,
@@ -1534,7 +1534,7 @@
       ],
       "answer": "Football",
       "answerIndex": 0,
-      "explanation": "Football is the UK's most popular sport, with the first professional clubs formed in the late 19th century. Cricket, rugby and tennis are also popular British sports, but football is described as the most popular."
+      "explanation": "Football is the UK's most popular sport, with the first professional clubs formed in the late 19th century.\n\nCricket, rugby and tennis are also popular British sports, but football is described as the most popular."
     },
     {
       "id": 108,
@@ -1548,7 +1548,7 @@
       ],
       "answer": "Cricket",
       "answerIndex": 0,
-      "explanation": "The Ashes is a cricket series between England and Australia. Rugby's most famous union competition is the Six Nations. Tennis is associated with Wimbledon. Golf's British 'Major' is the Open Championship."
+      "explanation": "The Ashes is a cricket series between England and Australia.\n\nRugby's most famous union competition is the Six Nations.\n\nTennis is associated with Wimbledon.\n\nGolf's British 'Major' is the Open Championship."
     },
     {
       "id": 109,
@@ -1562,7 +1562,7 @@
       ],
       "answer": "Golf",
       "answerIndex": 0,
-      "explanation": "St Andrews is known as the home of golf, which can be traced to 15th-century Scotland. Tennis is associated with Wimbledon and Leamington Spa. Rugby originated in England. Cricket also originated in England."
+      "explanation": "St Andrews is known as the home of golf, which can be traced to 15th-century Scotland.\n\nTennis is associated with Wimbledon and Leamington Spa.\n\nRugby originated in England.\n\nCricket also originated in England."
     },
     {
       "id": 110,
@@ -1576,7 +1576,7 @@
       ],
       "answer": "Grass",
       "answerIndex": 0,
-      "explanation": "Wimbledon is the oldest tennis tournament in the world and the only Grand Slam played on grass. The other surfaces are used at different tournaments and are distractors here."
+      "explanation": "Wimbledon is the oldest tennis tournament in the world and the only Grand Slam played on grass.\n\nThe other surfaces are used at different tournaments and are distractors here."
     },
     {
       "id": 111,
@@ -1590,7 +1590,7 @@
       ],
       "answer": "Sir Bradley Wiggins",
       "answerIndex": 0,
-      "explanation": "Sir Bradley Wiggins became the first Briton to win the Tour de France in 2012. Sir Chris Hoy is a track cyclist. Andy Murray is a tennis player. Mo Farah is a distance runner. All are notable British sportspeople but only Wiggins fits this achievement."
+      "explanation": "Sir Bradley Wiggins became the first Briton to win the Tour de France in 2012.\n\nSir Chris Hoy is a track cyclist.\n\nAndy Murray is a tennis player.\n\nMo Farah is a distance runner.\n\nAll are notable British sportspeople but only Wiggins fits this achievement."
     },
     {
       "id": 112,
@@ -1604,7 +1604,7 @@
       ],
       "answer": "Cardiff",
       "answerIndex": 0,
-      "explanation": "Cardiff is the capital of Wales. Swansea is a Welsh city but not the capital. Edinburgh is the capital of Scotland. Belfast is the capital of Northern Ireland."
+      "explanation": "Cardiff is the capital of Wales.\n\nSwansea is a Welsh city but not the capital.\n\nEdinburgh is the capital of Scotland.\n\nBelfast is the capital of Northern Ireland."
     },
     {
       "id": 113,
@@ -1618,7 +1618,7 @@
       ],
       "answer": "The pound sterling",
       "answerIndex": 0,
-      "explanation": "The UK currency is the pound sterling (£), with 100 pence in a pound. The UK is not part of the eurozone and does not use the euro. The dollar is not used in the UK."
+      "explanation": "The UK currency is the pound sterling (£), with 100 pence in a pound.\n\nThe UK is not part of the eurozone and does not use the euro.\n\nThe dollar is not used in the UK."
     },
     {
       "id": 114,
@@ -1632,7 +1632,7 @@
       ],
       "answer": "About 870 miles",
       "answerIndex": 0,
-      "explanation": "The distance from John O'Groats (north Scotland) to Land's End (south-west England) is about 870 miles (approximately 1,400 km). The other distances are distractors and do not match the handbook figure."
+      "explanation": "The distance from John O'Groats (north Scotland) to Land's End (south-west England) is about 870 miles (approximately 1,400 km).\n\nThe other distances are distractors and do not match the handbook figure."
     },
     {
       "id": 115,
@@ -1646,7 +1646,7 @@
       ],
       "answer": "84%",
       "answerIndex": 0,
-      "explanation": "England makes up about 84% of the UK population. Scotland is just over 8%, Wales around 5% and Northern Ireland less than 3% — so those figures are relevant to those nations respectively."
+      "explanation": "England makes up about 84% of the UK population.\n\nScotland is just over 8%, Wales around 5% and Northern Ireland less than 3% — so those figures are relevant to those nations respectively."
     },
     {
       "id": 116,
@@ -1660,7 +1660,7 @@
       ],
       "answer": "Parts of the Scottish Highlands and Islands",
       "answerIndex": 0,
-      "explanation": "Gaelic is spoken in some parts of the Scottish Highlands and Islands, and Irish Gaelic by some in Northern Ireland. Welsh is spoken widely in Wales. The other options do not match where Gaelic is spoken."
+      "explanation": "Gaelic is spoken in some parts of the Scottish Highlands and Islands, and Irish Gaelic by some in Northern Ireland.\n\nWelsh is spoken widely in Wales.\n\nThe other options do not match where Gaelic is spoken."
     },
     {
       "id": 117,
@@ -1674,7 +1674,7 @@
       ],
       "answer": "Unwritten (uncodified)",
       "answerIndex": 0,
-      "explanation": "The UK constitution is unwritten (not contained in a single document), having developed over hundreds of years. A single written document describes constitutions like those of the USA or France. The monarch does not set it, and the EU does not decide it."
+      "explanation": "The UK constitution is unwritten (not contained in a single document), having developed over hundreds of years.\n\nA single written document describes constitutions like those of the USA or France.\n\nThe monarch does not set it, and the EU does not decide it."
     },
     {
       "id": 118,
@@ -1688,7 +1688,7 @@
       ],
       "answer": "King Charles III",
       "answerIndex": 0,
-      "explanation": "King Charles III has been the sovereign since 2022. Queen Elizabeth II reigned from 1952 until her death in 2022. William, Prince of Wales, is the heir apparent. Prince Edward became Duke of Edinburgh in 2023."
+      "explanation": "King Charles III has been the sovereign since 2022.\n\nQueen Elizabeth II reigned from 1952 until her death in 2022.\n\nWilliam, Prince of Wales, is the heir apparent.\n\nPrince Edward became Duke of Edinburgh in 2023."
     },
     {
       "id": 119,
@@ -1702,7 +1702,7 @@
       ],
       "answer": "The House of Commons",
       "answerIndex": 0,
-      "explanation": "The House of Commons is regarded as more important because its members (MPs) are democratically elected. The House of Lords is made up of unelected peers. The Cabinet is the committee of senior ministers, not a chamber of Parliament."
+      "explanation": "The House of Commons is regarded as more important because its members (MPs) are democratically elected.\n\nThe House of Lords is made up of unelected peers.\n\nThe Cabinet is the committee of senior ministers, not a chamber of Parliament."
     },
     {
       "id": 120,
@@ -1716,7 +1716,7 @@
       ],
       "answer": "Peers",
       "answerIndex": 0,
-      "explanation": "Members of the House of Lords are peers, who are not elected. MPs sit in the House of Commons. MSPs are members of the Scottish Parliament. Councillors serve on local authorities."
+      "explanation": "Members of the House of Lords are peers, who are not elected.\n\nMPs sit in the House of Commons.\n\nMSPs are members of the Scottish Parliament.\n\nCouncillors serve on local authorities."
     },
     {
       "id": 121,
@@ -1730,7 +1730,7 @@
       ],
       "answer": "Life peers",
       "answerIndex": 0,
-      "explanation": "Since 1958 the PM can nominate life peers, who hold their title only for their own lifetime. Hereditary peers inherit their title (and since 1999 have lost the automatic right to sit). Bishops of the Church of England also sit in the Lords, but that is a separate category."
+      "explanation": "Since 1958 the PM can nominate life peers, who hold their title only for their own lifetime.\n\nHereditary peers inherit their title (and since 1999 have lost the automatic right to sit).\n\nBishops of the Church of England also sit in the Lords, but that is a separate category."
     },
     {
       "id": 122,
@@ -1744,7 +1744,7 @@
       ],
       "answer": "The Speaker",
       "answerIndex": 0,
-      "explanation": "The Speaker chairs debates in the Commons, is politically neutral, and is chosen by other MPs in a secret ballot. The Prime Minister leads the government. The other roles do not chair Commons debates."
+      "explanation": "The Speaker chairs debates in the Commons, is politically neutral, and is chosen by other MPs in a secret ballot.\n\nThe Prime Minister leads the government.\n\nThe other roles do not chair Commons debates."
     },
     {
       "id": 123,
@@ -1758,7 +1758,7 @@
       ],
       "answer": "First past the post",
       "answerIndex": 0,
-      "explanation": "MPs are elected by 'first past the post' — the candidate with the most votes in a constituency wins. Proportional representation is relevant to European Parliament elections and to the devolved bodies. A ballot of peers does not elect MPs."
+      "explanation": "MPs are elected by 'first past the post' — the candidate with the most votes in a constituency wins.\n\nProportional representation is relevant to European Parliament elections and to the devolved bodies.\n\nA ballot of peers does not elect MPs."
     },
     {
       "id": 124,
@@ -1772,7 +1772,7 @@
       ],
       "answer": "The Chancellor of the Exchequer",
       "answerIndex": 0,
-      "explanation": "The Chancellor of the Exchequer is responsible for the economy. The Home Secretary handles crime, policing and immigration. The Foreign Secretary manages relations with other countries. The Speaker chairs Commons debates and is not a cabinet minister."
+      "explanation": "The Chancellor of the Exchequer is responsible for the economy.\n\nThe Home Secretary handles crime, policing and immigration.\n\nThe Foreign Secretary manages relations with other countries.\n\nThe Speaker chairs Commons debates and is not a cabinet minister."
     },
     {
       "id": 125,
@@ -1786,7 +1786,7 @@
       ],
       "answer": "10 Downing Street",
       "answerIndex": 0,
-      "explanation": "The PM's official home is 10 Downing Street; Chequers is the PM's country house — so Chequers is relevant to the country residence, not the London home. Buckingham Palace is the monarch's residence. The Palace of Westminster houses Parliament."
+      "explanation": "The PM's official home is 10 Downing Street; Chequers is the PM's country house — so Chequers is relevant to the country residence, not the London home.\n\nBuckingham Palace is the monarch's residence.\n\nThe Palace of Westminster houses Parliament."
     },
     {
       "id": 126,
@@ -1800,7 +1800,7 @@
       ],
       "answer": "The Opposition",
       "answerIndex": 0,
-      "explanation": "The second-largest party is the Opposition, and its leader forms a shadow cabinet. A coalition forms when no party wins a majority. The Cabinet is the governing party's senior ministers. The civil service is politically neutral and supports the government of the day."
+      "explanation": "The second-largest party is the Opposition, and its leader forms a shadow cabinet.\n\nA coalition forms when no party wins a majority.\n\nThe Cabinet is the governing party's senior ministers.\n\nThe civil service is politically neutral and supports the government of the day."
     },
     {
       "id": 127,
@@ -1814,7 +1814,7 @@
       ],
       "answer": "Political impartiality",
       "answerIndex": 0,
-      "explanation": "Civil servants are chosen on merit and are politically neutral; their core values are integrity, honesty, objectivity and impartiality. They are not loyal to one party, not elected, and not appointed by heredity."
+      "explanation": "Civil servants are chosen on merit and are politically neutral; their core values are integrity, honesty, objectivity and impartiality.\n\nThey are not loyal to one party, not elected, and not appointed by heredity."
     },
     {
       "id": 128,
@@ -1828,7 +1828,7 @@
       ],
       "answer": "Holyrood, Edinburgh",
       "answerIndex": 0,
-      "explanation": "The Scottish Parliament sits at Holyrood in Edinburgh. Stormont in Belfast is the Northern Ireland Assembly. Cardiff Bay (the Senedd) is the Welsh Parliament/Assembly. Westminster is the UK Parliament."
+      "explanation": "The Scottish Parliament sits at Holyrood in Edinburgh.\n\nStormont in Belfast is the Northern Ireland Assembly.\n\nCardiff Bay (the Senedd) is the Welsh Parliament/Assembly.\n\nWestminster is the UK Parliament."
     },
     {
       "id": 129,
@@ -1842,7 +1842,7 @@
       ],
       "answer": "129 MSPs",
       "answerIndex": 0,
-      "explanation": "The Scottish Parliament has 129 MSPs. 60 members (AMs) is relevant to the Welsh Assembly. 90 members (MLAs) is relevant to the Northern Ireland Assembly. MPs sit in the UK House of Commons."
+      "explanation": "The Scottish Parliament has 129 MSPs. 60 members (AMs) is relevant to the Welsh Assembly. 90 members (MLAs) is relevant to the Northern Ireland Assembly.\n\nMPs sit in the UK House of Commons."
     },
     {
       "id": 130,
@@ -1870,7 +1870,7 @@
       ],
       "answer": "At least every five years",
       "answerIndex": 0,
-      "explanation": "A General Election must be held at least every five years. 'Every year' echoes one of the Chartists' demands (annual elections), which was not adopted, so it is relevant to that historical topic. The other intervals are distractors."
+      "explanation": "A General Election must be held at least every five years.\n\n'Every year' echoes one of the Chartists' demands (annual elections), which was not adopted, so it is relevant to that historical topic.\n\nThe other intervals are distractors."
     },
     {
       "id": 132,
@@ -1884,7 +1884,7 @@
       ],
       "answer": "Carrying a weapon for self-defence",
       "answerIndex": 0,
-      "explanation": "Carrying a weapon of any kind, even for self-defence, is a criminal offence. Disputes over faulty goods (consumer rights), landlord–tenant issues (housing law) and unfair dismissal (employment law) are matters of civil law, not criminal law."
+      "explanation": "Carrying a weapon of any kind, even for self-defence, is a criminal offence.\n\nDisputes over faulty goods (consumer rights), landlord–tenant issues (housing law) and unfair dismissal (employment law) are matters of civil law, not criminal law."
     },
     {
       "id": 133,
@@ -1898,7 +1898,7 @@
       ],
       "answer": "The Magistrates' Court",
       "answerIndex": 0,
-      "explanation": "Minor criminal cases in England, Wales and Northern Ireland are heard in a Magistrates' Court. The Crown Court hears serious criminal cases with a judge and jury. County Courts and the High Court deal with civil matters."
+      "explanation": "Minor criminal cases in England, Wales and Northern Ireland are heard in a Magistrates' Court.\n\nThe Crown Court hears serious criminal cases with a judge and jury.\n\nCounty Courts and the High Court deal with civil matters."
     },
     {
       "id": 134,
@@ -1912,7 +1912,7 @@
       ],
       "answer": "12",
       "answerIndex": 0,
-      "explanation": "A jury has 12 members in England, Wales and Northern Ireland. In Scotland a jury has 15 members — so 15 is relevant to Scotland. The other numbers are distractors."
+      "explanation": "A jury has 12 members in England, Wales and Northern Ireland.\n\nIn Scotland a jury has 15 members — so 15 is relevant to Scotland.\n\nThe other numbers are distractors."
     },
     {
       "id": 135,
@@ -1926,7 +1926,7 @@
       ],
       "answer": "Not proven",
       "answerIndex": 0,
-      "explanation": "In Scotland a third verdict of 'not proven' is possible, in addition to 'guilty' and 'not guilty'. The other terms are not the special Scottish verdict referred to in the handbook."
+      "explanation": "In Scotland a third verdict of 'not proven' is possible, in addition to 'guilty' and 'not guilty'.\n\nThe other terms are not the special Scottish verdict referred to in the handbook."
     },
     {
       "id": 136,
@@ -1940,7 +1940,7 @@
       ],
       "answer": "£10,000",
       "answerIndex": 0,
-      "explanation": "The small claims procedure is for claims of less than £10,000 in England and Wales. In Scotland and Northern Ireland the limit is £5,000 — so £5,000 is relevant to those parts of the UK."
+      "explanation": "The small claims procedure is for claims of less than £10,000 in England and Wales.\n\nIn Scotland and Northern Ireland the limit is £5,000 — so £5,000 is relevant to those parts of the UK."
     },
     {
       "id": 137,
@@ -1954,7 +1954,7 @@
       ],
       "answer": "Police and Crime Commissioners (PCCs)",
       "answerIndex": 0,
-      "explanation": "Directly elected Police and Crime Commissioners (PCCs) set local police priorities and budgets and appoint the Chief Constable. Magistrates decide court cases. The Home Secretary oversees policing nationally but does not set local priorities in this way."
+      "explanation": "Directly elected Police and Crime Commissioners (PCCs) set local police priorities and budgets and appoint the Chief Constable.\n\nMagistrates decide court cases.\n\nThe Home Secretary oversees policing nationally but does not set local priorities in this way."
     },
     {
       "id": 138,
@@ -1968,7 +1968,7 @@
       ],
       "answer": "The Human Rights Act 1998",
       "answerIndex": 0,
-      "explanation": "The Human Rights Act 1998 incorporated the European Convention on Human Rights into UK law. The Magna Carta (1215), Bill of Rights (1689) and Habeas Corpus Act (1679) are earlier foundations of individual rights but did not incorporate the Convention."
+      "explanation": "The Human Rights Act 1998 incorporated the European Convention on Human Rights into UK law.\n\nThe Magna Carta (1215), Bill of Rights (1689) and Habeas Corpus Act (1679) are earlier foundations of individual rights but did not incorporate the Convention."
     },
     {
       "id": 139,
@@ -1982,7 +1982,7 @@
       ],
       "answer": "HM Revenue & Customs (HMRC)",
       "answerIndex": 0,
-      "explanation": "HMRC collects taxes. The DWP is relevant to obtaining a National Insurance number and to benefits. The Home Office handles immigration and policing. The Bank of England manages monetary policy."
+      "explanation": "HMRC collects taxes.\n\nThe DWP is relevant to obtaining a National Insurance number and to benefits.\n\nThe Home Office handles immigration and policing.\n\nThe Bank of England manages monetary policy."
     },
     {
       "id": 140,
@@ -1996,7 +1996,7 @@
       ],
       "answer": "Pay As You Earn (PAYE)",
       "answerIndex": 0,
-      "explanation": "PAYE deducts income tax directly from wages. Self-assessment is used by self-employed people, who complete a tax return. National Insurance is a separate contribution for state benefits and the NHS. Council tax funds local services."
+      "explanation": "PAYE deducts income tax directly from wages.\n\nSelf-assessment is used by self-employed people, who complete a tax return.\n\nNational Insurance is a separate contribution for state benefits and the NHS.\n\nCouncil tax funds local services."
     },
     {
       "id": 141,
@@ -2038,7 +2038,7 @@
       ],
       "answer": "3 years",
       "answerIndex": 0,
-      "explanation": "A vehicle more than three years old must have an annual MOT test. The other durations are distractors and do not match the handbook rule."
+      "explanation": "A vehicle more than three years old must have an annual MOT test.\n\nThe other durations are distractors and do not match the handbook rule."
     },
     {
       "id": 144,
@@ -2052,7 +2052,7 @@
       ],
       "answer": "King Charles III",
       "answerIndex": 0,
-      "explanation": "The monarch, currently King Charles III, is the ceremonial head of the Commonwealth, a voluntary association of countries. The UN Secretary-General leads the United Nations. The other roles are unrelated to heading the Commonwealth."
+      "explanation": "The monarch, currently King Charles III, is the ceremonial head of the Commonwealth, a voluntary association of countries.\n\nThe UN Secretary-General leads the United Nations.\n\nThe other roles are unrelated to heading the Commonwealth."
     },
     {
       "id": 145,
@@ -2080,7 +2080,7 @@
       ],
       "answer": "27",
       "answerIndex": 0,
-      "explanation": "The EU now has 27 member states following the UK's departure. '47' is relevant to the Council of Europe (a separate body). '54' relates to the number of Commonwealth member states referenced in the handbook."
+      "explanation": "The EU now has 27 member states following the UK's departure.\n\n'47' is relevant to the Council of Europe (a separate body).\n\n'54' relates to the number of Commonwealth member states referenced in the handbook."
     },
     {
       "id": 147,
@@ -2094,7 +2094,7 @@
       ],
       "answer": "The protection and promotion of human rights",
       "answerIndex": 0,
-      "explanation": "The Council of Europe (47 members, separate from the EU) protects and promotes human rights and drew up the European Convention on Human Rights. It has no power to make laws. NATO is a defence alliance and the UN is a separate global body."
+      "explanation": "The Council of Europe (47 members, separate from the EU) protects and promotes human rights and drew up the European Convention on Human Rights.\n\nIt has no power to make laws.\n\nNATO is a defence alliance and the UN is a separate global body."
     },
     {
       "id": 148,
@@ -2108,7 +2108,7 @@
       ],
       "answer": "Five",
       "answerIndex": 0,
-      "explanation": "The UK is one of the five permanent members of the UN Security Council. 'Fifteen' is relevant to the total number of members on the Security Council, not the permanent members."
+      "explanation": "The UK is one of the five permanent members of the UN Security Council.\n\n'Fifteen' is relevant to the total number of members on the Security Council, not the permanent members."
     },
     {
       "id": 149,
@@ -2122,7 +2122,7 @@
       ],
       "answer": "A defence alliance of European and North American countries",
       "answerIndex": 0,
-      "explanation": "NATO is a group of European and North American countries that agree to help each other if attacked and to maintain peace among members. An EU trade bloc, a human rights court (the ECHR/Council of Europe), and a government department are all different institutions."
+      "explanation": "NATO is a group of European and North American countries that agree to help each other if attacked and to maintain peace among members.\n\nAn EU trade bloc, a human rights court (the ECHR/Council of Europe), and a government department are all different institutions."
     },
     {
       "id": 150,
@@ -2136,7 +2136,7 @@
       ],
       "answer": "Serve on a jury",
       "answerIndex": 0,
-      "explanation": "People on the electoral register aged 18 to 70 can be selected for jury service. Becoming PM, sitting in the Lords, or appointing a Chief Constable (a PCC's role) are not things ordinary citizens are randomly selected to do."
+      "explanation": "People on the electoral register aged 18 to 70 can be selected for jury service.\n\nBecoming PM, sitting in the Lords, or appointing a Chief Constable (a PCC's role) are not things ordinary citizens are randomly selected to do."
     },
     {
       "id": 151,
@@ -2150,7 +2150,7 @@
       ],
       "answer": "18, with no upper age limit",
       "answerIndex": 0,
-      "explanation": "School governors must be aged 18 or over at appointment, with no upper age limit. Jury service applies to those aged 18 to 70, so an upper limit is relevant to jury service rather than to school governors."
+      "explanation": "School governors must be aged 18 or over at appointment, with no upper age limit.\n\nJury service applies to those aged 18 to 70, so an upper limit is relevant to jury service rather than to school governors."
     },
     {
       "id": 152,
@@ -2164,7 +2164,7 @@
       ],
       "answer": "Canvassing",
       "answerIndex": 0,
-      "explanation": "Persuading people to vote for a candidate by leafleting and door-knocking is called canvassing. Lobbying is relevant to pressure groups influencing government policy. Filibustering and devolution refer to unrelated political concepts."
+      "explanation": "Persuading people to vote for a candidate by leafleting and door-knocking is called canvassing.\n\nLobbying is relevant to pressure groups influencing government policy.\n\nFilibustering and devolution refer to unrelated political concepts."
     },
     {
       "id": 153,
@@ -2178,7 +2178,7 @@
       ],
       "answer": "Recycling waste and shopping locally",
       "answerIndex": 0,
-      "explanation": "Recycling, shopping locally and using public transport or walking help protect the environment and reduce your carbon footprint. The other options increase pollution or waste and are the opposite of good environmental practice."
+      "explanation": "Recycling, shopping locally and using public transport or walking help protect the environment and reduce your carbon footprint.\n\nThe other options increase pollution or waste and are the opposite of good environmental practice."
     },
     {
       "id": 154,
@@ -2192,7 +2192,7 @@
       ],
       "answer": "The National Citizen Service",
       "answerIndex": 0,
-      "explanation": "The National Citizen Service offers 16- and 17-year-olds outdoor activities, skills development and a community project. The National Trust preserves heritage sites, the National Lottery funds good causes, and the NHS provides healthcare."
+      "explanation": "The National Citizen Service offers 16- and 17-year-olds outdoor activities, skills development and a community project.\n\nThe National Trust preserves heritage sites, the National Lottery funds good causes, and the NHS provides healthcare."
     },
     {
       "id": 155,
@@ -2206,7 +2206,7 @@
       ],
       "answer": "Mary I",
       "answerIndex": 0,
-      "explanation": "Mary I, a devout Catholic, persecuted Protestants and became known as 'Bloody Mary'. Mary, Queen of Scots was a Catholic Scottish queen executed under Elizabeth I. Elizabeth I re-established the Church of England. Queen Anne reigned much later, in the early 1700s."
+      "explanation": "Mary I, a devout Catholic, persecuted Protestants and became known as 'Bloody Mary'.\n\nMary, Queen of Scots was a Catholic Scottish queen executed under Elizabeth I.\n\nElizabeth I re-established the Church of England.\n\nQueen Anne reigned much later, in the early 1700s."
     },
     {
       "id": 156,
@@ -2220,7 +2220,7 @@
       ],
       "answer": "Isambard Kingdom Brunel",
       "answerIndex": 0,
-      "explanation": "Isambard Kingdom Brunel built the Great Western Railway and many bridges and tunnels. George Stephenson (with his son Robert) pioneered the railway engine. Richard Arkwright is relevant to textile factories. Sir Frank Whittle developed the jet engine."
+      "explanation": "Isambard Kingdom Brunel built the Great Western Railway and many bridges and tunnels.\n\nGeorge Stephenson (with his son Robert) pioneered the railway engine.\n\nRichard Arkwright is relevant to textile factories.\n\nSir Frank Whittle developed the jet engine."
     },
     {
       "id": 157,
@@ -2234,7 +2234,7 @@
       ],
       "answer": "The Crystal Palace",
       "answerIndex": 0,
-      "explanation": "The Great Exhibition of 1851 was held in the Crystal Palace, a huge structure of steel and glass in Hyde Park. The Royal Albert Hall hosts the Proms. The Banqueting House was designed by Inigo Jones. The 'Crystal Cathedral' is a distractor."
+      "explanation": "The Great Exhibition of 1851 was held in the Crystal Palace, a huge structure of steel and glass in Hyde Park.\n\nThe Royal Albert Hall hosts the Proms.\n\nThe Banqueting House was designed by Inigo Jones.\n\nThe 'Crystal Cathedral' is a distractor."
     },
     {
       "id": 158,
@@ -2248,7 +2248,7 @@
       ],
       "answer": "11am on 11 November 1918",
       "answerIndex": 0,
-      "explanation": "WWI ended at 11am on 11 November 1918. 6 June 1944 is D-Day in WWII. 8 May relates to the Allied victory in Europe in WWII (1945). The other option is invented."
+      "explanation": "WWI ended at 11am on 11 November 1918. 6 June 1944 is D-Day in WWII. 8 May relates to the Allied victory in Europe in WWII (1945).\n\nThe other option is invented."
     },
     {
       "id": 159,
@@ -2262,7 +2262,7 @@
       ],
       "answer": "Poland",
       "answerIndex": 0,
-      "explanation": "Hitler's invasion of Poland in 1939 led Britain and France to declare war. Germany later took Belgium and the Netherlands and advanced through France in 1940, and invaded the Soviet Union in 1941 — so those events are relevant to later stages of the war."
+      "explanation": "Hitler's invasion of Poland in 1939 led Britain and France to declare war.\n\nGermany later took Belgium and the Netherlands and advanced through France in 1940, and invaded the Soviet Union in 1941 — so those events are relevant to later stages of the war."
     },
     {
       "id": 160,
@@ -2304,7 +2304,7 @@
       ],
       "answer": "Mo Farah",
       "answerIndex": 0,
-      "explanation": "Mo Farah won the 5,000m and 10,000m in 2012. Bradley Wiggins is a cyclist who won the Tour de France. Jessica Ennis won the heptathlon in 2012. Andy Murray is a Scottish tennis player."
+      "explanation": "Mo Farah won the 5,000m and 10,000m in 2012.\n\nBradley Wiggins is a cyclist who won the Tour de France.\n\nJessica Ennis won the heptathlon in 2012.\n\nAndy Murray is a Scottish tennis player."
     },
     {
       "id": 163,
@@ -2318,7 +2318,7 @@
       ],
       "answer": "Rugby union",
       "answerIndex": 0,
-      "explanation": "The Six Nations is a rugby union competition between England, Ireland, Scotland, Wales, France and Italy. The Super League is the best-known rugby league competition. Football, cricket and golf have different signature competitions."
+      "explanation": "The Six Nations is a rugby union competition between England, Ireland, Scotland, Wales, France and Italy.\n\nThe Super League is the best-known rugby league competition.\n\nFootball, cricket and golf have different signature competitions."
     },
     {
       "id": 164,
@@ -2332,7 +2332,7 @@
       ],
       "answer": "George Frederick Handel",
       "answerIndex": 0,
-      "explanation": "Handel, German-born, became a British citizen in 1727 and wrote Water Music, Music for the Royal Fireworks and Messiah. Gustav Holst wrote The Planets. Henry Purcell was an earlier English composer. Benjamin Britten wrote 20th-century operas."
+      "explanation": "Handel, German-born, became a British citizen in 1727 and wrote Water Music, Music for the Royal Fireworks and Messiah.\n\nGustav Holst wrote The Planets.\n\nHenry Purcell was an earlier English composer.\n\nBenjamin Britten wrote 20th-century operas."
     },
     {
       "id": 165,
@@ -2346,7 +2346,7 @@
       ],
       "answer": "Banks and many businesses are closed and they have no religious significance",
       "answerIndex": 0,
-      "explanation": "Bank holidays are days when banks and many businesses close, and they generally have no religious significance. They occur at the start of May, in late May or early June, and in August (with an additional one in Northern Ireland in July). They are not weekly or exclusively Scottish."
+      "explanation": "Bank holidays are days when banks and many businesses close, and they generally have no religious significance.\n\nThey occur at the start of May, in late May or early June, and in August (with an additional one in Northern Ireland in July).\n\nThey are not weekly or exclusively Scottish."
     },
     {
       "id": 166,
@@ -2360,7 +2360,7 @@
       ],
       "answer": "About 67.6 million",
       "answerIndex": 0,
-      "explanation": "The estimated 2022 population was about 67.6 million. About 57 million relates to 1998, about 40 million to 1901, and just over 62 million to 2010 — so those figures are relevant to earlier census points."
+      "explanation": "The estimated 2022 population was about 67.6 million.\n\nAbout 57 million relates to 1998, about 40 million to 1901, and just over 62 million to 2010 — so those figures are relevant to earlier census points."
     },
     {
       "id": 167,
@@ -2374,7 +2374,7 @@
       ],
       "answer": "Denmark and Norway",
       "answerIndex": 0,
-      "explanation": "The Vikings came from Denmark and Norway, first raiding Britain in AD 789. The Angles, Saxons and Jutes came from areas of northern Europe including Germany. France is relevant to the Normans of 1066. The other pairs are distractors."
+      "explanation": "The Vikings came from Denmark and Norway, first raiding Britain in AD 789.\n\nThe Angles, Saxons and Jutes came from areas of northern Europe including Germany.\n\nFrance is relevant to the Normans of 1066.\n\nThe other pairs are distractors."
     },
     {
       "id": 168,
@@ -2388,7 +2388,7 @@
       ],
       "answer": "France",
       "answerIndex": 0,
-      "explanation": "The Hundred Years War (which actually lasted 116 years) was fought between England and France, including the Battle of Agincourt (1415). Scotland fought England at Bannockburn. Spain relates to the later Armada. Ireland relates to English settlement, not this war."
+      "explanation": "The Hundred Years War (which actually lasted 116 years) was fought between England and France, including the Battle of Agincourt (1415).\n\nScotland fought England at Bannockburn.\n\nSpain relates to the later Armada.\n\nIreland relates to English settlement, not this war."
     },
     {
       "id": 169,
@@ -2402,7 +2402,7 @@
       ],
       "answer": "A criminal offence",
       "answerIndex": 0,
-      "explanation": "FGM is illegal in the UK, and practising it or taking a girl or woman abroad for it is a criminal offence. It is never a civil-only matter and is not permitted with consent or for adults."
+      "explanation": "FGM is illegal in the UK, and practising it or taking a girl or woman abroad for it is a criminal offence.\n\nIt is never a civil-only matter and is not permitted with consent or for adults."
     },
     {
       "id": 170,
@@ -2416,7 +2416,7 @@
       ],
       "answer": "A criminal offence",
       "answerIndex": 0,
-      "explanation": "Forced marriage is a criminal offence; a marriage requires the full and free consent of both people. Arranged marriages, where both parties agree, are acceptable — but that is different from a forced marriage. Family agreement does not make forcing someone lawful."
+      "explanation": "Forced marriage is a criminal offence; a marriage requires the full and free consent of both people.\n\nArranged marriages, where both parties agree, are acceptable — but that is different from a forced marriage.\n\nFamily agreement does not make forcing someone lawful."
     },
     {
       "id": 171,
@@ -2430,7 +2430,7 @@
       ],
       "answer": "Respect and obey the law",
       "answerIndex": 0,
-      "explanation": "Residents are expected to respect and obey the law, respect the rights of others, treat others fairly and look after the environment. Joining a political party or volunteering is optional community participation, not a requirement. Military service and weekly church attendance are not required."
+      "explanation": "Residents are expected to respect and obey the law, respect the rights of others, treat others fairly and look after the environment.\n\nJoining a political party or volunteering is optional community participation, not a requirement.\n\nMilitary service and weekly church attendance are not required."
     },
     {
       "id": 172,
@@ -2444,7 +2444,7 @@
       ],
       "answer": "At a registered, approved test centre",
       "answerIndex": 0,
-      "explanation": "The test can only be taken at a registered and approved test centre, booked online through the official site. It cannot be taken at a post office, at home, or at a police station."
+      "explanation": "The test can only be taken at a registered and approved test centre, booked online through the official site.\n\nIt cannot be taken at a post office, at home, or at a police station."
     },
     {
       "id": 173,
@@ -2458,7 +2458,7 @@
       ],
       "answer": "Welsh or Scottish Gaelic",
       "answerIndex": 0,
-      "explanation": "The test is usually taken in English, but special arrangements can be made for Welsh or Scottish Gaelic. Irish Gaelic and other languages are not offered for the test itself, though Irish Gaelic is spoken by some in Northern Ireland."
+      "explanation": "The test is usually taken in English, but special arrangements can be made for Welsh or Scottish Gaelic.\n\nIrish Gaelic and other languages are not offered for the test itself, though Irish Gaelic is spoken by some in Northern Ireland."
     },
     {
       "id": 174,
@@ -2472,7 +2472,7 @@
       ],
       "answer": "The United Kingdom of Great Britain and Northern Ireland",
       "answerIndex": 0,
-      "explanation": "The official name is the United Kingdom of Great Britain and Northern Ireland. 'Great Britain and Ireland' was the name created by the Act of Union of 1800, before the partition of Ireland — so it is relevant to that historical union, not the country today."
+      "explanation": "The official name is the United Kingdom of Great Britain and Northern Ireland.\n\n'Great Britain and Ireland' was the name created by the Act of Union of 1800, before the partition of Ireland — so it is relevant to that historical union, not the country today."
     },
     {
       "id": 175,
@@ -2486,7 +2486,7 @@
       ],
       "answer": "St Helena",
       "answerIndex": 0,
-      "explanation": "St Helena and the Falkland Islands are British overseas territories. The Isle of Man, Jersey and Guernsey are Crown dependencies — a different category, linked to the UK but with their own governments."
+      "explanation": "St Helena and the Falkland Islands are British overseas territories.\n\nThe Isle of Man, Jersey and Guernsey are Crown dependencies — a different category, linked to the UK but with their own governments."
     },
     {
       "id": 176,
@@ -2500,7 +2500,7 @@
       ],
       "answer": "About 6,000 years ago",
       "answerIndex": 0,
-      "explanation": "The first farmers arrived about 6,000 years ago, probably from south-east Europe. About 10,000 years ago relates to when the Channel permanently separated Britain from the continent. About 4,000 years ago relates to the start of the Bronze Age."
+      "explanation": "The first farmers arrived about 6,000 years ago, probably from south-east Europe.\n\nAbout 10,000 years ago relates to when the Channel permanently separated Britain from the continent.\n\nAbout 4,000 years ago relates to the start of the Bronze Age."
     },
     {
       "id": 177,
@@ -2514,7 +2514,7 @@
       ],
       "answer": "The Bronze Age (about 4,000 years ago)",
       "answerIndex": 0,
-      "explanation": "People learned to make bronze about 4,000 years ago, in the Bronze Age, and buried their dead in round barrows. The Iron Age followed, when people made tools and weapons from iron. The Stone Age and Roman period are different eras."
+      "explanation": "People learned to make bronze about 4,000 years ago, in the Bronze Age, and buried their dead in round barrows.\n\nThe Iron Age followed, when people made tools and weapons from iron.\n\nThe Stone Age and Roman period are different eras."
     },
     {
       "id": 178,
@@ -2528,7 +2528,7 @@
       ],
       "answer": "Maiden Castle",
       "answerIndex": 0,
-      "explanation": "Maiden Castle in Dorset is an impressive Iron Age hill fort. Skara Brae (Orkney) is a Stone Age village. Sutton Hoo (Suffolk) is an Anglo-Saxon burial site. Stonehenge (Wiltshire) is a Stone Age monument."
+      "explanation": "Maiden Castle in Dorset is an impressive Iron Age hill fort.\n\nSkara Brae (Orkney) is a Stone Age village.\n\nSutton Hoo (Suffolk) is an Anglo-Saxon burial site.\n\nStonehenge (Wiltshire) is a Stone Age monument."
     },
     {
       "id": 179,
@@ -2542,7 +2542,7 @@
       ],
       "answer": "Julius Caesar",
       "answerIndex": 0,
-      "explanation": "Julius Caesar led the unsuccessful invasion of 55 BC. Emperor Claudius led the successful invasion in AD 43. Hadrian is relevant to Hadrian's Wall. Boudicca was a British tribal leader who fought against the Romans, not a Roman commander."
+      "explanation": "Julius Caesar led the unsuccessful invasion of 55 BC.\n\nEmperor Claudius led the successful invasion in AD 43.\n\nHadrian is relevant to Hadrian's Wall.\n\nBoudicca was a British tribal leader who fought against the Romans, not a Roman commander."
     },
     {
       "id": 180,
@@ -2556,7 +2556,7 @@
       ],
       "answer": "The Iceni",
       "answerIndex": 0,
-      "explanation": "Boudicca was queen of the Iceni in what is now eastern England; a statue of her stands on Westminster Bridge. The Picts were northern tribes kept out by Hadrian's Wall. The Angles were later invaders. The Normans arrived in 1066."
+      "explanation": "Boudicca was queen of the Iceni in what is now eastern England; a statue of her stands on Westminster Bridge.\n\nThe Picts were northern tribes kept out by Hadrian's Wall.\n\nThe Angles were later invaders.\n\nThe Normans arrived in 1066."
     },
     {
       "id": 181,
@@ -2570,7 +2570,7 @@
       ],
       "answer": "About 400 years",
       "answerIndex": 0,
-      "explanation": "The Romans remained in Britain for about 400 years, leaving in AD 410. They built roads and public buildings and created a structure of law. The other durations do not match the handbook."
+      "explanation": "The Romans remained in Britain for about 400 years, leaving in AD 410.\n\nThey built roads and public buildings and created a structure of law.\n\nThe other durations do not match the handbook."
     },
     {
       "id": 182,
@@ -2584,7 +2584,7 @@
       ],
       "answer": "Suffolk",
       "answerIndex": 0,
-      "explanation": "Sutton Hoo is in Suffolk. Wiltshire is relevant to Stonehenge, Dorset to Maiden Castle, and Orkney to Skara Brae."
+      "explanation": "Sutton Hoo is in Suffolk.\n\nWiltshire is relevant to Stonehenge, Dorset to Maiden Castle, and Orkney to Skara Brae."
     },
     {
       "id": 183,
@@ -2598,7 +2598,7 @@
       ],
       "answer": "St Columba",
       "answerIndex": 0,
-      "explanation": "St Columba founded a monastery on Iona, off the coast of what is now Scotland. St Augustine became the first Archbishop of Canterbury. St Patrick is the patron saint of Ireland. St David is the patron saint of Wales."
+      "explanation": "St Columba founded a monastery on Iona, off the coast of what is now Scotland.\n\nSt Augustine became the first Archbishop of Canterbury.\n\nSt Patrick is the patron saint of Ireland.\n\nSt David is the patron saint of Wales."
     },
     {
       "id": 184,
@@ -2612,7 +2612,7 @@
       ],
       "answer": "Viking languages",
       "answerIndex": 0,
-      "explanation": "Place names like Grimsby and Scunthorpe come from the Viking languages, in the area known as the Danelaw. Norman French influenced English after 1066. Latin came with the Romans. Welsh is a Celtic language."
+      "explanation": "Place names like Grimsby and Scunthorpe come from the Viking languages, in the area known as the Danelaw.\n\nNorman French influenced English after 1066.\n\nLatin came with the Romans.\n\nWelsh is a Celtic language."
     },
     {
       "id": 185,
@@ -2626,7 +2626,7 @@
       ],
       "answer": "The Bayeux Tapestry",
       "answerIndex": 0,
-      "explanation": "The Bayeux Tapestry commemorates the Battle of Hastings (1066). The Domesday Book was a survey of land and ownership. The Canterbury Tales are poems by Chaucer. The King James Bible dates from the 17th century."
+      "explanation": "The Bayeux Tapestry commemorates the Battle of Hastings (1066).\n\nThe Domesday Book was a survey of land and ownership.\n\nThe Canterbury Tales are poems by Chaucer.\n\nThe King James Bible dates from the 17th century."
     },
     {
       "id": 186,
@@ -2640,7 +2640,7 @@
       ],
       "answer": "Conwy and Caernarvon",
       "answerIndex": 0,
-      "explanation": "Conwy and Caernarvon castles were built to maintain English rule in Wales after the Statute of Rhuddlan. Windsor and Edinburgh are castles still in use today but are not the ones cited for maintaining power in Wales."
+      "explanation": "Conwy and Caernarvon castles were built to maintain English rule in Wales after the Statute of Rhuddlan.\n\nWindsor and Edinburgh are castles still in use today but are not the ones cited for maintaining power in Wales."
     },
     {
       "id": 187,
@@ -2654,7 +2654,7 @@
       ],
       "answer": "The Pale",
       "answerIndex": 0,
-      "explanation": "The English-ruled area of Ireland around Dublin was known as the Pale. The Danelaw was the Viking-influenced area of England. Ulster is the northern province of Ireland, relevant to later plantations. The Highlands are in Scotland."
+      "explanation": "The English-ruled area of Ireland around Dublin was known as the Pale.\n\nThe Danelaw was the Viking-influenced area of England.\n\nUlster is the northern province of Ireland, relevant to later plantations.\n\nThe Highlands are in Scotland."
     },
     {
       "id": 188,
@@ -2668,7 +2668,7 @@
       ],
       "answer": "The French",
       "answerIndex": 0,
-      "explanation": "At Agincourt (1415), Henry V's outnumbered English army defeated the French, during the Hundred Years War. The Scots fought England at Bannockburn. The Spanish relate to the Armada. The Vikings raided centuries earlier."
+      "explanation": "At Agincourt (1415), Henry V's outnumbered English army defeated the French, during the Hundred Years War.\n\nThe Scots fought England at Bannockburn.\n\nThe Spanish relate to the Armada.\n\nThe Vikings raided centuries earlier."
     },
     {
       "id": 189,
@@ -2682,7 +2682,7 @@
       ],
       "answer": "Feudalism",
       "answerIndex": 0,
-      "explanation": "The Normans used feudalism, giving land to lords in return for help in war. Common law is a legal system developed by precedent. Devolution is the transfer of powers to Scotland, Wales and Northern Ireland. Free trade relates to 19th-century economic policy."
+      "explanation": "The Normans used feudalism, giving land to lords in return for help in war.\n\nCommon law is a legal system developed by precedent.\n\nDevolution is the transfer of powers to Scotland, Wales and Northern Ireland.\n\nFree trade relates to 19th-century economic policy."
     },
     {
       "id": 190,
@@ -2696,7 +2696,7 @@
       ],
       "answer": "Nobility, great landowners and bishops",
       "answerIndex": 0,
-      "explanation": "The nobility, great landowners and bishops sat in the House of Lords. Knights and wealthy townspeople were elected to the House of Commons — so that group is relevant to the Commons. The Scottish Parliament, by contrast, had three Estates including the clergy."
+      "explanation": "The nobility, great landowners and bishops sat in the House of Lords.\n\nKnights and wealthy townspeople were elected to the House of Commons — so that group is relevant to the Commons.\n\nThe Scottish Parliament, by contrast, had three Estates including the clergy."
     },
     {
       "id": 191,
@@ -2710,7 +2710,7 @@
       ],
       "answer": "William Caxton",
       "answerIndex": 0,
-      "explanation": "William Caxton was the first person in England to print books using a printing press, including The Canterbury Tales. Geoffrey Chaucer wrote The Canterbury Tales. John Barbour wrote The Bruce in Scots. Shakespeare was a later playwright."
+      "explanation": "William Caxton was the first person in England to print books using a printing press, including The Canterbury Tales.\n\nGeoffrey Chaucer wrote The Canterbury Tales.\n\nJohn Barbour wrote The Bruce in Scots.\n\nShakespeare was a later playwright."
     },
     {
       "id": 192,
@@ -2724,7 +2724,7 @@
       ],
       "answer": "Henry VII",
       "answerIndex": 0,
-      "explanation": "Henry Tudor became Henry VII after Bosworth Field (1485), the first Tudor king. Henry VIII was his son. Richard III was the Yorkist king killed at Bosworth. Edward VI was a later Tudor monarch, son of Henry VIII."
+      "explanation": "Henry Tudor became Henry VII after Bosworth Field (1485), the first Tudor king.\n\nHenry VIII was his son.\n\nRichard III was the Yorkist king killed at Bosworth.\n\nEdward VI was a later Tudor monarch, son of Henry VIII."
     },
     {
       "id": 193,
@@ -2738,7 +2738,7 @@
       ],
       "answer": "Catherine of Aragon",
       "answerIndex": 0,
-      "explanation": "Catherine of Aragon was Spanish and the mother of Mary I. Anne Boleyn was the mother of Elizabeth I. Anne of Cleves was a German princess whom Henry divorced. Jane Seymour was the mother of Edward VI."
+      "explanation": "Catherine of Aragon was Spanish and the mother of Mary I.\n\nAnne Boleyn was the mother of Elizabeth I.\n\nAnne of Cleves was a German princess whom Henry divorced.\n\nJane Seymour was the mother of Edward VI."
     },
     {
       "id": 194,
@@ -2752,7 +2752,7 @@
       ],
       "answer": "Jane Seymour",
       "answerIndex": 0,
-      "explanation": "Jane Seymour gave birth to Edward but died shortly afterwards. Catherine Howard, like Anne Boleyn, was executed. Catherine Parr survived Henry. Anne Boleyn was the mother of Elizabeth I."
+      "explanation": "Jane Seymour gave birth to Edward but died shortly afterwards.\n\nCatherine Howard, like Anne Boleyn, was executed.\n\nCatherine Parr survived Henry.\n\nAnne Boleyn was the mother of Elizabeth I."
     },
     {
       "id": 195,
@@ -2766,7 +2766,7 @@
       ],
       "answer": "Catherine Parr",
       "answerIndex": 0,
-      "explanation": "Catherine Parr, a widow who married Henry late in his life, survived him. Jane Seymour died after childbirth. Anne Boleyn and Catherine Howard were both executed."
+      "explanation": "Catherine Parr, a widow who married Henry late in his life, survived him.\n\nJane Seymour died after childbirth.\n\nAnne Boleyn and Catherine Howard were both executed."
     },
     {
       "id": 196,
@@ -2780,7 +2780,7 @@
       ],
       "answer": "Edward VI",
       "answerIndex": 0,
-      "explanation": "The Book of Common Prayer was written during the reign of Edward VI, a strongly Protestant king. Mary I was a Catholic who persecuted Protestants. Elizabeth I re-established the Church of England. James I's reign produced the King James Bible."
+      "explanation": "The Book of Common Prayer was written during the reign of Edward VI, a strongly Protestant king.\n\nMary I was a Catholic who persecuted Protestants.\n\nElizabeth I re-established the Church of England.\n\nJames I's reign produced the King James Bible."
     },
     {
       "id": 197,
@@ -2794,7 +2794,7 @@
       ],
       "answer": "The Pope",
       "answerIndex": 0,
-      "explanation": "In 1560 the predominantly Protestant Scottish Parliament abolished the authority of the Pope in Scotland and established a Presbyterian Church of Scotland. The other options are not what was abolished in that reform."
+      "explanation": "In 1560 the predominantly Protestant Scottish Parliament abolished the authority of the Pope in Scotland and established a Presbyterian Church of Scotland.\n\nThe other options are not what was abolished in that reform."
     },
     {
       "id": 198,
@@ -2808,7 +2808,7 @@
       ],
       "answer": "Stratford-upon-Avon",
       "answerIndex": 0,
-      "explanation": "Shakespeare was born in Stratford-upon-Avon. London is home to the Globe Theatre, a modern copy of the theatres where his plays were performed. Canterbury and Swansea are associated with other figures and places."
+      "explanation": "Shakespeare was born in Stratford-upon-Avon.\n\nLondon is home to the Globe Theatre, a modern copy of the theatres where his plays were performed.\n\nCanterbury and Swansea are associated with other figures and places."
     },
     {
       "id": 199,
@@ -2822,7 +2822,7 @@
       ],
       "answer": "Macbeth",
       "answerIndex": 0,
-      "explanation": "Macbeth is a Shakespeare play. Under Milk Wood is a radio play by Dylan Thomas. Paradise Lost is a poem by John Milton. The Canterbury Tales are poems by Geoffrey Chaucer."
+      "explanation": "Macbeth is a Shakespeare play.\n\nUnder Milk Wood is a radio play by Dylan Thomas.\n\nParadise Lost is a poem by John Milton.\n\nThe Canterbury Tales are poems by Geoffrey Chaucer."
     },
     {
       "id": 200,
@@ -2836,7 +2836,7 @@
       ],
       "answer": "The Divine Right of Kings",
       "answerIndex": 0,
-      "explanation": "James I and Charles I believed in the Divine Right of Kings — that the monarch was appointed by God to rule. Universal suffrage and parliamentary supremacy developed much later; the UK has never had a single written constitution."
+      "explanation": "James I and Charles I believed in the Divine Right of Kings — that the monarch was appointed by God to rule.\n\nUniversal suffrage and parliamentary supremacy developed much later; the UK has never had a single written constitution."
     },
     {
       "id": 201,
@@ -2864,7 +2864,7 @@
       ],
       "answer": "Charles II",
       "answerIndex": 0,
-      "explanation": "Parliament invited Charles II back from exile in 1660 (the Restoration). James II succeeded him and was later deposed. William III came to the throne after the Glorious Revolution (1688). George I became king in 1714."
+      "explanation": "Parliament invited Charles II back from exile in 1660 (the Restoration).\n\nJames II succeeded him and was later deposed.\n\nWilliam III came to the throne after the Glorious Revolution (1688).\n\nGeorge I became king in 1714."
     },
     {
       "id": 203,
@@ -2892,7 +2892,7 @@
       ],
       "answer": "Samuel Pepys",
       "answerIndex": 0,
-      "explanation": "Samuel Pepys wrote the diary describing these events. Isaac Newton was a scientist of the era. Christopher Wren designed the new St Paul's Cathedral. John Milton wrote Paradise Lost."
+      "explanation": "Samuel Pepys wrote the diary describing these events.\n\nIsaac Newton was a scientist of the era.\n\nChristopher Wren designed the new St Paul's Cathedral.\n\nJohn Milton wrote Paradise Lost."
     },
     {
       "id": 205,
@@ -2906,7 +2906,7 @@
       ],
       "answer": "Natural knowledge (science)",
       "answerIndex": 0,
-      "explanation": "The Royal Society was formed to promote 'natural knowledge' (science) and is the oldest surviving scientific society in the world; early members included Isaac Newton and Edmund Halley. The other purposes are unrelated to its founding aim."
+      "explanation": "The Royal Society was formed to promote 'natural knowledge' (science) and is the oldest surviving scientific society in the world; early members included Isaac Newton and Edmund Halley.\n\nThe other purposes are unrelated to its founding aim."
     },
     {
       "id": 206,
@@ -2920,7 +2920,7 @@
       ],
       "answer": "The Battle of the Boyne",
       "answerIndex": 0,
-      "explanation": "William III defeated James II at the Battle of the Boyne (1690), still commemorated by some in Northern Ireland. Culloden (1746) defeated Bonnie Prince Charlie. Bosworth Field (1485) ended the Wars of the Roses. Naseby (1645) was a Civil War battle."
+      "explanation": "William III defeated James II at the Battle of the Boyne (1690), still commemorated by some in Northern Ireland.\n\nCulloden (1746) defeated Bonnie Prince Charlie.\n\nBosworth Field (1485) ended the Wars of the Roses.\n\nNaseby (1645) was a Civil War battle."
     },
     {
       "id": 207,
@@ -2934,7 +2934,7 @@
       ],
       "answer": "Jacobites",
       "answerIndex": 0,
-      "explanation": "Supporters of James II were the Jacobites, particularly strong in Scotland. Roundheads supported Parliament in the Civil War. Chartists campaigned for voting reform in the 1830s–40s. Whigs were an early parliamentary group."
+      "explanation": "Supporters of James II were the Jacobites, particularly strong in Scotland.\n\nRoundheads supported Parliament in the Civil War.\n\nChartists campaigned for voting reform in the 1830s–40s.\n\nWhigs were an early parliamentary group."
     },
     {
       "id": 208,
@@ -2948,7 +2948,7 @@
       ],
       "answer": "The Tories",
       "answerIndex": 0,
-      "explanation": "The two groups were the Whigs and the Tories; the modern Conservative Party is still sometimes called the Tories. The Jacobites supported the exiled Stuarts. Chartists and Roundheads belong to other periods."
+      "explanation": "The two groups were the Whigs and the Tories; the modern Conservative Party is still sometimes called the Tories.\n\nThe Jacobites supported the exiled Stuarts.\n\nChartists and Roundheads belong to other periods."
     },
     {
       "id": 209,
@@ -2962,7 +2962,7 @@
       ],
       "answer": "French Protestants",
       "answerIndex": 0,
-      "explanation": "The Huguenots were French Protestants fleeing religious persecution, many skilled in banking, weaving and science. Russian and Polish Jews came later (1870–1914) — so that group is relevant to a different migration. The other options are not the Huguenots."
+      "explanation": "The Huguenots were French Protestants fleeing religious persecution, many skilled in banking, weaving and science.\n\nRussian and Polish Jews came later (1870–1914) — so that group is relevant to a different migration.\n\nThe other options are not the Huguenots."
     },
     {
       "id": 210,
@@ -2976,7 +2976,7 @@
       ],
       "answer": "George I",
       "answerIndex": 0,
-      "explanation": "George I, a German and Anne's nearest Protestant relative, became king in 1714; his poor English increased his reliance on ministers. William III and Charles II reigned earlier. Bonnie Prince Charlie was a Jacobite claimant, not a reigning king."
+      "explanation": "George I, a German and Anne's nearest Protestant relative, became king in 1714; his poor English increased his reliance on ministers.\n\nWilliam III and Charles II reigned earlier.\n\nBonnie Prince Charlie was a Jacobite claimant, not a reigning king."
     },
     {
       "id": 211,
@@ -2990,7 +2990,7 @@
       ],
       "answer": "The Highland Clearances",
       "answerIndex": 0,
-      "explanation": "The Highland Clearances saw many small Scottish farms (crofts) destroyed for large flocks of sheep, driving many people to North America. The Plantations relate to the settlement of Ulster in Ireland. The Reformation was a religious movement."
+      "explanation": "The Highland Clearances saw many small Scottish farms (crofts) destroyed for large flocks of sheep, driving many people to North America.\n\nThe Plantations relate to the settlement of Ulster in Ireland.\n\nThe Reformation was a religious movement."
     },
     {
       "id": 212,
@@ -3004,7 +3004,7 @@
       ],
       "answer": "James Watt",
       "answerIndex": 0,
-      "explanation": "James Watt's work on steam power helped the Industrial Revolution. Adam Smith is relevant to economics, David Hume to philosophy and human nature, and Isaac Newton to gravity and light."
+      "explanation": "James Watt's work on steam power helped the Industrial Revolution.\n\nAdam Smith is relevant to economics, David Hume to philosophy and human nature, and Isaac Newton to gravity and light."
     },
     {
       "id": 213,
@@ -3018,7 +3018,7 @@
       ],
       "answer": "Steel",
       "answerIndex": 0,
-      "explanation": "The Bessemer process enabled the mass production of steel, aiding shipbuilding and railways. Britain also produced large amounts of cotton cloth and coal, but the Bessemer process specifically relates to steel."
+      "explanation": "The Bessemer process enabled the mass production of steel, aiding shipbuilding and railways.\n\nBritain also produced large amounts of cotton cloth and coal, but the Bessemer process specifically relates to steel."
     },
     {
       "id": 214,
@@ -3032,7 +3032,7 @@
       ],
       "answer": "Captain James Cook",
       "answerIndex": 0,
-      "explanation": "Captain James Cook mapped the coast of Australia. Sir Francis Drake circumnavigated the world in the Golden Hind. Sir Francis Chichester was the first to sail single-handed around the world in 1966/67."
+      "explanation": "Captain James Cook mapped the coast of Australia.\n\nSir Francis Drake circumnavigated the world in the Golden Hind.\n\nSir Francis Chichester was the first to sail single-handed around the world in 1966/67."
     },
     {
       "id": 215,
@@ -3046,7 +3046,7 @@
       ],
       "answer": "The Quakers",
       "answerIndex": 0,
-      "explanation": "The Quakers set up the first formal anti-slavery groups in the late 1700s and petitioned Parliament. The Puritans were 17th-century Protestants. The Chartists campaigned for voting reform. The Jacobites supported the exiled Stuarts."
+      "explanation": "The Quakers set up the first formal anti-slavery groups in the late 1700s and petitioned Parliament.\n\nThe Puritans were 17th-century Protestants.\n\nThe Chartists campaigned for voting reform.\n\nThe Jacobites supported the exiled Stuarts."
     },
     {
       "id": 216,
@@ -3074,7 +3074,7 @@
       ],
       "answer": "No taxation without representation",
       "answerIndex": 0,
-      "explanation": "The colonists said there should be 'no taxation without representation' in the British Parliament, declaring independence in 1776. 'Liberty, equality, fraternity' relates to the French Revolution. 'Home Rule' relates to 19th-century Ireland."
+      "explanation": "The colonists said there should be 'no taxation without representation' in the British Parliament, declaring independence in 1776.\n\n'Liberty, equality, fraternity' relates to the French Revolution.\n\n'Home Rule' relates to 19th-century Ireland."
     },
     {
       "id": 218,
@@ -3088,7 +3088,7 @@
       ],
       "answer": "The United Kingdom of Great Britain and Ireland",
       "answerIndex": 0,
-      "explanation": "The Act of Union of 1800 (effective 1801) united Ireland with Great Britain, creating the United Kingdom of Great Britain and Ireland. The Kingdom of Great Britain was created earlier, in 1707. The Irish Free State came in 1922."
+      "explanation": "The Act of Union of 1800 (effective 1801) united Ireland with Great Britain, creating the United Kingdom of Great Britain and Ireland.\n\nThe Kingdom of Great Britain was created earlier, in 1707.\n\nThe Irish Free State came in 1922."
     },
     {
       "id": 219,
@@ -3102,7 +3102,7 @@
       ],
       "answer": "A diagonal red cross on a white ground",
       "answerIndex": 0,
-      "explanation": "St Patrick (Ireland) is a diagonal red cross on a white ground. St George (England) is an upright red cross on a white ground. St Andrew (Scotland) is a diagonal white cross on a blue ground. The red dragon is the Welsh flag."
+      "explanation": "St Patrick (Ireland) is a diagonal red cross on a white ground.\n\nSt George (England) is an upright red cross on a white ground.\n\nSt Andrew (Scotland) is a diagonal white cross on a blue ground.\n\nThe red dragon is the Welsh flag."
     },
     {
       "id": 220,
@@ -3116,7 +3116,7 @@
       ],
       "answer": "More than 400 million",
       "answerIndex": 0,
-      "explanation": "The Empire had an estimated population of more than 400 million. 'About 13 million' relates to the number of British citizens who emigrated between 1853 and 1913 — relevant to emigration, not the Empire's population."
+      "explanation": "The Empire had an estimated population of more than 400 million.\n\n'About 13 million' relates to the number of British citizens who emigrated between 1853 and 1913 — relevant to emigration, not the Empire's population."
     },
     {
       "id": 221,
@@ -3130,7 +3130,7 @@
       ],
       "answer": "Free trade",
       "answerIndex": 0,
-      "explanation": "Repealing the Corn Laws in 1846 promoted free trade by allowing cheaper grain imports. Protectionism is the opposite. Nationalisation relates to the post-1945 government, and devolution to powers for Scotland, Wales and Northern Ireland."
+      "explanation": "Repealing the Corn Laws in 1846 promoted free trade by allowing cheaper grain imports.\n\nProtectionism is the opposite.\n\nNationalisation relates to the post-1945 government, and devolution to powers for Scotland, Wales and Northern Ireland."
     },
     {
       "id": 222,
@@ -3144,7 +3144,7 @@
       ],
       "answer": "Russia",
       "answerIndex": 0,
-      "explanation": "Britain, with Turkey and France, fought against Russia in the Crimean War. France was an ally in this war, not the enemy. Germany and Spain were not involved."
+      "explanation": "Britain, with Turkey and France, fought against Russia in the Crimean War.\n\nFrance was an ally in this war, not the enemy.\n\nGermany and Spain were not involved."
     },
     {
       "id": 223,
@@ -3158,7 +3158,7 @@
       ],
       "answer": "The Victoria Cross",
       "answerIndex": 0,
-      "explanation": "Queen Victoria introduced the Victoria Cross to honour acts of valour. The other awards are real honours but not the one she introduced during the Crimean War."
+      "explanation": "Queen Victoria introduced the Victoria Cross to honour acts of valour.\n\nThe other awards are real honours but not the one she introduced during the Crimean War."
     },
     {
       "id": 224,
@@ -3172,7 +3172,7 @@
       ],
       "answer": "Potatoes",
       "answerIndex": 0,
-      "explanation": "The Irish famine was caused by the failure of the potato crop, on which many people depended; a million died and a million and a half emigrated. The other crops were not the cause of the famine."
+      "explanation": "The Irish famine was caused by the failure of the potato crop, on which many people depended; a million died and a million and a half emigrated.\n\nThe other crops were not the cause of the famine."
     },
     {
       "id": 225,
@@ -3186,7 +3186,7 @@
       ],
       "answer": "Rudyard Kipling",
       "answerIndex": 0,
-      "explanation": "Rudyard Kipling, born in India, wrote The Jungle Book and 'If', and won the Nobel Prize in Literature in 1907. Dickens, Stevenson and Hardy were other notable authors but not the writer of these works."
+      "explanation": "Rudyard Kipling, born in India, wrote The Jungle Book and 'If', and won the Nobel Prize in Literature in 1907.\n\nDickens, Stevenson and Hardy were other notable authors but not the writer of these works."
     },
     {
       "id": 226,
@@ -3200,7 +3200,7 @@
       ],
       "answer": "Archduke Franz Ferdinand",
       "answerIndex": 0,
-      "explanation": "The assassination of Archduke Franz Ferdinand of Austria on 28 June 1914 triggered the chain of events leading to WWI. The other figures were involved in 20th-century history but were not the assassinated trigger."
+      "explanation": "The assassination of Archduke Franz Ferdinand of Austria on 28 June 1914 triggered the chain of events leading to WWI.\n\nThe other figures were involved in 20th-century history but were not the assassinated trigger."
     },
     {
       "id": 227,
@@ -3214,7 +3214,7 @@
       ],
       "answer": "The Allied Powers",
       "answerIndex": 0,
-      "explanation": "Britain was part of the Allied Powers (with France, Russia and others). The Central Powers (Germany, Austria-Hungary, Ottoman Empire) were the enemy in WWI. The Axis relates to WWII, and the Warsaw Pact to the Cold War."
+      "explanation": "Britain was part of the Allied Powers (with France, Russia and others).\n\nThe Central Powers (Germany, Austria-Hungary, Ottoman Empire) were the enemy in WWI.\n\nThe Axis relates to WWII, and the Warsaw Pact to the Cold War."
     },
     {
       "id": 228,
@@ -3228,7 +3228,7 @@
       ],
       "answer": "The Easter Rising",
       "answerIndex": 0,
-      "explanation": "The Easter Rising of 1916 was an uprising against the British in Dublin. The Glorious Revolution (1688) brought William of Orange to the throne. The Jacobite Rising supported the exiled Stuarts. The Peasants' Revolt was a medieval event."
+      "explanation": "The Easter Rising of 1916 was an uprising against the British in Dublin.\n\nThe Glorious Revolution (1688) brought William of Orange to the throne.\n\nThe Jacobite Rising supported the exiled Stuarts.\n\nThe Peasants' Revolt was a medieval event."
     },
     {
       "id": 229,
@@ -3256,7 +3256,7 @@
       ],
       "answer": "1936",
       "answerIndex": 0,
-      "explanation": "The BBC began the world's first regular television service in 1936. It started radio broadcasts in 1922 — so 1922 is relevant to radio. 1969 and 1990 relate to other events (voting age; the first web transfer)."
+      "explanation": "The BBC began the world's first regular television service in 1936.\n\nIt started radio broadcasts in 1922 — so 1922 is relevant to radio. 1969 and 1990 relate to other events (voting age; the first web transfer)."
     },
     {
       "id": 231,
@@ -3270,7 +3270,7 @@
       ],
       "answer": "Japan",
       "answerIndex": 0,
-      "explanation": "The Axis powers were Germany, Italy and Japan. Russia (the Soviet Union) was invaded by Germany and joined the Allies. France and Poland were on the Allied side."
+      "explanation": "The Axis powers were Germany, Italy and Japan.\n\nRussia (the Soviet Union) was invaded by Germany and joined the Allies.\n\nFrance and Poland were on the Allied side."
     },
     {
       "id": 232,
@@ -3284,7 +3284,7 @@
       ],
       "answer": "Normandy",
       "answerIndex": 0,
-      "explanation": "Allied forces landed in Normandy on D-Day (6 June 1944). Dunkirk relates to the 1940 evacuation. Berlin was the German capital, reached later. Sicily saw earlier Allied action in Italy but was not the D-Day location."
+      "explanation": "Allied forces landed in Normandy on D-Day (6 June 1944).\n\nDunkirk relates to the 1940 evacuation.\n\nBerlin was the German capital, reached later.\n\nSicily saw earlier Allied action in Italy but was not the D-Day location."
     },
     {
       "id": 233,
@@ -3298,7 +3298,7 @@
       ],
       "answer": "Sir Robert Watson-Watt",
       "answerIndex": 0,
-      "explanation": "Sir Robert Watson-Watt, a Scotsman, developed radar. John Logie Baird developed television. Sir Frank Whittle developed the jet engine. Sir Bernard Lovell built the Jodrell Bank radio telescope."
+      "explanation": "Sir Robert Watson-Watt, a Scotsman, developed radar.\n\nJohn Logie Baird developed television.\n\nSir Frank Whittle developed the jet engine.\n\nSir Bernard Lovell built the Jodrell Bank radio telescope."
     },
     {
       "id": 234,
@@ -3312,7 +3312,7 @@
       ],
       "answer": "Sir Frank Whittle",
       "answerIndex": 0,
-      "explanation": "Sir Frank Whittle, an RAF engineer officer, developed the jet engine. Sir Christopher Cockerell invented the hovercraft. James Goodfellow invented the cash-dispensing ATM. Sir Peter Mansfield co-invented the MRI scanner."
+      "explanation": "Sir Frank Whittle, an RAF engineer officer, developed the jet engine.\n\nSir Christopher Cockerell invented the hovercraft.\n\nJames Goodfellow invented the cash-dispensing ATM.\n\nSir Peter Mansfield co-invented the MRI scanner."
     },
     {
       "id": 235,
@@ -3326,7 +3326,7 @@
       ],
       "answer": "Sir Christopher Cockerell",
       "answerIndex": 0,
-      "explanation": "Sir Christopher Cockerell invented the hovercraft. Sir Frank Whittle developed the jet engine. Alan Turing devised the Turing machine. John MacLeod co-discovered insulin."
+      "explanation": "Sir Christopher Cockerell invented the hovercraft.\n\nSir Frank Whittle developed the jet engine.\n\nAlan Turing devised the Turing machine.\n\nJohn MacLeod co-discovered insulin."
     },
     {
       "id": 236,
@@ -3340,7 +3340,7 @@
       ],
       "answer": "Enfield",
       "answerIndex": 0,
-      "explanation": "The first ATM, invented by James Goodfellow, was installed by Barclays in Enfield, north London, in 1967. Greenwich, Canterbury and Stratford are associated with other landmarks and events."
+      "explanation": "The first ATM, invented by James Goodfellow, was installed by Barclays in Enfield, north London, in 1967.\n\nGreenwich, Canterbury and Stratford are associated with other landmarks and events."
     },
     {
       "id": 237,
@@ -3354,7 +3354,7 @@
       ],
       "answer": "Oldham",
       "answerIndex": 0,
-      "explanation": "IVF was pioneered by Sir Robert Edwards and Patrick Steptoe, and the first test-tube baby was born in Oldham, Lancashire, in 1978. The other places are associated with other scientific work."
+      "explanation": "IVF was pioneered by Sir Robert Edwards and Patrick Steptoe, and the first test-tube baby was born in Oldham, Lancashire, in 1978.\n\nThe other places are associated with other scientific work."
     },
     {
       "id": 238,
@@ -3382,7 +3382,7 @@
       ],
       "answer": "India",
       "answerIndex": 0,
-      "explanation": "In 1947, independence was granted to nine countries, including India, Pakistan and Ceylon (now Sri Lanka). Other African and Caribbean colonies gained independence over the following 20 years, so Kenya and Nigeria came later."
+      "explanation": "In 1947, independence was granted to nine countries, including India, Pakistan and Ceylon (now Sri Lanka).\n\nOther African and Caribbean colonies gained independence over the following 20 years, so Kenya and Nigeria came later."
     },
     {
       "id": 240,
@@ -3396,7 +3396,7 @@
       ],
       "answer": "Harold Macmillan",
       "answerIndex": 0,
-      "explanation": "Harold Macmillan, PM in the late 1950s, gave the 'wind of change' speech. Clement Attlee led the 1945 government, Churchill led Britain in WWII, and Thatcher became PM in 1979."
+      "explanation": "Harold Macmillan, PM in the late 1950s, gave the 'wind of change' speech.\n\nClement Attlee led the 1945 government, Churchill led Britain in WWII, and Thatcher became PM in 1979."
     },
     {
       "id": 241,
@@ -3410,7 +3410,7 @@
       ],
       "answer": "Free secondary education",
       "answerIndex": 0,
-      "explanation": "The Butler Act (1944) introduced free secondary education and the primary/secondary division. The NHS was created in 1948 under a different reform. The other options are not what the Act introduced."
+      "explanation": "The Butler Act (1944) introduced free secondary education and the primary/secondary division.\n\nThe NHS was created in 1948 under a different reform.\n\nThe other options are not what the Act introduced."
     },
     {
       "id": 242,
@@ -3424,7 +3424,7 @@
       ],
       "answer": "The West Indies",
       "answerIndex": 0,
-      "explanation": "In 1948, people from the West Indies were invited to come and help rebuild Britain. Later, workers were also recruited from India, Pakistan and Bangladesh. The other regions were not part of this post-war recruitment."
+      "explanation": "In 1948, people from the West Indies were invited to come and help rebuild Britain.\n\nLater, workers were also recruited from India, Pakistan and Bangladesh.\n\nThe other regions were not part of this post-war recruitment."
     },
     {
       "id": 243,
@@ -3438,7 +3438,7 @@
       ],
       "answer": "The Beatles and The Rolling Stones",
       "answerIndex": 0,
-      "explanation": "The Beatles and The Rolling Stones were prominent in the 1960s and continue to influence music. The other bands are real British acts but are not the two named in the handbook for the 'Swinging Sixties'."
+      "explanation": "The Beatles and The Rolling Stones were prominent in the 1960s and continue to influence music.\n\nThe other bands are real British acts but are not the two named in the handbook for the 'Swinging Sixties'."
     },
     {
       "id": 244,
@@ -3466,7 +3466,7 @@
       ],
       "answer": "Chemist and lawyer",
       "answerIndex": 0,
-      "explanation": "Margaret Thatcher, the grocer's daughter from Grantham, trained as a chemist and a lawyer. The other professions are distractors and do not match the handbook."
+      "explanation": "Margaret Thatcher, the grocer's daughter from Grantham, trained as a chemist and a lawyer.\n\nThe other professions are distractors and do not match the handbook."
     },
     {
       "id": 246,
@@ -3480,7 +3480,7 @@
       ],
       "answer": "Boris Johnson",
       "answerIndex": 0,
-      "explanation": "Conservative PMs in that period included David Cameron, Theresa May, Boris Johnson, Liz Truss and Rishi Sunak. Tony Blair and Gordon Brown were earlier Labour PMs, and Keir Starmer became Labour PM in 2024."
+      "explanation": "Conservative PMs in that period included David Cameron, Theresa May, Boris Johnson, Liz Truss and Rishi Sunak.\n\nTony Blair and Gordon Brown were earlier Labour PMs, and Keir Starmer became Labour PM in 2024."
     },
     {
       "id": 247,
@@ -3494,7 +3494,7 @@
       ],
       "answer": "Henry Purcell",
       "answerIndex": 0,
-      "explanation": "Henry Purcell was the organist at Westminster Abbey and developed a distinct British style. Handel was German-born and wrote Messiah. Holst wrote The Planets, and Elgar the Pomp and Circumstance Marches."
+      "explanation": "Henry Purcell was the organist at Westminster Abbey and developed a distinct British style.\n\nHandel was German-born and wrote Messiah.\n\nHolst wrote The Planets, and Elgar the Pomp and Circumstance Marches."
     },
     {
       "id": 248,
@@ -3508,7 +3508,7 @@
       ],
       "answer": "Comic operas",
       "answerIndex": 0,
-      "explanation": "Gilbert and Sullivan wrote comic operas such as HMS Pinafore, The Pirates of Penzance and The Mikado. Detective novels relate to Agatha Christie and Conan Doyle. War poetry relates to Wilfred Owen and Siegfried Sassoon."
+      "explanation": "Gilbert and Sullivan wrote comic operas such as HMS Pinafore, The Pirates of Penzance and The Mikado.\n\nDetective novels relate to Agatha Christie and Conan Doyle.\n\nWar poetry relates to Wilfred Owen and Siegfried Sassoon."
     },
     {
       "id": 249,
@@ -3522,7 +3522,7 @@
       ],
       "answer": "Benjamin Britten",
       "answerIndex": 0,
-      "explanation": "Benjamin Britten wrote Peter Grimes and Billy Budd and founded the Aldeburgh festival. Walton wrote Façade; Vaughan Williams was influenced by folk music; Purcell was a much earlier composer."
+      "explanation": "Benjamin Britten wrote Peter Grimes and Billy Budd and founded the Aldeburgh festival.\n\nWalton wrote Façade; Vaughan Williams was influenced by folk music; Purcell was a much earlier composer."
     },
     {
       "id": 250,
@@ -3536,7 +3536,7 @@
       ],
       "answer": "Theatre and comedy",
       "answerIndex": 0,
-      "explanation": "The Edinburgh Festival Fringe showcases mainly theatre and comedy, often experimental. Classical painting relates to galleries and the Turner Prize. Motor racing and horse racing are sports, not the Fringe."
+      "explanation": "The Edinburgh Festival Fringe showcases mainly theatre and comedy, often experimental.\n\nClassical painting relates to galleries and the Turner Prize.\n\nMotor racing and horse racing are sports, not the Fringe."
     },
     {
       "id": 251,
@@ -3550,7 +3550,7 @@
       ],
       "answer": "John Constable",
       "answerIndex": 0,
-      "explanation": "John Constable is famous for painting Dedham Vale on the Suffolk–Essex border. Thomas Gainsborough painted portraits in country settings. Henry Moore was a sculptor. David Hockney is associated with pop art."
+      "explanation": "John Constable is famous for painting Dedham Vale on the Suffolk–Essex border.\n\nThomas Gainsborough painted portraits in country settings.\n\nHenry Moore was a sculptor.\n\nDavid Hockney is associated with pop art."
     },
     {
       "id": 252,
@@ -3564,7 +3564,7 @@
       ],
       "answer": "Inigo Jones",
       "answerIndex": 0,
-      "explanation": "Inigo Jones designed the Queen's House at Greenwich and the Banqueting House. Sir Christopher Wren designed St Paul's Cathedral. Robert Adam is relevant to the Royal Crescent in Bath. Sir Edwin Lutyens designed the Cenotaph."
+      "explanation": "Inigo Jones designed the Queen's House at Greenwich and the Banqueting House.\n\nSir Christopher Wren designed St Paul's Cathedral.\n\nRobert Adam is relevant to the Royal Crescent in Bath.\n\nSir Edwin Lutyens designed the Cenotaph."
     },
     {
       "id": 253,
@@ -3578,7 +3578,7 @@
       ],
       "answer": "Lancelot 'Capability' Brown",
       "answerIndex": 0,
-      "explanation": "Lancelot 'Capability' Brown designed natural-looking landscapes around country houses. Gertrude Jekyll designed colourful gardens, often with Lutyens. Robert Adam was an architect, and Sir Norman Foster is a modern architect."
+      "explanation": "Lancelot 'Capability' Brown designed natural-looking landscapes around country houses.\n\nGertrude Jekyll designed colourful gardens, often with Lutyens.\n\nRobert Adam was an architect, and Sir Norman Foster is a modern architect."
     },
     {
       "id": 254,
@@ -3592,7 +3592,7 @@
       ],
       "answer": "Charles Dickens",
       "answerIndex": 0,
-      "explanation": "Charles Dickens wrote Oliver Twist and Great Expectations, and created characters such as Scrooge and Mr Micawber. Jane Austen wrote Pride and Prejudice. Thomas Hardy wrote Far from the Madding Crowd. Graham Greene wrote Brighton Rock."
+      "explanation": "Charles Dickens wrote Oliver Twist and Great Expectations, and created characters such as Scrooge and Mr Micawber.\n\nJane Austen wrote Pride and Prejudice.\n\nThomas Hardy wrote Far from the Madding Crowd.\n\nGraham Greene wrote Brighton Rock."
     },
     {
       "id": 255,
@@ -3606,7 +3606,7 @@
       ],
       "answer": "John Milton",
       "answerIndex": 0,
-      "explanation": "John Milton wrote Paradise Lost. William Wordsworth wrote 'The Daffodils'. William Blake wrote 'The Tyger'. Lord Byron wrote 'She Walks in Beauty'."
+      "explanation": "John Milton wrote Paradise Lost.\n\nWilliam Wordsworth wrote 'The Daffodils'.\n\nWilliam Blake wrote 'The Tyger'.\n\nLord Byron wrote 'She Walks in Beauty'."
     },
     {
       "id": 256,
@@ -3620,7 +3620,7 @@
       ],
       "answer": "Boxing Day",
       "answerIndex": 0,
-      "explanation": "Boxing Day (26 December) is the day after Christmas and a public holiday. New Year's Day is 1 January. Shrove Tuesday is the day before Lent. The other option is a distractor."
+      "explanation": "Boxing Day (26 December) is the day after Christmas and a public holiday.\n\nNew Year's Day is 1 January.\n\nShrove Tuesday is the day before Lent.\n\nThe other option is a distractor."
     },
     {
       "id": 257,
@@ -3634,7 +3634,7 @@
       ],
       "answer": "Hanukkah",
       "answerIndex": 0,
-      "explanation": "Hanukkah is a Jewish festival lasting eight days, marked by lighting a menorah. Diwali is a Hindu and Sikh festival. Vaisakhi is a Sikh festival. Eid al-Fitr marks the end of Ramadan for Muslims."
+      "explanation": "Hanukkah is a Jewish festival lasting eight days, marked by lighting a menorah.\n\nDiwali is a Hindu and Sikh festival.\n\nVaisakhi is a Sikh festival.\n\nEid al-Fitr marks the end of Ramadan for Muslims."
     },
     {
       "id": 258,
@@ -3648,7 +3648,7 @@
       ],
       "answer": "Sikhs",
       "answerIndex": 0,
-      "explanation": "Vaisakhi is a Sikh festival celebrating the founding of the Khalsa, on 14 April. Diwali is celebrated by Hindus and Sikhs. Eid festivals are Muslim, and Hanukkah is Jewish."
+      "explanation": "Vaisakhi is a Sikh festival celebrating the founding of the Khalsa, on 14 April.\n\nDiwali is celebrated by Hindus and Sikhs.\n\nEid festivals are Muslim, and Hanukkah is Jewish."
     },
     {
       "id": 259,
@@ -3662,7 +3662,7 @@
       ],
       "answer": "Three weeks before Easter",
       "answerIndex": 0,
-      "explanation": "Mothering Sunday (Mother's Day) is the Sunday three weeks before Easter. The third Sunday in June is Father's Day. 14 February is Valentine's Day, and 1 April is April Fool's Day."
+      "explanation": "Mothering Sunday (Mother's Day) is the Sunday three weeks before Easter.\n\nThe third Sunday in June is Father's Day. 14 February is Valentine's Day, and 1 April is April Fool's Day."
     },
     {
       "id": 260,
@@ -3676,7 +3676,7 @@
       ],
       "answer": "An allotment",
       "answerIndex": 0,
-      "explanation": "An allotment is rented land for growing fruit and vegetables. A croft was a small Scottish farm, relevant to the Highland Clearances. A plantation relates to settlement in Ulster. A 'common' is a different kind of shared land."
+      "explanation": "An allotment is rented land for growing fruit and vegetables.\n\nA croft was a small Scottish farm, relevant to the Highland Clearances.\n\nA plantation relates to settlement in Ulster.\n\nA 'common' is a different kind of shared land."
     },
     {
       "id": 261,
@@ -3690,7 +3690,7 @@
       ],
       "answer": "Punch",
       "answerIndex": 0,
-      "explanation": "Punch was first published in the 1840s and was the most famous satirical magazine. Private Eye continues the tradition of satire today. Hansard is the official record of parliamentary proceedings, not a satirical magazine."
+      "explanation": "Punch was first published in the 1840s and was the most famous satirical magazine.\n\nPrivate Eye continues the tradition of satire today.\n\nHansard is the official record of parliamentary proceedings, not a satirical magazine."
     },
     {
       "id": 262,
@@ -3718,7 +3718,7 @@
       ],
       "answer": "Elizabeth Tower",
       "answerIndex": 0,
-      "explanation": "The tower was named Elizabeth Tower in honour of Queen Elizabeth II's Diamond Jubilee in 2012. Big Ben is actually the nickname of the great bell. The Shard is a separate modern skyscraper."
+      "explanation": "The tower was named Elizabeth Tower in honour of Queen Elizabeth II's Diamond Jubilee in 2012.\n\nBig Ben is actually the nickname of the great bell.\n\nThe Shard is a separate modern skyscraper."
     },
     {
       "id": 264,
@@ -3732,7 +3732,7 @@
       ],
       "answer": "The Archbishop of Canterbury",
       "answerIndex": 0,
-      "explanation": "The Archbishop of Canterbury is the spiritual leader of the Church of England. The monarch is its head. The Moderator chairs the General Assembly of the Church of Scotland. The Pope leads the Roman Catholic Church."
+      "explanation": "The Archbishop of Canterbury is the spiritual leader of the Church of England.\n\nThe monarch is its head.\n\nThe Moderator chairs the General Assembly of the Church of Scotland.\n\nThe Pope leads the Roman Catholic Church."
     },
     {
       "id": 265,
@@ -3746,7 +3746,7 @@
       ],
       "answer": "The shamrock",
       "answerIndex": 0,
-      "explanation": "The shamrock is associated with Northern Ireland. The daffodil is associated with Wales, the rose with England, and the thistle with Scotland."
+      "explanation": "The shamrock is associated with Northern Ireland.\n\nThe daffodil is associated with Wales, the rose with England, and the thistle with Scotland."
     },
     {
       "id": 266,
@@ -3760,7 +3760,7 @@
       ],
       "answer": "Stoke Mandeville",
       "answerIndex": 0,
-      "explanation": "Dr Ludwig Guttman's work at Stoke Mandeville hospital in Buckinghamshire led to the Paralympics. St Thomas' is relevant to Florence Nightingale's nursing school. The other hospitals are distractors here."
+      "explanation": "Dr Ludwig Guttman's work at Stoke Mandeville hospital in Buckinghamshire led to the Paralympics.\n\nSt Thomas' is relevant to Florence Nightingale's nursing school.\n\nThe other hospitals are distractors here."
     },
     {
       "id": 267,
@@ -3774,7 +3774,7 @@
       ],
       "answer": "Rowing",
       "answerIndex": 0,
-      "explanation": "Sir Steve Redgrave won rowing golds in five consecutive Olympics. Cycling relates to Sir Chris Hoy and Sir Bradley Wiggins. Athletics relates to figures like Mo Farah, and sailing to Dame Ellen MacArthur."
+      "explanation": "Sir Steve Redgrave won rowing golds in five consecutive Olympics.\n\nCycling relates to Sir Chris Hoy and Sir Bradley Wiggins.\n\nAthletics relates to figures like Mo Farah, and sailing to Dame Ellen MacArthur."
     },
     {
       "id": 268,
@@ -3788,7 +3788,7 @@
       ],
       "answer": "Belfast",
       "answerIndex": 0,
-      "explanation": "Belfast is the capital of Northern Ireland. Cardiff is the capital of Wales, Edinburgh of Scotland. Dublin is the capital of the Republic of Ireland, which is a separate country and not part of the UK."
+      "explanation": "Belfast is the capital of Northern Ireland.\n\nCardiff is the capital of Wales, Edinburgh of Scotland.\n\nDublin is the capital of the Republic of Ireland, which is a separate country and not part of the UK."
     },
     {
       "id": 269,
@@ -3802,7 +3802,7 @@
       ],
       "answer": "God Save the King",
       "answerIndex": 0,
-      "explanation": "The National Anthem is 'God Save the King (or Queen)'. 'Land of Hope and Glory' is played at the Last Night of the Proms. 'Rule Britannia' and 'Jerusalem' are patriotic songs but not the national anthem."
+      "explanation": "The National Anthem is 'God Save the King (or Queen)'.\n\n'Land of Hope and Glory' is played at the Last Night of the Proms.\n\n'Rule Britannia' and 'Jerusalem' are patriotic songs but not the national anthem."
     },
     {
       "id": 270,
@@ -3816,7 +3816,7 @@
       ],
       "answer": "The High Court",
       "answerIndex": 0,
-      "explanation": "In Scotland the most serious cases, such as murder, are heard at the High Court with a judge and jury. The Sheriff Court hears less serious cases. Magistrates' Courts and County Courts operate in England, Wales and Northern Ireland, not Scotland."
+      "explanation": "In Scotland the most serious cases, such as murder, are heard at the High Court with a judge and jury.\n\nThe Sheriff Court hears less serious cases.\n\nMagistrates' Courts and County Courts operate in England, Wales and Northern Ireland, not Scotland."
     }
   ]
 }
