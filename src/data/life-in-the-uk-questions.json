@@ -1,0 +1,1570 @@
+{
+  "meta": {
+    "title": "Life in the UK — Practice Test Question Bank",
+    "version": "1.0",
+    "source": "Based on 'Life in the UK: A guide for new residents' (3rd Edition) plus current official facts (King Charles III, 2024 Labour government, Brexit, 27 EU states).",
+    "notes_for_cursor": [
+      "Each question has a stable integer `id`. Do not renumber existing ids if you add questions; append new ones.",
+      "`answerIndex` is the 0-based index of the correct option in `options`.",
+      "`answer` duplicates the correct option text for convenience/validation.",
+      "`explanation` always (a) confirms/contextualises the correct answer, then (b) explains any distractor that is itself the correct answer to a DIFFERENT topic, telling the learner what that fact is relevant to. This is the requested cross-reference behaviour.",
+      "`category` groups questions by handbook chapter so you can build category-filtered or full-random 24-question mock exams.",
+      "Official real test format for reference: 24 questions, 45 minutes, pass mark 75% (18/24 correct). You can hard-code that in the exam engine.",
+      "To build a mock exam, randomly draw 24 questions across categories, shuffle `options` per render, and recompute the correct index after shuffling (or shuffle a copy and track the answer text)."
+    ],
+    "categories": [
+      "Values and principles",
+      "What is the UK",
+      "Early Britain",
+      "The Middle Ages",
+      "The Tudors and Stuarts",
+      "A global power",
+      "The 20th century",
+      "Britain since 1945",
+      "Arts and culture",
+      "Customs and traditions",
+      "Leisure",
+      "Places of interest",
+      "Religion",
+      "Sport",
+      "The UK today",
+      "Government and constitution",
+      "The law and courts",
+      "Rights, tax and driving",
+      "International institutions",
+      "Your role in the community"
+    ]
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "Values and principles",
+      "question": "Which of these is a fundamental principle of British life?",
+      "options": ["The rule of law", "Compulsory military service", "A written constitution", "State religion for all"],
+      "answer": "The rule of law",
+      "answerIndex": 0,
+      "explanation": "The fundamental principles are democracy, the rule of law, individual liberty, tolerance of those with different faiths and beliefs, and participation in community life. 'A written constitution' is wrong here and is relevant to a different topic: the UK's constitution is famously unwritten (uncodified). 'State religion for all' misstates religion in the UK — the Church of England is the established church in England, but everyone has the legal right to choose their religion or none."
+    },
+    {
+      "id": 2,
+      "category": "Values and principles",
+      "question": "New citizens pledge to do which of the following at the citizenship ceremony?",
+      "options": ["Give loyalty to the UK and uphold its democratic values", "Renounce all other nationalities", "Serve in the armed forces", "Pay a special citizenship tax each year"],
+      "answer": "Give loyalty to the UK and uphold its democratic values",
+      "answerIndex": 0,
+      "explanation": "The pledge is to give loyalty to the United Kingdom, respect its rights and freedoms, uphold its democratic values, and observe its laws faithfully. The UK does not require renouncing other nationalities. Military service is not compulsory. There is no annual 'citizenship tax'; general income tax and National Insurance are separate topics covered under tax and rights."
+    },
+    {
+      "id": 3,
+      "category": "Values and principles",
+      "question": "How many questions are on the official Life in the UK test?",
+      "options": ["24", "18", "30", "45"],
+      "answer": "24",
+      "answerIndex": 0,
+      "explanation": "The test consists of 24 questions and lasts 45 minutes. '18' is the number of correct answers needed to pass (the 75% pass mark), so it is relevant to the pass threshold, not the number of questions. '45' is relevant to the time limit in minutes, not the question count."
+    },
+    {
+      "id": 4,
+      "category": "Values and principles",
+      "question": "In return for accepting its responsibilities, the UK offers residents which freedom?",
+      "options": ["Freedom of speech", "Freedom from paying any tax", "A guaranteed government job", "Free housing for life"],
+      "answer": "Freedom of speech",
+      "answerIndex": 0,
+      "explanation": "The UK offers freedom of belief and religion, freedom of speech, freedom from unfair discrimination, a right to a fair trial, and a right to join in electing a government. Freedom from tax is not a right — paying income tax and National Insurance is a duty covered under the tax topic. Guaranteed jobs and free housing are not offered."
+    },
+    {
+      "id": 5,
+      "category": "What is the UK",
+      "question": "Which countries make up the United Kingdom?",
+      "options": ["England, Scotland, Wales and Northern Ireland", "England, Scotland, Wales and the Republic of Ireland", "England, Scotland and Wales", "Great Britain and the Isle of Man"],
+      "answer": "England, Scotland, Wales and Northern Ireland",
+      "answerIndex": 0,
+      "explanation": "The UK is England, Scotland, Wales and Northern Ireland. 'England, Scotland and Wales' is the definition of Great Britain, so it is relevant to a question about what Great Britain means. The Republic of Ireland is an independent country, not part of the UK. The Isle of Man is a Crown dependency linked to the UK but not part of it."
+    },
+    {
+      "id": 6,
+      "category": "What is the UK",
+      "question": "What does the term 'Great Britain' refer to?",
+      "options": ["England, Scotland and Wales", "England, Scotland, Wales and Northern Ireland", "The UK plus the Crown dependencies", "England and Wales only"],
+      "answer": "England, Scotland and Wales",
+      "answerIndex": 0,
+      "explanation": "'Great Britain' refers only to England, Scotland and Wales — not Northern Ireland. 'England, Scotland, Wales and Northern Ireland' is the full United Kingdom, which is a separate definition. The Crown dependencies (Channel Islands, Isle of Man) are linked to but not part of the UK or Great Britain."
+    },
+    {
+      "id": 7,
+      "category": "What is the UK",
+      "question": "Which of the following are Crown dependencies?",
+      "options": ["The Channel Islands and the Isle of Man", "The Falkland Islands and St Helena", "Scotland and Wales", "Northern Ireland and the Republic of Ireland"],
+      "answer": "The Channel Islands and the Isle of Man",
+      "answerIndex": 0,
+      "explanation": "The Channel Islands and the Isle of Man are Crown dependencies with their own governments, linked to the UK but not part of it. The Falkland Islands and St Helena are British overseas territories — a different category relevant to a question about overseas territories. Scotland and Wales are constituent countries of the UK with devolved powers."
+    },
+    {
+      "id": 8,
+      "category": "What is the UK",
+      "question": "Where does the UK Parliament sit?",
+      "options": ["Westminster", "Holyrood", "Stormont", "Cardiff Bay"],
+      "answer": "Westminster",
+      "answerIndex": 0,
+      "explanation": "The UK Parliament sits at Westminster in London. Holyrood is relevant to the Scottish Parliament in Edinburgh. Stormont is relevant to the Northern Ireland Assembly in Belfast. Cardiff Bay (the Senedd) is relevant to the Welsh Parliament/Assembly."
+    },
+    {
+      "id": 9,
+      "category": "Early Britain",
+      "question": "In which English county does Stonehenge stand?",
+      "options": ["Wiltshire", "Dorset", "Suffolk", "Orkney"],
+      "answer": "Wiltshire",
+      "answerIndex": 0,
+      "explanation": "Stonehenge, a Stone Age monument, stands in Wiltshire. Dorset is relevant to Maiden Castle, an impressive Iron Age hill fort. Suffolk is relevant to the Anglo-Saxon burial site at Sutton Hoo. Orkney is relevant to Skara Brae, the best-preserved prehistoric village in northern Europe."
+    },
+    {
+      "id": 10,
+      "category": "Early Britain",
+      "question": "What is Skara Brae?",
+      "options": ["A preserved prehistoric village on Orkney", "A Roman fort on Hadrian's Wall", "A Norman castle in Wales", "An Iron Age hill fort in Dorset"],
+      "answer": "A preserved prehistoric village on Orkney",
+      "answerIndex": 0,
+      "explanation": "Skara Brae on Orkney is the best-preserved prehistoric village in northern Europe, from the end of the Stone Age. A Roman fort on Hadrian's Wall points to Housesteads or Vindolanda. A Norman castle in Wales points to Conwy or Caernarvon. An Iron Age hill fort in Dorset is Maiden Castle."
+    },
+    {
+      "id": 11,
+      "category": "Early Britain",
+      "question": "Which Roman emperor led the successful invasion of Britain in AD 43?",
+      "options": ["Claudius", "Julius Caesar", "Hadrian", "Boudicca"],
+      "answer": "Claudius",
+      "answerIndex": 0,
+      "explanation": "Emperor Claudius led the successful invasion in AD 43. Julius Caesar led an earlier unsuccessful invasion in 55 BC — relevant to the first Roman attempt. Hadrian is relevant to Hadrian's Wall, built to keep out the Picts. Boudicca was not a Roman at all — she was the queen of the Iceni who fought against the Romans."
+    },
+    {
+      "id": 12,
+      "category": "Early Britain",
+      "question": "Why did the Emperor Hadrian build a wall in the north of England?",
+      "options": ["To keep out the Picts", "To defend against the Vikings", "To mark the border with Wales", "To protect London"],
+      "answer": "To keep out the Picts",
+      "answerIndex": 0,
+      "explanation": "Hadrian's Wall was built to keep out the Picts (ancestors of the Scottish people). The Vikings came much later, from AD 789, and are relevant to Anglo-Saxon-era raids and the Danelaw. The Welsh border and London are not the purpose of Hadrian's Wall."
+    },
+    {
+      "id": 13,
+      "category": "Early Britain",
+      "question": "Which tribes invaded Britain after the Romans left in AD 410?",
+      "options": ["The Jutes, Angles and Saxons", "The Normans", "The Romans", "The Huguenots"],
+      "answer": "The Jutes, Angles and Saxons",
+      "answerIndex": 0,
+      "explanation": "After the Romans left, Britain was invaded by the Jutes, Angles and Saxons, whose languages are the basis of modern English. The Normans invaded much later, in 1066. The Huguenots were French Protestant refugees who came peacefully between 1680 and 1720 — relevant to later migration, not invasion."
+    },
+    {
+      "id": 14,
+      "category": "Early Britain",
+      "question": "Who became the first Archbishop of Canterbury?",
+      "options": ["St Augustine", "St Patrick", "St Columba", "St David"],
+      "answer": "St Augustine",
+      "answerIndex": 0,
+      "explanation": "St Augustine led missionaries from Rome and became the first Archbishop of Canterbury. St Patrick is relevant as the patron saint of Ireland. St Columba founded a monastery on Iona, off Scotland. St David is relevant as the patron saint of Wales."
+    },
+    {
+      "id": 15,
+      "category": "Early Britain",
+      "question": "Which king united the Anglo-Saxon kingdoms and defeated the Vikings?",
+      "options": ["Alfred the Great", "William the Conqueror", "Cnut (Canute)", "Kenneth MacAlpin"],
+      "answer": "Alfred the Great",
+      "answerIndex": 0,
+      "explanation": "King Alfred the Great united the Anglo-Saxon kingdoms and defeated the Vikings. William the Conqueror is relevant to the Norman Conquest of 1066. Cnut (Canute) was the first Danish king to rule England. Kenneth MacAlpin united the people in the north, and the term 'Scotland' began to be used for that country."
+    },
+    {
+      "id": 16,
+      "category": "Early Britain",
+      "question": "In which year was the Battle of Hastings, and who won?",
+      "options": ["1066 — William, Duke of Normandy", "1215 — King John", "1314 — Robert the Bruce", "1415 — Henry V"],
+      "answer": "1066 — William, Duke of Normandy",
+      "answerIndex": 0,
+      "explanation": "At the Battle of Hastings in 1066, William, Duke of Normandy defeated Harold, the Saxon king. '1215 — King John' is relevant to the Magna Carta. '1314 — Robert the Bruce' is relevant to the Battle of Bannockburn. '1415 — Henry V' is relevant to the Battle of Agincourt."
+    },
+    {
+      "id": 17,
+      "category": "Early Britain",
+      "question": "What was the Domesday Book?",
+      "options": ["A record of towns, villages, land and ownership after the Norman Conquest", "A charter limiting the king's power", "A translation of the Bible into English", "A diary of the Great Fire of London"],
+      "answer": "A record of towns, villages, land and ownership after the Norman Conquest",
+      "answerIndex": 0,
+      "explanation": "William the Conqueror ordered the Domesday Book, listing towns, villages, landowners and animals. A charter limiting the king's power is the Magna Carta (1215). A translation of the Bible into English relates to the King James Bible. A diary of the Great Fire of London relates to Samuel Pepys."
+    },
+    {
+      "id": 18,
+      "category": "The Middle Ages",
+      "question": "In 1314, who defeated the English at the Battle of Bannockburn?",
+      "options": ["Robert the Bruce", "William the Conqueror", "Henry V", "Edward I"],
+      "answer": "Robert the Bruce",
+      "answerIndex": 0,
+      "explanation": "At Bannockburn (1314), the Scots led by Robert the Bruce defeated the English, and Scotland remained unconquered. William the Conqueror is relevant to 1066. Henry V is relevant to the Battle of Agincourt (1415). Edward I is relevant to the Statute of Rhuddlan, which annexed Wales."
+    },
+    {
+      "id": 19,
+      "category": "The Middle Ages",
+      "question": "The Statute of Rhuddlan (1284) did what?",
+      "options": ["Annexed Wales to the Crown of England", "Ended the Wars of the Roses", "Established the Church of England", "United England and Scotland"],
+      "answer": "Annexed Wales to the Crown of England",
+      "answerIndex": 0,
+      "explanation": "King Edward I's Statute of Rhuddlan (1284) annexed Wales to the Crown of England. Ending the Wars of the Roses relates to the Battle of Bosworth Field (1485). Establishing the Church of England relates to Henry VIII. Uniting England and Scotland relates to the Act of Union of 1707."
+    },
+    {
+      "id": 20,
+      "category": "The Middle Ages",
+      "question": "What did the Magna Carta (1215) establish?",
+      "options": ["That even the king was subject to the law", "Free secondary education", "The National Health Service", "Universal suffrage"],
+      "answer": "That even the king was subject to the law",
+      "answerIndex": 0,
+      "explanation": "The Magna Carta established that even the king was subject to the law and restricted his power. Free secondary education relates to the Education Act 1944 (the Butler Act). The NHS was created in 1948. Universal suffrage developed much later, in the 19th and 20th centuries."
+    },
+    {
+      "id": 21,
+      "category": "The Middle Ages",
+      "question": "The Black Death of 1348 killed roughly what proportion of England's population?",
+      "options": ["About one third", "About one tenth", "About one half", "About one quarter"],
+      "answer": "About one third",
+      "answerIndex": 0,
+      "explanation": "The Black Death (1348) killed about one third of the population of England, with a similar proportion in Scotland and Wales, causing labour shortages and social change. The other fractions are distractors and do not correspond to the handbook figure."
+    },
+    {
+      "id": 22,
+      "category": "The Middle Ages",
+      "question": "Who wrote The Canterbury Tales?",
+      "options": ["Geoffrey Chaucer", "William Shakespeare", "William Caxton", "John Milton"],
+      "answer": "Geoffrey Chaucer",
+      "answerIndex": 0,
+      "explanation": "Geoffrey Chaucer wrote The Canterbury Tales. William Shakespeare is relevant to the Elizabethan period and plays such as Hamlet. William Caxton was the first person in England to print books using a printing press — relevant to printing, not authorship. John Milton wrote Paradise Lost."
+    },
+    {
+      "id": 23,
+      "category": "The Middle Ages",
+      "question": "The Wars of the Roses were fought between which two houses?",
+      "options": ["Lancaster and York", "Tudor and Stuart", "Whigs and Tories", "Cavaliers and Roundheads"],
+      "answer": "Lancaster and York",
+      "answerIndex": 0,
+      "explanation": "The Wars of the Roses were fought between the House of Lancaster (red rose) and the House of York (white rose). Tudor and Stuart are relevant to later royal dynasties. Whigs and Tories relate to early party politics after the Glorious Revolution. Cavaliers and Roundheads relate to the English Civil War."
+    },
+    {
+      "id": 24,
+      "category": "The Middle Ages",
+      "question": "The Wars of the Roses ended in 1485 at which battle?",
+      "options": ["The Battle of Bosworth Field", "The Battle of Hastings", "The Battle of Bannockburn", "The Battle of Agincourt"],
+      "answer": "The Battle of Bosworth Field",
+      "answerIndex": 0,
+      "explanation": "The Wars of the Roses ended at Bosworth Field (1485), where Richard III was killed and Henry Tudor became Henry VII. Hastings (1066) was the Norman Conquest. Bannockburn (1314) was a Scottish victory. Agincourt (1415) was an English victory over France in the Hundred Years War."
+    },
+    {
+      "id": 25,
+      "category": "The Tudors and Stuarts",
+      "question": "How many times did Henry VIII marry?",
+      "options": ["Six", "Two", "Four", "Three"],
+      "answer": "Six",
+      "answerIndex": 0,
+      "explanation": "Henry VIII married six times and is famous for breaking away from the Church of Rome. The other numbers are distractors; the six wives in order were Catherine of Aragon, Anne Boleyn, Jane Seymour, Anne of Cleves, Catherine Howard and Catherine Parr."
+    },
+    {
+      "id": 26,
+      "category": "The Tudors and Stuarts",
+      "question": "Why did Henry VIII establish the Church of England?",
+      "options": ["The Pope refused to allow him to divorce", "He wanted to unite England and Scotland", "He wished to join the Crusades", "He was defeated by the Spanish Armada"],
+      "answer": "The Pope refused to allow him to divorce",
+      "answerIndex": 0,
+      "explanation": "Henry VIII established the Church of England after the Pope refused to allow him to divorce Catherine of Aragon. Uniting England and Scotland relates to the Act of Union 1707. The Crusades relate to the Middle Ages. The Spanish Armada (1588) was defeated under Elizabeth I."
+    },
+    {
+      "id": 27,
+      "category": "The Tudors and Stuarts",
+      "question": "Which of Henry VIII's wives was the mother of the future Elizabeth I?",
+      "options": ["Anne Boleyn", "Catherine of Aragon", "Jane Seymour", "Catherine Parr"],
+      "answer": "Anne Boleyn",
+      "answerIndex": 0,
+      "explanation": "Anne Boleyn was Elizabeth I's mother. Catherine of Aragon was the mother of Mary I ('Bloody Mary'). Jane Seymour was the mother of Edward VI. Catherine Parr survived Henry and had no child who became monarch."
+    },
+    {
+      "id": 28,
+      "category": "The Tudors and Stuarts",
+      "question": "In which year was the Spanish Armada defeated?",
+      "options": ["1588", "1605", "1649", "1707"],
+      "answer": "1588",
+      "answerIndex": 0,
+      "explanation": "The Spanish Armada was defeated in 1588 under Elizabeth I. 1605 relates to the Gunpowder Plot / Guy Fawkes (Bonfire Night). 1649 relates to the execution of Charles I. 1707 relates to the Act of Union between England and Scotland."
+    },
+    {
+      "id": 29,
+      "category": "The Tudors and Stuarts",
+      "question": "Whose ship, the Golden Hind, was among the first to circumnavigate the world?",
+      "options": ["Sir Francis Drake", "Sir Walter Raleigh", "Captain James Cook", "Sir Francis Chichester"],
+      "answer": "Sir Francis Drake",
+      "answerIndex": 0,
+      "explanation": "Sir Francis Drake sailed the Golden Hind around the world and helped defeat the Spanish Armada. Captain James Cook is relevant to mapping the coast of Australia in the 18th century. Sir Francis Chichester is relevant to being the first person to sail single-handed around the world in 1966/67."
+    },
+    {
+      "id": 30,
+      "category": "The Tudors and Stuarts",
+      "question": "Which monarch's reign produced the 'King James' translation of the Bible?",
+      "options": ["James VI and I", "Henry VIII", "Charles II", "Elizabeth I"],
+      "answer": "James VI and I",
+      "answerIndex": 0,
+      "explanation": "James VI of Scotland became James I of England and his reign produced the King James (Authorised) Version of the Bible. Henry VIII broke from Rome and established the Church of England. Charles II is relevant to the Restoration and the Habeas Corpus Act. Elizabeth I is relevant to the Spanish Armada."
+    },
+    {
+      "id": 31,
+      "category": "The Tudors and Stuarts",
+      "question": "In the English Civil War, supporters of Parliament were known as what?",
+      "options": ["Roundheads", "Cavaliers", "Jacobites", "Chartists"],
+      "answer": "Roundheads",
+      "answerIndex": 0,
+      "explanation": "Parliament's supporters were the Roundheads; the king's supporters were the Cavaliers. Jacobites were supporters of the exiled James II and his descendants — relevant to later rebellions. Chartists campaigned for voting reform in the 1830s and 1840s."
+    },
+    {
+      "id": 32,
+      "category": "The Tudors and Stuarts",
+      "question": "What happened to King Charles I in 1649?",
+      "options": ["He was executed", "He was crowned", "He fled to France", "He signed the Magna Carta"],
+      "answer": "He was executed",
+      "answerIndex": 0,
+      "explanation": "Charles I was executed in 1649 after Parliament won the Civil War, and England became a republic. Fleeing to France relates to James II after the Glorious Revolution. Signing the Magna Carta relates to King John in 1215."
+    },
+    {
+      "id": 33,
+      "category": "The Tudors and Stuarts",
+      "question": "Who ruled England as Lord Protector during the republic?",
+      "options": ["Oliver Cromwell", "Charles II", "William of Orange", "Robert Walpole"],
+      "answer": "Oliver Cromwell",
+      "answerIndex": 0,
+      "explanation": "Oliver Cromwell became Lord Protector and ruled the republic until his death in 1658. Charles II is relevant to the Restoration of the monarchy in 1660. William of Orange relates to the Glorious Revolution of 1688. Robert Walpole was the first Prime Minister (from 1721)."
+    },
+    {
+      "id": 34,
+      "category": "The Tudors and Stuarts",
+      "question": "Which architect designed the new St Paul's Cathedral after the Great Fire of London?",
+      "options": ["Sir Christopher Wren", "Inigo Jones", "Robert Adam", "Sir Edwin Lutyens"],
+      "answer": "Sir Christopher Wren",
+      "answerIndex": 0,
+      "explanation": "Sir Christopher Wren designed the new St Paul's Cathedral after the Great Fire of 1666. Inigo Jones designed the Queen's House at Greenwich and the Banqueting House. Robert Adam is relevant to 18th-century designs such as the Royal Crescent in Bath. Sir Edwin Lutyens designed the Cenotaph and New Delhi."
+    },
+    {
+      "id": 35,
+      "category": "The Tudors and Stuarts",
+      "question": "The Habeas Corpus Act of 1679 guaranteed what?",
+      "options": ["That no one could be held prisoner unlawfully", "The right of every adult to vote", "Free trade in imported goods", "Equal pay for women"],
+      "answer": "That no one could be held prisoner unlawfully",
+      "answerIndex": 0,
+      "explanation": "The Habeas Corpus Act (1679) guaranteed that no one could be held prisoner unlawfully and that every prisoner has a right to a court hearing. Universal voting rights developed in the 19th–20th centuries. Free trade relates to the repeal of the Corn Laws (1846). Equal pay for women relates to 1960s legislation."
+    },
+    {
+      "id": 36,
+      "category": "The Tudors and Stuarts",
+      "question": "The 'Glorious Revolution' of 1688 brought which ruler to the English throne?",
+      "options": ["William of Orange", "Oliver Cromwell", "Bonnie Prince Charlie", "George I"],
+      "answer": "William of Orange",
+      "answerIndex": 0,
+      "explanation": "In 1688 William of Orange invaded without resistance and became William III, ruling jointly with Mary. Oliver Cromwell led the earlier republic. Bonnie Prince Charlie attempted a Jacobite rising in 1745. George I became king in 1714 as Anne's nearest Protestant relative."
+    },
+    {
+      "id": 37,
+      "category": "A global power",
+      "question": "The Bill of Rights of 1689 did what?",
+      "options": ["Confirmed the rights of Parliament and the limits of the king's power", "Abolished slavery in the British Empire", "Created the National Health Service", "Gave women the right to vote"],
+      "answer": "Confirmed the rights of Parliament and the limits of the king's power",
+      "answerIndex": 0,
+      "explanation": "The Bill of Rights (1689) confirmed the rights of Parliament and limited the monarch's power. Abolishing slavery relates to the Emancipation Act (1833). The NHS was created in 1948. Women first gained the vote in 1918 (age 30+)."
+    },
+    {
+      "id": 38,
+      "category": "A global power",
+      "question": "Who was the first person to be called Prime Minister?",
+      "options": ["Sir Robert Walpole", "Sir Winston Churchill", "William Pitt", "Clement Attlee"],
+      "answer": "Sir Robert Walpole",
+      "answerIndex": 0,
+      "explanation": "Sir Robert Walpole was the first Prime Minister, serving from 1721 to 1742. Winston Churchill was wartime PM from 1940. Clement Attlee became PM in 1945 and created the NHS. William Pitt is a distractor here and not the correct answer to this question."
+    },
+    {
+      "id": 39,
+      "category": "A global power",
+      "question": "The Act (or Treaty) of Union of 1707 created which kingdom?",
+      "options": ["The Kingdom of Great Britain", "The United Kingdom of Great Britain and Ireland", "The Commonwealth", "The Irish Free State"],
+      "answer": "The Kingdom of Great Britain",
+      "answerIndex": 0,
+      "explanation": "The 1707 union of England and Scotland created the Kingdom of Great Britain. The United Kingdom of Great Britain and Ireland was created by the Act of Union of 1800 (effective 1801). The Commonwealth is a modern association of countries. The Irish Free State was created in 1922."
+    },
+    {
+      "id": 40,
+      "category": "A global power",
+      "question": "In 1746, Bonnie Prince Charlie was defeated at which battle?",
+      "options": ["The Battle of Culloden", "The Battle of Waterloo", "The Battle of Trafalgar", "The Battle of the Boyne"],
+      "answer": "The Battle of Culloden",
+      "answerIndex": 0,
+      "explanation": "Charles Edward Stuart (Bonnie Prince Charlie) was defeated at Culloden in 1746. Waterloo (1815) was the defeat of Napoleon by the Duke of Wellington. Trafalgar (1805) was Nelson's naval victory. The Battle of the Boyne (1690) was William III's victory over James II in Ireland."
+    },
+    {
+      "id": 41,
+      "category": "A global power",
+      "question": "Which Scottish poet wrote 'Auld Lang Syne'?",
+      "options": ["Robert Burns", "Sir Walter Scott", "Dylan Thomas", "Robert Louis Stevenson"],
+      "answer": "Robert Burns",
+      "answerIndex": 0,
+      "explanation": "Robert Burns, known as 'The Bard', wrote 'Auld Lang Syne'. Sir Walter Scott wrote poems and novels set in Scotland. Dylan Thomas was a Welsh poet (Under Milk Wood). Robert Louis Stevenson was a Scottish novelist (Treasure Island), not the author of Auld Lang Syne."
+    },
+    {
+      "id": 42,
+      "category": "A global power",
+      "question": "Which Scottish thinker of the Enlightenment developed influential ideas about economics?",
+      "options": ["Adam Smith", "David Hume", "James Watt", "Isaac Newton"],
+      "answer": "Adam Smith",
+      "answerIndex": 0,
+      "explanation": "Adam Smith developed ideas about economics still referred to today. David Hume is relevant to ideas about human nature and philosophy. James Watt is relevant to work on steam power. Isaac Newton is relevant to gravity and light, from an earlier period."
+    },
+    {
+      "id": 43,
+      "category": "A global power",
+      "question": "Who opened the first curry house in Britain and introduced 'shampooing'?",
+      "options": ["Sake Dean Mahomet", "Richard Arkwright", "Isambard Kingdom Brunel", "Rudyard Kipling"],
+      "answer": "Sake Dean Mahomet",
+      "answerIndex": 0,
+      "explanation": "Sake Dean Mahomet opened the Hindoostane Coffee House, the first curry house in Britain, and introduced shampooing. Richard Arkwright is relevant to efficient factories in the Industrial Revolution. Isambard Kingdom Brunel was an engineer. Rudyard Kipling was an author born in India."
+    },
+    {
+      "id": 44,
+      "category": "A global power",
+      "question": "In which year did it become illegal to trade slaves in British ships?",
+      "options": ["1807", "1833", "1689", "1918"],
+      "answer": "1807",
+      "answerIndex": 0,
+      "explanation": "In 1807 it became illegal to trade slaves in British ships or from British ports. In 1833 the Emancipation Act abolished slavery throughout the British Empire — so 1833 is relevant to the abolition of slavery itself. 1689 relates to the Bill of Rights. 1918 relates to some women gaining the vote."
+    },
+    {
+      "id": 45,
+      "category": "A global power",
+      "question": "Which MP played a leading role in abolishing the slave trade?",
+      "options": ["William Wilberforce", "William Beveridge", "William Gladstone", "William Caxton"],
+      "answer": "William Wilberforce",
+      "answerIndex": 0,
+      "explanation": "William Wilberforce, an evangelical Christian and MP, helped turn opinion against the slave trade. William Beveridge is relevant to the 1942 report that shaped the welfare state. William Caxton introduced printing to England. William Gladstone is a distractor and not the correct answer here."
+    },
+    {
+      "id": 46,
+      "category": "A global power",
+      "question": "Admiral Nelson led the British fleet to victory at which 1805 battle?",
+      "options": ["The Battle of Trafalgar", "The Battle of Waterloo", "The Battle of Britain", "The Battle of the Somme"],
+      "answer": "The Battle of Trafalgar",
+      "answerIndex": 0,
+      "explanation": "Nelson led the fleet at the Battle of Trafalgar (1805) and was killed; Nelson's Column commemorates him. Waterloo (1815) was Wellington's land victory over Napoleon. The Battle of Britain (1940) was an aerial battle in WWII. The Battle of the Somme (1916) was in WWI."
+    },
+    {
+      "id": 47,
+      "category": "A global power",
+      "question": "Who defeated Napoleon at the Battle of Waterloo in 1815?",
+      "options": ["The Duke of Wellington", "Admiral Nelson", "Winston Churchill", "Oliver Cromwell"],
+      "answer": "The Duke of Wellington",
+      "answerIndex": 0,
+      "explanation": "The Duke of Wellington, known as the Iron Duke, defeated Napoleon at Waterloo. Admiral Nelson won at sea at Trafalgar (1805). Winston Churchill led Britain in WWII. Oliver Cromwell led the 17th-century republic."
+    },
+    {
+      "id": 48,
+      "category": "A global power",
+      "question": "The cross of St Andrew on the Union Flag is which colour and design?",
+      "options": ["A diagonal white cross on a blue ground", "A red cross on a white ground", "A diagonal red cross on a white ground", "A red dragon on a green and white ground"],
+      "answer": "A diagonal white cross on a blue ground",
+      "answerIndex": 0,
+      "explanation": "St Andrew (Scotland) is a diagonal white cross on a blue ground. A red cross on a white ground is the cross of St George (England). A diagonal red cross on a white ground is the cross of St Patrick (Ireland). A red dragon is the Welsh flag, which does not appear on the Union Flag."
+    },
+    {
+      "id": 49,
+      "category": "A global power",
+      "question": "Why does the Welsh dragon not appear on the Union Flag?",
+      "options": ["Wales was already united with England when the first Union Flag was created", "The dragon was considered unlucky", "Wales joined the UK too recently", "Wales has no national flag"],
+      "answer": "Wales was already united with England when the first Union Flag was created",
+      "answerIndex": 0,
+      "explanation": "When the first Union Flag was created in 1606, the Principality of Wales was already united with England, so its dragon was not included. Wales does have its own flag showing a Welsh dragon. The other options are inventions and not supported by the handbook."
+    },
+    {
+      "id": 50,
+      "category": "A global power",
+      "question": "For roughly how long did Queen Victoria reign?",
+      "options": ["Almost 64 years", "About 45 years", "About 25 years", "Exactly 60 years"],
+      "answer": "Almost 64 years",
+      "answerIndex": 0,
+      "explanation": "Queen Victoria reigned from 1837 to 1901, almost 64 years. 'Exactly 60 years' is a distractor that echoes Queen Elizabeth II's Diamond Jubilee (60 years, celebrated in 2012), so it is relevant to Elizabeth II rather than Victoria."
+    },
+    {
+      "id": 51,
+      "category": "A global power",
+      "question": "Who is often regarded as the founder of modern nursing?",
+      "options": ["Florence Nightingale", "Emmeline Pankhurst", "Mary Peters", "Mary Quant"],
+      "answer": "Florence Nightingale",
+      "answerIndex": 0,
+      "explanation": "Florence Nightingale is regarded as the founder of modern nursing and worked in the Crimean War. Emmeline Pankhurst is relevant to the women's suffrage movement. Mary Peters is relevant to Olympic athletics. Mary Quant is relevant to fashion design."
+    },
+    {
+      "id": 52,
+      "category": "A global power",
+      "question": "The Chartists in the 1830s and 1840s campaigned for what?",
+      "options": ["Voting reform", "The abolition of slavery", "Free healthcare", "Independence for India"],
+      "answer": "Voting reform",
+      "answerIndex": 0,
+      "explanation": "The Chartists campaigned for voting reform, including votes for all men and paying MPs. Abolition of slavery relates to Wilberforce and the Emancipation Act. Free healthcare relates to the NHS (1948). Independence for India came in 1947."
+    },
+    {
+      "id": 53,
+      "category": "A global power",
+      "question": "Which suffragette founded the Women's Social and Political Union (WSPU)?",
+      "options": ["Emmeline Pankhurst", "Florence Nightingale", "Jane Austen", "Elizabeth Browning"],
+      "answer": "Emmeline Pankhurst",
+      "answerIndex": 0,
+      "explanation": "Emmeline Pankhurst founded the WSPU in 1903, whose members were the first to be called suffragettes. Florence Nightingale is relevant to nursing. Jane Austen and Elizabeth Browning are relevant to literature and poetry, not the suffrage movement."
+    },
+    {
+      "id": 54,
+      "category": "The 20th century",
+      "question": "In which year did the First World War end?",
+      "options": ["1918", "1914", "1939", "1945"],
+      "answer": "1918",
+      "answerIndex": 0,
+      "explanation": "The First World War ended at 11am on 11 November 1918. 1914 is relevant to the start of WWI. 1939 is relevant to the start of WWII. 1945 is relevant to the end of WWII."
+    },
+    {
+      "id": 55,
+      "category": "The 20th century",
+      "question": "The British attack on the Somme in July 1916 resulted in roughly how many British casualties on the first day?",
+      "options": ["About 60,000", "About 6,000", "About 300,000", "About 2 million"],
+      "answer": "About 60,000",
+      "answerIndex": 0,
+      "explanation": "The Somme cost about 60,000 British casualties on the first day. 'About 300,000' is relevant to the number of men rescued at the Dunkirk evacuation in 1940. 'About 2 million' relates to the total number of British casualties in WWI overall."
+    },
+    {
+      "id": 56,
+      "category": "The 20th century",
+      "question": "In 1922, Ireland was divided; what became of the six northern counties?",
+      "options": ["They remained part of the UK as Northern Ireland", "They became the Irish Free State", "They became a Crown dependency", "They joined the European Union"],
+      "answer": "They remained part of the UK as Northern Ireland",
+      "answerIndex": 0,
+      "explanation": "The six mainly Protestant northern counties remained in the UK as Northern Ireland. The rest of Ireland became the Irish Free State, later a republic (1949). Crown dependency and EU membership are unrelated to this division."
+    },
+    {
+      "id": 57,
+      "category": "The 20th century",
+      "question": "Who became Prime Minister and Britain's war leader in 1940?",
+      "options": ["Winston Churchill", "Clement Attlee", "Neville Chamberlain", "David Lloyd George"],
+      "answer": "Winston Churchill",
+      "answerIndex": 0,
+      "explanation": "Winston Churchill became Prime Minister in May 1940. Clement Attlee became PM in 1945 and created the welfare state and NHS. Neville Chamberlain and David Lloyd George are distractors and not the correct answer to this question."
+    },
+    {
+      "id": 58,
+      "category": "The 20th century",
+      "question": "The evacuation of over 300,000 soldiers in 1940 took place from where?",
+      "options": ["Dunkirk", "Normandy", "The Somme", "Gallipoli"],
+      "answer": "Dunkirk",
+      "answerIndex": 0,
+      "explanation": "More than 300,000 men were evacuated from the beaches around Dunkirk, giving rise to the phrase 'the Dunkirk spirit'. Normandy is relevant to the D-Day landings of 6 June 1944. The Somme relates to a WWI battle."
+    },
+    {
+      "id": 59,
+      "category": "The 20th century",
+      "question": "Which two British-built aircraft were most important in the Battle of Britain?",
+      "options": ["The Spitfire and the Hurricane", "The Harrier and Concorde", "The Lancaster and the Blenheim", "The Wellington and the Mosquito"],
+      "answer": "The Spitfire and the Hurricane",
+      "answerIndex": 0,
+      "explanation": "The Spitfire and the Hurricane were the key fighters in the Battle of Britain (1940). The Harrier jump jet and Concorde are British aircraft but relevant to later 20th-century invention questions, not the Battle of Britain."
+    },
+    {
+      "id": 60,
+      "category": "The 20th century",
+      "question": "Who discovered penicillin in 1928?",
+      "options": ["Sir Alexander Fleming", "Sir Frank Whittle", "Sir Robert Watson-Watt", "Sir Tim Berners-Lee"],
+      "answer": "Sir Alexander Fleming",
+      "answerIndex": 0,
+      "explanation": "Sir Alexander Fleming, a Scottish-born doctor, discovered penicillin in 1928. Sir Frank Whittle developed the jet engine. Sir Robert Watson-Watt developed radar. Sir Tim Berners-Lee invented the World Wide Web."
+    },
+    {
+      "id": 61,
+      "category": "The 20th century",
+      "question": "Who is credited with inventing the World Wide Web?",
+      "options": ["Sir Tim Berners-Lee", "John Logie Baird", "Alan Turing", "James Goodfellow"],
+      "answer": "Sir Tim Berners-Lee",
+      "answerIndex": 0,
+      "explanation": "Sir Tim Berners-Lee invented the World Wide Web; information was first transferred via the web on 25 December 1990. John Logie Baird developed the television. Alan Turing devised the theoretical Turing machine. James Goodfellow invented the cash-dispensing ATM."
+    },
+    {
+      "id": 62,
+      "category": "The 20th century",
+      "question": "Who developed the television?",
+      "options": ["John Logie Baird", "Sir Christopher Cockerell", "Sir Bernard Lovell", "Sir Peter Mansfield"],
+      "answer": "John Logie Baird",
+      "answerIndex": 0,
+      "explanation": "The Scotsman John Logie Baird developed the television and made the first broadcast between London and Glasgow in 1932. Sir Christopher Cockerell invented the hovercraft. Sir Bernard Lovell built the radio telescope at Jodrell Bank. Sir Peter Mansfield co-invented the MRI scanner."
+    },
+    {
+      "id": 63,
+      "category": "The 20th century",
+      "question": "Concorde, the supersonic passenger aircraft, was developed by Britain and which country?",
+      "options": ["France", "Germany", "The United States", "Italy"],
+      "answer": "France",
+      "answerIndex": 0,
+      "explanation": "Britain and France jointly developed Concorde, which first flew in 1969 and carried passengers from 1976 until it was retired in 2003. The other countries were not partners in the Concorde project."
+    },
+    {
+      "id": 64,
+      "category": "Britain since 1945",
+      "question": "Which Prime Minister led the Labour government elected in 1945?",
+      "options": ["Clement Attlee", "Winston Churchill", "Harold Macmillan", "Tony Blair"],
+      "answer": "Clement Attlee",
+      "answerIndex": 0,
+      "explanation": "Clement Attlee led the 1945 Labour government and introduced the welfare state. Winston Churchill lost the 1945 election but returned as PM in 1951. Harold Macmillan is relevant to the 1950s 'wind of change' speech. Tony Blair is relevant to the 1997 Labour government."
+    },
+    {
+      "id": 65,
+      "category": "Britain since 1945",
+      "question": "Who led the establishment of the National Health Service in 1948?",
+      "options": ["Aneurin (Nye) Bevan", "William Beveridge", "R A Butler", "Clement Attlee"],
+      "answer": "Aneurin (Nye) Bevan",
+      "answerIndex": 0,
+      "explanation": "Aneurin (Nye) Bevan, the Minister for Health, led the establishment of the NHS in 1948. William Beveridge wrote the 1942 report that set out the welfare state. R A Butler is relevant to the Education Act 1944. Clement Attlee was the Prime Minister who oversaw these reforms."
+    },
+    {
+      "id": 66,
+      "category": "Britain since 1945",
+      "question": "The 1942 Beveridge Report identified 'five giant evils' to be fought. Which of these was one of them?",
+      "options": ["Want", "Corruption", "Crime", "Pollution"],
+      "answer": "Want",
+      "answerIndex": 0,
+      "explanation": "The five 'Giant Evils' were Want, Disease, Ignorance, Squalor and Idleness. Corruption, crime and pollution are not among the five and are distractors."
+    },
+    {
+      "id": 67,
+      "category": "Britain since 1945",
+      "question": "Which report set out the basis of the modern welfare state?",
+      "options": ["The Beveridge Report (1942)", "The Butler Act (1944)", "The Good Friday Agreement (1998)", "The Domesday Book"],
+      "answer": "The Beveridge Report (1942)",
+      "answerIndex": 0,
+      "explanation": "The Beveridge Report (1942) provided the basis of the modern welfare state. The Butler Act (Education Act 1944) introduced free secondary education. The Good Friday Agreement (1998) relates to peace in Northern Ireland. The Domesday Book is a Norman-era record."
+    },
+    {
+      "id": 68,
+      "category": "Britain since 1945",
+      "question": "Which Welsh poet wrote the radio play 'Under Milk Wood'?",
+      "options": ["Dylan Thomas", "Robert Burns", "Ted Hughes", "Wilfred Owen"],
+      "answer": "Dylan Thomas",
+      "answerIndex": 0,
+      "explanation": "Dylan Thomas, a Welsh poet, wrote 'Under Milk Wood' and the poem 'Do Not Go Gentle into That Good Night'. Robert Burns was a Scottish poet. Ted Hughes and Wilfred Owen were English poets; Owen is particularly associated with the First World War."
+    },
+    {
+      "id": 69,
+      "category": "Britain since 1945",
+      "question": "Who became the UK's first woman Prime Minister?",
+      "options": ["Margaret Thatcher", "Theresa May", "Emmeline Pankhurst", "Queen Victoria"],
+      "answer": "Margaret Thatcher",
+      "answerIndex": 0,
+      "explanation": "Margaret Thatcher became the first woman Prime Minister in 1979 and was the longest-serving PM of the 20th century. Theresa May was a later woman PM but not the first. Emmeline Pankhurst was a suffragette, not a PM. Queen Victoria was a monarch, not a Prime Minister."
+    },
+    {
+      "id": 70,
+      "category": "Britain since 1945",
+      "question": "In 1982, which islands did Argentina invade, prompting a British military response?",
+      "options": ["The Falkland Islands", "The Channel Islands", "The Isle of Man", "The Orkney Islands"],
+      "answer": "The Falkland Islands",
+      "answerIndex": 0,
+      "explanation": "Argentina invaded the Falkland Islands, a British overseas territory, in 1982, and a naval task force recovered them. The Channel Islands and Isle of Man are Crown dependencies. Orkney is part of Scotland. Only the Falklands fit this event."
+    },
+    {
+      "id": 71,
+      "category": "Britain since 1945",
+      "question": "The Good Friday (Belfast) Agreement was signed in which year?",
+      "options": ["1998", "1972", "2007", "1922"],
+      "answer": "1998",
+      "answerIndex": 0,
+      "explanation": "The Good Friday Agreement was signed in 1998. 1972 relates to the suspension of the Northern Ireland Parliament and direct rule. 2007 relates to the reinstatement of the Northern Ireland Assembly. 1922 relates to the original partition of Ireland."
+    },
+    {
+      "id": 72,
+      "category": "Britain since 1945",
+      "question": "Who led the Labour Party to victory in the 1997 general election?",
+      "options": ["Tony Blair", "Gordon Brown", "Keir Starmer", "Clement Attlee"],
+      "answer": "Tony Blair",
+      "answerIndex": 0,
+      "explanation": "Tony Blair led Labour to victory in 1997 and introduced devolution. Gordon Brown took over as PM in 2007. Keir Starmer led Labour to victory in 2024. Clement Attlee led the 1945 Labour government."
+    },
+    {
+      "id": 73,
+      "category": "Britain since 1945",
+      "question": "Which party or parties formed the government after the 2010 general election?",
+      "options": ["A Conservative–Liberal Democrat coalition", "A Labour majority", "A Conservative majority", "A Labour–Liberal Democrat coalition"],
+      "answer": "A Conservative–Liberal Democrat coalition",
+      "answerIndex": 0,
+      "explanation": "No party won a majority in 2010, so the Conservatives and Liberal Democrats formed a coalition, with David Cameron as PM. A Labour majority relates to 1997, 2001, 2005 and 2024. A Conservative majority relates to 2015 onwards."
+    },
+    {
+      "id": 74,
+      "category": "Britain since 1945",
+      "question": "Who became Prime Minister after the Labour Party won the 2024 general election?",
+      "options": ["Sir Keir Starmer", "Rishi Sunak", "Boris Johnson", "Tony Blair"],
+      "answer": "Sir Keir Starmer",
+      "answerIndex": 0,
+      "explanation": "Sir Keir Starmer became PM after Labour won the 2024 election. Rishi Sunak and Boris Johnson were Conservative PMs during the 2015–2024 period. Tony Blair led the earlier Labour government from 1997."
+    },
+    {
+      "id": 75,
+      "category": "Arts and culture",
+      "question": "The Proms, an annual summer season of classical music, is organised by which body?",
+      "options": ["The BBC", "The National Trust", "The Royal Society", "BAFTA"],
+      "answer": "The BBC",
+      "answerIndex": 0,
+      "explanation": "The Proms has been organised by the BBC since 1927. The National Trust preserves buildings and countryside. The Royal Society promotes science. BAFTA runs the British Academy Film Awards."
+    },
+    {
+      "id": 76,
+      "category": "Arts and culture",
+      "question": "Which composer wrote 'The Planets' suite?",
+      "options": ["Gustav Holst", "Henry Purcell", "Edward Elgar", "Benjamin Britten"],
+      "answer": "Gustav Holst",
+      "answerIndex": 0,
+      "explanation": "Gustav Holst wrote 'The Planets'; he adapted 'Jupiter' as the tune for the hymn 'I Vow to Thee My Country'. Henry Purcell was the organist at Westminster Abbey. Edward Elgar wrote the Pomp and Circumstance Marches. Benjamin Britten wrote operas such as Peter Grimes."
+    },
+    {
+      "id": 77,
+      "category": "Arts and culture",
+      "question": "'Land of Hope and Glory' (Pomp and Circumstance March No. 1) was composed by whom?",
+      "options": ["Sir Edward Elgar", "Ralph Vaughan Williams", "Sir William Walton", "George Frederick Handel"],
+      "answer": "Sir Edward Elgar",
+      "answerIndex": 0,
+      "explanation": "Sir Edward Elgar composed the Pomp and Circumstance Marches, usually played at the Last Night of the Proms. Ralph Vaughan Williams was influenced by English folk music. William Walton wrote Façade and Belshazzar's Feast. Handel wrote the Water Music and Messiah."
+    },
+    {
+      "id": 78,
+      "category": "Arts and culture",
+      "question": "Which murder-mystery play has run in London's West End since 1952?",
+      "options": ["The Mousetrap", "Cats", "The Phantom of the Opera", "The Mikado"],
+      "answer": "The Mousetrap",
+      "answerIndex": 0,
+      "explanation": "Agatha Christie's The Mousetrap has run in the West End since 1952 — the longest initial run of any show. Cats and The Phantom of the Opera are Andrew Lloyd Webber musicals. The Mikado is a Gilbert and Sullivan comic opera."
+    },
+    {
+      "id": 79,
+      "category": "Arts and culture",
+      "question": "The Turner Prize celebrates which art form?",
+      "options": ["Contemporary art", "Classical music", "Fiction writing", "Film"],
+      "answer": "Contemporary art",
+      "answerIndex": 0,
+      "explanation": "The Turner Prize, established in 1984 and named after Joseph Turner, celebrates contemporary art. Classical music relates to prizes like the Mercury Music Prize. Fiction writing relates to the Man Booker Prize. Film relates to the BAFTAs."
+    },
+    {
+      "id": 80,
+      "category": "Arts and culture",
+      "question": "Which artist is famous for large bronze abstract sculptures?",
+      "options": ["Henry Moore", "John Constable", "David Hockney", "Thomas Gainsborough"],
+      "answer": "Henry Moore",
+      "answerIndex": 0,
+      "explanation": "Henry Moore was an English sculptor known for large bronze abstract sculptures. John Constable painted landscapes (Dedham Vale). David Hockney is associated with the pop art movement. Thomas Gainsborough was a portrait painter."
+    },
+    {
+      "id": 81,
+      "category": "Arts and culture",
+      "question": "Who wrote 'Pride and Prejudice'?",
+      "options": ["Jane Austen", "Charles Dickens", "Thomas Hardy", "J K Rowling"],
+      "answer": "Jane Austen",
+      "answerIndex": 0,
+      "explanation": "Jane Austen wrote Pride and Prejudice and Sense and Sensibility. Charles Dickens wrote Oliver Twist and Great Expectations. Thomas Hardy wrote Far from the Madding Crowd. J K Rowling wrote the Harry Potter series."
+    },
+    {
+      "id": 82,
+      "category": "Arts and culture",
+      "question": "Which author created the detective Sherlock Holmes?",
+      "options": ["Sir Arthur Conan Doyle", "Agatha Christie", "Ian Fleming", "Robert Louis Stevenson"],
+      "answer": "Sir Arthur Conan Doyle",
+      "answerIndex": 0,
+      "explanation": "Sir Arthur Conan Doyle created Sherlock Holmes. Agatha Christie wrote detective stories and The Mousetrap. Ian Fleming created James Bond. Robert Louis Stevenson wrote Treasure Island and Dr Jekyll and Mr Hyde."
+    },
+    {
+      "id": 83,
+      "category": "Arts and culture",
+      "question": "In 2003, which novel was voted the country's best-loved novel?",
+      "options": ["The Lord of the Rings by J R R Tolkien", "Pride and Prejudice by Jane Austen", "Great Expectations by Charles Dickens", "Brideshead Revisited by Evelyn Waugh"],
+      "answer": "The Lord of the Rings by J R R Tolkien",
+      "answerIndex": 0,
+      "explanation": "The Lord of the Rings by J R R Tolkien was voted the country's best-loved novel in 2003. The other novels are all real British works but were not the ones voted best-loved in that poll."
+    },
+    {
+      "id": 84,
+      "category": "Arts and culture",
+      "question": "Which architect designed the Cenotaph in Whitehall?",
+      "options": ["Sir Edwin Lutyens", "Sir Christopher Wren", "Inigo Jones", "Robert Adam"],
+      "answer": "Sir Edwin Lutyens",
+      "answerIndex": 0,
+      "explanation": "Sir Edwin Lutyens designed the Cenotaph in Whitehall and New Delhi. Sir Christopher Wren designed St Paul's Cathedral. Inigo Jones designed the Banqueting House. Robert Adam is relevant to 18th-century interiors and the Royal Crescent in Bath."
+    },
+    {
+      "id": 85,
+      "category": "Customs and traditions",
+      "question": "What is celebrated on 25 December?",
+      "options": ["Christmas Day", "Boxing Day", "New Year's Day", "St George's Day"],
+      "answer": "Christmas Day",
+      "answerIndex": 0,
+      "explanation": "Christmas Day (25 December) celebrates the birth of Jesus Christ. Boxing Day is 26 December. New Year's Day is 1 January. St George's Day (23 April) is the patron saint's day of England."
+    },
+    {
+      "id": 86,
+      "category": "Customs and traditions",
+      "question": "The festival of Diwali is celebrated by which groups?",
+      "options": ["Hindus and Sikhs", "Christians and Jews", "Muslims and Buddhists", "Sikhs and Muslims"],
+      "answer": "Hindus and Sikhs",
+      "answerIndex": 0,
+      "explanation": "Diwali, the Festival of Lights, is celebrated by Hindus and Sikhs, with a famous celebration in Leicester. Hanukkah is a Jewish festival. Eid al-Fitr and Eid ul Adha are Muslim festivals. Vaisakhi is a Sikh festival."
+    },
+    {
+      "id": 87,
+      "category": "Customs and traditions",
+      "question": "Which festival marks the end of Ramadan for Muslims?",
+      "options": ["Eid al-Fitr", "Eid ul Adha", "Vaisakhi", "Hanukkah"],
+      "answer": "Eid al-Fitr",
+      "answerIndex": 0,
+      "explanation": "Eid al-Fitr celebrates the end of Ramadan, when Muslims have fasted for a month. Eid ul Adha remembers the prophet Ibrahim's willingness to sacrifice his son. Vaisakhi is a Sikh festival. Hanukkah is a Jewish festival."
+    },
+    {
+      "id": 88,
+      "category": "Customs and traditions",
+      "question": "Bonfire Night on 5 November commemorates which event?",
+      "options": ["The failed Gunpowder Plot of 1605", "The end of the First World War", "The Battle of Trafalgar", "The Great Fire of London"],
+      "answer": "The failed Gunpowder Plot of 1605",
+      "answerIndex": 0,
+      "explanation": "Bonfire Night marks the failure of Guy Fawkes and other Catholics to blow up Parliament in 1605. The end of WWI relates to Remembrance Day (11 November). The Battle of Trafalgar and the Great Fire of London are unrelated to 5 November."
+    },
+    {
+      "id": 89,
+      "category": "Customs and traditions",
+      "question": "What is worn on Remembrance Day (11 November)?",
+      "options": ["A poppy", "A daffodil", "A shamrock", "A thistle"],
+      "answer": "A poppy",
+      "answerIndex": 0,
+      "explanation": "People wear poppies on Remembrance Day to commemorate those who died fighting for the UK and its allies. The daffodil is associated with Wales, the shamrock with Northern Ireland, and the thistle with Scotland — all relevant to national symbols on saints' days."
+    },
+    {
+      "id": 90,
+      "category": "Customs and traditions",
+      "question": "What is the day before Lent begins commonly called?",
+      "options": ["Shrove Tuesday (Pancake Day)", "Ash Wednesday", "Boxing Day", "Hogmanay"],
+      "answer": "Shrove Tuesday (Pancake Day)",
+      "answerIndex": 0,
+      "explanation": "The day before Lent is Shrove Tuesday, or Pancake Day. Ash Wednesday is the day Lent begins. Boxing Day is the day after Christmas. Hogmanay is the Scottish name for New Year's Eve (31 December)."
+    },
+    {
+      "id": 91,
+      "category": "Leisure",
+      "question": "Which traditional food is associated with Scotland?",
+      "options": ["Haggis", "Welsh cakes", "The Ulster fry", "Yorkshire pudding"],
+      "answer": "Haggis",
+      "answerIndex": 0,
+      "explanation": "Haggis is a traditional Scottish dish. Welsh cakes are associated with Wales. The Ulster fry is associated with Northern Ireland. Yorkshire pudding (with roast beef) is associated with England."
+    },
+    {
+      "id": 92,
+      "category": "Leisure",
+      "question": "Which British animator has won multiple Oscars for films featuring Wallace and Gromit?",
+      "options": ["Nick Park", "Sir Alfred Hitchcock", "Ridley Scott", "Sir David Lean"],
+      "answer": "Nick Park",
+      "answerIndex": 0,
+      "explanation": "Nick Park won Oscars for animated films including those featuring Wallace and Gromit. Sir Alfred Hitchcock, Ridley Scott and Sir David Lean were live-action directors, not the creators of Wallace and Gromit."
+    },
+    {
+      "id": 93,
+      "category": "Leisure",
+      "question": "The money from TV licences is used mainly to fund which organisation?",
+      "options": ["The BBC", "The National Trust", "ITV", "The National Lottery"],
+      "answer": "The BBC",
+      "answerIndex": 0,
+      "explanation": "TV licence money funds the BBC, the only wholly state-funded media organisation independent of government. The National Trust preserves buildings and countryside. ITV and other channels are funded mainly by advertising."
+    },
+    {
+      "id": 94,
+      "category": "Leisure",
+      "question": "What is the minimum age to buy alcohol in a pub in the UK?",
+      "options": ["18", "16", "21", "17"],
+      "answer": "18",
+      "answerIndex": 0,
+      "explanation": "You must be 18 or over to buy alcohol in a pub. However, people aged 16 or over can drink wine or beer with a meal in a hotel or restaurant if accompanied by someone over 18 — so 16 is relevant to that specific exception."
+    },
+    {
+      "id": 95,
+      "category": "Places of interest",
+      "question": "How many national parks are there in England, Wales and Scotland?",
+      "options": ["15", "10", "20", "5"],
+      "answer": "15",
+      "answerIndex": 0,
+      "explanation": "There are 15 national parks in England, Wales and Scotland. '5' is a distractor that echoes the number of ski centres in Scotland, so it is relevant to skiing rather than national parks."
+    },
+    {
+      "id": 96,
+      "category": "Places of interest",
+      "question": "The Giant's Causeway is located in which part of the UK?",
+      "options": ["Northern Ireland", "Scotland", "Wales", "Cornwall"],
+      "answer": "Northern Ireland",
+      "answerIndex": 0,
+      "explanation": "The Giant's Causeway, a formation of volcanic lava columns, is on the north-east coast of Northern Ireland. Cornwall is relevant to the Eden Project. Wales is relevant to Snowdonia, and Scotland to Loch Lomond and Edinburgh Castle."
+    },
+    {
+      "id": 97,
+      "category": "Places of interest",
+      "question": "Where is the Eden Project located?",
+      "options": ["Cornwall", "The Lake District", "Snowdonia", "Loch Lomond"],
+      "answer": "Cornwall",
+      "answerIndex": 0,
+      "explanation": "The Eden Project, with its biome greenhouses, is in Cornwall. The Lake District is England's largest national park. Snowdonia is a national park in North Wales. Loch Lomond and the Trossachs is a national park in Scotland."
+    },
+    {
+      "id": 98,
+      "category": "Places of interest",
+      "question": "The Tower of London was first built by whom?",
+      "options": ["William the Conqueror", "Henry VIII", "Sir Christopher Wren", "Queen Victoria"],
+      "answer": "William the Conqueror",
+      "answerIndex": 0,
+      "explanation": "The Tower of London was first built by William the Conqueror after 1066; the White Tower is a Norman keep. Tours are given by the Yeoman Warders (Beefeaters) and the Crown Jewels are kept there. The other figures did not build it."
+    },
+    {
+      "id": 99,
+      "category": "Places of interest",
+      "question": "Snowdon, the highest mountain in Wales, is found in which national park?",
+      "options": ["Snowdonia", "The Lake District", "Loch Lomond and the Trossachs", "The Peak District"],
+      "answer": "Snowdonia",
+      "answerIndex": 0,
+      "explanation": "Snowdon is in Snowdonia in North Wales. The Lake District (England's largest national park) contains Windermere and Wastwater. Loch Lomond and the Trossachs is in Scotland. The Peak District is a distractor here."
+    },
+    {
+      "id": 100,
+      "category": "Religion",
+      "question": "In the 2009 Citizenship Survey, what percentage of people identified themselves as Christian?",
+      "options": ["70%", "21%", "4%", "50%"],
+      "answer": "70%",
+      "answerIndex": 0,
+      "explanation": "About 70% identified as Christian. 21% said they had no religion, and 4% identified as Muslim — so those figures are relevant to 'no religion' and 'Muslim' respectively, not to Christians."
+    },
+    {
+      "id": 101,
+      "category": "Religion",
+      "question": "Who is the head of the Church of England?",
+      "options": ["The monarch", "The Archbishop of Canterbury", "The Prime Minister", "The Moderator"],
+      "answer": "The monarch",
+      "answerIndex": 0,
+      "explanation": "The monarch is the head of the Church of England. The Archbishop of Canterbury is its spiritual leader. The Prime Minister usually advises on senior church appointments. The Moderator chairs the General Assembly of the Church of Scotland."
+    },
+    {
+      "id": 102,
+      "category": "Religion",
+      "question": "What is the established (national) Church in Scotland?",
+      "options": ["The Church of Scotland (Presbyterian)", "The Church of England", "The Roman Catholic Church", "The Methodist Church"],
+      "answer": "The Church of Scotland (Presbyterian)",
+      "answerIndex": 0,
+      "explanation": "The Church of Scotland is a Presbyterian church, governed by ministers and elders, and led by the Moderator. The Church of England is the established church in England. There is no established church in Wales or Northern Ireland."
+    },
+    {
+      "id": 103,
+      "category": "Religion",
+      "question": "On which date is St George's Day, the patron saint's day of England?",
+      "options": ["23 April", "1 March", "17 March", "30 November"],
+      "answer": "23 April",
+      "answerIndex": 0,
+      "explanation": "St George's Day (England) is 23 April. 1 March is St David's Day (Wales). 17 March is St Patrick's Day (Northern Ireland). 30 November is St Andrew's Day (Scotland)."
+    },
+    {
+      "id": 104,
+      "category": "Religion",
+      "question": "Which flower is associated with Scotland?",
+      "options": ["The thistle", "The daffodil", "The rose", "The shamrock"],
+      "answer": "The thistle",
+      "answerIndex": 0,
+      "explanation": "The thistle is associated with Scotland. The daffodil is associated with Wales, the rose with England, and the shamrock with Northern Ireland."
+    },
+    {
+      "id": 105,
+      "category": "Sport",
+      "question": "In which years did the UK host the summer Olympic Games?",
+      "options": ["1908, 1948 and 2012", "1948, 1980 and 2012", "1908, 1966 and 2012", "1936, 1948 and 2012"],
+      "answer": "1908, 1948 and 2012",
+      "answerIndex": 0,
+      "explanation": "The UK hosted the Olympics in 1908, 1948 and 2012, with the main 2012 site in Stratford, East London. '1966' is a distractor that relates to England hosting and winning the football World Cup, not the Olympics."
+    },
+    {
+      "id": 106,
+      "category": "Sport",
+      "question": "Who was the first person to run a mile in under four minutes?",
+      "options": ["Sir Roger Bannister", "Sir Steve Redgrave", "Mo Farah", "Sir Chris Hoy"],
+      "answer": "Sir Roger Bannister",
+      "answerIndex": 0,
+      "explanation": "Sir Roger Bannister ran the first sub-four-minute mile in 1954. Sir Steve Redgrave won rowing golds in five Olympics. Mo Farah won distance-running golds in 2012. Sir Chris Hoy is a Scottish track cyclist."
+    },
+    {
+      "id": 107,
+      "category": "Sport",
+      "question": "Which sport is the most popular in the UK?",
+      "options": ["Football", "Cricket", "Rugby", "Tennis"],
+      "answer": "Football",
+      "answerIndex": 0,
+      "explanation": "Football is the UK's most popular sport, with the first professional clubs formed in the late 19th century. Cricket, rugby and tennis are also popular British sports, but football is described as the most popular."
+    },
+    {
+      "id": 108,
+      "category": "Sport",
+      "question": "The Ashes is a famous series of Test matches in which sport?",
+      "options": ["Cricket", "Rugby", "Tennis", "Golf"],
+      "answer": "Cricket",
+      "answerIndex": 0,
+      "explanation": "The Ashes is a cricket series between England and Australia. Rugby's most famous union competition is the Six Nations. Tennis is associated with Wimbledon. Golf's British 'Major' is the Open Championship."
+    },
+    {
+      "id": 109,
+      "category": "Sport",
+      "question": "St Andrews in Scotland is known as the home of which sport?",
+      "options": ["Golf", "Tennis", "Rugby", "Cricket"],
+      "answer": "Golf",
+      "answerIndex": 0,
+      "explanation": "St Andrews is known as the home of golf, which can be traced to 15th-century Scotland. Tennis is associated with Wimbledon and Leamington Spa. Rugby originated in England. Cricket also originated in England."
+    },
+    {
+      "id": 110,
+      "category": "Sport",
+      "question": "The Wimbledon Championships is the only Grand Slam tennis tournament played on what surface?",
+      "options": ["Grass", "Clay", "Hard court", "Carpet"],
+      "answer": "Grass",
+      "answerIndex": 0,
+      "explanation": "Wimbledon is the oldest tennis tournament in the world and the only Grand Slam played on grass. The other surfaces are used at different tournaments and are distractors here."
+    },
+    {
+      "id": 111,
+      "category": "Sport",
+      "question": "Who became the first Briton to win the Tour de France, in 2012?",
+      "options": ["Sir Bradley Wiggins", "Sir Chris Hoy", "Andy Murray", "Mo Farah"],
+      "answer": "Sir Bradley Wiggins",
+      "answerIndex": 0,
+      "explanation": "Sir Bradley Wiggins became the first Briton to win the Tour de France in 2012. Sir Chris Hoy is a track cyclist. Andy Murray is a tennis player. Mo Farah is a distance runner. All are notable British sportspeople but only Wiggins fits this achievement."
+    },
+    {
+      "id": 112,
+      "category": "The UK today",
+      "question": "What is the capital city of Wales?",
+      "options": ["Cardiff", "Swansea", "Edinburgh", "Belfast"],
+      "answer": "Cardiff",
+      "answerIndex": 0,
+      "explanation": "Cardiff is the capital of Wales. Swansea is a Welsh city but not the capital. Edinburgh is the capital of Scotland. Belfast is the capital of Northern Ireland."
+    },
+    {
+      "id": 113,
+      "category": "The UK today",
+      "question": "What is the currency of the UK?",
+      "options": ["The pound sterling", "The euro", "The dollar", "The pound and the euro"],
+      "answer": "The pound sterling",
+      "answerIndex": 0,
+      "explanation": "The UK currency is the pound sterling (£), with 100 pence in a pound. The UK is not part of the eurozone and does not use the euro. The dollar is not used in the UK."
+    },
+    {
+      "id": 114,
+      "category": "The UK today",
+      "question": "Roughly how far is it from John O'Groats to Land's End, the longest distance on the UK mainland?",
+      "options": ["About 870 miles", "About 500 miles", "About 1,200 miles", "About 300 miles"],
+      "answer": "About 870 miles",
+      "answerIndex": 0,
+      "explanation": "The distance from John O'Groats (north Scotland) to Land's End (south-west England) is about 870 miles (approximately 1,400 km). The other distances are distractors and do not match the handbook figure."
+    },
+    {
+      "id": 115,
+      "category": "The UK today",
+      "question": "Roughly what percentage of the UK population lives in England?",
+      "options": ["84%", "8%", "5%", "3%"],
+      "answer": "84%",
+      "answerIndex": 0,
+      "explanation": "England makes up about 84% of the UK population. Scotland is just over 8%, Wales around 5% and Northern Ireland less than 3% — so those figures are relevant to those nations respectively."
+    },
+    {
+      "id": 116,
+      "category": "The UK today",
+      "question": "In which parts of the UK is Gaelic spoken by some people?",
+      "options": ["Parts of the Scottish Highlands and Islands", "The whole of England", "Cornwall only", "London"],
+      "answer": "Parts of the Scottish Highlands and Islands",
+      "answerIndex": 0,
+      "explanation": "Gaelic is spoken in some parts of the Scottish Highlands and Islands, and Irish Gaelic by some in Northern Ireland. Welsh is spoken widely in Wales. The other options do not match where Gaelic is spoken."
+    },
+    {
+      "id": 117,
+      "category": "Government and constitution",
+      "question": "How is the UK's constitution best described?",
+      "options": ["Unwritten (uncodified)", "Written in a single document", "Set by the monarch alone", "Decided by the European Union"],
+      "answer": "Unwritten (uncodified)",
+      "answerIndex": 0,
+      "explanation": "The UK constitution is unwritten (not contained in a single document), having developed over hundreds of years. A single written document describes constitutions like those of the USA or France. The monarch does not set it, and the EU does not decide it."
+    },
+    {
+      "id": 118,
+      "category": "Government and constitution",
+      "question": "Who is the current monarch and head of state of the UK?",
+      "options": ["King Charles III", "Queen Elizabeth II", "William, Prince of Wales", "Prince Edward"],
+      "answer": "King Charles III",
+      "answerIndex": 0,
+      "explanation": "King Charles III has been the sovereign since 2022. Queen Elizabeth II reigned from 1952 until her death in 2022. William, Prince of Wales, is the heir apparent. Prince Edward became Duke of Edinburgh in 2023."
+    },
+    {
+      "id": 119,
+      "category": "Government and constitution",
+      "question": "Which chamber of Parliament is regarded as the more important?",
+      "options": ["The House of Commons", "The House of Lords", "The Privy Council", "The Cabinet"],
+      "answer": "The House of Commons",
+      "answerIndex": 0,
+      "explanation": "The House of Commons is regarded as more important because its members (MPs) are democratically elected. The House of Lords is made up of unelected peers. The Cabinet is the committee of senior ministers, not a chamber of Parliament."
+    },
+    {
+      "id": 120,
+      "category": "Government and constitution",
+      "question": "Members of the House of Lords are known as what?",
+      "options": ["Peers", "MPs", "MSPs", "Councillors"],
+      "answer": "Peers",
+      "answerIndex": 0,
+      "explanation": "Members of the House of Lords are peers, who are not elected. MPs sit in the House of Commons. MSPs are members of the Scottish Parliament. Councillors serve on local authorities."
+    },
+    {
+      "id": 121,
+      "category": "Government and constitution",
+      "question": "Since 1958, the Prime Minister has been able to nominate what kind of peers?",
+      "options": ["Life peers", "Hereditary peers", "Elected peers", "Bishops"],
+      "answer": "Life peers",
+      "answerIndex": 0,
+      "explanation": "Since 1958 the PM can nominate life peers, who hold their title only for their own lifetime. Hereditary peers inherit their title (and since 1999 have lost the automatic right to sit). Bishops of the Church of England also sit in the Lords, but that is a separate category."
+    },
+    {
+      "id": 122,
+      "category": "Government and constitution",
+      "question": "Who chairs debates in the House of Commons?",
+      "options": ["The Speaker", "The Prime Minister", "The Lord Chancellor", "The Chief Whip"],
+      "answer": "The Speaker",
+      "answerIndex": 0,
+      "explanation": "The Speaker chairs debates in the Commons, is politically neutral, and is chosen by other MPs in a secret ballot. The Prime Minister leads the government. The other roles do not chair Commons debates."
+    },
+    {
+      "id": 123,
+      "category": "Government and constitution",
+      "question": "By what voting system are MPs elected to the House of Commons?",
+      "options": ["First past the post", "Proportional representation", "Single transferable vote by default", "A secret ballot of peers"],
+      "answer": "First past the post",
+      "answerIndex": 0,
+      "explanation": "MPs are elected by 'first past the post' — the candidate with the most votes in a constituency wins. Proportional representation is relevant to European Parliament elections and to the devolved bodies. A ballot of peers does not elect MPs."
+    },
+    {
+      "id": 124,
+      "category": "Government and constitution",
+      "question": "Which cabinet minister is responsible for the economy?",
+      "options": ["The Chancellor of the Exchequer", "The Home Secretary", "The Foreign Secretary", "The Speaker"],
+      "answer": "The Chancellor of the Exchequer",
+      "answerIndex": 0,
+      "explanation": "The Chancellor of the Exchequer is responsible for the economy. The Home Secretary handles crime, policing and immigration. The Foreign Secretary manages relations with other countries. The Speaker chairs Commons debates and is not a cabinet minister."
+    },
+    {
+      "id": 125,
+      "category": "Government and constitution",
+      "question": "What is the official London home of the Prime Minister?",
+      "options": ["10 Downing Street", "Buckingham Palace", "Chequers", "The Palace of Westminster"],
+      "answer": "10 Downing Street",
+      "answerIndex": 0,
+      "explanation": "The PM's official home is 10 Downing Street; Chequers is the PM's country house — so Chequers is relevant to the country residence, not the London home. Buckingham Palace is the monarch's residence. The Palace of Westminster houses Parliament."
+    },
+    {
+      "id": 126,
+      "category": "Government and constitution",
+      "question": "The second-largest party in the House of Commons is known as what?",
+      "options": ["The Opposition", "The coalition", "The Cabinet", "The civil service"],
+      "answer": "The Opposition",
+      "answerIndex": 0,
+      "explanation": "The second-largest party is the Opposition, and its leader forms a shadow cabinet. A coalition forms when no party wins a majority. The Cabinet is the governing party's senior ministers. The civil service is politically neutral and supports the government of the day."
+    },
+    {
+      "id": 127,
+      "category": "Government and constitution",
+      "question": "Which of these is a core value of the civil service?",
+      "options": ["Political impartiality", "Loyalty to one party", "Elected accountability", "Hereditary appointment"],
+      "answer": "Political impartiality",
+      "answerIndex": 0,
+      "explanation": "Civil servants are chosen on merit and are politically neutral; their core values are integrity, honesty, objectivity and impartiality. They are not loyal to one party, not elected, and not appointed by heredity."
+    },
+    {
+      "id": 128,
+      "category": "Government and constitution",
+      "question": "Where does the Scottish Parliament sit?",
+      "options": ["Holyrood, Edinburgh", "Stormont, Belfast", "Cardiff Bay", "Westminster, London"],
+      "answer": "Holyrood, Edinburgh",
+      "answerIndex": 0,
+      "explanation": "The Scottish Parliament sits at Holyrood in Edinburgh. Stormont in Belfast is the Northern Ireland Assembly. Cardiff Bay (the Senedd) is the Welsh Parliament/Assembly. Westminster is the UK Parliament."
+    },
+    {
+      "id": 129,
+      "category": "Government and constitution",
+      "question": "How many members does the Scottish Parliament have?",
+      "options": ["129 MSPs", "60 AMs", "90 MLAs", "650 MPs"],
+      "answer": "129 MSPs",
+      "answerIndex": 0,
+      "explanation": "The Scottish Parliament has 129 MSPs. 60 members (AMs) is relevant to the Welsh Assembly. 90 members (MLAs) is relevant to the Northern Ireland Assembly. MPs sit in the UK House of Commons."
+    },
+    {
+      "id": 130,
+      "category": "Government and constitution",
+      "question": "In which year were the Scottish Parliament and Welsh Assembly established?",
+      "options": ["1999", "1979", "1922", "2007"],
+      "answer": "1999",
+      "answerIndex": 0,
+      "explanation": "Both were established in 1999 following devolution. 1922 relates to the original Northern Ireland Parliament. 2007 relates to the reinstatement of the Northern Ireland Assembly. 1979 is a distractor here."
+    },
+    {
+      "id": 131,
+      "category": "Government and constitution",
+      "question": "How often must a General Election be held at the latest?",
+      "options": ["At least every five years", "At least every three years", "At least every seven years", "Every year"],
+      "answer": "At least every five years",
+      "answerIndex": 0,
+      "explanation": "A General Election must be held at least every five years. 'Every year' echoes one of the Chartists' demands (annual elections), which was not adopted, so it is relevant to that historical topic. The other intervals are distractors."
+    },
+    {
+      "id": 132,
+      "category": "The law and courts",
+      "question": "Which of these is a criminal offence in the UK?",
+      "options": ["Carrying a weapon for self-defence", "A dispute over faulty goods", "A disagreement between a landlord and tenant", "An unfair dismissal claim"],
+      "answer": "Carrying a weapon for self-defence",
+      "answerIndex": 0,
+      "explanation": "Carrying a weapon of any kind, even for self-defence, is a criminal offence. Disputes over faulty goods (consumer rights), landlord–tenant issues (housing law) and unfair dismissal (employment law) are matters of civil law, not criminal law."
+    },
+    {
+      "id": 133,
+      "category": "The law and courts",
+      "question": "Which court in England and Wales deals with most minor criminal cases?",
+      "options": ["The Magistrates' Court", "The Crown Court", "The County Court", "The High Court"],
+      "answer": "The Magistrates' Court",
+      "answerIndex": 0,
+      "explanation": "Minor criminal cases in England, Wales and Northern Ireland are heard in a Magistrates' Court. The Crown Court hears serious criminal cases with a judge and jury. County Courts and the High Court deal with civil matters."
+    },
+    {
+      "id": 134,
+      "category": "The law and courts",
+      "question": "In England, Wales and Northern Ireland, how many people sit on a jury?",
+      "options": ["12", "15", "10", "24"],
+      "answer": "12",
+      "answerIndex": 0,
+      "explanation": "A jury has 12 members in England, Wales and Northern Ireland. In Scotland a jury has 15 members — so 15 is relevant to Scotland. The other numbers are distractors."
+    },
+    {
+      "id": 135,
+      "category": "The law and courts",
+      "question": "Which additional verdict is possible only in Scottish criminal courts?",
+      "options": ["Not proven", "No case to answer", "Suspended", "Discharged"],
+      "answer": "Not proven",
+      "answerIndex": 0,
+      "explanation": "In Scotland a third verdict of 'not proven' is possible, in addition to 'guilty' and 'not guilty'. The other terms are not the special Scottish verdict referred to in the handbook."
+    },
+    {
+      "id": 136,
+      "category": "The law and courts",
+      "question": "What is the maximum value for a claim under the small claims procedure in England and Wales?",
+      "options": ["£10,000", "£5,000", "£1,000", "£50,000"],
+      "answer": "£10,000",
+      "answerIndex": 0,
+      "explanation": "The small claims procedure is for claims of less than £10,000 in England and Wales. In Scotland and Northern Ireland the limit is £5,000 — so £5,000 is relevant to those parts of the UK."
+    },
+    {
+      "id": 137,
+      "category": "The law and courts",
+      "question": "Who set local police priorities after being elected in England and Wales from November 2012?",
+      "options": ["Police and Crime Commissioners (PCCs)", "Magistrates", "The Home Secretary", "Chief Constables alone"],
+      "answer": "Police and Crime Commissioners (PCCs)",
+      "answerIndex": 0,
+      "explanation": "Directly elected Police and Crime Commissioners (PCCs) set local police priorities and budgets and appoint the Chief Constable. Magistrates decide court cases. The Home Secretary oversees policing nationally but does not set local priorities in this way."
+    },
+    {
+      "id": 138,
+      "category": "Rights, tax and driving",
+      "question": "Which Act incorporated the European Convention on Human Rights into UK law?",
+      "options": ["The Human Rights Act 1998", "The Magna Carta", "The Bill of Rights 1689", "The Habeas Corpus Act 1679"],
+      "answer": "The Human Rights Act 1998",
+      "answerIndex": 0,
+      "explanation": "The Human Rights Act 1998 incorporated the European Convention on Human Rights into UK law. The Magna Carta (1215), Bill of Rights (1689) and Habeas Corpus Act (1679) are earlier foundations of individual rights but did not incorporate the Convention."
+    },
+    {
+      "id": 139,
+      "category": "Rights, tax and driving",
+      "question": "Which government department collects taxes in the UK?",
+      "options": ["HM Revenue & Customs (HMRC)", "The Department for Work and Pensions (DWP)", "The Home Office", "The Bank of England"],
+      "answer": "HM Revenue & Customs (HMRC)",
+      "answerIndex": 0,
+      "explanation": "HMRC collects taxes. The DWP is relevant to obtaining a National Insurance number and to benefits. The Home Office handles immigration and policing. The Bank of England manages monetary policy."
+    },
+    {
+      "id": 140,
+      "category": "Rights, tax and driving",
+      "question": "The system by which most employees have income tax deducted automatically is called what?",
+      "options": ["Pay As You Earn (PAYE)", "Self-assessment", "National Insurance", "Council tax"],
+      "answer": "Pay As You Earn (PAYE)",
+      "answerIndex": 0,
+      "explanation": "PAYE deducts income tax directly from wages. Self-assessment is used by self-employed people, who complete a tax return. National Insurance is a separate contribution for state benefits and the NHS. Council tax funds local services."
+    },
+    {
+      "id": 141,
+      "category": "Rights, tax and driving",
+      "question": "At what age are young people in the UK sent a National Insurance number?",
+      "options": ["Just before their 16th birthday", "At 18", "At 21", "At 17"],
+      "answer": "Just before their 16th birthday",
+      "answerIndex": 0,
+      "explanation": "All young people are sent a National Insurance number just before their 16th birthday. 17 is the minimum age to drive a car, and 18 is the age for voting and buying alcohol — so those ages are relevant to driving and adult rights, not to NI numbers."
+    },
+    {
+      "id": 142,
+      "category": "Rights, tax and driving",
+      "question": "What is the minimum age to drive a car in the UK?",
+      "options": ["17", "16", "18", "21"],
+      "answer": "17",
+      "answerIndex": 0,
+      "explanation": "You must be at least 17 to drive a car or motorcycle. 16 is the minimum age to ride a moped. 18 is relevant to voting and buying alcohol, not to driving a car."
+    },
+    {
+      "id": 143,
+      "category": "Rights, tax and driving",
+      "question": "A vehicle over how many years old must have an annual MOT test?",
+      "options": ["3 years", "1 year", "5 years", "10 years"],
+      "answer": "3 years",
+      "answerIndex": 0,
+      "explanation": "A vehicle more than three years old must have an annual MOT test. The other durations are distractors and do not match the handbook rule."
+    },
+    {
+      "id": 144,
+      "category": "International institutions",
+      "question": "Who is the ceremonial head of the Commonwealth?",
+      "options": ["King Charles III", "The UN Secretary-General", "The Prime Minister of the UK", "The President of the European Council"],
+      "answer": "King Charles III",
+      "answerIndex": 0,
+      "explanation": "The monarch, currently King Charles III, is the ceremonial head of the Commonwealth, a voluntary association of countries. The UN Secretary-General leads the United Nations. The other roles are unrelated to heading the Commonwealth."
+    },
+    {
+      "id": 145,
+      "category": "International institutions",
+      "question": "When did the UK officially leave the European Union?",
+      "options": ["31 January 2020", "1 January 1973", "25 March 1957", "8 September 2022"],
+      "answer": "31 January 2020",
+      "answerIndex": 0,
+      "explanation": "The UK left the EU (Brexit) at 23:00 GMT on 31 January 2020. 1973 is when the UK joined the EEC. 25 March 1957 is when the Treaty of Rome founded the EEC. 8 September 2022 is the date Queen Elizabeth II died."
+    },
+    {
+      "id": 146,
+      "category": "International institutions",
+      "question": "How many member states does the European Union now have?",
+      "options": ["27", "28", "47", "54"],
+      "answer": "27",
+      "answerIndex": 0,
+      "explanation": "The EU now has 27 member states following the UK's departure. '47' is relevant to the Council of Europe (a separate body). '54' relates to the number of Commonwealth member states referenced in the handbook."
+    },
+    {
+      "id": 147,
+      "category": "International institutions",
+      "question": "The Council of Europe is mainly responsible for what?",
+      "options": ["The protection and promotion of human rights", "Setting EU trade tariffs", "Commanding NATO forces", "Running the United Nations"],
+      "answer": "The protection and promotion of human rights",
+      "answerIndex": 0,
+      "explanation": "The Council of Europe (47 members, separate from the EU) protects and promotes human rights and drew up the European Convention on Human Rights. It has no power to make laws. NATO is a defence alliance and the UN is a separate global body."
+    },
+    {
+      "id": 148,
+      "category": "International institutions",
+      "question": "The UK is one of how many permanent members of the UN Security Council?",
+      "options": ["Five", "Fifteen", "Twenty-seven", "Ten"],
+      "answer": "Five",
+      "answerIndex": 0,
+      "explanation": "The UK is one of the five permanent members of the UN Security Council. 'Fifteen' is relevant to the total number of members on the Security Council, not the permanent members."
+    },
+    {
+      "id": 149,
+      "category": "International institutions",
+      "question": "What is NATO?",
+      "options": ["A defence alliance of European and North American countries", "A trade bloc of EU states", "A human rights court", "A UK government department"],
+      "answer": "A defence alliance of European and North American countries",
+      "answerIndex": 0,
+      "explanation": "NATO is a group of European and North American countries that agree to help each other if attacked and to maintain peace among members. An EU trade bloc, a human rights court (the ECHR/Council of Europe), and a government department are all different institutions."
+    },
+    {
+      "id": 150,
+      "category": "Your role in the community",
+      "question": "People on the electoral register aged 18 to 70 can be asked to do what?",
+      "options": ["Serve on a jury", "Become the Prime Minister", "Sit in the House of Lords", "Appoint the Chief Constable"],
+      "answer": "Serve on a jury",
+      "answerIndex": 0,
+      "explanation": "People on the electoral register aged 18 to 70 can be selected for jury service. Becoming PM, sitting in the Lords, or appointing a Chief Constable (a PCC's role) are not things ordinary citizens are randomly selected to do."
+    },
+    {
+      "id": 151,
+      "category": "Your role in the community",
+      "question": "What is the minimum age to become a school governor or school board member?",
+      "options": ["18, with no upper age limit", "16", "21", "25 with an upper limit of 70"],
+      "answer": "18, with no upper age limit",
+      "answerIndex": 0,
+      "explanation": "School governors must be aged 18 or over at appointment, with no upper age limit. Jury service applies to those aged 18 to 70, so an upper limit is relevant to jury service rather than to school governors."
+    },
+    {
+      "id": 152,
+      "category": "Your role in the community",
+      "question": "Handing out leaflets and knocking on doors to persuade people to vote for a party is called what?",
+      "options": ["Canvassing", "Lobbying", "Filibustering", "Devolution"],
+      "answer": "Canvassing",
+      "answerIndex": 0,
+      "explanation": "Persuading people to vote for a candidate by leafleting and door-knocking is called canvassing. Lobbying is relevant to pressure groups influencing government policy. Filibustering and devolution refer to unrelated political concepts."
+    },
+    {
+      "id": 153,
+      "category": "Your role in the community",
+      "question": "Which of these is a good way to look after the environment?",
+      "options": ["Recycling waste and shopping locally", "Using a car for every short journey", "Sending all waste to landfill", "Buying only imported goods"],
+      "answer": "Recycling waste and shopping locally",
+      "answerIndex": 0,
+      "explanation": "Recycling, shopping locally and using public transport or walking help protect the environment and reduce your carbon footprint. The other options increase pollution or waste and are the opposite of good environmental practice."
+    },
+    {
+      "id": 154,
+      "category": "Your role in the community",
+      "question": "Which programme gives 16- and 17-year-olds the chance to develop skills and take part in a community project?",
+      "options": ["The National Citizen Service", "The National Trust", "The National Lottery", "The National Health Service"],
+      "answer": "The National Citizen Service",
+      "answerIndex": 0,
+      "explanation": "The National Citizen Service offers 16- and 17-year-olds outdoor activities, skills development and a community project. The National Trust preserves heritage sites, the National Lottery funds good causes, and the NHS provides healthcare."
+    },
+    {
+      "id": 155,
+      "category": "The Tudors and Stuarts",
+      "question": "Which queen was known as 'Bloody Mary' for persecuting Protestants?",
+      "options": ["Mary I", "Mary, Queen of Scots", "Elizabeth I", "Queen Anne"],
+      "answer": "Mary I",
+      "answerIndex": 0,
+      "explanation": "Mary I, a devout Catholic, persecuted Protestants and became known as 'Bloody Mary'. Mary, Queen of Scots was a Catholic Scottish queen executed under Elizabeth I. Elizabeth I re-established the Church of England. Queen Anne reigned much later, in the early 1700s."
+    },
+    {
+      "id": 156,
+      "category": "A global power",
+      "question": "Which engineer built the Great Western Railway from Paddington?",
+      "options": ["Isambard Kingdom Brunel", "George Stephenson", "Richard Arkwright", "Sir Frank Whittle"],
+      "answer": "Isambard Kingdom Brunel",
+      "answerIndex": 0,
+      "explanation": "Isambard Kingdom Brunel built the Great Western Railway and many bridges and tunnels. George Stephenson (with his son Robert) pioneered the railway engine. Richard Arkwright is relevant to textile factories. Sir Frank Whittle developed the jet engine."
+    },
+    {
+      "id": 157,
+      "category": "A global power",
+      "question": "The Great Exhibition of 1851 was held in which building in Hyde Park?",
+      "options": ["The Crystal Palace", "The Crystal Cathedral", "The Royal Albert Hall", "The Banqueting House"],
+      "answer": "The Crystal Palace",
+      "answerIndex": 0,
+      "explanation": "The Great Exhibition of 1851 was held in the Crystal Palace, a huge structure of steel and glass in Hyde Park. The Royal Albert Hall hosts the Proms. The Banqueting House was designed by Inigo Jones. The 'Crystal Cathedral' is a distractor."
+    },
+    {
+      "id": 158,
+      "category": "The 20th century",
+      "question": "On which date and time did the First World War end?",
+      "options": ["11am on 11 November 1918", "Noon on 1 January 1918", "6 June 1944", "8 May 1945"],
+      "answer": "11am on 11 November 1918",
+      "answerIndex": 0,
+      "explanation": "WWI ended at 11am on 11 November 1918. 6 June 1944 is D-Day in WWII. 8 May relates to the Allied victory in Europe in WWII (1945). The other option is invented."
+    },
+    {
+      "id": 159,
+      "category": "The 20th century",
+      "question": "Which country did Hitler invade in 1939, prompting Britain and France to declare war?",
+      "options": ["Poland", "Belgium", "France", "The Soviet Union"],
+      "answer": "Poland",
+      "answerIndex": 0,
+      "explanation": "Hitler's invasion of Poland in 1939 led Britain and France to declare war. Germany later took Belgium and the Netherlands and advanced through France in 1940, and invaded the Soviet Union in 1941 — so those events are relevant to later stages of the war."
+    },
+    {
+      "id": 160,
+      "category": "Government and constitution",
+      "question": "In what year did the UK become a fully democratic country with equal voting rights for men and women?",
+      "options": ["1928", "1918", "1969", "1832"],
+      "answer": "1928",
+      "answerIndex": 0,
+      "explanation": "The UK had a fully democratic voting system from 1928, when men and women could vote at 21. 1918 gave the vote to women over 30. 1969 reduced the voting age to 18. 1832 relates to the Reform Act that expanded the male franchise."
+    },
+    {
+      "id": 161,
+      "category": "Government and constitution",
+      "question": "In which year was the present voting age of 18 set?",
+      "options": ["1969", "1928", "1918", "1948"],
+      "answer": "1969",
+      "answerIndex": 0,
+      "explanation": "The voting age was reduced to 18 in 1969. 1928 is when all adults could vote at 21. 1918 gave some women the vote at 30. 1948 is a distractor here."
+    },
+    {
+      "id": 162,
+      "category": "Sport",
+      "question": "Which British distance runner, born in Somalia, won 5,000m and 10,000m gold at the 2012 Olympics?",
+      "options": ["Mo Farah", "Bradley Wiggins", "Jessica Ennis", "Andy Murray"],
+      "answer": "Mo Farah",
+      "answerIndex": 0,
+      "explanation": "Mo Farah won the 5,000m and 10,000m in 2012. Bradley Wiggins is a cyclist who won the Tour de France. Jessica Ennis won the heptathlon in 2012. Andy Murray is a Scottish tennis player."
+    },
+    {
+      "id": 163,
+      "category": "Sport",
+      "question": "The Six Nations Championship is played in which sport?",
+      "options": ["Rugby union", "Football", "Cricket", "Golf"],
+      "answer": "Rugby union",
+      "answerIndex": 0,
+      "explanation": "The Six Nations is a rugby union competition between England, Ireland, Scotland, Wales, France and Italy. The Super League is the best-known rugby league competition. Football, cricket and golf have different signature competitions."
+    },
+    {
+      "id": 164,
+      "category": "Arts and culture",
+      "question": "Which German-born composer became a British citizen in 1727 and wrote 'Messiah'?",
+      "options": ["George Frederick Handel", "Gustav Holst", "Henry Purcell", "Benjamin Britten"],
+      "answer": "George Frederick Handel",
+      "answerIndex": 0,
+      "explanation": "Handel, German-born, became a British citizen in 1727 and wrote Water Music, Music for the Royal Fireworks and Messiah. Gustav Holst wrote The Planets. Henry Purcell was an earlier English composer. Benjamin Britten wrote 20th-century operas."
+    },
+    {
+      "id": 165,
+      "category": "Customs and traditions",
+      "question": "Which of these is a UK bank holiday characteristic?",
+      "options": ["Banks and many businesses are closed and they have no religious significance", "They are always religious festivals", "They only occur in Scotland", "They are held every week"],
+      "answer": "Banks and many businesses are closed and they have no religious significance",
+      "answerIndex": 0,
+      "explanation": "Bank holidays are days when banks and many businesses close, and they generally have no religious significance. They occur at the start of May, in late May or early June, and in August (with an additional one in Northern Ireland in July). They are not weekly or exclusively Scottish."
+    },
+    {
+      "id": 166,
+      "category": "The UK today",
+      "question": "According to the handbook, roughly what was the estimated UK population in 2022?",
+      "options": ["About 67.6 million", "About 57 million", "About 40 million", "About 62 million"],
+      "answer": "About 67.6 million",
+      "answerIndex": 0,
+      "explanation": "The estimated 2022 population was about 67.6 million. About 57 million relates to 1998, about 40 million to 1901, and just over 62 million to 2010 — so those figures are relevant to earlier census points."
+    },
+    {
+      "id": 167,
+      "category": "Early Britain",
+      "question": "The Vikings first came to Britain from which countries?",
+      "options": ["Denmark and Norway", "Germany and the Netherlands", "France and Italy", "Sweden and Finland"],
+      "answer": "Denmark and Norway",
+      "answerIndex": 0,
+      "explanation": "The Vikings came from Denmark and Norway, first raiding Britain in AD 789. The Angles, Saxons and Jutes came from areas of northern Europe including Germany. France is relevant to the Normans of 1066. The other pairs are distractors."
+    },
+    {
+      "id": 168,
+      "category": "The Middle Ages",
+      "question": "The Hundred Years War was fought between England and which country?",
+      "options": ["France", "Scotland", "Spain", "Ireland"],
+      "answer": "France",
+      "answerIndex": 0,
+      "explanation": "The Hundred Years War (which actually lasted 116 years) was fought between England and France, including the Battle of Agincourt (1415). Scotland fought England at Bannockburn. Spain relates to the later Armada. Ireland relates to English settlement, not this war."
+    },
+    {
+      "id": 169,
+      "category": "Rights, tax and driving",
+      "question": "Female genital mutilation (FGM) in the UK is what?",
+      "options": ["A criminal offence", "Legal with consent", "A civil matter only", "Permitted for adults"],
+      "answer": "A criminal offence",
+      "answerIndex": 0,
+      "explanation": "FGM is illegal in the UK, and practising it or taking a girl or woman abroad for it is a criminal offence. It is never a civil-only matter and is not permitted with consent or for adults."
+    },
+    {
+      "id": 170,
+      "category": "Rights, tax and driving",
+      "question": "Forcing another person to marry in the UK is what?",
+      "options": ["A criminal offence", "Allowed if the family agrees", "A civil dispute", "Legal for those over 18"],
+      "answer": "A criminal offence",
+      "answerIndex": 0,
+      "explanation": "Forced marriage is a criminal offence; a marriage requires the full and free consent of both people. Arranged marriages, where both parties agree, are acceptable — but that is different from a forced marriage. Family agreement does not make forcing someone lawful."
+    }
+  ]
+}
