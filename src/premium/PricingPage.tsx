@@ -12,7 +12,6 @@ export default function PricingPage() {
   const {
     hasPremium,
     isExpired,
-    completedMockTests,
   } = usePremium();
   const showLimitMessage =
     (location.state as PricingLocationState | null)?.upgradeReason === "mock-limit";
@@ -66,11 +65,6 @@ export default function PricingPage() {
         </div>
       ) : null}
       <PricingCards />
-
-      <p className="pricing-footnote">
-        Completed free mock tests: {completedMockTests} of {FREE_MOCK_TEST_LIMIT}. Premium access
-        is activated only after Stripe confirms payment through the verified webhook.
-      </p>
     </main>
   );
 }
