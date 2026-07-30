@@ -1078,7 +1078,7 @@ function UKLandmarkSkyline() {
       src="/london-skyline.png"
       alt="London landmarks including the London Eye, Elizabeth Tower, Tower Bridge and the Tower of London"
       width={1000}
-      height={667}
+      height={666}
       decoding="async"
     />
   );
