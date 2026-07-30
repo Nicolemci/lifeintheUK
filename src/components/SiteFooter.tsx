@@ -28,7 +28,7 @@ export default function SiteFooter() {
           ))}
         </nav>
         <div className="site-footer-meta">
-          <a href="mailto:nicolemci@hotmail.com">nicolemci@hotmail.com</a>
+          <a href="mailto:support@lifeintheukprep.co">support@lifeintheukprep.co</a>
           <small>© {new Date().getFullYear()} Life in the UK Prep</small>
         </div>
       </div>
