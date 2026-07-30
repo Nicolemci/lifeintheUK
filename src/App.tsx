@@ -978,85 +978,138 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
   const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const sectionLabels: Record<AppTab, string> = {
-    study: "Study",
-    "test-info": "Test info",
-    handbook: "Handbook",
-    absence: "Away tracker",
-  };
-
-  function selectTab(tab: AppTab) {
-    onChange(tab);
+  function closeMenu() {
     setMenuOpen(false);
   }
 
+  function selectTab(tab: AppTab) {
+    onChange(tab);
+    closeMenu();
+  }
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.body.classList.add("mobile-nav-open");
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.classList.remove("mobile-nav-open");
+    };
+  }, [menuOpen]);
+
+  const profileControls = (
+    <div className="tab-profile">
+      <span>{currentUser.displayName}</span>
+      {user ? (
+        <LogoutButton />
+      ) : (
+        <>
+          <Link to="/login" onClick={closeMenu}>
+            Log in
+          </Link>
+          <Link className="secondary-button" to="/sign-up" onClick={closeMenu}>
+            Create account
+          </Link>
+        </>
+      )}
+    </div>
+  );
+
+  const sectionButtons = (
+    <>
+      <button
+        className={["tab-button", activeTab === "study" ? "active" : ""].filter(Boolean).join(" ")}
+        type="button"
+        role="tab"
+        aria-selected={activeTab === "study"}
+        onClick={() => selectTab("study")}
+      >
+        Study
+      </button>
+      <button
+        className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}
+        type="button"
+        role="tab"
+        aria-selected={activeTab === "test-info"}
+        onClick={() => selectTab("test-info")}
+      >
+        Test info
+      </button>
+      <button
+        className={["tab-button", activeTab === "handbook" ? "active" : ""].filter(Boolean).join(" ")}
+        type="button"
+        role="tab"
+        aria-selected={activeTab === "handbook"}
+        onClick={() => selectTab("handbook")}
+      >
+        Handbook
+      </button>
+      <button
+        className={["tab-button", activeTab === "absence" ? "active" : ""].filter(Boolean).join(" ")}
+        type="button"
+        role="tab"
+        aria-selected={activeTab === "absence"}
+        onClick={() => selectTab("absence")}
+      >
+        Away tracker
+      </button>
+    </>
+  );
+
   return (
     <nav className="app-tabs card" aria-label="Main app sections">
+      <div className="tab-group desktop-nav" role="tablist" aria-label="Choose app section">
+        {sectionButtons}
+      </div>
+      <div className="desktop-nav">{profileControls}</div>
+
       <button
         className="mobile-nav-toggle"
         type="button"
         aria-expanded={menuOpen}
-        aria-controls="app-section-menu"
-        onClick={() => setMenuOpen((open) => !open)}
+        aria-controls="mobile-nav-drawer"
+        onClick={() => setMenuOpen(true)}
       >
-        <span>{sectionLabels[activeTab]}</span>
-        <span aria-hidden="true">{menuOpen ? "▴" : "▾"}</span>
+        <span>Menu</span>
+        <span aria-hidden="true">☰</span>
       </button>
+
+      <button
+        className={["mobile-nav-backdrop", menuOpen ? "is-open" : ""].filter(Boolean).join(" ")}
+        type="button"
+        aria-label="Close menu"
+        tabIndex={menuOpen ? 0 : -1}
+        onClick={closeMenu}
+      />
+
       <div
-        id="app-section-menu"
-        className={["tab-group", menuOpen ? "is-open" : ""].filter(Boolean).join(" ")}
-        role="tablist"
-        aria-label="Choose app section"
+        id="mobile-nav-drawer"
+        className={["mobile-nav-drawer", menuOpen ? "is-open" : ""].filter(Boolean).join(" ")}
+        role="dialog"
+        aria-modal="true"
+        aria-label="App menu"
+        aria-hidden={!menuOpen}
       >
-        <button
-          className={["tab-button", activeTab === "study" ? "active" : ""].filter(Boolean).join(" ")}
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "study"}
-          onClick={() => selectTab("study")}
-        >
-          Study
-        </button>
-        <button
-          className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "test-info"}
-          onClick={() => selectTab("test-info")}
-        >
-          Test info
-        </button>
-        <button
-          className={["tab-button", activeTab === "handbook" ? "active" : ""].filter(Boolean).join(" ")}
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "handbook"}
-          onClick={() => selectTab("handbook")}
-        >
-          Handbook
-        </button>
-        <button
-          className={["tab-button", activeTab === "absence" ? "active" : ""].filter(Boolean).join(" ")}
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "absence"}
-          onClick={() => selectTab("absence")}
-        >
-          Away tracker
-        </button>
-      </div>
-      <div className="tab-profile">
-        <span>{currentUser.displayName}</span>
-        {user ? (
-          <LogoutButton />
-        ) : (
-          <>
-            <Link to="/login">Log in</Link>
-            <Link className="secondary-button" to="/sign-up">
-              Create account
-            </Link>
-          </>
-        )}
+        <div className="mobile-nav-drawer-header">
+          <strong>Menu</strong>
+          <button className="ghost-button mobile-nav-close" type="button" onClick={closeMenu}>
+            Close
+          </button>
+        </div>
+        <div className="tab-group mobile-nav-links" role="tablist" aria-label="Choose app section">
+          {sectionButtons}
+        </div>
+        {profileControls}
       </div>
     </nav>
   );
