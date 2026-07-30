@@ -49,6 +49,25 @@ async function loadSupabaseClient() {
   return getSupabaseClient();
 }
 
+function getStatusErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error && error.message.trim()) {
+    return error.message;
+  }
+
+  if (typeof error === "object" && error !== null) {
+    const maybeMessage = (error as { message?: unknown }).message;
+    if (typeof maybeMessage === "string" && maybeMessage.trim()) {
+      return maybeMessage;
+    }
+  }
+
+  if (typeof error === "string" && error.trim()) {
+    return error;
+  }
+
+  return fallback;
+}
+
 export function derivePremiumStatus(
   access: PremiumAccessRow | null,
   now: number = Date.now(),
@@ -118,11 +137,22 @@ export function PremiumProvider() {
       setLatestAccess(accessRows[0] ?? null);
       setEntitlementNow(Date.now());
     } catch (statusError) {
-      setError(
-        statusError instanceof Error
-          ? statusError.message
-          : "Unable to load Premium access status.",
+      const message = getStatusErrorMessage(
+        statusError,
+        "Unable to load Premium access status.",
       );
+      const normalized = message.toLowerCase();
+      if (
+        normalized.includes("premium_access") ||
+        normalized.includes("schema cache") ||
+        normalized.includes("pgrst205")
+      ) {
+        setError(
+          "Premium access status is unavailable because the Supabase premium_access table is missing. Apply the SQL migrations in supabase/migrations, then refresh.",
+        );
+      } else {
+        setError(message);
+      }
     } finally {
       setLoading(false);
     }

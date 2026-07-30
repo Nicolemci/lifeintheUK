@@ -267,11 +267,15 @@ export function ProgressProvider() {
         ),
       );
     } catch (summaryError) {
-      setError(
-        summaryError instanceof Error
+      const message =
+        summaryError instanceof Error && summaryError.message.trim()
           ? summaryError.message
-          : "Unable to load your progress.",
-      );
+          : typeof summaryError === "object" &&
+              summaryError !== null &&
+              typeof (summaryError as { message?: unknown }).message === "string"
+            ? String((summaryError as { message: string }).message)
+            : "Unable to load your progress.";
+      setError(message);
     } finally {
       setLoading(false);
     }

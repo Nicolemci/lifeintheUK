@@ -11,5 +11,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["api/**/*.ts", "src/config/premium.ts"]
+  "include": ["api/**/*.ts"]
 }
