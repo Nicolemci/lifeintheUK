@@ -1,5 +1,6 @@
 -- Combined migrations for Life in the UK Prep
--- Run this entire file once in the Supabase SQL Editor.
+-- Paste this entire file into the Supabase SQL Editor and click Run:
+-- https://supabase.com/dashboard/project/qkvgbguigytbqwxglayy/sql/new
 
 
 -- >>> 20260728154400_create_core_schema.sql
