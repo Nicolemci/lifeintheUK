@@ -392,6 +392,11 @@ button {
   box-shadow: 0 12px 28px rgba(7, 31, 77, 0.2);
 }
 
+.mobile-nav-backdrop,
+.mobile-nav-drawer {
+  display: none;
+}
+
 .tab-profile span {
   color: var(--muted);
   font-weight: 900;
@@ -2334,35 +2339,111 @@ button {
 
   .quiz-header,
   .results-topline,
-  .app-tabs,
   .latest-score {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .mobile-nav-toggle {
-    display: inline-flex;
-    width: 100%;
+  .app-tabs {
+    position: relative;
+    z-index: 40;
+    justify-content: flex-end;
   }
 
-  .tab-group {
+  .desktop-nav {
     display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  body.mobile-nav-open {
+    overflow: hidden;
+  }
+
+  .mobile-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    border: 0;
+    background: rgba(7, 31, 77, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .mobile-nav-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav-drawer {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 60;
+    width: min(320px, calc(100vw - 48px));
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 18px 28px;
+    color: var(--ink);
+    background: #fffaf1;
+    box-shadow: -18px 0 48px rgba(7, 31, 77, 0.22);
+    transform: translateX(105%);
+    transition: transform 220ms ease;
+    pointer-events: none;
+  }
+
+  .mobile-nav-drawer.is-open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .mobile-nav-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mobile-nav-drawer-header strong {
+    color: var(--navy);
+    font-size: 1.15rem;
+  }
+
+  .mobile-nav-close {
+    min-height: 40px;
+    padding: 0 14px;
+  }
+
+  .mobile-nav-links {
+    display: flex;
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
-  .tab-group.is-open {
-    display: flex;
-  }
-
-  .tab-group .tab-button {
+  .mobile-nav-links .tab-button {
     width: 100%;
     justify-content: flex-start;
   }
 
-  .tab-profile {
-    width: 100%;
+  .mobile-nav-drawer .tab-profile {
+    display: grid;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(7, 31, 77, 0.12);
+  }
+
+  .mobile-nav-drawer .tab-profile span {
+    overflow-wrap: anywhere;
   }
 
   .question-map {
