@@ -975,33 +975,54 @@ type AppTabsProps = {
 };
 
 function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
-  const { loading, hasPremium } = usePremium();
   const { user } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const sectionLabels: Record<AppTab, string> = {
+    study: "Study",
+    "test-info": "Test info",
+    handbook: "Handbook",
+    absence: "Away tracker",
+  };
+
+  function selectTab(tab: AppTab) {
+    onChange(tab);
+    setMenuOpen(false);
+  }
 
   return (
     <nav className="app-tabs card" aria-label="Main app sections">
-      <div className="tab-group" role="tablist" aria-label="Choose app section">
+      <button
+        className="mobile-nav-toggle"
+        type="button"
+        aria-expanded={menuOpen}
+        aria-controls="app-section-menu"
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span>{sectionLabels[activeTab]}</span>
+        <span aria-hidden="true">{menuOpen ? "▴" : "▾"}</span>
+      </button>
+      <div
+        id="app-section-menu"
+        className={["tab-group", menuOpen ? "is-open" : ""].filter(Boolean).join(" ")}
+        role="tablist"
+        aria-label="Choose app section"
+      >
         <button
           className={["tab-button", activeTab === "study" ? "active" : ""].filter(Boolean).join(" ")}
           type="button"
           role="tab"
           aria-selected={activeTab === "study"}
-          onClick={() => onChange("study")}
+          onClick={() => selectTab("study")}
         >
           Study
         </button>
-        <Link
-          className="tab-button"
-          to={hasPremium ? "/premium" : user ? "/pricing" : "/upgrade"}
-        >
-          {loading ? "Premium…" : hasPremium ? "Premium area" : "Upgrade"}
-        </Link>
         <button
           className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}
           type="button"
           role="tab"
           aria-selected={activeTab === "test-info"}
-          onClick={() => onChange("test-info")}
+          onClick={() => selectTab("test-info")}
         >
           Test info
         </button>
@@ -1010,7 +1031,7 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
           type="button"
           role="tab"
           aria-selected={activeTab === "handbook"}
-          onClick={() => onChange("handbook")}
+          onClick={() => selectTab("handbook")}
         >
           Handbook
         </button>
@@ -1019,7 +1040,7 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
           type="button"
           role="tab"
           aria-selected={activeTab === "absence"}
-          onClick={() => onChange("absence")}
+          onClick={() => selectTab("absence")}
         >
           Away tracker
         </button>
