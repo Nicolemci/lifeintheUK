@@ -115,24 +115,9 @@ button {
   width: min(680px, 100%);
   height: auto;
   margin-top: 22px;
-  overflow: visible;
+  border-radius: 18px;
+  object-fit: contain;
   filter: drop-shadow(0 12px 18px rgba(7, 31, 77, 0.08));
-}
-
-.skyline-blue {
-  fill: var(--navy);
-  stroke: var(--navy);
-  opacity: 0.28;
-}
-
-.skyline-blue .skyline-clock {
-  fill: var(--parchment);
-  opacity: 1;
-}
-
-.skyline-red {
-  stroke: var(--union-red);
-  opacity: 0.24;
 }
 
 .login-layout {
