@@ -28,8 +28,8 @@ export default function ContactPage() {
             For account access, Premium purchases, payment questions, privacy requests or general
             support, email:
           </p>
-          <a className="contact-email" href="mailto:nicolemci@hotmail.com">
-            nicolemci@hotmail.com
+          <a className="contact-email" href="mailto:support@lifeintheukprep.co">
+            support@lifeintheukprep.co
           </a>
           <p className="contact-response-time">We aim to respond within 2 business days.</p>
         </div>

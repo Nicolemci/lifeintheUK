@@ -20,7 +20,7 @@ type ContentPageProps = {
 };
 
 function renderText(text: string): ReactNode {
-  const email = "nicolemci@hotmail.com";
+  const email = "support@lifeintheukprep.co";
   const parts = text.split(email);
 
   if (parts.length === 1) {

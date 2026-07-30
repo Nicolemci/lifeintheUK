@@ -77,7 +77,7 @@ export const privacySections: ContentSection[] = [
     id: "contact",
     title: "Contact",
     paragraphs: [
-      "For privacy enquiries or to exercise your rights, email nicolemci@hotmail.com.",
+      "For privacy enquiries or to exercise your rights, email support@lifeintheukprep.co.",
       "This policy is intended to comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.",
     ],
   },
@@ -188,7 +188,7 @@ export const termsSections: ContentSection[] = [
   {
     id: "terms-contact",
     title: "Contact",
-    paragraphs: ["Questions about these terms can be sent to nicolemci@hotmail.com."],
+    paragraphs: ["Questions about these terms can be sent to support@lifeintheukprep.co."],
   },
 ];
 
@@ -221,7 +221,7 @@ export const refundSections: ContentSection[] = [
     id: "request-refund",
     title: "How to request a review",
     paragraphs: [
-      "Email nicolemci@hotmail.com with your account email, payment date, purchased plan and a brief explanation. Do not send full card details. We may request the Stripe receipt or Checkout reference.",
+      "Email support@lifeintheukprep.co with your account email, payment date, purchased plan and a brief explanation. Do not send full card details. We may request the Stripe receipt or Checkout reference.",
     ],
   },
   {
@@ -281,7 +281,7 @@ export const cookieSections: ContentSection[] = [
     title: "Managing cookies",
     paragraphs: [
       "You can block or delete cookies through your browser's privacy settings. Blocking essential cookies or browser storage may sign you out or prevent authentication, payment and saved-progress features from working.",
-      "Questions about cookie use can be sent to nicolemci@hotmail.com.",
+      "Questions about cookie use can be sent to support@lifeintheukprep.co.",
     ],
   },
 ];
