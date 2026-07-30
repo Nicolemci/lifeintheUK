@@ -34,54 +34,56 @@ function publicPage(element: ReactNode) {
 
 export default function AppRoutes() {
   return (
-    <>
-      <Routes>
-        <Route path="/privacy" element={publicPage(<PrivacyPage />)} />
-        <Route path="/terms" element={publicPage(<TermsPage />)} />
-        <Route path="/refund-policy" element={publicPage(<RefundPolicyPage />)} />
-        <Route path="/cookie-policy" element={publicPage(<CookiePolicyPage />)} />
-        <Route path="/about" element={publicPage(<AboutPage />)} />
-        <Route path="/contact" element={publicPage(<ContactPage />)} />
+    <div className="app-frame">
+      <div className="app-frame-content">
+        <Routes>
+          <Route path="/privacy" element={publicPage(<PrivacyPage />)} />
+          <Route path="/terms" element={publicPage(<TermsPage />)} />
+          <Route path="/refund-policy" element={publicPage(<RefundPolicyPage />)} />
+          <Route path="/cookie-policy" element={publicPage(<CookiePolicyPage />)} />
+          <Route path="/about" element={publicPage(<AboutPage />)} />
+          <Route path="/contact" element={publicPage(<ContactPage />)} />
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-        <Route element={<AdminProvider />}>
-          <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route element={<AdminGuard />}>
-            <Route
-              path="/admin/questions"
-              element={
-                <Suspense fallback={<p className="empty-state">Loading admin dashboard…</p>}>
-                  <AdminQuestionsPage />
-                </Suspense>
-              }
-            />
-            <Route path="/admin" element={<Navigate to="/admin/questions" replace />} />
-          </Route>
-        </Route>
-
-        <Route element={<ProgressProvider />}>
-          <Route element={<PremiumProvider />}>
-            <Route path="/upgrade" element={<UpgradePage />} />
-            <Route path="/results-history" element={<MockResultsPage />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/payment-success" element={<PaymentSuccessPage />} />
-              <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
-              <Route element={<PremiumGuard />}>
-                <Route path="/premium" element={<PremiumHomePage />} />
-              </Route>
+          <Route element={<AdminProvider />}>
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route element={<AdminGuard />}>
+              <Route
+                path="/admin/questions"
+                element={
+                  <Suspense fallback={<p className="empty-state">Loading admin dashboard…</p>}>
+                    <AdminQuestionsPage />
+                  </Suspense>
+                }
+              />
+              <Route path="/admin" element={<Navigate to="/admin/questions" replace />} />
             </Route>
-            <Route path="/*" element={<App />} />
           </Route>
-        </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          <Route element={<ProgressProvider />}>
+            <Route element={<PremiumProvider />}>
+              <Route path="/upgrade" element={<UpgradePage />} />
+              <Route path="/results-history" element={<MockResultsPage />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/payment-success" element={<PaymentSuccessPage />} />
+                <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
+                <Route element={<PremiumGuard />}>
+                  <Route path="/premium" element={<PremiumHomePage />} />
+                </Route>
+              </Route>
+              <Route path="/*" element={<App />} />
+            </Route>
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
       <SiteFooter />
-    </>
+    </div>
   );
 }

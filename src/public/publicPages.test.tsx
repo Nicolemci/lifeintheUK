@@ -25,6 +25,17 @@ describe("public information pages", () => {
     ].forEach((route) => expect(markup).toContain(`href="${route}"`));
   });
 
+  it("renders the privacy page heading", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter>
+        <PrivacyPage />
+      </MemoryRouter>,
+    );
+
+    expect(markup).toContain("Privacy Policy");
+    expect(markup).toContain("UK GDPR");
+  });
+
   it("contains the required legal statements", () => {
     const privacyText = JSON.stringify(privacySections);
     const termsText = JSON.stringify(termsSections);
