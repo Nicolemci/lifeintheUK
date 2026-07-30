@@ -1,4 +1,13 @@
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import {
+  type FormEvent,
+  lazy,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { questions, topics, type Question, type TopicId } from "./questions";
 import {
   MOCK_DURATION_SECONDS,
@@ -27,7 +36,14 @@ import {
 import { officialTestInfoSections } from "./testInfoContent";
 import { findClosestTestCentres, type NearbyTestCentre } from "./testCentres";
 import { buildStudyGuide } from "./handbookStudyGuide";
+import { useAuth } from "./auth/AuthContext";
+import LogoutButton from "./auth/LogoutButton";
+import { FREE_MOCK_TEST_LIMIT } from "./config/premium";
+import { usePremium } from "./premium/PremiumContext";
+import { useProgress } from "./progress/ProgressContext";
 import "./styles.css";
+
+const SupabaseTest = lazy(() => import("./components/SupabaseTest"));
 
 type StoredProgress = {
   wrongQuestionIds: string[];
@@ -68,16 +84,10 @@ type StoredUserProfile = AuthUser & {
   progress: StoredProgress;
 };
 
-type AuthState = {
-  user: AuthUser | null;
-  progress: StoredProgress;
-};
-
-type AppTab = "study" | "test-info" | "handbook" | "absence";
+type AppTab = "study" | "test-info" | "handbook" | "absence" | "supabase-test";
 
 const LEGACY_PROGRESS_KEY = "life-in-the-uk-prep-progress-v1";
 const USERS_STORAGE_KEY = "life-in-the-uk-prep-users-v1";
-const CURRENT_USER_STORAGE_KEY = "life-in-the-uk-prep-current-user-v1";
 
 const defaultProgress: StoredProgress = {
   wrongQuestionIds: [],
@@ -97,10 +107,6 @@ function loadLegacyProgress(): StoredProgress | null {
   }
 }
 
-function normalizeProfileId(displayName: string): string {
-  return displayName.trim().toLowerCase().replace(/\s+/g, " ");
-}
-
 function loadProfiles(): Record<string, StoredUserProfile> {
   try {
     const savedProfiles = window.localStorage.getItem(USERS_STORAGE_KEY);
@@ -118,108 +124,29 @@ function saveProfiles(profiles: Record<string, StoredUserProfile>) {
   }
 }
 
-function toAuthUser(profile: StoredUserProfile): AuthUser {
-  return {
-    id: profile.id,
-    displayName: profile.displayName,
-  };
-}
-
-function loadInitialAuthState(): AuthState {
-  try {
-    const currentUserId = window.localStorage.getItem(CURRENT_USER_STORAGE_KEY);
-    const profiles = loadProfiles();
-    const profile = currentUserId ? profiles[currentUserId] : undefined;
-
-    if (profile) {
-      return {
-        user: toAuthUser(profile),
-        progress: { ...defaultProgress, ...profile.progress },
-      };
-    }
-  } catch {
-    return {
-      user: null,
-      progress: defaultProgress,
-    };
-  }
-
-  return {
-    user: null,
-    progress: defaultProgress,
-  };
-}
-
-function loginToLocalProfile(displayName: string): AuthState | null {
-  const trimmedName = displayName.trim();
-  const profileId = normalizeProfileId(trimmedName);
-
-  if (!profileId) {
-    return null;
-  }
-
+function loadProgressForUser(user: AuthUser): StoredProgress {
   const profiles = loadProfiles();
-  const existingProfile = profiles[profileId];
-  const now = new Date().toISOString();
+  const existingProfile = profiles[user.id];
   const legacyProgress = Object.keys(profiles).length === 0 ? loadLegacyProgress() : null;
-  const progress = existingProfile?.progress ?? legacyProgress ?? defaultProgress;
-  const profile: StoredUserProfile = {
-    id: profileId,
-    displayName: trimmedName,
+
+  return {
+    ...defaultProgress,
+    ...(existingProfile?.progress ?? legacyProgress ?? {}),
+  };
+}
+
+function saveProgressForUser(user: AuthUser, progress: StoredProgress) {
+  const profiles = loadProfiles();
+  const existingProfile = profiles[user.id];
+  const now = new Date().toISOString();
+
+  profiles[user.id] = {
+    ...user,
     createdAt: existingProfile?.createdAt ?? now,
     lastLoginAt: now,
-    progress: { ...defaultProgress, ...progress },
-  };
-
-  profiles[profileId] = profile;
-  saveProfiles(profiles);
-
-  try {
-    window.localStorage.setItem(CURRENT_USER_STORAGE_KEY, profile.id);
-  } catch {
-    // If the browser blocks storage, the app can still run for the current session.
-  }
-
-  return {
-    user: toAuthUser(profile),
-    progress: profile.progress,
-  };
-}
-
-function saveProgressForUser(userId: string, progress: StoredProgress) {
-  const profiles = loadProfiles();
-  const profile = profiles[userId];
-
-  if (!profile) {
-    return;
-  }
-
-  profiles[userId] = {
-    ...profile,
     progress,
   };
   saveProfiles(profiles);
-}
-
-function clearCurrentUser() {
-  try {
-    window.localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
-  } catch {
-    // Storage errors should not prevent signing out of the in-memory session.
-  }
-}
-
-function getAverageMockScore(progress: StoredProgress): number | null {
-  const scores =
-    progress.mockScoreHistory.length > 0
-      ? progress.mockScoreHistory
-      : Object.values(progress.mockTestResults).map((result) => result.percentage);
-
-  if (scores.length === 0) {
-    return null;
-  }
-
-  return Math.round(scores.reduce((total, score) => total + score, 0) / scores.length);
 }
 
 function updateProgress(
@@ -291,23 +218,54 @@ function createSession(
 }
 
 export default function App() {
-  const [initialAuthState] = useState<AuthState>(() => loadInitialAuthState());
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(initialAuthState.user);
-  const [progress, setProgress] = useState<StoredProgress>(initialAuthState.progress);
+  const { user: supabaseUser } = useAuth();
+  const navigate = useNavigate();
+  const {
+    loading: premiumLoading,
+    error: premiumError,
+    hasPremium,
+    freeMockTestsRemaining,
+    canStartMockTest,
+  } = usePremium();
+  const {
+    loading: progressLoading,
+    saving: progressSaving,
+    error: progressError,
+    stats: cloudStats,
+    wrongQuestionIds: cloudWrongQuestionIds,
+    saveQuestionAnswer,
+    saveMockTest,
+  } = useProgress();
+  const currentUser = useMemo<AuthUser>(
+    () => ({
+      id: supabaseUser?.id ?? "",
+      displayName: supabaseUser?.email ?? "Guest",
+    }),
+    [supabaseUser?.id, supabaseUser?.email],
+  );
+  const [progress, setProgress] = useState<StoredProgress>(() =>
+    currentUser.id ? loadProgressForUser(currentUser) : defaultProgress,
+  );
   const [session, setSession] = useState<QuizSession | null>(null);
   const [score, setScore] = useState<ScoreSummary | null>(null);
   const [activeTab, setActiveTab] = useState<AppTab>("study");
+  const [sessionSaveError, setSessionSaveError] = useState("");
+  const [answerSaveError, setAnswerSaveError] = useState("");
+  const [savingAnswer, setSavingAnswer] = useState(false);
+  const [savingSession, setSavingSession] = useState(false);
+  const completionInProgress = useRef(false);
 
   const wrongQuestions = useMemo(() => {
-    const wrongQuestionIds = new Set(progress.wrongQuestionIds);
+    const wrongQuestionIds = new Set(
+      progressLoading ? progress.wrongQuestionIds : cloudWrongQuestionIds,
+    );
     return questions.filter((question) => wrongQuestionIds.has(question.id));
-  }, [progress.wrongQuestionIds]);
+  }, [progressLoading, progress.wrongQuestionIds, cloudWrongQuestionIds]);
   const mockTestSets = useMemo(
     () => createMockTestSets(questions, MOCK_QUESTION_COUNT, MINIMUM_NUMBERED_MOCK_TESTS),
     [],
   );
   const absenceSummary = useMemo(() => summarizeAbsences(progress.absences), [progress.absences]);
-  const averageMockScore = useMemo(() => getAverageMockScore(progress), [progress]);
 
   const currentQuestion = session?.questions[session.currentIndex];
   const isCompleted = Boolean(session?.completedAt && score);
@@ -315,18 +273,25 @@ export default function App() {
   const isImmediateFeedbackMode = isPracticeMode || Boolean(session?.immediateFeedback);
 
   useEffect(() => {
-    if (currentUser) {
-      saveProgressForUser(currentUser.id, progress);
+    if (currentUser.id) {
+      saveProgressForUser(currentUser, progress);
     }
   }, [currentUser, progress]);
 
   useEffect(() => {
-    if (!session || session.mode !== "mock" || session.completedAt || session.secondsRemaining === undefined) {
+    if (
+      !session ||
+      session.mode !== "mock" ||
+      session.completedAt ||
+      session.secondsRemaining === undefined ||
+      sessionSaveError ||
+      savingAnswer
+    ) {
       return;
     }
 
     if (session.secondsRemaining <= 0) {
-      finishSession(session);
+      void finishSession(session);
       return;
     }
 
@@ -344,15 +309,43 @@ export default function App() {
     }, 1000);
 
     return () => window.clearTimeout(timerId);
-  }, [session]);
+  }, [session, sessionSaveError, savingAnswer]);
+
+  function prepareMockTestStart(): boolean {
+    if (premiumLoading || premiumError) {
+      return false;
+    }
+
+    if (!canStartMockTest) {
+      navigate("/upgrade", {
+        state: {
+          upgradeReason: "mock-limit",
+        },
+      });
+      return false;
+    }
+
+    setSessionSaveError("");
+    setAnswerSaveError("");
+    completionInProgress.current = false;
+    return true;
+  }
 
   function startMockTest() {
+    if (!prepareMockTestStart()) {
+      return;
+    }
+
     const selectedQuestions = chooseQuestions(questions, MOCK_QUESTION_COUNT);
     setSession(createSession("mock", "Random timed mock test", selectedQuestions));
     setScore(null);
   }
 
   function startMockTestSet(testSetIndex: number) {
+    if (!prepareMockTestStart()) {
+      return;
+    }
+
     const testSet = mockTestSets[testSetIndex];
 
     if (!testSet) {
@@ -373,6 +366,7 @@ export default function App() {
     const selectedQuestions = questionsForTopic(questions, topicId);
     setSession(createSession("topic", topic?.name ?? "Topic practice", selectedQuestions));
     setScore(null);
+    setAnswerSaveError("");
   }
 
   function startWrongQuestionReview() {
@@ -382,10 +376,11 @@ export default function App() {
 
     setSession(createSession("wrong", "Wrong-question revision", wrongQuestions));
     setScore(null);
+    setAnswerSaveError("");
   }
 
-  function answerCurrentQuestion(optionIndex: number) {
-    if (!session || !currentQuestion || session.completedAt) {
+  async function answerCurrentQuestion(optionIndex: number) {
+    if (!session || !currentQuestion || session.completedAt || savingAnswer) {
       return;
     }
 
@@ -395,13 +390,31 @@ export default function App() {
       return;
     }
 
-    setSession({
-      ...session,
-      answers: {
-        ...session.answers,
-        [currentQuestion.id]: optionIndex,
-      },
-    });
+    setSavingAnswer(true);
+    setAnswerSaveError("");
+
+    try {
+      await saveQuestionAnswer({
+        questionId: currentQuestion.id,
+        correct: optionIndex === currentQuestion.correctIndex,
+        answeredAt: new Date().toISOString(),
+      });
+      setSession({
+        ...session,
+        answers: {
+          ...session.answers,
+          [currentQuestion.id]: optionIndex,
+        },
+      });
+    } catch (saveError) {
+      setAnswerSaveError(
+        saveError instanceof Error
+          ? `Your answer could not be saved: ${saveError.message}`
+          : "Your answer could not be saved. Please try again.",
+      );
+    } finally {
+      setSavingAnswer(false);
+    }
   }
 
   function goToQuestion(index: number) {
@@ -413,48 +426,67 @@ export default function App() {
       ...session,
       currentIndex: index,
     });
+    setAnswerSaveError("");
   }
 
-  function finishSession(sessionToFinish = session) {
-    if (!sessionToFinish || sessionToFinish.completedAt) {
+  async function finishSession(sessionToFinish = session) {
+    if (
+      !sessionToFinish ||
+      sessionToFinish.completedAt ||
+      completionInProgress.current
+    ) {
       return;
     }
 
+    completionInProgress.current = true;
+    setSavingSession(true);
+    setSessionSaveError("");
+    setAnswerSaveError("");
     const finalScore = calculateScore(sessionToFinish.questions, sessionToFinish.answers);
+    const completedAtMilliseconds = Date.now();
+    const completedAt = new Date(completedAtMilliseconds).toISOString();
+    const durationSeconds = Math.max(
+      0,
+      Math.round((completedAtMilliseconds - sessionToFinish.startedAt) / 1000),
+    );
     const completedSession = {
       ...sessionToFinish,
-      completedAt: Date.now(),
+      completedAt: completedAtMilliseconds,
     };
 
-    setScore(finalScore);
-    setSession(completedSession);
-    setProgress((currentProgress) => updateProgress(currentProgress, completedSession, finalScore));
+    try {
+      if (sessionToFinish.mode === "mock") {
+        await saveMockTest({
+          score: finalScore.correct,
+          percentage: finalScore.percentage,
+          completedAt,
+          durationSeconds,
+        });
+      }
+
+      setScore(finalScore);
+      setSession(completedSession);
+      setProgress((currentProgress) =>
+        updateProgress(currentProgress, completedSession, finalScore),
+      );
+    } catch (saveError) {
+      setSessionSaveError(
+        saveError instanceof Error
+          ? `Your test could not be saved: ${saveError.message}`
+          : "Your test could not be saved. Please try again.",
+      );
+      completionInProgress.current = false;
+    } finally {
+      setSavingSession(false);
+    }
   }
 
   function resetToHome() {
     setSession(null);
     setScore(null);
+    setSessionSaveError("");
+    completionInProgress.current = false;
     setActiveTab("study");
-  }
-
-  function handleLogin(displayName: string) {
-    const authState = loginToLocalProfile(displayName);
-
-    if (!authState) {
-      return;
-    }
-
-    setCurrentUser(authState.user);
-    setProgress(authState.progress);
-    resetToHome();
-  }
-
-  function handleSignOut() {
-    clearCurrentUser();
-    setCurrentUser(null);
-    setProgress(defaultProgress);
-    setActiveTab("study");
-    resetToHome();
   }
 
   function switchTab(tab: AppTab) {
@@ -483,14 +515,6 @@ export default function App() {
     }));
   }
 
-  if (!currentUser) {
-    return (
-      <main className="app-shell">
-        <LoginView onLogin={handleLogin} />
-      </main>
-    );
-  }
-
   if (session && isCompleted && score) {
     const retakeMock = () => {
       if (session.mockTestId) {
@@ -514,7 +538,6 @@ export default function App() {
           onReviewWrong={wrongQuestions.length > 0 ? startWrongQuestionReview : undefined}
           onHome={resetToHome}
           currentUser={currentUser}
-          onSignOut={handleSignOut}
         />
       </main>
     );
@@ -546,9 +569,13 @@ export default function App() {
               <button className="ghost-button" type="button" onClick={resetToHome}>
                 Exit
               </button>
-              <button className="ghost-button" type="button" onClick={handleSignOut}>
-                Sign out
-              </button>
+              {supabaseUser ? (
+                <LogoutButton />
+              ) : (
+                <Link className="ghost-button" to="/login">
+                  Log in
+                </Link>
+              )}
             </div>
           </header>
 
@@ -594,8 +621,8 @@ export default function App() {
                       .filter(Boolean)
                       .join(" ")}
                     type="button"
-                    onClick={() => answerCurrentQuestion(optionIndex)}
-                    disabled={showExplanation}
+                    onClick={() => void answerCurrentQuestion(optionIndex)}
+                    disabled={showExplanation || savingAnswer}
                   >
                     <span>{String.fromCharCode(65 + optionIndex)}</span>
                     {option}
@@ -607,6 +634,10 @@ export default function App() {
             {showExplanation ? (
               <AnswerFeedback question={currentQuestion} selectedAnswer={selectedAnswer} />
             ) : null}
+
+            {savingAnswer ? <p className="progress-saving">Saving answer…</p> : null}
+            {answerSaveError ? <p className="form-error session-save-error">{answerSaveError}</p> : null}
+            {sessionSaveError ? <p className="form-error session-save-error">{sessionSaveError}</p> : null}
 
             <footer className="question-actions">
               <button
@@ -626,8 +657,13 @@ export default function App() {
                   Next question
                 </button>
               ) : (
-                <button className="primary-button" type="button" onClick={() => finishSession()}>
-                  Finish session
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={() => void finishSession()}
+                  disabled={savingSession}
+                >
+                  {savingSession ? "Saving result…" : sessionSaveError ? "Try saving again" : "Finish session"}
                 </button>
               )}
             </footer>
@@ -644,7 +680,6 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <AbsenceTracker
           absences={progress.absences}
@@ -663,7 +698,6 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <HandbookReader />
       </main>
@@ -677,9 +711,23 @@ export default function App() {
           activeTab={activeTab}
           currentUser={currentUser}
           onChange={switchTab}
-          onSignOut={handleSignOut}
         />
         <OfficialTestInfo />
+      </main>
+    );
+  }
+
+  if (activeTab === "supabase-test") {
+    return (
+      <main className="app-shell">
+        <AppTabs
+          activeTab={activeTab}
+          currentUser={currentUser}
+          onChange={switchTab}
+        />
+        <Suspense fallback={<p className="empty-state">Loading Supabase connection check…</p>}>
+          <SupabaseTest />
+        </Suspense>
       </main>
     );
   }
@@ -690,7 +738,6 @@ export default function App() {
         activeTab={activeTab}
         currentUser={currentUser}
         onChange={switchTab}
-        onSignOut={handleSignOut}
       />
       <section className="hero">
         <div>
@@ -701,7 +748,12 @@ export default function App() {
             revising questions you miss until they are cleared from your list.
           </p>
           <div className="hero-actions">
-            <button className="primary-button" type="button" onClick={startMockTest}>
+            <button
+              className="primary-button"
+              type="button"
+              onClick={startMockTest}
+              disabled={premiumLoading || Boolean(premiumError)}
+            >
               Start timed mock test
             </button>
             <button
@@ -712,6 +764,9 @@ export default function App() {
             >
               Revise wrong questions ({wrongQuestions.length})
             </button>
+            <Link className="secondary-button" to={supabaseUser ? "/pricing" : "/upgrade"}>
+              Premium plans
+            </Link>
           </div>
           <UKLandmarkSkyline />
         </div>
@@ -721,34 +776,74 @@ export default function App() {
             🇬🇧
           </div>
           <div className="profile-summary">
-            <span>Signed in as</span>
+            <span>{supabaseUser ? "Signed in as" : "Browsing as"}</span>
             <strong className="profile-name">{currentUser.displayName}</strong>
-            <button className="ghost-button" type="button" onClick={handleSignOut}>
-              Sign out
-            </button>
+            {supabaseUser ? (
+              <LogoutButton />
+            ) : (
+              <div className="guest-account-actions">
+                <Link className="ghost-button" to="/login">
+                  Log in
+                </Link>
+                <Link className="ghost-button" to="/sign-up">
+                  Create account
+                </Link>
+              </div>
+            )}
           </div>
           <div className="score-highlights">
             <div>
-              <strong>{progress.bestMockScore}%</strong>
+              <strong>{progressLoading ? "—" : `${cloudStats.bestScore}%`}</strong>
               <span>Best test score</span>
             </div>
             <div>
-              <strong>{averageMockScore === null ? "N/A" : `${averageMockScore}%`}</strong>
+              <strong>{progressLoading ? "—" : `${cloudStats.averageScore}%`}</strong>
               <span>Average test score</span>
             </div>
           </div>
           <dl>
             <div>
-              <dt>Sessions completed</dt>
-              <dd>{progress.completedSessions}</dd>
+              <dt>Total questions answered</dt>
+              <dd>{progressLoading ? "—" : cloudStats.totalQuestionsAnswered}</dd>
+            </div>
+            <div>
+              <dt>Accuracy</dt>
+              <dd>{progressLoading ? "—" : `${cloudStats.accuracyPercentage}%`}</dd>
+            </div>
+            <div>
+              <dt>Mock tests completed</dt>
+              <dd>{progressLoading ? "—" : cloudStats.mockTestsCompleted}</dd>
             </div>
             <div>
               <dt>Wrong-question bank</dt>
               <dd>{wrongQuestions.length}</dd>
             </div>
+            <div>
+              <dt>Access</dt>
+              <dd className="access-status">{hasPremium ? "Premium" : "Free"}</dd>
+            </div>
+            {!hasPremium ? (
+              <div>
+                <dt>Free mock tests left</dt>
+                <dd>{freeMockTestsRemaining}</dd>
+              </div>
+            ) : null}
           </dl>
+          {progressSaving ? <span className="progress-saving">Saving progress…</span> : null}
         </div>
       </section>
+
+      {progressError ? (
+        <p className="form-error premium-load-error">
+          Progress could not be synchronized: {progressError}
+        </p>
+      ) : null}
+
+      {premiumError ? (
+        <p className="form-error premium-load-error">
+          Premium status could not be loaded: {premiumError}
+        </p>
+      ) : null}
 
       <section className="mode-grid" aria-label="Study modes">
         <article className="card mode-card">
@@ -758,7 +853,12 @@ export default function App() {
             Answer {MOCK_QUESTION_COUNT} randomly selected questions in 45 minutes. You need 75% to
             pass, matching the real Life in the UK test threshold.
           </p>
-          <button className="primary-button" type="button" onClick={startMockTest}>
+          <button
+            className="primary-button"
+            type="button"
+            onClick={startMockTest}
+            disabled={premiumLoading || Boolean(premiumError)}
+          >
             Start mock
           </button>
         </article>
@@ -788,6 +888,9 @@ export default function App() {
           <p>
             Work through these in order to see the whole question bank. Each mock uses the real
             45-minute timer and 24-question format, with review questions mixed in where needed.
+            {!hasPremium
+              ? ` Free accounts can complete ${FREE_MOCK_TEST_LIMIT} mock tests in total.`
+              : " Your Premium access includes unlimited mock tests."}
           </p>
         </div>
         <div className="mock-test-grid">
@@ -816,6 +919,7 @@ export default function App() {
                   className="secondary-button"
                   type="button"
                   onClick={() => startMockTestSet(index)}
+                  disabled={premiumLoading || Boolean(premiumError)}
                 >
                   Start {testSet.title.toLowerCase()}
                 </button>
@@ -866,6 +970,21 @@ export default function App() {
         </section>
       ) : null}
 
+      <section className="company-links" aria-labelledby="company-links-title">
+        <div className="section-heading">
+          <p className="eyebrow">Company</p>
+          <h2 id="company-links-title">Policies and contact</h2>
+        </div>
+        <nav className="company-links-nav" aria-label="Policies and company pages">
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/terms">Terms &amp; Conditions</Link>
+          <Link to="/refund-policy">Refund Policy</Link>
+          <Link to="/cookie-policy">Cookie Policy</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
+        </nav>
+      </section>
+
       <p className="disclaimer">
         This app uses original practice questions for revision. Always study the latest official Life
         in the UK handbook and guidance before booking your test.
@@ -881,66 +1000,18 @@ type ResultsViewProps = {
   onReviewWrong?: () => void;
   onHome: () => void;
   currentUser: AuthUser;
-  onSignOut: () => void;
 };
-
-function LoginView({ onLogin }: { onLogin: (displayName: string) => void }) {
-  const [displayName, setDisplayName] = useState("");
-  const [error, setError] = useState("");
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (!displayName.trim()) {
-      setError("Enter your name to save progress.");
-      return;
-    }
-
-    setError("");
-    onLogin(displayName);
-  }
-
-  return (
-    <section className="login-layout" aria-labelledby="login-title">
-      <div>
-        <p className="british-kicker">Life in the UK test</p>
-        <h1 id="login-title">Sign in to save your progress.</h1>
-        <p>
-          Create a local study profile or return with the same name to continue your best score,
-          wrong-question list, and completed sessions on this browser.
-        </p>
-        <UKLandmarkSkyline />
-      </div>
-      <form className="card login-card" onSubmit={handleSubmit}>
-        <label htmlFor="display-name">Your name</label>
-        <input
-          id="display-name"
-          autoComplete="name"
-          placeholder="e.g. Nicole"
-          value={displayName}
-          onChange={(event) => setDisplayName(event.target.value)}
-        />
-        {error ? <p className="form-error">{error}</p> : null}
-        <button className="primary-button" type="submit">
-          Continue
-        </button>
-        <p className="login-note">
-          This first version saves profiles on this device only. A real email/password account would
-          need a backend service.
-        </p>
-      </form>
-    </section>
-  );
-}
 
 type AppTabsProps = {
   activeTab: AppTab;
   currentUser: AuthUser;
   onChange: (tab: AppTab) => void;
-  onSignOut: () => void;
 };
 
-function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) {
+function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
+  const { loading, hasPremium } = usePremium();
+  const { user } = useAuth();
+
   return (
     <nav className="app-tabs card" aria-label="Main app sections">
       <div className="tab-group" role="tablist" aria-label="Choose app section">
@@ -953,6 +1024,12 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
         >
           Study
         </button>
+        <Link
+          className="tab-button"
+          to={hasPremium ? "/premium" : user ? "/pricing" : "/upgrade"}
+        >
+          {loading ? "Premium…" : hasPremium ? "Premium area" : "Upgrade"}
+        </Link>
         <button
           className={["tab-button", activeTab === "test-info" ? "active" : ""].filter(Boolean).join(" ")}
           type="button"
@@ -980,12 +1057,30 @@ function AppTabs({ activeTab, currentUser, onChange, onSignOut }: AppTabsProps) 
         >
           Away tracker
         </button>
+        <button
+          className={["tab-button", activeTab === "supabase-test" ? "active" : ""]
+            .filter(Boolean)
+            .join(" ")}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "supabase-test"}
+          onClick={() => onChange("supabase-test")}
+        >
+          Supabase test
+        </button>
       </div>
       <div className="tab-profile">
         <span>{currentUser.displayName}</span>
-        <button className="ghost-button" type="button" onClick={onSignOut}>
-          Sign out
-        </button>
+        {user ? (
+          <LogoutButton />
+        ) : (
+          <>
+            <Link to="/login">Log in</Link>
+            <Link className="secondary-button" to="/sign-up">
+              Create account
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
@@ -1501,15 +1596,20 @@ function ResultsView({
   onReviewWrong,
   onHome,
   currentUser,
-  onSignOut,
 }: ResultsViewProps) {
+  const { user } = useAuth();
+
   return (
     <section className="results card" aria-labelledby="results-title">
       <div className="results-topline">
         <p className="eyebrow">Session complete · {currentUser.displayName}</p>
-        <button className="ghost-button" type="button" onClick={onSignOut}>
-          Sign out
-        </button>
+        {user ? (
+          <LogoutButton />
+        ) : (
+          <Link className="ghost-button" to="/login">
+            Log in
+          </Link>
+        )}
       </div>
       <h1 id="results-title">{score.passed ? "You passed this session" : "Keep practising"}</h1>
       <p className="result-score">
