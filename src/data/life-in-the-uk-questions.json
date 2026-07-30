@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Life in the UK — Practice Test Question Bank",
-    "version": "1.1",
+    "version": "1.2",
     "source": "Based on 'Life in the UK: A guide for new residents' (3rd Edition) plus current official facts (King Charles III, 2024 Labour government, Brexit, 27 EU states).",
     "notes_for_cursor": [
       "Each question has a stable integer `id`. Do not renumber existing ids if you add questions; append new ones.",
@@ -35,7 +35,8 @@
       "Your role in the community"
     ],
     "batch2_added": 100,
-    "total_questions": 270
+    "total_questions": 360,
+    "batch3_added": 90
   },
   "questions": [
     {
@@ -3817,6 +3818,1266 @@
       "answer": "The High Court",
       "answerIndex": 0,
       "explanation": "In Scotland the most serious cases, such as murder, are heard at the High Court with a judge and jury.\n\nThe Sheriff Court hears less serious cases.\n\nMagistrates' Courts and County Courts operate in England, Wales and Northern Ireland, not Scotland."
+    },
+    {
+      "id": 271,
+      "category": "Sport",
+      "question": "Sir Jackie Stewart is a Scottish former champion in which sport?",
+      "options": [
+        "Formula 1 motor racing",
+        "Cycling",
+        "Rowing",
+        "Athletics"
+      ],
+      "answer": "Formula 1 motor racing",
+      "answerIndex": 0,
+      "explanation": "Sir Jackie Stewart won the Formula 1 world championship three times.\n\nCycling relates to Sir Chris Hoy, rowing to Sir Steve Redgrave, and athletics to figures such as Mo Farah and Dame Kelly Holmes."
+    },
+    {
+      "id": 272,
+      "category": "Sport",
+      "question": "Bobby Moore captained the English team that won which tournament in 1966?",
+      "options": [
+        "The football World Cup",
+        "The cricket World Cup",
+        "The rugby World Cup",
+        "The Ashes"
+      ],
+      "answer": "The football World Cup",
+      "answerIndex": 0,
+      "explanation": "Bobby Moore captained England's football team to the 1966 World Cup, England's only international football tournament victory.\n\nThe Ashes is a cricket series between England and Australia — relevant to cricket, not football."
+    },
+    {
+      "id": 273,
+      "category": "Sport",
+      "question": "Sir Ian Botham captained the English team and holds records in which sport?",
+      "options": [
+        "Cricket",
+        "Football",
+        "Rugby",
+        "Tennis"
+      ],
+      "answer": "Cricket",
+      "answerIndex": 0,
+      "explanation": "Sir Ian Botham captained the English cricket team and holds records for both batting and bowling.\n\nFootball relates to Bobby Moore, rugby to the Six Nations, and tennis to Andy Murray and Wimbledon."
+    },
+    {
+      "id": 274,
+      "category": "Sport",
+      "question": "Jayne Torvill and Christopher Dean won Olympic gold in 1984 for which discipline?",
+      "options": [
+        "Ice dancing",
+        "Rowing",
+        "Cycling",
+        "Swimming"
+      ],
+      "answer": "Ice dancing",
+      "answerIndex": 0,
+      "explanation": "Torvill and Dean won gold for ice dancing in 1984 and in four consecutive world championships.\n\nRowing relates to Redgrave, cycling to Hoy and Wiggins, and swimming to Paralympian Ellie Simmonds."
+    },
+    {
+      "id": 275,
+      "category": "Sport",
+      "question": "Baroness Tanni Grey-Thompson won 16 Paralympic medals in what kind of racing?",
+      "options": [
+        "Wheelchair racing",
+        "Cycling",
+        "Sailing",
+        "Rowing"
+      ],
+      "answer": "Wheelchair racing",
+      "answerIndex": 0,
+      "explanation": "Baroness Tanni Grey-Thompson, a wheelchair athlete, won 16 Paralympic medals (11 gold) and the London Marathon six times.\n\nSailing relates to Dame Ellen MacArthur, and cycling to Sir Chris Hoy."
+    },
+    {
+      "id": 276,
+      "category": "Sport",
+      "question": "Dame Kelly Holmes won two Olympic gold medals in 2004 in which sport?",
+      "options": [
+        "Running (athletics)",
+        "Cycling",
+        "Swimming",
+        "Rowing"
+      ],
+      "answer": "Running (athletics)",
+      "answerIndex": 0,
+      "explanation": "Dame Kelly Holmes won two golds for running at the 2004 Olympics.\n\nCycling relates to Chris Hoy, swimming to Ellie Simmonds, and rowing to Steve Redgrave."
+    },
+    {
+      "id": 277,
+      "category": "Sport",
+      "question": "In 2004, Dame Ellen MacArthur became the fastest person to do what?",
+      "options": [
+        "Sail single-handed around the world",
+        "Run a marathon",
+        "Cycle across Europe",
+        "Swim the Channel"
+      ],
+      "answer": "Sail single-handed around the world",
+      "answerIndex": 0,
+      "explanation": "Dame Ellen MacArthur became the fastest person to sail around the world single-handed in 2004.\n\nSir Francis Chichester was the first to do so, in 1966/67 — relevant to that earlier achievement."
+    },
+    {
+      "id": 278,
+      "category": "Sport",
+      "question": "Sir Chris Hoy is a Scottish Olympic champion in which sport?",
+      "options": [
+        "Cycling",
+        "Rowing",
+        "Athletics",
+        "Sailing"
+      ],
+      "answer": "Cycling",
+      "answerIndex": 0,
+      "explanation": "Sir Chris Hoy is a Scottish cyclist who won six gold and one silver Olympic medals.\n\nRowing relates to Redgrave, athletics to Mo Farah, and sailing to Ellen MacArthur."
+    },
+    {
+      "id": 279,
+      "category": "Sport",
+      "question": "Jessica Ennis won the 2012 Olympic gold medal in which event?",
+      "options": [
+        "The heptathlon",
+        "The marathon",
+        "The 100 metres",
+        "The high jump"
+      ],
+      "answer": "The heptathlon",
+      "answerIndex": 0,
+      "explanation": "Jessica Ennis won the 2012 heptathlon, which includes seven track and field events.\n\nThe other events are individual disciplines, not the multi-event competition she won."
+    },
+    {
+      "id": 280,
+      "category": "Sport",
+      "question": "Andy Murray, a Scottish tennis player, won which title in 2012?",
+      "options": [
+        "The US Open men's singles",
+        "The Wimbledon men's singles",
+        "The French Open",
+        "The Australian Open"
+      ],
+      "answer": "The US Open men's singles",
+      "answerIndex": 0,
+      "explanation": "Andy Murray won the 2012 US Open, the first British man to win a Grand Slam singles title since 1936.\n\nIn the same year he won Olympic gold and was runner-up at Wimbledon, so Wimbledon relates to a different result."
+    },
+    {
+      "id": 281,
+      "category": "Sport",
+      "question": "Ellie Simmonds won Paralympic gold medals in which sport at the 2008 and 2012 Games?",
+      "options": [
+        "Swimming",
+        "Wheelchair racing",
+        "Cycling",
+        "Athletics"
+      ],
+      "answer": "Swimming",
+      "answerIndex": 0,
+      "explanation": "Ellie Simmonds won gold medals for swimming and was the youngest member of the British team at the 2008 Games.\n\nWheelchair racing relates to Tanni Grey-Thompson and David Weir."
+    },
+    {
+      "id": 282,
+      "category": "Sport",
+      "question": "The Grand National horse race is held at which course?",
+      "options": [
+        "Aintree, near Liverpool",
+        "Royal Ascot, in Berkshire",
+        "Ayr, in Scotland",
+        "Newmarket, in Suffolk"
+      ],
+      "answer": "Aintree, near Liverpool",
+      "answerIndex": 0,
+      "explanation": "The Grand National is held at Aintree near Liverpool.\n\nRoyal Ascot is a Berkshire meeting attended by the Royal Family.\n\nAyr hosts the Scottish Grand National.\n\nNewmarket has the National Horseracing Museum."
+    },
+    {
+      "id": 283,
+      "category": "Sport",
+      "question": "The only golf 'Major' tournament held outside the United States is which?",
+      "options": [
+        "The Open Championship",
+        "The Ashes",
+        "The Six Nations",
+        "The Grand National"
+      ],
+      "answer": "The Open Championship",
+      "answerIndex": 0,
+      "explanation": "The Open Championship is the only golf Major held outside the US, hosted by a different course each year.\n\nThe Ashes is cricket, the Six Nations is rugby, and the Grand National is horse racing."
+    },
+    {
+      "id": 284,
+      "category": "Places of interest",
+      "question": "How tall is the London Eye?",
+      "options": [
+        "443 feet (135 metres)",
+        "300 feet (91 metres)",
+        "600 feet (183 metres)",
+        "150 feet (46 metres)"
+      ],
+      "answer": "443 feet (135 metres)",
+      "answerIndex": 0,
+      "explanation": "The London Eye is a Ferris wheel 443 feet (135 metres) tall, on the southern bank of the Thames, built for the millennium.\n\nThe other heights are distractors and do not match the handbook."
+    },
+    {
+      "id": 285,
+      "category": "Places of interest",
+      "question": "Loch Lomond is the largest expanse of what in mainland Britain?",
+      "options": [
+        "Fresh water",
+        "Woodland",
+        "Moorland",
+        "Coastline"
+      ],
+      "answer": "Fresh water",
+      "answerIndex": 0,
+      "explanation": "Loch Lomond, in the Loch Lomond and the Trossachs National Park, is the largest expanse of fresh water in mainland Britain.\n\nThe other options do not describe what makes Loch Lomond notable."
+    },
+    {
+      "id": 286,
+      "category": "Places of interest",
+      "question": "What is England's largest national park?",
+      "options": [
+        "The Lake District",
+        "Snowdonia",
+        "Loch Lomond and the Trossachs",
+        "The Peak District"
+      ],
+      "answer": "The Lake District",
+      "answerIndex": 0,
+      "explanation": "The Lake District is England's largest national park, famous for its lakes and mountains; its biggest stretch of water is Windermere.\n\nSnowdonia is in Wales and Loch Lomond in Scotland."
+    },
+    {
+      "id": 287,
+      "category": "Places of interest",
+      "question": "In 2007, television viewers voted which lake Britain's favourite view?",
+      "options": [
+        "Wastwater",
+        "Windermere",
+        "Loch Lomond",
+        "Lough Neagh"
+      ],
+      "answer": "Wastwater",
+      "answerIndex": 0,
+      "explanation": "Wastwater, in the Lake District, was voted Britain's favourite view in 2007.\n\nWindermere is the biggest stretch of water in the Lake District, and Loch Lomond is in Scotland — relevant to those places, not this poll."
+    },
+    {
+      "id": 288,
+      "category": "Places of interest",
+      "question": "Roughly how long ago was the Giant's Causeway formed?",
+      "options": [
+        "About 50 million years ago",
+        "About 10,000 years ago",
+        "About 1,000 years ago",
+        "About 6,000 years ago"
+      ],
+      "answer": "About 50 million years ago",
+      "answerIndex": 0,
+      "explanation": "The Giant's Causeway in Northern Ireland, a formation of volcanic lava columns, was formed about 50 million years ago.\n\nThe other timescales relate to human prehistory (e.g. first farmers ~6,000 years ago), not the Causeway's geology."
+    },
+    {
+      "id": 289,
+      "category": "The law and courts",
+      "question": "Which of these is a criminal offence in the UK?",
+      "options": [
+        "Selling drugs such as heroin or cocaine",
+        "A dispute over unpaid rent",
+        "A disagreement about faulty goods",
+        "A claim of unfair dismissal"
+      ],
+      "answer": "Selling drugs such as heroin or cocaine",
+      "answerIndex": 0,
+      "explanation": "Selling or buying illegal drugs is a criminal offence.\n\nDisputes over rent (housing law), faulty goods (consumer rights) and unfair dismissal (employment law) are civil matters, not criminal."
+    },
+    {
+      "id": 290,
+      "category": "The law and courts",
+      "question": "Causing harassment, alarm or distress to someone because of their religion or ethnic origin is what?",
+      "options": [
+        "A criminal offence (racial crime)",
+        "A civil dispute",
+        "Permitted free speech",
+        "A matter for the small claims court"
+      ],
+      "answer": "A criminal offence (racial crime)",
+      "answerIndex": 0,
+      "explanation": "Racial crime — causing harassment, alarm or distress because of religion or ethnic origin — is a criminal offence.\n\nIt is not a civil dispute, and the small claims court deals with minor civil money claims, not criminal matters."
+    },
+    {
+      "id": 291,
+      "category": "The law and courts",
+      "question": "At what age is it legal to be sold tobacco products in the UK?",
+      "options": [
+        "18 or over",
+        "16 or over",
+        "21 or over",
+        "17 or over"
+      ],
+      "answer": "18 or over",
+      "answerIndex": 0,
+      "explanation": "It is illegal to sell tobacco products to anyone under 18. 16 is relevant to riding a moped or drinking with a meal in specific circumstances; 17 is the minimum age to drive a car."
+    },
+    {
+      "id": 292,
+      "category": "The law and courts",
+      "question": "Which of these is dealt with under civil law rather than criminal law?",
+      "options": [
+        "A dispute between a landlord and tenant",
+        "Carrying a weapon",
+        "Selling illegal drugs",
+        "Racial harassment"
+      ],
+      "answer": "A dispute between a landlord and tenant",
+      "answerIndex": 0,
+      "explanation": "Landlord–tenant disputes (housing law) are civil matters.\n\nCarrying a weapon, selling illegal drugs and racial harassment are all criminal offences, handled by the criminal courts."
+    },
+    {
+      "id": 293,
+      "category": "The law and courts",
+      "question": "What is one of the main duties of the police in the UK?",
+      "options": [
+        "To protect life and property",
+        "To collect taxes",
+        "To make new laws",
+        "To run the courts"
+      ],
+      "answer": "To protect life and property",
+      "answerIndex": 0,
+      "explanation": "The police protect life and property, prevent disturbances (keeping the peace), and prevent and detect crime.\n\nCollecting taxes is done by HMRC, making laws is Parliament's role, and the courts are run by the judiciary."
+    },
+    {
+      "id": 294,
+      "category": "The law and courts",
+      "question": "Police forces are headed by whom and are independent of what?",
+      "options": [
+        "Chief Constables; independent of the government",
+        "The Home Secretary; independent of Parliament",
+        "Magistrates; independent of the monarch",
+        "Judges; independent of the police"
+      ],
+      "answer": "Chief Constables; independent of the government",
+      "answerIndex": 0,
+      "explanation": "Police forces are headed by Chief Constables and are independent of the government.\n\nSince 2012, elected Police and Crime Commissioners appoint the Chief Constable in England and Wales.\n\nThe other pairings are inaccurate."
+    },
+    {
+      "id": 295,
+      "category": "The law and courts",
+      "question": "In England, Wales and Northern Ireland, cases involving accused people aged 10 to 17 are normally heard where?",
+      "options": [
+        "A Youth Court",
+        "A Crown Court",
+        "The House of Lords",
+        "A County Court"
+      ],
+      "answer": "A Youth Court",
+      "answerIndex": 0,
+      "explanation": "Cases involving those aged 10 to 17 are normally heard in a Youth Court.\n\nThe Crown Court hears the most serious cases.\n\nCounty Courts deal with civil matters.\n\nIn Scotland the Children's Hearings System is used instead."
+    },
+    {
+      "id": 296,
+      "category": "The law and courts",
+      "question": "In Scotland, which system deals with children and young people who have committed an offence?",
+      "options": [
+        "The Children's Hearings System",
+        "The Youth Court",
+        "The Magistrates' Court",
+        "The Crown Court"
+      ],
+      "answer": "The Children's Hearings System",
+      "answerIndex": 0,
+      "explanation": "Scotland uses the Children's Hearings System for children and young people.\n\nYouth Courts, Magistrates' Courts and Crown Courts operate in England, Wales and Northern Ireland — so those are relevant to those parts of the UK."
+    },
+    {
+      "id": 297,
+      "category": "The law and courts",
+      "question": "Which trained lawyers give legal advice and can represent clients in court?",
+      "options": [
+        "Solicitors",
+        "Magistrates",
+        "Peers",
+        "Councillors"
+      ],
+      "answer": "Solicitors",
+      "answerIndex": 0,
+      "explanation": "Solicitors are trained lawyers who advise clients and represent them in court.\n\nMagistrates decide cases in Magistrates' Courts.\n\nPeers sit in the House of Lords.\n\nCouncillors serve on local authorities."
+    },
+    {
+      "id": 298,
+      "category": "Rights, tax and driving",
+      "question": "In which year was the UK one of the first countries to sign the European Convention on Human Rights?",
+      "options": [
+        "1950",
+        "1998",
+        "1689",
+        "1215"
+      ],
+      "answer": "1950",
+      "answerIndex": 0,
+      "explanation": "The UK signed the European Convention on Human Rights in 1950.\n\nThe Human Rights Act 1998 later incorporated it into UK law — so 1998 is relevant to that Act. 1689 and 1215 relate to the Bill of Rights and Magna Carta."
+    },
+    {
+      "id": 299,
+      "category": "Rights, tax and driving",
+      "question": "Which of these is a right protected by the European Convention on Human Rights?",
+      "options": [
+        "The right to a fair trial",
+        "The right to free housing",
+        "The right to a government job",
+        "The right to avoid all taxes"
+      ],
+      "answer": "The right to a fair trial",
+      "answerIndex": 0,
+      "explanation": "Convention rights include the right to life, prohibition of torture, prohibition of slavery and forced labour, liberty and security, a fair trial, freedom of thought and religion, and freedom of expression.\n\nThe other options are not Convention rights."
+    },
+    {
+      "id": 300,
+      "category": "Rights, tax and driving",
+      "question": "Domestic violence in the UK is treated as what?",
+      "options": [
+        "A serious crime",
+        "A private family matter",
+        "A civil dispute only",
+        "Acceptable if within marriage"
+      ],
+      "answer": "A serious crime",
+      "answerIndex": 0,
+      "explanation": "Domestic violence is a serious crime; anyone violent towards a partner can be prosecuted, and forcing a partner to have sex, including within marriage, can be charged as rape.\n\nIt is never a private-only or acceptable matter."
+    },
+    {
+      "id": 301,
+      "category": "Rights, tax and driving",
+      "question": "Money raised from National Insurance Contributions helps pay for what?",
+      "options": [
+        "State benefits, the state pension and the NHS",
+        "Road building only",
+        "The armed forces only",
+        "Local council services only"
+      ],
+      "answer": "State benefits, the state pension and the NHS",
+      "answerIndex": 0,
+      "explanation": "National Insurance funds state benefits, the state retirement pension and the NHS.\n\nGeneral income tax pays for services such as roads, education, police and the armed forces — so those relate to income tax rather than National Insurance."
+    },
+    {
+      "id": 302,
+      "category": "Rights, tax and driving",
+      "question": "Self-employed people pay their tax through which system?",
+      "options": [
+        "Self-assessment",
+        "Pay As You Earn (PAYE)",
+        "Council tax",
+        "National Insurance only"
+      ],
+      "answer": "Self-assessment",
+      "answerIndex": 0,
+      "explanation": "Self-employed people pay tax through self-assessment, completing a tax return.\n\nPAYE is used for employees, whose tax is deducted by their employer.\n\nCouncil tax funds local services and is a separate charge."
+    },
+    {
+      "id": 303,
+      "category": "Rights, tax and driving",
+      "question": "What is the minimum age to ride a moped in the UK?",
+      "options": [
+        "16",
+        "17",
+        "18",
+        "14"
+      ],
+      "answer": "16",
+      "answerIndex": 0,
+      "explanation": "You must be at least 16 to ride a moped. 17 is the minimum age to drive a car or motorcycle. 18 relates to voting and buying alcohol."
+    },
+    {
+      "id": 304,
+      "category": "Rights, tax and driving",
+      "question": "A UK driving licence is valid until the holder is what age, after which it is renewed every three years?",
+      "options": [
+        "70",
+        "65",
+        "75",
+        "80"
+      ],
+      "answer": "70",
+      "answerIndex": 0,
+      "explanation": "Drivers can use their licence until they are 70, after which it must be renewed every three years.\n\nThe other ages are distractors and do not match the handbook."
+    },
+    {
+      "id": 305,
+      "category": "International institutions",
+      "question": "The EEC was set up by which treaty, signed in 1957?",
+      "options": [
+        "The Treaty of Rome",
+        "The Treaty of Union",
+        "The Good Friday Agreement",
+        "The Treaty of Waterloo"
+      ],
+      "answer": "The Treaty of Rome",
+      "answerIndex": 0,
+      "explanation": "The EEC was set up by the Treaty of Rome, signed on 25 March 1957.\n\nThe Treaty (Act) of Union relates to England and Scotland (1707).\n\nThe Good Friday Agreement (1998) relates to Northern Ireland.\n\nThe other option is invented."
+    },
+    {
+      "id": 306,
+      "category": "International institutions",
+      "question": "How many countries originally founded the EEC in 1957?",
+      "options": [
+        "Six",
+        "Twelve",
+        "Twenty-seven",
+        "Forty-seven"
+      ],
+      "answer": "Six",
+      "answerIndex": 0,
+      "explanation": "Six western European countries founded the EEC: Belgium, France, Germany, Italy, Luxembourg and the Netherlands.\n\n'27' is the current number of EU members, and '47' relates to the Council of Europe — so those are relevant to other bodies."
+    },
+    {
+      "id": 307,
+      "category": "International institutions",
+      "question": "According to the handbook, how many member countries does the Council of Europe have?",
+      "options": [
+        "47",
+        "27",
+        "54",
+        "15"
+      ],
+      "answer": "47",
+      "answerIndex": 0,
+      "explanation": "The handbook states the Council of Europe has 47 member countries and is responsible for human rights, with no power to make laws.\n\n'27' relates to the EU, '54' to the Commonwealth, and '15' to the total members of the UN Security Council."
+    },
+    {
+      "id": 308,
+      "category": "International institutions",
+      "question": "How many members sit on the UN Security Council?",
+      "options": [
+        "15",
+        "5",
+        "27",
+        "47"
+      ],
+      "answer": "15",
+      "answerIndex": 0,
+      "explanation": "There are 15 members on the UN Security Council.\n\nThe UK is one of the five permanent members — so '5' is relevant to the permanent members, not the total.\n\n'27' and '47' relate to the EU and Council of Europe."
+    },
+    {
+      "id": 309,
+      "category": "International institutions",
+      "question": "Membership of the Commonwealth is described how?",
+      "options": [
+        "Voluntary",
+        "Compulsory for former colonies",
+        "Decided by the UN",
+        "Permanent and unbreakable"
+      ],
+      "answer": "Voluntary",
+      "answerIndex": 0,
+      "explanation": "Commonwealth membership is voluntary, and the Commonwealth can suspend members but has no power over them.\n\nIts core values are democracy, good government and the rule of law.\n\nThe other options misdescribe how membership works."
+    },
+    {
+      "id": 310,
+      "category": "The UK today",
+      "question": "According to the handbook's population table, what was the UK population in 1901?",
+      "options": [
+        "40 million",
+        "20 million",
+        "50 million",
+        "8 million"
+      ],
+      "answer": "40 million",
+      "answerIndex": 0,
+      "explanation": "The population in 1901 was 40 million. 20 million relates to 1851, 50 million to 1951, and 8 million to 1801 — so those figures are relevant to those earlier years."
+    },
+    {
+      "id": 311,
+      "category": "The UK today",
+      "question": "What has mainly driven faster UK population growth in recent years?",
+      "options": [
+        "Migration and longer life expectancy",
+        "A higher birth rate only",
+        "The Industrial Revolution",
+        "Emigration"
+      ],
+      "answer": "Migration and longer life expectancy",
+      "answerIndex": 0,
+      "explanation": "Migration into the UK and longer life expectancy have driven recent population growth.\n\nEmigration reduces population, and the Industrial Revolution relates to a much earlier historical period."
+    },
+    {
+      "id": 312,
+      "category": "The UK today",
+      "question": "Roughly what proportion of the UK population has a parent or grandparent born outside the UK?",
+      "options": [
+        "Nearly 10%",
+        "About 50%",
+        "About 25%",
+        "About 1%"
+      ],
+      "answer": "Nearly 10%",
+      "answerIndex": 0,
+      "explanation": "Post-war immigration means nearly 10% of the population has a parent or grandparent born outside the UK.\n\nThe other proportions are distractors and do not match the handbook."
+    },
+    {
+      "id": 313,
+      "category": "The UK today",
+      "question": "Which statement about Scottish and Northern Irish banknotes is correct?",
+      "options": [
+        "They are valid everywhere in the UK, but shops do not have to accept them",
+        "They are only valid in Scotland and Northern Ireland",
+        "They are not legal at all",
+        "They must be exchanged before use in England"
+      ],
+      "answer": "They are valid everywhere in the UK, but shops do not have to accept them",
+      "answerIndex": 0,
+      "explanation": "Scotland and Northern Ireland have their own banknotes, valid everywhere in the UK, though shops and businesses are not obliged to accept them.\n\nThe other statements are inaccurate."
+    },
+    {
+      "id": 314,
+      "category": "Government and constitution",
+      "question": "In which year did Queen Elizabeth II's reign begin?",
+      "options": [
+        "1952",
+        "1969",
+        "2012",
+        "2022"
+      ],
+      "answer": "1952",
+      "answerIndex": 0,
+      "explanation": "Queen Elizabeth II's reign began in 1952, on her father's death; she died in 2022. 2012 was her Diamond Jubilee (60 years). 2022 is the year she died and King Charles III became sovereign."
+    },
+    {
+      "id": 315,
+      "category": "Government and constitution",
+      "question": "Who is the heir apparent to King Charles III?",
+      "options": [
+        "William, Prince of Wales",
+        "Prince Edward",
+        "Princess Charlotte",
+        "Prince Louis"
+      ],
+      "answer": "William, Prince of Wales",
+      "answerIndex": 0,
+      "explanation": "William, Prince of Wales, is the heir apparent.\n\nHis children (Prince George, Princess Charlotte and Prince Louis) are next in line after him.\n\nPrince Edward is a separate member of the Royal Family."
+    },
+    {
+      "id": 316,
+      "category": "Government and constitution",
+      "question": "New citizens swear or affirm allegiance to whom at the citizenship ceremony?",
+      "options": [
+        "His Majesty King Charles the Third, his Heirs and Successors",
+        "The Prime Minister",
+        "Parliament",
+        "The Archbishop of Canterbury"
+      ],
+      "answer": "His Majesty King Charles the Third, his Heirs and Successors",
+      "answerIndex": 0,
+      "explanation": "The oath and affirmation of allegiance are made to His Majesty King Charles the Third, his Heirs and Successors, according to law.\n\nAllegiance is not sworn to the Prime Minister, Parliament or the Archbishop."
+    },
+    {
+      "id": 317,
+      "category": "Government and constitution",
+      "question": "Since 1999, hereditary peers have lost which right?",
+      "options": [
+        "The automatic right to attend the House of Lords",
+        "The right to vote in general elections",
+        "The right to own property",
+        "The right to stand as an MP"
+      ],
+      "answer": "The automatic right to attend the House of Lords",
+      "answerIndex": 0,
+      "explanation": "Since 1999, hereditary peers have lost the automatic right to attend the House of Lords and now elect a few of their number to represent them.\n\nThe other rights are unaffected by this change."
+    },
+    {
+      "id": 318,
+      "category": "Government and constitution",
+      "question": "What is a by-election?",
+      "options": [
+        "An election held when an MP dies or resigns",
+        "A general election held every five years",
+        "An election for the House of Lords",
+        "A vote to change the monarch"
+      ],
+      "answer": "An election held when an MP dies or resigns",
+      "answerIndex": 0,
+      "explanation": "A by-election is held in a constituency when its MP dies or resigns.\n\nA general election is the nationwide election held at least every five years.\n\nPeers are not elected by the public, and the monarch is not chosen by a vote."
+    },
+    {
+      "id": 319,
+      "category": "Government and constitution",
+      "question": "How many members does the Welsh Parliament/Assembly have?",
+      "options": [
+        "60",
+        "129",
+        "90",
+        "650"
+      ],
+      "answer": "60",
+      "answerIndex": 0,
+      "explanation": "The Welsh body has 60 members (AMs), based in Cardiff. 129 relates to the Scottish Parliament (MSPs), 90 to the Northern Ireland Assembly (MLAs), and 650 to MPs in the UK House of Commons."
+    },
+    {
+      "id": 320,
+      "category": "Government and constitution",
+      "question": "How many members does the Northern Ireland Assembly have?",
+      "options": [
+        "90",
+        "60",
+        "129",
+        "54"
+      ],
+      "answer": "90",
+      "answerIndex": 0,
+      "explanation": "The Northern Ireland Assembly has 90 members (MLAs), based at Stormont, elected by proportional representation with a power-sharing arrangement. 60 relates to Wales and 129 to Scotland."
+    },
+    {
+      "id": 321,
+      "category": "Government and constitution",
+      "question": "In which year was the original Northern Ireland Parliament established?",
+      "options": [
+        "1922",
+        "1972",
+        "1998",
+        "2007"
+      ],
+      "answer": "1922",
+      "answerIndex": 0,
+      "explanation": "A Northern Ireland Parliament was established in 1922 when Ireland was divided; it was abolished in 1972. 1998 relates to the Belfast (Good Friday) Agreement and 2007 to the Assembly running successfully again."
+    },
+    {
+      "id": 322,
+      "category": "Government and constitution",
+      "question": "The official reports of proceedings in Parliament are published in what?",
+      "options": [
+        "Hansard",
+        "The Domesday Book",
+        "The Yellow Pages",
+        "The Beveridge Report"
+      ],
+      "answer": "Hansard",
+      "answerIndex": 0,
+      "explanation": "Parliamentary proceedings are published in Hansard.\n\nThe Domesday Book was a Norman-era land survey.\n\nThe Beveridge Report set out the welfare state.\n\nThe Yellow Pages was a business phone directory."
+    },
+    {
+      "id": 323,
+      "category": "Government and constitution",
+      "question": "Which cabinet minister is responsible for crime, policing and immigration?",
+      "options": [
+        "The Home Secretary",
+        "The Chancellor of the Exchequer",
+        "The Foreign Secretary",
+        "The Speaker"
+      ],
+      "answer": "The Home Secretary",
+      "answerIndex": 0,
+      "explanation": "The Home Secretary is responsible for crime, policing and immigration.\n\nThe Chancellor of the Exchequer handles the economy.\n\nThe Foreign Secretary manages relations with other countries.\n\nThe Speaker chairs Commons debates."
+    },
+    {
+      "id": 324,
+      "category": "Government and constitution",
+      "question": "Who can vote in all UK public elections, including general elections?",
+      "options": [
+        "UK, Commonwealth and Irish Republic citizens resident in the UK",
+        "Only people born in the UK",
+        "Anyone aged 16 or over",
+        "Only UK passport holders"
+      ],
+      "answer": "UK, Commonwealth and Irish Republic citizens resident in the UK",
+      "answerIndex": 0,
+      "explanation": "Adult citizens of the UK, the Commonwealth and the Irish Republic who are resident in the UK can vote in all public elections.\n\nThe voting age is 18, not 16, and citizenship is broader than being UK-born or a passport holder."
+    },
+    {
+      "id": 325,
+      "category": "Government and constitution",
+      "question": "To vote in an election, your name must be on what?",
+      "options": [
+        "The electoral register",
+        "The Domesday Book",
+        "Hansard",
+        "The Yellow Pages"
+      ],
+      "answer": "The electoral register",
+      "answerIndex": 0,
+      "explanation": "You must have your name on the electoral register to vote.\n\nHansard records parliamentary debates, the Domesday Book was a Norman survey, and the Yellow Pages was a phone directory — none of which register voters."
+    },
+    {
+      "id": 326,
+      "category": "Government and constitution",
+      "question": "On election day, what hours are polling stations open?",
+      "options": [
+        "7.00 am to 10.00 pm",
+        "9.00 am to 5.00 pm",
+        "8.00 am to 8.00 pm",
+        "6.00 am to midnight"
+      ],
+      "answer": "7.00 am to 10.00 pm",
+      "answerIndex": 0,
+      "explanation": "Polling stations are open from 7.00 am until 10.00 pm on election day.\n\nThe other times are distractors and do not match the handbook."
+    },
+    {
+      "id": 327,
+      "category": "Government and constitution",
+      "question": "Which of these groups cannot stand for public office?",
+      "options": [
+        "Members of the armed forces and civil servants",
+        "Retired people",
+        "Members of the Commonwealth",
+        "People over 65"
+      ],
+      "answer": "Members of the armed forces and civil servants",
+      "answerIndex": 0,
+      "explanation": "Exceptions to standing for office include members of the armed forces, civil servants and people found guilty of certain criminal offences.\n\nBeing retired, over 65, or a Commonwealth citizen does not by itself prevent someone from standing."
+    },
+    {
+      "id": 328,
+      "category": "Government and constitution",
+      "question": "In which year did the process of devolving powers to Scotland, Wales and Northern Ireland begin?",
+      "options": [
+        "1997",
+        "1928",
+        "1969",
+        "2010"
+      ],
+      "answer": "1997",
+      "answerIndex": 0,
+      "explanation": "Since 1997, some powers have been devolved to Scotland, Wales and Northern Ireland, with the Scottish Parliament and Welsh Assembly first meeting in 1999. 1928 relates to full voting equality, 1969 to the voting age of 18, and 2010 to the coalition government."
+    },
+    {
+      "id": 329,
+      "category": "Government and constitution",
+      "question": "Pressure and lobby groups try to do what?",
+      "options": [
+        "Influence government policy",
+        "Elect the monarch",
+        "Run the courts",
+        "Collect taxes"
+      ],
+      "answer": "Influence government policy",
+      "answerIndex": 0,
+      "explanation": "Pressure and lobby groups (such as the CBI, Greenpeace and Liberty) try to influence government policy.\n\nThey do not elect the monarch, run the courts, or collect taxes."
+    },
+    {
+      "id": 330,
+      "category": "Government and constitution",
+      "question": "The CBI (Confederation of British Industry) represents whose views?",
+      "options": [
+        "British business",
+        "The environment",
+        "Human rights campaigners",
+        "Trade unions"
+      ],
+      "answer": "British business",
+      "answerIndex": 0,
+      "explanation": "The CBI represents the views of British business.\n\nGreenpeace campaigns on the environment, and Liberty on human rights — so those causes relate to other pressure groups."
+    },
+    {
+      "id": 331,
+      "category": "Government and constitution",
+      "question": "The shadow cabinet's role is to do what?",
+      "options": [
+        "Challenge the government and put forward alternative policies",
+        "Advise the monarch on appointments",
+        "Run local councils",
+        "Chair debates in the Commons"
+      ],
+      "answer": "Challenge the government and put forward alternative policies",
+      "answerIndex": 0,
+      "explanation": "The shadow cabinet, appointed by the leader of the opposition, challenges the government and offers alternative policies.\n\nChairing Commons debates is the Speaker's role, and local councils are run separately."
+    },
+    {
+      "id": 332,
+      "category": "Government and constitution",
+      "question": "Local authorities (councils) are funded by what?",
+      "options": [
+        "Central government money and local taxes",
+        "The monarch",
+        "The European Union",
+        "Church of England funds"
+      ],
+      "answer": "Central government money and local taxes",
+      "answerIndex": 0,
+      "explanation": "Local authorities are funded by money from central government and by local taxes.\n\nThey are not funded by the monarch, the EU, or the Church of England."
+    },
+    {
+      "id": 333,
+      "category": "Government and constitution",
+      "question": "Life peers are appointed by the monarch on whose advice?",
+      "options": [
+        "The Prime Minister",
+        "The Speaker",
+        "The Archbishop of Canterbury",
+        "The Chief Constable"
+      ],
+      "answer": "The Prime Minister",
+      "answerIndex": 0,
+      "explanation": "Life peers are appointed by the monarch on the advice of the Prime Minister, and may include people nominated by other party leaders or an independent Appointments Commission.\n\nThe other roles do not advise on peerages."
+    },
+    {
+      "id": 334,
+      "category": "Your role in the community",
+      "question": "Which of these is listed as a shared responsibility of everyone in the UK?",
+      "options": [
+        "To vote in local and national elections",
+        "To attend church weekly",
+        "To join the armed forces",
+        "To belong to a political party"
+      ],
+      "answer": "To vote in local and national elections",
+      "answerIndex": 0,
+      "explanation": "Shared responsibilities include obeying the law, respecting others' rights, looking after your family and the environment, and voting in elections.\n\nWeekly church attendance, military service and party membership are not required."
+    },
+    {
+      "id": 335,
+      "category": "Your role in the community",
+      "question": "What are the three key roles of school governors?",
+      "options": [
+        "Setting strategic direction, ensuring accountability, and monitoring performance",
+        "Teaching lessons, marking work, and setting exams",
+        "Running the canteen, cleaning, and transport",
+        "Appointing the police, judges, and MPs"
+      ],
+      "answer": "Setting strategic direction, ensuring accountability, and monitoring performance",
+      "answerIndex": 0,
+      "explanation": "School governors set the strategic direction of the school, ensure accountability, and monitor and evaluate school performance.\n\nTeaching and day-to-day tasks are done by staff, not governors."
+    },
+    {
+      "id": 336,
+      "category": "Your role in the community",
+      "question": "Roughly how long does giving blood take?",
+      "options": [
+        "About an hour",
+        "A whole day",
+        "About five minutes",
+        "Several hours"
+      ],
+      "answer": "About an hour",
+      "answerIndex": 0,
+      "explanation": "Giving blood takes about an hour.\n\nDonated blood is used by hospitals to help people with a wide range of injuries and illnesses.\n\nThe other durations do not match the handbook."
+    },
+    {
+      "id": 337,
+      "category": "Your role in the community",
+      "question": "You can volunteer with the police as which of these?",
+      "options": [
+        "A special constable",
+        "A Chief Constable",
+        "A magistrate in the police",
+        "A Police and Crime Commissioner appointee"
+      ],
+      "answer": "A special constable",
+      "answerIndex": 0,
+      "explanation": "You can volunteer with the police as a special constable or a lay representative.\n\nA Chief Constable heads a police force (a senior paid role).\n\nYou can separately apply to become a magistrate, but that is a court role, not a police one."
+    },
+    {
+      "id": 338,
+      "category": "Your role in the community",
+      "question": "The NSPCC is a charity that works mainly with whom?",
+      "options": [
+        "Children",
+        "Older people",
+        "Animals",
+        "The homeless"
+      ],
+      "answer": "Children",
+      "answerIndex": 0,
+      "explanation": "The NSPCC (National Society for the Prevention of Cruelty to Children) works with children.\n\nAge UK works with older people, the PDSA with animals, and Crisis and Shelter with the homeless — so those causes relate to other charities."
+    },
+    {
+      "id": 339,
+      "category": "Your role in the community",
+      "question": "Which charity works with older people?",
+      "options": [
+        "Age UK",
+        "The NSPCC",
+        "The PDSA",
+        "Friends of the Earth"
+      ],
+      "answer": "Age UK",
+      "answerIndex": 0,
+      "explanation": "Age UK works with older people.\n\nThe NSPCC works with children, the PDSA with animals, and Friends of the Earth on the environment."
+    },
+    {
+      "id": 340,
+      "category": "Your role in the community",
+      "question": "Which of these is a benefit of volunteering mentioned in the handbook?",
+      "options": [
+        "Meeting new people and practising English or work skills",
+        "Guaranteed payment",
+        "Exemption from tax",
+        "A free driving licence"
+      ],
+      "answer": "Meeting new people and practising English or work skills",
+      "answerIndex": 0,
+      "explanation": "Volunteering can help you meet new people, practise English, develop work skills and improve your CV.\n\nVolunteering is unpaid work for good causes, so payment, tax exemption and free licences are not benefits of it."
+    },
+    {
+      "id": 341,
+      "category": "The 20th century",
+      "question": "The Concorde supersonic aircraft was retired from service in which year?",
+      "options": [
+        "2003",
+        "1969",
+        "1976",
+        "1990"
+      ],
+      "answer": "2003",
+      "answerIndex": 0,
+      "explanation": "Concorde was retired in 2003.\n\nIt first flew in 1969 and began carrying passengers in 1976 — so those years relate to its introduction, not its retirement. 1990 relates to the first World Wide Web transfer."
+    },
+    {
+      "id": 342,
+      "category": "Britain since 1945",
+      "question": "In the early 1970s, Britain admitted around 28,000 people of Indian origin forced to leave which country?",
+      "options": [
+        "Uganda",
+        "Kenya",
+        "India",
+        "Pakistan"
+      ],
+      "answer": "Uganda",
+      "answerIndex": 0,
+      "explanation": "Britain admitted around 28,000 people of Indian origin forced to leave Uganda in the early 1970s.\n\nIndia and Pakistan were sources of earlier recruited workers, and Kenya is a distractor here."
+    },
+    {
+      "id": 343,
+      "category": "Britain since 1945",
+      "question": "Which Welsh author, whose parents were Norwegian, wrote 'Charlie and the Chocolate Factory'?",
+      "options": [
+        "Roald Dahl",
+        "Dylan Thomas",
+        "J K Rowling",
+        "J R R Tolkien"
+      ],
+      "answer": "Roald Dahl",
+      "answerIndex": 0,
+      "explanation": "Roald Dahl, born in Wales to Norwegian parents, wrote Charlie and the Chocolate Factory and George's Marvellous Medicine.\n\nDylan Thomas was a Welsh poet.\n\nJ K Rowling wrote Harry Potter, and Tolkien wrote The Lord of the Rings."
+    },
+    {
+      "id": 344,
+      "category": "Arts and culture",
+      "question": "Which prize for the best UK and Ireland album is awarded each September?",
+      "options": [
+        "The Mercury Music Prize",
+        "The Turner Prize",
+        "The Man Booker Prize",
+        "The Laurence Olivier Award"
+      ],
+      "answer": "The Mercury Music Prize",
+      "answerIndex": 0,
+      "explanation": "The Mercury Music Prize is awarded each September for the best album from the UK and Ireland.\n\nThe Turner Prize is for contemporary art, the Man Booker Prize for fiction, and the Laurence Olivier Awards for theatre."
+    },
+    {
+      "id": 345,
+      "category": "Arts and culture",
+      "question": "The National Eisteddfod is an annual cultural festival held in which nation, largely in its own language?",
+      "options": [
+        "Wales",
+        "Scotland",
+        "Northern Ireland",
+        "England"
+      ],
+      "answer": "Wales",
+      "answerIndex": 0,
+      "explanation": "The National Eisteddfod of Wales is a cultural festival of music, dance, art and performance, largely in Welsh, with important poetry competitions.\n\nIt is specific to Wales."
+    },
+    {
+      "id": 346,
+      "category": "Arts and culture",
+      "question": "Which British silent-film star was famous for his 'tramp' character?",
+      "options": [
+        "Sir Charlie Chaplin",
+        "Sir Alfred Hitchcock",
+        "Sir David Lean",
+        "Ridley Scott"
+      ],
+      "answer": "Sir Charlie Chaplin",
+      "answerIndex": 0,
+      "explanation": "Sir Charlie Chaplin became famous in silent movies for his tramp character.\n\nSir Alfred Hitchcock, Sir David Lean and Ridley Scott were directors rather than silent-film comedy actors."
+    },
+    {
+      "id": 347,
+      "category": "Customs and traditions",
+      "question": "Which day, on 1 April, is when people play jokes on each other until midday?",
+      "options": [
+        "April Fool's Day",
+        "Valentine's Day",
+        "Halloween",
+        "Hogmanay"
+      ],
+      "answer": "April Fool's Day",
+      "answerIndex": 0,
+      "explanation": "April Fool's Day (1 April) is when people play jokes until midday.\n\nValentine's Day is 14 February, Halloween is 31 October, and Hogmanay is the Scottish name for New Year's Eve (31 December)."
+    },
+    {
+      "id": 348,
+      "category": "Customs and traditions",
+      "question": "In Scotland, what is New Year's Eve (31 December) called?",
+      "options": [
+        "Hogmanay",
+        "Boxing Day",
+        "Shrove Tuesday",
+        "Vaisakhi"
+      ],
+      "answer": "Hogmanay",
+      "answerIndex": 0,
+      "explanation": "In Scotland, 31 December is called Hogmanay, and for some Scots it is a bigger celebration than Christmas.\n\nBoxing Day is 26 December, Shrove Tuesday precedes Lent, and Vaisakhi is a Sikh festival."
+    },
+    {
+      "id": 349,
+      "category": "Leisure",
+      "question": "Which two long-running soap operas are named in the handbook?",
+      "options": [
+        "Coronation Street and EastEnders",
+        "Emmerdale and Hollyoaks",
+        "Doctor Who and Sherlock",
+        "Downton Abbey and The Crown"
+      ],
+      "answer": "Coronation Street and EastEnders",
+      "answerIndex": 0,
+      "explanation": "Coronation Street and EastEnders are the soap operas named as popular programmes.\n\nThe other titles are real British shows but are not the ones cited in the handbook here."
+    },
+    {
+      "id": 350,
+      "category": "Leisure",
+      "question": "What penalty can you face for watching TV without a TV licence?",
+      "options": [
+        "A fine of up to £1,000",
+        "Imprisonment for a year",
+        "Loss of your driving licence",
+        "Deportation"
+      ],
+      "answer": "A fine of up to £1,000",
+      "answerIndex": 0,
+      "explanation": "You can be fined up to £1,000 for watching TV without a licence.\n\nPeople over 75 can apply for a free licence and blind people get a 50% discount.\n\nThe other penalties are not the consequence described."
+    },
+    {
+      "id": 351,
+      "category": "Religion",
+      "question": "In the 2009 Citizenship Survey, what percentage of people said they had no religion?",
+      "options": [
+        "21%",
+        "70%",
+        "4%",
+        "2%"
+      ],
+      "answer": "21%",
+      "answerIndex": 0,
+      "explanation": "About 21% said they had no religion. 70% identified as Christian, and 4% as Muslim — so those figures relate to those groups.\n\nThe UK guarantees everyone the right to choose their religion or none."
+    },
+    {
+      "id": 352,
+      "category": "Religion",
+      "question": "The Moderator is the chairperson of the General Assembly of which church?",
+      "options": [
+        "The Church of Scotland",
+        "The Church of England",
+        "The Roman Catholic Church",
+        "The Methodist Church"
+      ],
+      "answer": "The Church of Scotland",
+      "answerIndex": 0,
+      "explanation": "The Moderator chairs the General Assembly of the Church of Scotland and is appointed for one year.\n\nThe Church of England is led spiritually by the Archbishop of Canterbury, with the monarch as its head."
+    },
+    {
+      "id": 353,
+      "category": "Religion",
+      "question": "Which day is St David's Day, the patron saint's day of Wales?",
+      "options": [
+        "1 March",
+        "17 March",
+        "23 April",
+        "30 November"
+      ],
+      "answer": "1 March",
+      "answerIndex": 0,
+      "explanation": "St David's Day (Wales) is 1 March. 17 March is St Patrick's Day (Northern Ireland), 23 April is St George's Day (England), and 30 November is St Andrew's Day (Scotland)."
+    },
+    {
+      "id": 354,
+      "category": "Religion",
+      "question": "Which day is St Andrew's Day, the patron saint's day of Scotland?",
+      "options": [
+        "30 November",
+        "1 March",
+        "17 March",
+        "23 April"
+      ],
+      "answer": "30 November",
+      "answerIndex": 0,
+      "explanation": "St Andrew's Day (Scotland) is 30 November. 1 March is St David's Day (Wales), 17 March is St Patrick's Day (Northern Ireland), and 23 April is St George's Day (England)."
+    },
+    {
+      "id": 355,
+      "category": "What is the UK",
+      "question": "The Rest of Ireland (outside Northern Ireland) is what?",
+      "options": [
+        "An independent country",
+        "A Crown dependency",
+        "A British overseas territory",
+        "Part of Great Britain"
+      ],
+      "answer": "An independent country",
+      "answerIndex": 0,
+      "explanation": "The rest of Ireland is an independent country (the Republic of Ireland).\n\nCrown dependencies are the Channel Islands and Isle of Man; British overseas territories include St Helena and the Falklands; Great Britain is England, Scotland and Wales."
+    },
+    {
+      "id": 356,
+      "category": "The Middle Ages",
+      "question": "In which cathedral is there famous medieval stained glass telling Bible stories?",
+      "options": [
+        "York Minster",
+        "St Paul's Cathedral",
+        "Westminster Abbey",
+        "The Banqueting House"
+      ],
+      "answer": "York Minster",
+      "answerIndex": 0,
+      "explanation": "York Minster is famous for its medieval stained glass.\n\nSt Paul's Cathedral was rebuilt by Christopher Wren after the Great Fire.\n\nWestminster Abbey is where several composers and poets are associated.\n\nThe Banqueting House is not a cathedral."
+    },
+    {
+      "id": 357,
+      "category": "A global power",
+      "question": "In 1776, how many American colonies declared their independence?",
+      "options": [
+        "13",
+        "9",
+        "27",
+        "6"
+      ],
+      "answer": "13",
+      "answerIndex": 0,
+      "explanation": "In 1776, 13 American colonies declared independence, which Britain recognised in 1783.\n\n'9' relates to the number of countries granted independence in 1947, and '6' to the founding members of the EEC — so those numbers relate to other topics."
+    },
+    {
+      "id": 358,
+      "category": "Britain since 1945",
+      "question": "In which year did the UK officially become a member of the EEC?",
+      "options": [
+        "1973",
+        "1957",
+        "1993",
+        "2016"
+      ],
+      "answer": "1973",
+      "answerIndex": 0,
+      "explanation": "The UK joined the EEC in 1973. 1957 is when the EEC was founded. 2016 is the year of the EU membership referendum (Brexit vote), and 1993 is a distractor here."
+    },
+    {
+      "id": 359,
+      "category": "The 20th century",
+      "question": "Which team of scientists, led by Ernest Rutherford, first 'split the atom'?",
+      "options": [
+        "Scientists working at Manchester and Cambridge universities",
+        "Scientists at Oxford only",
+        "A team in the United States only",
+        "Scientists in Scotland only"
+      ],
+      "answer": "Scientists working at Manchester and Cambridge universities",
+      "answerIndex": 0,
+      "explanation": "Scientists led by Ernest Rutherford, working at Manchester and then Cambridge University, were the first to 'split the atom' and took part in the Manhattan Project.\n\nThe other locations are inaccurate."
+    },
+    {
+      "id": 360,
+      "category": "Values and principles",
+      "question": "Which of these is one of the fundamental principles of British life?",
+      "options": [
+        "Participation in community life",
+        "Loyalty to a single political party",
+        "A state-controlled press",
+        "Compulsory religious worship"
+      ],
+      "answer": "Participation in community life",
+      "answerIndex": 0,
+      "explanation": "The fundamental principles are democracy, the rule of law, individual liberty, tolerance of different faiths and beliefs, and participation in community life.\n\nA state-controlled press contradicts the UK's free press, and the other options are not British values."
     }
   ]
 }
