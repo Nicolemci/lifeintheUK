@@ -392,6 +392,10 @@ button {
   box-shadow: 0 12px 28px rgba(7, 31, 77, 0.2);
 }
 
+.mobile-nav-bar {
+  display: none;
+}
+
 .mobile-nav-backdrop,
 .mobile-nav-drawer {
   display: none;
@@ -2347,16 +2351,34 @@ button {
   .app-tabs {
     position: relative;
     z-index: 40;
-    justify-content: flex-end;
+    justify-content: stretch;
   }
 
   .desktop-nav {
     display: none;
   }
 
+  .mobile-nav-bar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mobile-nav-brand {
+    margin: 0;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   .mobile-nav-toggle {
     display: inline-flex;
-    margin-left: auto;
+    flex: 0 0 auto;
+  }
+
+  .hero .british-kicker {
+    display: none;
   }
 
   body.mobile-nav-open {

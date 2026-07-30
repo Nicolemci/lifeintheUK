@@ -1073,16 +1073,19 @@ function AppTabs({ activeTab, currentUser, onChange }: AppTabsProps) {
       </div>
       <div className="desktop-nav">{profileControls}</div>
 
-      <button
-        className="mobile-nav-toggle"
-        type="button"
-        aria-expanded={menuOpen}
-        aria-controls="mobile-nav-drawer"
-        onClick={() => setMenuOpen(true)}
-      >
-        <span>Menu</span>
-        <span aria-hidden="true">☰</span>
-      </button>
+      <div className="mobile-nav-bar">
+        <p className="british-kicker mobile-nav-brand">Life in the UK test prep</p>
+        <button
+          className="mobile-nav-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav-drawer"
+          onClick={() => setMenuOpen(true)}
+        >
+          <span>Menu</span>
+          <span aria-hidden="true">☰</span>
+        </button>
+      </div>
 
       <button
         className={["mobile-nav-backdrop", menuOpen ? "is-open" : ""].filter(Boolean).join(" ")}
