@@ -970,21 +970,6 @@ export default function App() {
         </section>
       ) : null}
 
-      <section className="company-links" aria-labelledby="company-links-title">
-        <div className="section-heading">
-          <p className="eyebrow">Company</p>
-          <h2 id="company-links-title">Policies and contact</h2>
-        </div>
-        <nav className="company-links-nav" aria-label="Policies and company pages">
-          <Link to="/privacy">Privacy Policy</Link>
-          <Link to="/terms">Terms &amp; Conditions</Link>
-          <Link to="/refund-policy">Refund Policy</Link>
-          <Link to="/cookie-policy">Cookie Policy</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
-        </nav>
-      </section>
-
       <p className="disclaimer">
         This app uses original practice questions for revision. Always study the latest official Life
         in the UK handbook and guidance before booking your test.
