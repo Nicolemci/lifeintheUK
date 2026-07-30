@@ -2,31 +2,28 @@
 
 The migration files in this directory are intended for the Supabase CLI migration workflow.
 
-## Apply the schema
+## Apply the schema (required)
 
-Premium status and Checkout activation both require these migrations to be applied to the live
-Supabase project. If `premium_access` is missing, the app shows Premium status errors and the
-Stripe webhook cannot grant access after payment.
+Premium status and Checkout activation both require these migrations on the live Supabase
+project. If `premium_access` is missing, Premium purchases cannot be stored.
 
-Project ref used by this app:
+**Project:** `qkvgbguigytbqwxglayy`
 
-`qkvgbguigytbqwxglayy`
+### Fastest method (SQL Editor)
 
-After linking the local repository to the correct Supabase project:
+1. Open the SQL Editor:  
+   https://supabase.com/dashboard/project/qkvgbguigytbqwxglayy/sql/new
+2. Paste the full contents of [`APPLY_ALL.sql`](./APPLY_ALL.sql)
+3. Click **Run**
+4. Refresh the website
+
+### CLI method
 
 ```bash
+npx supabase login
 npx supabase link --project-ref qkvgbguigytbqwxglayy
 npx supabase db push
 ```
-
-Alternatively, open the Supabase SQL Editor and run every file in `supabase/migrations/` in
-filename order:
-
-1. `20260728154400_create_core_schema.sql`
-2. `20260728162000_add_stripe_webhook_grant.sql`
-3. `20260728163500_add_progress_metrics.sql`
-4. `20260728170000_add_question_admin.sql`
-5. `20260729153500_add_anonymous_progress_migration.sql`
 
 ## Security model
 

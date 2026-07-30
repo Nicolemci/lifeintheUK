@@ -142,14 +142,20 @@ export function PremiumProvider() {
         "Unable to load Premium access status.",
       );
       const normalized = message.toLowerCase();
-      if (
+      const schemaMissing =
         normalized.includes("premium_access") ||
         normalized.includes("schema cache") ||
-        normalized.includes("pgrst205")
-      ) {
-        setError(
-          "Premium access status is unavailable because the Supabase premium_access table is missing. Apply the SQL migrations in supabase/migrations, then refresh.",
+        normalized.includes("pgrst205") ||
+        normalized.includes("does not exist");
+
+      if (schemaMissing) {
+        // Migrations not applied yet: treat the user as Free instead of blocking study.
+        console.warn(
+          "[premium] premium_access is missing. Apply supabase/APPLY_ALL.sql in the Supabase SQL Editor, then refresh.",
+          statusError,
         );
+        setLatestAccess(null);
+        setError(null);
       } else {
         setError(message);
       }

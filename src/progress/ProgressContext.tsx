@@ -275,7 +275,29 @@ export function ProgressProvider() {
               typeof (summaryError as { message?: unknown }).message === "string"
             ? String((summaryError as { message: string }).message)
             : "Unable to load your progress.";
-      setError(message);
+      const normalized = message.toLowerCase();
+      const schemaMissing =
+        normalized.includes("schema cache") ||
+        normalized.includes("pgrst205") ||
+        normalized.includes("does not exist") ||
+        normalized.includes("quiz_progress") ||
+        normalized.includes("mock_tests") ||
+        normalized.includes("migrate_anonymous_progress") ||
+        normalized.includes("get_user_progress_summary");
+
+      if (schemaMissing) {
+        console.warn(
+          "[progress] Supabase progress tables/RPCs are missing. Apply supabase/APPLY_ALL.sql, then refresh.",
+          summaryError,
+        );
+        const localProgress = loadAnonymousProgress();
+        setAnonymousProgress(localProgress);
+        setProgress(progressStateFromAnonymous(localProgress));
+        setMockTestHistory(mockHistoryFromAnonymous(localProgress));
+        setError(null);
+      } else {
+        setError(message);
+      }
     } finally {
       setLoading(false);
     }
