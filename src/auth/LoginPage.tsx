@@ -1,5 +1,6 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { usePageMetadata } from "../seo/usePageMetadata";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
 
@@ -13,6 +14,12 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const redirectPath =
     (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? "/";
+
+  usePageMetadata({
+    title: "Log in",
+    description: "Log in to Life in the UK Prep to continue mock tests and sync your study progress.",
+    path: "/login",
+  });
 
   useEffect(() => {
     if (!authLoading && user) {

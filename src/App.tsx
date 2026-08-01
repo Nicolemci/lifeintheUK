@@ -40,7 +40,7 @@ import LogoutButton from "./auth/LogoutButton";
 import { FREE_MOCK_TEST_LIMIT } from "./config/premium";
 import { usePremium } from "./premium/PremiumContext";
 import { useProgress } from "./progress/ProgressContext";
-import "./styles.css";
+import { usePageMetadata } from "./seo/usePageMetadata";
 
 type StoredProgress = {
   wrongQuestionIds: string[];
@@ -251,6 +251,36 @@ export default function App() {
   const [savingAnswer, setSavingAnswer] = useState(false);
   const [savingSession, setSavingSession] = useState(false);
   const completionInProgress = useRef(false);
+
+  const homeMetadata =
+    activeTab === "handbook"
+      ? {
+          title: "Life in the UK Study Guide",
+          description:
+            "Revise key Life in the UK facts by topic, including history, government, culture and everyday life.",
+        }
+      : activeTab === "test-info"
+        ? {
+            title: "Life in the UK Test Information",
+            description:
+              "Official-style guidance on the Life in the UK test format, booking, and finding a test centre.",
+          }
+        : activeTab === "absence"
+          ? {
+              title: "UK Absence Tracker",
+              description:
+                "Track days spent outside the UK to support Indefinite Leave to Remain and naturalisation planning.",
+            }
+          : {
+              title: "Life in the UK Test Practice",
+              description:
+                "Practice mock tests, topic quizzes, and wrong-question revision for the Life in the UK test.",
+            };
+
+  usePageMetadata({
+    ...homeMetadata,
+    path: "/",
+  });
 
   const wrongQuestions = useMemo(() => {
     const wrongQuestionIds = new Set(
@@ -1516,7 +1546,7 @@ function AbsenceTracker({ absences, summary, onAddAbsence, onDeleteAbsence }: Ab
     <section className="absence-section" aria-labelledby="absence-title">
       <div className="section-heading">
         <p className="eyebrow">Away from the UK</p>
-        <h2 id="absence-title">Track days outside the UK</h2>
+        <h1 id="absence-title">Track days outside the UK</h1>
         <p>
           Add trips abroad to monitor full days away from the UK. Departure and return dates are not
           counted as absence days, matching common Home Office absence-counting guidance.

@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { usePageMetadata } from "../seo/usePageMetadata";
 
 export default function PaymentCancelledPage() {
+  usePageMetadata({
+    title: "Payment cancelled",
+    description: "Your Life in the UK Prep checkout was cancelled and no payment was taken.",
+    path: "/payment-cancelled",
+    noIndex: true,
+  });
+
   return (
     <main className="payment-page">
       <section className="card payment-card cancelled">

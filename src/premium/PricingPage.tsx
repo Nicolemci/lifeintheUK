@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { FREE_MOCK_TEST_LIMIT } from "../config/premium";
+import { usePageMetadata } from "../seo/usePageMetadata";
 import { usePremium } from "./PremiumContext";
 import PricingCards from "./PricingCards";
 
@@ -13,6 +14,15 @@ export default function PricingPage() {
     hasPremium,
     isExpired,
   } = usePremium();
+
+  usePageMetadata({
+    title: "Premium pricing",
+    description:
+      "Choose Life in the UK Prep Premium access for unlimited mock tests and full practice features.",
+    path: "/pricing",
+    noIndex: true,
+  });
+
   const showLimitMessage =
     (location.state as PricingLocationState | null)?.upgradeReason === "mock-limit";
   const showExpiredMessage =

@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usePageMetadata } from "../seo/usePageMetadata";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
 
@@ -10,6 +11,13 @@ export default function ResetPasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  usePageMetadata({
+    title: "Reset password",
+    description: "Choose a new password for your Life in the UK Prep account.",
+    path: "/reset-password",
+    noIndex: true,
+  });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

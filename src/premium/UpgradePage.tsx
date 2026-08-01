@@ -1,6 +1,7 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import SignUpForm from "../auth/SignUpForm";
+import { usePageMetadata } from "../seo/usePageMetadata";
 
 const premiumBenefits = [
   "Unlimited mock tests",
@@ -13,6 +14,13 @@ const premiumBenefits = [
 export default function UpgradePage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+
+  usePageMetadata({
+    title: "Upgrade to Premium",
+    description:
+      "Continue Life in the UK preparation with unlimited mock tests, full explanations and saved progress.",
+    path: "/upgrade",
+  });
 
   if (loading) {
     return <p className="empty-state">Checking your session…</p>;
