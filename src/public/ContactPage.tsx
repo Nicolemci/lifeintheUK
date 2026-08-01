@@ -2,10 +2,12 @@ import PublicPageLayout from "./PublicPageLayout";
 import { usePageMetadata } from "./usePageMetadata";
 
 export default function ContactPage() {
-  usePageMetadata(
-    "Contact Us",
-    "Contact Life in the UK Prep for help with your account, Premium access, payments or general enquiries.",
-  );
+  usePageMetadata({
+    title: "Contact Us",
+    description:
+      "Contact Life in the UK Prep for help with your account, Premium access, payments or general enquiries.",
+    path: "/contact",
+  });
 
   return (
     <PublicPageLayout

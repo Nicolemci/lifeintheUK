@@ -2,6 +2,7 @@ import { type FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import AuthLayout from "../auth/AuthLayout";
+import { usePageMetadata } from "../seo/usePageMetadata";
 import { useAdmin } from "./AdminContext";
 
 export default function AdminLoginPage() {
@@ -12,6 +13,13 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  usePageMetadata({
+    title: "Admin login",
+    description: "Administrator sign-in for Life in the UK Prep.",
+    path: "/admin/login",
+    noIndex: true,
+  });
 
   useEffect(() => {
     if (user && !adminLoading && isAdmin) {

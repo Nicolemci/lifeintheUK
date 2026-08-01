@@ -1,0 +1,30 @@
+{
+  "defaultSiteUrl": "https://lifeintheukprep.co",
+  "siteName": "Life in the UK Prep",
+  "defaultDescription": "Practice mock tests, topic quizzes, and wrong-question revision for the Life in the UK test. Prepare with timed exams, explanations and progress tracking.",
+  "defaultOgImagePath": "/icon-512.png",
+  "sitemapRoutes": [
+    { "path": "/", "priority": "1.0", "changefreq": "weekly" },
+    { "path": "/about", "priority": "0.8", "changefreq": "monthly" },
+    { "path": "/contact", "priority": "0.8", "changefreq": "monthly" },
+    { "path": "/upgrade", "priority": "0.7", "changefreq": "weekly" },
+    { "path": "/login", "priority": "0.5", "changefreq": "monthly" },
+    { "path": "/sign-up", "priority": "0.6", "changefreq": "monthly" },
+    { "path": "/privacy", "priority": "0.4", "changefreq": "yearly" },
+    { "path": "/terms", "priority": "0.4", "changefreq": "yearly" },
+    { "path": "/refund-policy", "priority": "0.4", "changefreq": "yearly" },
+    { "path": "/cookie-policy", "priority": "0.4", "changefreq": "yearly" }
+  ],
+  "robotsDisallow": [
+    "/admin",
+    "/admin/",
+    "/api/",
+    "/pricing",
+    "/payment-success",
+    "/payment-cancelled",
+    "/premium",
+    "/results-history",
+    "/forgot-password",
+    "/reset-password"
+  ]
+}

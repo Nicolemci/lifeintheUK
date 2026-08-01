@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { usePageMetadata } from "../seo/usePageMetadata";
 import { useProgress } from "./ProgressContext";
 
 function formatDate(date: string): string {
@@ -20,6 +21,13 @@ function formatDuration(durationSeconds: number): string {
 
 export default function MockResultsPage() {
   const { loading, error, stats, mockTestHistory, refreshProgress } = useProgress();
+
+  usePageMetadata({
+    title: "Mock test results",
+    description: "Review your previous Life in the UK mock-test scores and progress over time.",
+    path: "/results-history",
+    noIndex: true,
+  });
 
   return (
     <main className="results-history-page">

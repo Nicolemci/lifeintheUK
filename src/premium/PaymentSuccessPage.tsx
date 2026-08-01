@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usePageMetadata } from "../seo/usePageMetadata";
 import { usePremium } from "./PremiumContext";
 
 export default function PaymentSuccessPage() {
   const navigate = useNavigate();
   const { hasPremium, error, refreshPremiumStatus } = usePremium();
   const [timedOut, setTimedOut] = useState(false);
+
+  usePageMetadata({
+    title: "Payment successful",
+    description: "Your Life in the UK Prep Premium payment is being confirmed.",
+    path: "/payment-success",
+    noIndex: true,
+  });
 
   useEffect(() => {
     if (hasPremium) {

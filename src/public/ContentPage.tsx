@@ -43,7 +43,7 @@ export default function ContentPage({
   sections,
   updatedAt,
 }: ContentPageProps) {
-  usePageMetadata(title, metaDescription);
+  usePageMetadata({ title, description: metaDescription });
 
   return (
     <PublicPageLayout
