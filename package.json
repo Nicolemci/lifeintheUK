@@ -10,7 +10,8 @@
     "test": "vitest run",
     "cap:sync": "npm run build && npx cap sync",
     "cap:android": "npx cap open android",
-    "cap:open": "npx cap open android"
+    "cap:open": "npx cap open android",
+    "cap:build:android": "npm run cap:sync && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.2",
