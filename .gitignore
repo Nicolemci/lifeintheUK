@@ -4,3 +4,12 @@ dist/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+
+# Android / Capacitor local tooling
+.android-sdk/
+*.apk
+*.aab
+android/local.properties
+android/.gradle/
+android/app/build/
+android/build/
