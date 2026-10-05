@@ -25,6 +25,8 @@ export default function UpgradePage() {
     return <p className="empty-state">Checking your session…</p>;
   }
 
+  // Logged-in users go straight to the public plans page.
+  // Guests can still buy here without creating an account first.
   if (user) {
     return <Navigate to="/pricing" replace />;
   }
@@ -39,8 +41,8 @@ export default function UpgradePage() {
           You can pay first — account setup happens during checkout with your email.
         </p>
         <div className="hero-actions">
-          <Link className="secondary-button" to="/results-history">
-            Review My Previous Results
+          <Link className="secondary-button" to="/pricing">
+            View all plans
           </Link>
           <Link className="ghost-button" to="/">
             Return to study
