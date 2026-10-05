@@ -949,6 +949,51 @@ button {
   font-weight: 900;
 }
 
+.checkout-account-page {
+  width: min(980px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.checkout-account-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(280px, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding: 28px;
+}
+
+.checkout-plan-summary {
+  padding: 8px 4px;
+}
+
+.checkout-plan-summary h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 1.8rem;
+}
+
+.checkout-plan-summary .pricing-price {
+  margin: 8px 0;
+}
+
+.checkout-account-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.checkout-account-help {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+
+.checkout-account-help a {
+  color: var(--royal-blue);
+  font-weight: 800;
+}
+
 .results-history-hero {
   margin-bottom: 24px;
 }
@@ -2322,6 +2367,10 @@ button {
   }
 
   .upgrade-account {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-account-card {
     grid-template-columns: 1fr;
   }
 

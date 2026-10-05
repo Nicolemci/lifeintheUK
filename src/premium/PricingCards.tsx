@@ -1,16 +1,30 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 import { PREMIUM_PLANS, type PremiumPlanId } from "../config/premium";
 import { createCheckoutSession } from "../lib/checkout";
 import { usePremium } from "./PremiumContext";
 
 export default function PricingCards() {
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const { loading, error: statusError, hasPremium } = usePremium();
   const [purchasingPlan, setPurchasingPlan] = useState<PremiumPlanId | null>(null);
   const [checkoutError, setCheckoutError] = useState("");
 
   async function buyPlan(plan: PremiumPlanId) {
-    setPurchasingPlan(plan);
     setCheckoutError("");
+
+    if (authLoading) {
+      return;
+    }
+
+    if (!user) {
+      navigate(`/checkout?plan=${encodeURIComponent(plan)}`);
+      return;
+    }
+
+    setPurchasingPlan(plan);
 
     try {
       const checkoutUrl = await createCheckoutSession(plan);
@@ -48,7 +62,7 @@ export default function PricingCards() {
               className={plan.featured ? "primary-button" : "secondary-button"}
               type="button"
               onClick={() => void buyPlan(plan.id)}
-              disabled={loading || hasPremium || purchasingPlan !== null}
+              disabled={loading || authLoading || hasPremium || purchasingPlan !== null}
             >
               {purchasingPlan === plan.id
                 ? "Opening Checkout…"

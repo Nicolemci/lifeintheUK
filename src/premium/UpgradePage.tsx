@@ -17,7 +17,7 @@ export default function UpgradePage() {
   usePageMetadata({
     title: "Premium plans",
     description:
-      "Compare Life in the UK Prep Premium plans by price and duration, then buy before creating an account.",
+      "Compare Life in the UK Prep Premium plans by price and duration. Create an account or log in, then pay with Stripe.",
     path: "/upgrade",
   });
 
@@ -35,8 +35,8 @@ export default function UpgradePage() {
         <p className="british-kicker">Premium access</p>
         <h1>Choose your Premium plan</h1>
         <p>
-          See prices and access length below. You can buy now — Stripe Checkout will collect your
-          email, and you can set your account password after payment.
+          See prices and access length below. Choose a plan, create an account or log in, then
+          continue to Stripe Checkout to pay.
         </p>
       </header>
 
@@ -87,8 +87,8 @@ export default function UpgradePage() {
           <p className="eyebrow">Plans and prices</p>
           <h2 id="upgrade-plans-title">Buy Premium now</h2>
           <p>
-            Pick a duration, pay securely with Stripe, then set your password on the success page to
-            finish creating your account.
+            Pick a duration, then create an account or log in. After that, Stripe Checkout opens so
+            you can pay securely.
           </p>
         </div>
         <PricingCards />
@@ -100,7 +100,7 @@ export default function UpgradePage() {
           <Link to="/login" state={{ from: { pathname: "/upgrade" } }}>
             Sign in
           </Link>{" "}
-          before buying if you want Premium linked to your existing login.
+          first, then choose a plan to go straight to payment.
         </p>
       ) : null}
     </main>
