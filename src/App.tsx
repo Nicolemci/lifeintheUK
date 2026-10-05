@@ -344,7 +344,7 @@ export default function App() {
     }
 
     if (!canStartMockTest) {
-      navigate("/pricing", {
+      navigate("/upgrade", {
         state: {
           upgradeReason: "mock-limit",
         },
@@ -776,7 +776,7 @@ export default function App() {
             >
               Revise wrong questions ({wrongQuestions.length})
             </button>
-            <Link className="secondary-button" to="/pricing">
+            <Link className="secondary-button" to="/upgrade">
               Premium plans
             </Link>
           </div>

@@ -9,7 +9,7 @@ type PremiumGuardProps = {
 
 export default function PremiumGuard({
   children,
-  redirectTo = "/pricing",
+  redirectTo = "/upgrade",
 }: PremiumGuardProps) {
   const {
     isLoggedIn,

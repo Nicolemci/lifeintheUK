@@ -18,8 +18,8 @@ export default function PaymentCancelledPage() {
         <p className="eyebrow">Checkout closed</p>
         <h1>Payment cancelled</h1>
         <p>No payment has been taken. You can choose a plan whenever you are ready.</p>
-        <Link className="secondary-button" to="/pricing">
-          Return to Pricing
+        <Link className="secondary-button" to="/upgrade">
+          Return to plans
         </Link>
       </section>
     </main>
