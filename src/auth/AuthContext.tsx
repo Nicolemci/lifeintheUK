@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
+import { authRedirectUrl } from "../config/site";
 
 type AuthContextValue = {
   session: Session | null;
@@ -128,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const sendPasswordReset = useCallback(async (email: string) => {
     const supabase = await loadSupabaseClient();
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: authRedirectUrl("/reset-password"),
     });
 
     if (resetError) {
