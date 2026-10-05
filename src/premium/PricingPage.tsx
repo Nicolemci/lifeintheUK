@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 import { FREE_MOCK_TEST_LIMIT } from "../config/premium";
 import { usePageMetadata } from "../seo/usePageMetadata";
 import { usePremium } from "./PremiumContext";
@@ -10,17 +11,14 @@ type PricingLocationState = {
 
 export default function PricingPage() {
   const location = useLocation();
-  const {
-    hasPremium,
-    isExpired,
-  } = usePremium();
+  const { user } = useAuth();
+  const { hasPremium, isExpired } = usePremium();
 
   usePageMetadata({
-    title: "Premium pricing",
+    title: "Premium plans",
     description:
-      "Choose Life in the UK Prep Premium access for unlimited mock tests and full practice features.",
+      "Compare Life in the UK Prep Premium plans by price and duration, then buy before creating an account.",
     path: "/pricing",
-    noIndex: true,
   });
 
   const showLimitMessage =
@@ -38,10 +36,10 @@ export default function PricingPage() {
           Back to study
         </Link>
         <p className="british-kicker">Premium access</p>
-        <h1>Unlock unlimited Life in the UK preparation.</h1>
+        <h1>Choose your Premium plan</h1>
         <p>
-          Choose the access period that suits your study plan. Checkout is securely hosted by
-          Stripe.
+          See prices and access length below. You can buy now — Stripe Checkout will collect your
+          email, and you can set your account password after payment.
         </p>
       </header>
 
@@ -74,7 +72,15 @@ export default function PricingPage() {
           Premium access is active. <Link to="/premium">Open Premium area</Link>
         </div>
       ) : null}
+
       <PricingCards />
+
+      {!user && !hasPremium ? (
+        <p className="pricing-footnote">
+          Already have an account? <Link to="/login" state={{ from: { pathname: "/pricing" } }}>Sign in</Link>{" "}
+          before buying if you want Premium linked to your existing login.
+        </p>
+      ) : null}
     </main>
   );
 }

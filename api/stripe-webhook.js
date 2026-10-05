@@ -1,6 +1,7 @@
 const { createClient } = require("@supabase/supabase-js");
 const Stripe = require("stripe");
 const { getErrorMessage, logApiFailure } = require("./_lib/httpError");
+const { findOrCreateUserByEmail } = require("./_lib/findOrCreateUserByEmail");
 const { buildPremiumGrant } = require("./_lib/premiumGrant");
 const { getStripeWebhookConfig } = require("./_lib/stripeConfig");
 
@@ -90,10 +91,18 @@ module.exports = async function stripeWebhook(request, response) {
         },
       },
     );
+
+    let userId = grant.userId;
+
+    if (!userId) {
+      const resolved = await findOrCreateUserByEmail(supabase, grant.email);
+      userId = resolved.userId;
+    }
+
     const { data: applied, error: grantError } = await supabase.rpc(
       "grant_premium_access_from_stripe",
       {
-        p_user_id: grant.userId,
+        p_user_id: userId,
         p_plan: grant.plan,
         p_purchase_date: grant.purchaseDate,
         p_expires_at: grant.expiresAt,
@@ -111,6 +120,7 @@ module.exports = async function stripeWebhook(request, response) {
       received: true,
       handled: true,
       applied: applied === true,
+      userId,
     });
   } catch (databaseError) {
     logApiFailure("stripe-webhook", databaseError, {
@@ -118,6 +128,7 @@ module.exports = async function stripeWebhook(request, response) {
       eventId: event.id,
       checkoutSessionId: grant.stripeCheckoutSessionId,
       userId: grant.userId,
+      email: grant.email,
     });
     return response.status(500).json({
       error: "Premium access could not be granted.",

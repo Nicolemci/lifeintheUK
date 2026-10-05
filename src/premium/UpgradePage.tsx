@@ -1,7 +1,7 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import SignUpForm from "../auth/SignUpForm";
 import { usePageMetadata } from "../seo/usePageMetadata";
+import PricingCards from "./PricingCards";
 
 const premiumBenefits = [
   "Unlimited mock tests",
@@ -13,7 +13,6 @@ const premiumBenefits = [
 
 export default function UpgradePage() {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
 
   usePageMetadata({
     title: "Upgrade to Premium",
@@ -34,11 +33,10 @@ export default function UpgradePage() {
     <main className="upgrade-page">
       <header className="card upgrade-hero">
         <p className="british-kicker">A great milestone</p>
-        <h1>🎉 You've Completed All 5 Free Mock Tests</h1>
+        <h1>Continue with Premium</h1>
         <p>
-          Congratulations on the progress you have made. You have now used all five mock tests
-          included for visitors. Create a free account to continue, save this progress to your
-          account and choose a Premium plan.
+          You have used the free mock-test allowance. Choose a Premium plan below to keep practising.
+          You can pay first — account setup happens during checkout with your email.
         </p>
         <div className="hero-actions">
           <Link className="secondary-button" to="/results-history">
@@ -60,25 +58,16 @@ export default function UpgradePage() {
         </ul>
       </section>
 
-      <section className="card upgrade-account" aria-labelledby="upgrade-account-title">
-        <div>
-          <p className="eyebrow">One quick step</p>
-          <h2 id="upgrade-account-title">Create your account</h2>
+      <section aria-labelledby="upgrade-plans-title">
+        <div className="section-heading">
+          <p className="eyebrow">Plans and prices</p>
+          <h2 id="upgrade-plans-title">Buy Premium now</h2>
           <p>
-            You only need an email address and password. Your session stays signed in on this
-            device, and your anonymous progress will be transferred securely.
-          </p>
-          <p>
-            Already registered?{" "}
-            <Link to="/login" state={{ from: { pathname: "/pricing" } }}>
-              Sign in instead
-            </Link>
+            Pick a duration, pay securely with Stripe, then set your password on the success page to
+            finish creating your account.
           </p>
         </div>
-        <SignUpForm
-          submitLabel="Create account and view plans"
-          onSuccess={() => navigate("/pricing", { replace: true })}
-        />
+        <PricingCards />
       </section>
     </main>
   );
