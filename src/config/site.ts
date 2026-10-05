@@ -8,6 +8,19 @@ export const DEFAULT_DESCRIPTION = seoRoutes.defaultDescription;
 export const DEFAULT_OG_IMAGE_PATH = seoRoutes.defaultOgImagePath;
 export const SUPPORT_EMAIL = "support@lifeintheukprep.co";
 
+/** Prefer the www host for auth emails — apex redirects and dead preview URLs break reset links. */
+export const AUTH_SITE_URL = (() => {
+  try {
+    const parsed = new URL(SITE_URL);
+    if (parsed.hostname === "lifeintheukprep.co") {
+      parsed.hostname = "www.lifeintheukprep.co";
+    }
+    return parsed.origin;
+  } catch {
+    return "https://www.lifeintheukprep.co";
+  }
+})();
+
 export function absoluteUrl(path = "/"): string {
   if (/^https?:\/\//i.test(path)) {
     return path;
@@ -19,4 +32,9 @@ export function absoluteUrl(path = "/"): string {
 
 export function absoluteAssetUrl(path: string): string {
   return absoluteUrl(path);
+}
+
+export function authRedirectUrl(path: string): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${AUTH_SITE_URL}${normalized}`;
 }
