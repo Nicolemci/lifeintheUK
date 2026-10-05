@@ -791,6 +791,18 @@ button {
   margin: 16px 0;
 }
 
+.pricing-footnote {
+  margin: 28px 0 0;
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.pricing-footnote a {
+  color: var(--navy);
+  font-weight: 700;
+}
+
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

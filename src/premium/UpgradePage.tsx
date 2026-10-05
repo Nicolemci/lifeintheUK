@@ -1,85 +1,108 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import SignUpForm from "../auth/SignUpForm";
+import { FREE_MOCK_TEST_LIMIT } from "../config/premium";
 import { usePageMetadata } from "../seo/usePageMetadata";
+import { usePremium } from "./PremiumContext";
+import PricingCards from "./PricingCards";
 
-const premiumBenefits = [
-  "Unlimited mock tests",
-  "Unlimited practice questions",
-  "Full question bank",
-  "Detailed explanations",
-  "Progress saved across devices",
-];
+type UpgradeLocationState = {
+  upgradeReason?: "mock-limit" | "expired" | "premium-required";
+};
 
 export default function UpgradePage() {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+  const { hasPremium, isExpired } = usePremium();
 
   usePageMetadata({
-    title: "Upgrade to Premium",
+    title: "Premium plans",
     description:
-      "Continue Life in the UK preparation with unlimited mock tests, full explanations and saved progress.",
+      "Compare Life in the UK Prep Premium plans by price and duration, then buy before creating an account.",
     path: "/upgrade",
   });
 
-  if (loading) {
-    return <p className="empty-state">Checking your session…</p>;
-  }
-
-  if (user) {
-    return <Navigate to="/pricing" replace />;
-  }
+  const upgradeReason = (location.state as UpgradeLocationState | null)?.upgradeReason;
+  const showLimitMessage = upgradeReason === "mock-limit";
+  const showExpiredMessage = upgradeReason === "expired" || isExpired;
+  const showPremiumRequiredMessage = upgradeReason === "premium-required";
 
   return (
     <main className="upgrade-page">
-      <header className="card upgrade-hero">
-        <p className="british-kicker">A great milestone</p>
-        <h1>🎉 You've Completed All 5 Free Mock Tests</h1>
+      <header className="pricing-hero">
+        <Link className="ghost-button" to="/">
+          Back to study
+        </Link>
+        <p className="british-kicker">Premium access</p>
+        <h1>Choose your Premium plan</h1>
         <p>
-          Congratulations on the progress you have made. You have now used all five mock tests
-          included for visitors. Create a free account to continue, save this progress to your
-          account and choose a Premium plan.
+          See prices and access length below. You can buy now — Stripe Checkout will collect your
+          email, and you can set your account password after payment.
         </p>
-        <div className="hero-actions">
-          <Link className="secondary-button" to="/results-history">
-            Review My Previous Results
-          </Link>
-          <Link className="ghost-button" to="/">
-            Return to study
-          </Link>
-        </div>
       </header>
+
+      {showLimitMessage ? (
+        <section className="card upgrade-notice" role="alert">
+          <p className="eyebrow">Free test allowance used</p>
+          <h2>You have completed all {FREE_MOCK_TEST_LIMIT} free mock tests.</h2>
+          <p>Upgrade to Premium to continue taking unlimited mock tests.</p>
+        </section>
+      ) : null}
+
+      {showExpiredMessage ? (
+        <section className="card upgrade-notice" role="alert">
+          <p className="eyebrow">Premium expired</p>
+          <h2>Your previous Premium access has ended.</h2>
+          <p>Choose a new plan below to restore unlimited access.</p>
+        </section>
+      ) : null}
+
+      {showPremiumRequiredMessage ? (
+        <section className="card upgrade-notice" role="alert">
+          <p className="eyebrow">Premium feature</p>
+          <h2>This area requires active Premium access.</h2>
+          <p>Choose a plan below to unlock all Premium features.</p>
+        </section>
+      ) : null}
+
+      {hasPremium ? (
+        <div className="form-success pricing-status">
+          Premium access is active. <Link to="/premium">Open Premium area</Link>
+        </div>
+      ) : null}
 
       <section className="card upgrade-benefits" aria-labelledby="premium-benefits-title">
         <p className="eyebrow">Continue your preparation</p>
         <h2 id="premium-benefits-title">Premium includes</h2>
         <ul>
-          {premiumBenefits.map((benefit) => (
-            <li key={benefit}>✓ {benefit}</li>
-          ))}
+          <li>✓ Unlimited mock tests</li>
+          <li>✓ Unlimited practice questions</li>
+          <li>✓ Full question bank</li>
+          <li>✓ Detailed explanations</li>
+          <li>✓ Progress saved across devices</li>
         </ul>
       </section>
 
-      <section className="card upgrade-account" aria-labelledby="upgrade-account-title">
-        <div>
-          <p className="eyebrow">One quick step</p>
-          <h2 id="upgrade-account-title">Create your account</h2>
+      <section aria-labelledby="upgrade-plans-title">
+        <div className="section-heading">
+          <p className="eyebrow">Plans and prices</p>
+          <h2 id="upgrade-plans-title">Buy Premium now</h2>
           <p>
-            You only need an email address and password. Your session stays signed in on this
-            device, and your anonymous progress will be transferred securely.
-          </p>
-          <p>
-            Already registered?{" "}
-            <Link to="/login" state={{ from: { pathname: "/pricing" } }}>
-              Sign in instead
-            </Link>
+            Pick a duration, pay securely with Stripe, then set your password on the success page to
+            finish creating your account.
           </p>
         </div>
-        <SignUpForm
-          submitLabel="Create account and view plans"
-          onSuccess={() => navigate("/pricing", { replace: true })}
-        />
+        <PricingCards />
       </section>
+
+      {!user && !hasPremium ? (
+        <p className="pricing-footnote">
+          Already have an account?{" "}
+          <Link to="/login" state={{ from: { pathname: "/upgrade" } }}>
+            Sign in
+          </Link>{" "}
+          before buying if you want Premium linked to your existing login.
+        </p>
+      ) : null}
     </main>
   );
 }

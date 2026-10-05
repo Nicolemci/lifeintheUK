@@ -42,7 +42,7 @@ export default function PremiumHomePage() {
           <Link className="primary-button" to="/">
             Continue studying
           </Link>
-          <Link className="secondary-button" to="/pricing">
+          <Link className="secondary-button" to="/upgrade">
             View plans
           </Link>
         </div>

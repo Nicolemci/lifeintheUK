@@ -86,8 +86,35 @@ function getStripeWebhookConfig(environment = process.env) {
   };
 }
 
+function getPurchaseActivationConfig(environment = process.env) {
+  const values = {
+    STRIPE_SECRET_KEY: firstNonEmpty(environment.STRIPE_SECRET_KEY),
+    VITE_SUPABASE_URL: firstNonEmpty(environment.VITE_SUPABASE_URL),
+    SUPABASE_SERVICE_ROLE_KEY: firstNonEmpty(environment.SUPABASE_SERVICE_ROLE_KEY),
+  };
+  const missingVariables = Object.entries(values)
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+
+  if (missingVariables.length > 0) {
+    console.error("[stripeConfig] Missing purchase activation environment variables", {
+      missingVariables,
+    });
+    throw new Error(
+      `Missing required activation environment variable${missingVariables.length > 1 ? "s" : ""}: ${missingVariables.join(", ")}`,
+    );
+  }
+
+  return {
+    secretKey: values.STRIPE_SECRET_KEY,
+    supabaseUrl: values.VITE_SUPABASE_URL,
+    supabaseServiceRoleKey: values.SUPABASE_SERVICE_ROLE_KEY,
+  };
+}
+
 module.exports = {
   getStripeServerConfig,
   getStripeWebhookConfig,
+  getPurchaseActivationConfig,
   isPremiumPlanId,
 };

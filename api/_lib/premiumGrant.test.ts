@@ -2,7 +2,7 @@ import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
 
 const require = createRequire(import.meta.url);
-const { buildPremiumGrant } = require("./premiumGrant.js");
+const { buildPremiumGrant, getCheckoutEmail } = require("./premiumGrant.js");
 
 const userId = "7b26ba2e-98f4-4d79-a523-7f31e16cb6f4";
 const paidAt = Date.UTC(2026, 6, 28, 12, 0, 0) / 1000;
@@ -34,6 +34,8 @@ describe("Premium webhook grants", () => {
       new Date((paidAt + days * 24 * 60 * 60) * 1000).toISOString(),
     );
     expect(grant.isLifetime).toBe(false);
+    expect(grant.isGuestCheckout).toBe(false);
+    expect(grant.userId).toBe(userId);
   });
 
   it("creates lifetime access without an expiry", () => {
@@ -41,6 +43,25 @@ describe("Premium webhook grants", () => {
 
     expect(grant.expiresAt).toBeNull();
     expect(grant.isLifetime).toBe(true);
+  });
+
+  it("supports guest checkout with email and no user metadata", () => {
+    const grant = buildPremiumGrant(
+      checkoutSession("two_weeks", {
+        client_reference_id: null,
+        customer_details: { email: "Buyer@Example.com" },
+        metadata: {
+          plan: "two_weeks",
+          guest_checkout: "true",
+        },
+      }),
+      paidAt,
+    );
+
+    expect(grant.userId).toBeNull();
+    expect(grant.isGuestCheckout).toBe(true);
+    expect(grant.email).toBe("buyer@example.com");
+    expect(grant.plan).toBe("two_weeks");
   });
 
   it("rejects unpaid, invalid, or mismatched sessions", () => {
@@ -59,5 +80,33 @@ describe("Premium webhook grants", () => {
     expect(() =>
       buildPremiumGrant(checkoutSession("one_week", { customer: null }), paidAt),
     ).toThrow("no Stripe Customer ID");
+    expect(() =>
+      buildPremiumGrant(
+        checkoutSession("one_week", {
+          client_reference_id: null,
+          metadata: { plan: "one_week", guest_checkout: "true" },
+        }),
+        paidAt,
+      ),
+    ).toThrow("no customer email");
+  });
+
+  it("reads checkout email from customer details, customer email, or metadata", () => {
+    expect(
+      getCheckoutEmail({
+        customer_details: { email: " One@Example.com " },
+      }),
+    ).toBe("one@example.com");
+    expect(
+      getCheckoutEmail({
+        customer_email: "two@example.com",
+      }),
+    ).toBe("two@example.com");
+    expect(
+      getCheckoutEmail({
+        metadata: { email: "three@example.com" },
+      }),
+    ).toBe("three@example.com");
+    expect(getCheckoutEmail({})).toBeNull();
   });
 });

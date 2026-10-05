@@ -20,9 +20,11 @@ describe("generate-seo-files", () => {
 
     expect(sitemap).toContain("<loc>https://lifeintheukprep.co/</loc>");
     expect(sitemap).toContain("<loc>https://lifeintheukprep.co/about</loc>");
+    expect(sitemap).toContain("<loc>https://lifeintheukprep.co/upgrade</loc>");
     expect(sitemap).toContain("<loc>https://lifeintheukprep.co/privacy</loc>");
     expect(robots).toContain("Sitemap: https://lifeintheukprep.co/sitemap.xml");
     expect(robots).toContain("Disallow: /admin");
     expect(robots).toContain("Disallow: /api/");
+    expect(robots).not.toContain("Disallow: /upgrade");
   });
 });

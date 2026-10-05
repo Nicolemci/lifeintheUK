@@ -67,11 +67,6 @@ module.exports = async function createCheckoutSession(request, response) {
   }
 
   const accessToken = getBearerToken(request);
-
-  if (!accessToken) {
-    return response.status(401).json({ error: "Authentication is required." });
-  }
-
   const { plan } = parseBody(request);
 
   if (typeof plan !== "string" || !isPremiumPlanId(plan)) {
@@ -80,35 +75,52 @@ module.exports = async function createCheckoutSession(request, response) {
 
   try {
     const config = getStripeServerConfig();
-    const supabase = createClient(config.supabaseUrl, config.supabasePublishableKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
-    });
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser(accessToken);
-
-    if (userError || !user) {
-      logApiFailure("create-checkout-session", userError || "No user returned", {
-        stage: "supabase.auth.getUser",
-      });
-      return response.status(401).json({ error: "Your session is invalid or has expired." });
-    }
-
     const stripe = new Stripe(config.secretKey);
     const origin = getRequestOrigin(request);
-    const metadata = {
-      user_id: user.id,
-      plan,
-    };
+    let user = null;
+
+    if (accessToken) {
+      const supabase = createClient(config.supabaseUrl, config.supabasePublishableKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+        },
+      });
+      const {
+        data: { user: authenticatedUser },
+        error: userError,
+      } = await supabase.auth.getUser(accessToken);
+
+      if (userError || !authenticatedUser) {
+        logApiFailure("create-checkout-session", userError || "No user returned", {
+          stage: "supabase.auth.getUser",
+        });
+        return response.status(401).json({ error: "Your session is invalid or has expired." });
+      }
+
+      user = authenticatedUser;
+    }
+
+    const metadata = user
+      ? {
+          user_id: user.id,
+          plan,
+          guest_checkout: "false",
+        }
+      : {
+          plan,
+          guest_checkout: "true",
+        };
+
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: "payment",
       customer_creation: "always",
-      client_reference_id: user.id,
-      customer_email: user.email,
+      ...(user
+        ? {
+            client_reference_id: user.id,
+            customer_email: user.email,
+          }
+        : {}),
       line_items: [
         {
           price: config.priceIds[plan],

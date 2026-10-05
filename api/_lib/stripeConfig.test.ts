@@ -2,7 +2,7 @@ import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
 
 const require = createRequire(import.meta.url);
-const { getStripeServerConfig, getStripeWebhookConfig } = require("./stripeConfig.js");
+const { getStripeServerConfig, getStripeWebhookConfig, getPurchaseActivationConfig } = require("./stripeConfig.js");
 
 const validEnvironment = {
   STRIPE_SECRET_KEY: "sk_test_example",
@@ -60,5 +60,15 @@ describe("Stripe server configuration", () => {
     });
     expect(() => getStripeWebhookConfig({})).toThrow("STRIPE_WEBHOOK_SECRET");
     expect(() => getStripeWebhookConfig({})).toThrow("SUPABASE_SERVICE_ROLE_KEY");
+  });
+
+  it("validates purchase activation secrets for guest account setup", () => {
+    expect(getPurchaseActivationConfig(validEnvironment)).toEqual({
+      secretKey: "sk_test_example",
+      supabaseUrl: "https://example.supabase.co",
+      supabaseServiceRoleKey: "service_role_example",
+    });
+    expect(() => getPurchaseActivationConfig({})).toThrow("STRIPE_SECRET_KEY");
+    expect(() => getPurchaseActivationConfig({})).toThrow("SUPABASE_SERVICE_ROLE_KEY");
   });
 });

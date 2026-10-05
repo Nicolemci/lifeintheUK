@@ -19,7 +19,6 @@
     "/admin",
     "/admin/",
     "/api/",
-    "/pricing",
     "/payment-success",
     "/payment-cancelled",
     "/premium",

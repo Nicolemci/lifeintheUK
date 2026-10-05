@@ -24,14 +24,15 @@ describe("Stripe Checkout function request validation", () => {
     expect(response.setHeader).toHaveBeenCalledWith("Allow", "POST");
   });
 
-  it("requires a Supabase bearer token", async () => {
+  it("allows guest checkout without a Supabase bearer token", async () => {
     const response = createResponse();
     await createCheckoutSession(
       { method: "POST", headers: {}, body: { plan: "one_week" } },
       response,
     );
 
-    expect(response.status).toHaveBeenCalledWith(401);
+    expect(response.status).not.toHaveBeenCalledWith(401);
+    expect(response.status).toHaveBeenCalledWith(500);
   });
 
   it("rejects plans outside the server allow-list", async () => {

@@ -20,21 +20,49 @@ function isUuid(value) {
   );
 }
 
+function getCheckoutEmail(session) {
+  const candidates = [
+    session.customer_details?.email,
+    session.customer_email,
+    session.metadata?.email,
+  ];
+
+  for (const value of candidates) {
+    if (typeof value === "string" && value.trim()) {
+      return value.trim().toLowerCase();
+    }
+  }
+
+  return null;
+}
+
 function buildPremiumGrant(session, paidAtUnixSeconds) {
   if (session.payment_status !== "paid") {
     throw new Error(`Checkout Session ${session.id} is not paid.`);
   }
 
-  const userId = session.metadata?.user_id;
+  const metadataUserId = session.metadata?.user_id;
   const plan = session.metadata?.plan;
   const customerId = getStripeCustomerId(session.customer);
+  const email = getCheckoutEmail(session);
+  const isGuestCheckout =
+    session.metadata?.guest_checkout === "true" ||
+    (!metadataUserId && Boolean(email));
 
-  if (!userId || !isUuid(userId)) {
+  let userId = null;
+
+  if (metadataUserId) {
+    if (!isUuid(metadataUserId)) {
+      throw new Error(`Checkout Session ${session.id} has invalid user metadata.`);
+    }
+
+    if (session.client_reference_id && session.client_reference_id !== metadataUserId) {
+      throw new Error(`Checkout Session ${session.id} user references do not match.`);
+    }
+
+    userId = metadataUserId;
+  } else if (!isGuestCheckout) {
     throw new Error(`Checkout Session ${session.id} has invalid user metadata.`);
-  }
-
-  if (session.client_reference_id !== userId) {
-    throw new Error(`Checkout Session ${session.id} user references do not match.`);
   }
 
   if (!plan || !isPremiumPlanId(plan)) {
@@ -43,6 +71,10 @@ function buildPremiumGrant(session, paidAtUnixSeconds) {
 
   if (!customerId) {
     throw new Error(`Checkout Session ${session.id} has no Stripe Customer ID.`);
+  }
+
+  if (isGuestCheckout && !email) {
+    throw new Error(`Checkout Session ${session.id} has no customer email for guest checkout.`);
   }
 
   const purchaseDate = new Date(paidAtUnixSeconds * 1000);
@@ -60,6 +92,8 @@ function buildPremiumGrant(session, paidAtUnixSeconds) {
 
   return {
     userId,
+    email,
+    isGuestCheckout,
     plan,
     purchaseDate: purchaseDate.toISOString(),
     expiresAt,
@@ -71,4 +105,5 @@ function buildPremiumGrant(session, paidAtUnixSeconds) {
 
 module.exports = {
   buildPremiumGrant,
+  getCheckoutEmail,
 };

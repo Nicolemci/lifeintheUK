@@ -21,13 +21,13 @@ export default function SignUpPage() {
       footer={
         <span>
           Already have an account?{" "}
-          <Link to="/login" state={{ from: { pathname: "/pricing" } }}>
+          <Link to="/login" state={{ from: { pathname: "/upgrade" } }}>
             Log in
           </Link>
         </span>
       }
     >
-      <SignUpForm onSuccess={() => navigate("/pricing", { replace: true })} />
+      <SignUpForm onSuccess={() => navigate("/upgrade", { replace: true })} />
     </AuthLayout>
   );
 }
