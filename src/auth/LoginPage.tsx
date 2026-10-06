@@ -47,7 +47,7 @@ export default function LoginPage() {
     <AuthLayout
       eyebrow="Welcome back"
       title="Log in to continue studying."
-      description="Your Supabase session keeps you signed in and restores automatically after refresh."
+      description="Stay signed in on this device so your study progress is ready when you come back."
       footer={
         <>
           <Link to="/forgot-password">Forgot password?</Link>

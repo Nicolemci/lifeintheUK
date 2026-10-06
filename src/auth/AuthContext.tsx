@@ -109,7 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (!data.session) {
       throw new Error(
-        "Account creation requires immediate sessions. Disable Confirm email in Supabase Authentication settings, then try again.",
+        "Account creation requires an active session. Please try again, or contact support if this keeps happening.",
       );
     }
 

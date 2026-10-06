@@ -17,7 +17,7 @@ export default function SignUpPage() {
     <AuthLayout
       eyebrow="Create account"
       title="Save your progress securely."
-      description="Create a Supabase account to keep your test progress associated with your login."
+      description="Create a free account to keep your test progress associated with your login."
       footer={
         <span>
           Already have an account?{" "}
