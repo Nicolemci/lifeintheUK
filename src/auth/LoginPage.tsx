@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { usePageMetadata } from "../seo/usePageMetadata";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
+import { getAuthErrorMessage } from "./authErrorMessage";
 
 export default function LoginPage() {
   const { user, loading: authLoading, signIn } = useAuth();
@@ -36,7 +37,7 @@ export default function LoginPage() {
       await signIn(email.trim(), password);
       navigate(redirectPath, { replace: true });
     } catch (signInError) {
-      setError(signInError instanceof Error ? signInError.message : "Unable to log in.");
+      setError(getAuthErrorMessage(signInError, "Unable to log in."));
     } finally {
       setSubmitting(false);
     }

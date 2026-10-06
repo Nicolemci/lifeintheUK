@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { usePageMetadata } from "../seo/usePageMetadata";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
+import { getAuthErrorMessage } from "./authErrorMessage";
 
 export default function ResetPasswordPage() {
   const { user, loading, isPasswordRecovery, updatePassword } = useAuth();
@@ -34,7 +35,7 @@ export default function ResetPasswordPage() {
       await updatePassword(password);
       navigate("/", { replace: true });
     } catch (updateError) {
-      setError(updateError instanceof Error ? updateError.message : "Unable to update password.");
+      setError(getAuthErrorMessage(updateError, "Unable to update password."));
     } finally {
       setSubmitting(false);
     }
