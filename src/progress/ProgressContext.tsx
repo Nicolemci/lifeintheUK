@@ -410,7 +410,7 @@ export function ProgressProvider() {
         }
 
         if (!insertedRow) {
-          throw new Error("Supabase did not return the saved mock test.");
+          throw new Error("The saved mock test could not be confirmed. Please try again.");
         }
 
         const row = insertedRow as MockTestHistoryRow;
