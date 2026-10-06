@@ -9,6 +9,7 @@ import {
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { authRedirectUrl } from "../config/site";
+import { getAuthErrorMessage } from "./authErrorMessage";
 
 type AuthContextValue = {
   session: Session | null;
@@ -24,10 +25,6 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : "An unexpected authentication error occurred.";
-}
 
 async function loadSupabaseClient() {
   const { getSupabaseClient } = await import("../lib/supabase");
@@ -82,7 +79,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       .catch((configurationError: unknown) => {
         if (mounted) {
-          setError(errorMessage(configurationError));
+          setError(
+            getAuthErrorMessage(
+              configurationError,
+              "An unexpected authentication error occurred.",
+            ),
+          );
         }
       })
       .finally(() => {
@@ -102,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
 
     if (signUpError) {
-      throw signUpError;
+      throw new Error(getAuthErrorMessage(signUpError, "Unable to create account."));
     }
 
     if (!data.session) {
@@ -122,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (signInError) {
-      throw signInError;
+      throw new Error(getAuthErrorMessage(signInError, "Unable to log in."));
     }
   }, []);
 
@@ -133,7 +135,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (resetError) {
-      throw resetError;
+      throw new Error(
+        getAuthErrorMessage(
+          resetError,
+          "Unable to send a password reset email. Please try again or contact support.",
+        ),
+      );
     }
   }, []);
 
@@ -144,7 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (updateError) {
-      throw updateError;
+      throw new Error(getAuthErrorMessage(updateError, "Unable to update password."));
     }
 
     setIsPasswordRecovery(false);

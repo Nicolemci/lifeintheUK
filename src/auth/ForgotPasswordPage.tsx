@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { usePageMetadata } from "../seo/usePageMetadata";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
+import { getAuthErrorMessage } from "./authErrorMessage";
 
 export default function ForgotPasswordPage() {
   const { sendPasswordReset } = useAuth();
@@ -28,7 +29,12 @@ export default function ForgotPasswordPage() {
       await sendPasswordReset(email.trim());
       setSuccess("If an account exists for that address, a password reset email has been sent.");
     } catch (resetError) {
-      setError(resetError instanceof Error ? resetError.message : "Unable to send reset email.");
+      setError(
+        getAuthErrorMessage(
+          resetError,
+          "Unable to send a password reset email. Please try again or contact support.",
+        ),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -38,7 +44,7 @@ export default function ForgotPasswordPage() {
     <AuthLayout
       eyebrow="Password help"
       title="Reset your password."
-      description="Enter your account email and Supabase will send a secure recovery link."
+      description="Enter your account email and we will send a secure recovery link."
       footer={<Link to="/login">Back to login</Link>}
     >
       <form className="auth-form" onSubmit={handleSubmit}>

@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { useAuth } from "./AuthContext";
+import { getAuthErrorMessage } from "./authErrorMessage";
 
 type SignUpFormProps = {
   onSuccess: () => void;
@@ -25,9 +26,7 @@ export default function SignUpForm({
       await signUp(email.trim(), password);
       onSuccess();
     } catch (signUpError) {
-      setError(
-        signUpError instanceof Error ? signUpError.message : "Unable to create account.",
-      );
+      setError(getAuthErrorMessage(signUpError, "Unable to create account."));
     } finally {
       setSubmitting(false);
     }
