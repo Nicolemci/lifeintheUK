@@ -2,6 +2,7 @@ import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import SignUpForm from "../auth/SignUpForm";
 import { useAuth } from "../auth/AuthContext";
+import PasswordInput from "../components/PasswordInput";
 import { PREMIUM_PLANS, isPremiumPlanId, type PremiumPlanId } from "../config/premium";
 import { createCheckoutSession } from "../lib/checkout";
 import { usePageMetadata } from "../seo/usePageMetadata";
@@ -202,17 +203,14 @@ export default function CheckoutAccountPage() {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </label>
-                <label>
-                  Password
-                  <input
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    minLength={6}
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                  />
-                </label>
+                <PasswordInput
+                  label="Password"
+                  autoComplete="current-password"
+                  required
+                  minLength={6}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
                 {error ? <p className="form-error">{error}</p> : null}
                 <button className="primary-button" type="submit" disabled={submitting}>
                   {submitting ? "Logging in…" : "Log in and continue to payment"}

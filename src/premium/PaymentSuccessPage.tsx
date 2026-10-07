@@ -1,6 +1,7 @@
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import PasswordInput from "../components/PasswordInput";
 import { activateGuestPurchase, fetchCheckoutSession } from "../lib/checkout";
 import { usePageMetadata } from "../seo/usePageMetadata";
 import { usePremium } from "./PremiumContext";
@@ -150,28 +151,22 @@ export default function PaymentSuccessPage() {
               creating your account and unlock Premium.
             </p>
             <form className="auth-form" onSubmit={handleAccountSetup}>
-              <label>
-                Password
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  minLength={6}
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </label>
-              <label>
-                Confirm password
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  minLength={6}
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                />
-              </label>
+              <PasswordInput
+                label="Password"
+                autoComplete="new-password"
+                required
+                minLength={6}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              <PasswordInput
+                label="Confirm password"
+                autoComplete="new-password"
+                required
+                minLength={6}
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+              />
               {setupError ? <p className="form-error">{setupError}</p> : null}
               {setupSuccess ? <p className="form-success">{setupSuccess}</p> : null}
               <button className="primary-button" type="submit" disabled={submitting}>

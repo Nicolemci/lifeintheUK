@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { usePageMetadata } from "../seo/usePageMetadata";
+import PasswordInput from "../components/PasswordInput";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
 import { getAuthErrorMessage } from "./authErrorMessage";
@@ -59,28 +60,22 @@ export default function ResetPasswordPage() {
               You are signed in. You can still update your password here.
             </p>
           ) : null}
-          <label>
-            New password
-            <input
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </label>
-          <label>
-            Confirm new password
-            <input
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={6}
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-            />
-          </label>
+          <PasswordInput
+            label="New password"
+            autoComplete="new-password"
+            required
+            minLength={6}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <PasswordInput
+            label="Confirm new password"
+            autoComplete="new-password"
+            required
+            minLength={6}
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+          />
           {error ? <p className="form-error">{error}</p> : null}
           <button className="primary-button" type="submit" disabled={submitting}>
             {submitting ? "Updating…" : "Update password"}

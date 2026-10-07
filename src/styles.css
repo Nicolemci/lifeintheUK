@@ -271,6 +271,39 @@ button {
   outline: none;
 }
 
+.password-field-control {
+  position: relative;
+  display: block;
+}
+
+.password-field-control input {
+  padding-right: 48px;
+}
+
+.password-visibility-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  color: var(--navy);
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.password-visibility-toggle:hover,
+.password-visibility-toggle:focus-visible {
+  background: rgba(7, 31, 77, 0.08);
+  outline: none;
+}
+
 .auth-footer {
   display: grid;
   gap: 10px;

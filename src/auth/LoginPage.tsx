@@ -1,6 +1,7 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { usePageMetadata } from "../seo/usePageMetadata";
+import PasswordInput from "../components/PasswordInput";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "./AuthContext";
 import { getAuthErrorMessage } from "./authErrorMessage";
@@ -68,17 +69,14 @@ export default function LoginPage() {
             onChange={(event) => setEmail(event.target.value)}
           />
         </label>
-        <label>
-          Password
-          <input
-            type="password"
-            autoComplete="current-password"
-            required
-            minLength={6}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
+        <PasswordInput
+          label="Password"
+          autoComplete="current-password"
+          required
+          minLength={6}
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
         {error ? <p className="form-error">{error}</p> : null}
         <button className="primary-button" type="submit" disabled={submitting || authLoading}>
           {submitting ? "Logging in…" : "Log in"}
