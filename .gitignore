@@ -4,3 +4,17 @@ dist/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+
+# Capacitor / native local machine files
+android/local.properties
+android/.gradle/
+android/app/build/
+android/build/
+android/captures/
+android/.idea/
+ios/App/Pods/
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+ios/DerivedData/
+*.keystore
+*.jks
