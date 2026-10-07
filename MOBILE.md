@@ -33,7 +33,21 @@ npm run cap:android
 
 3. In Android Studio: wait for Gradle sync → choose emulator/device → **Run**.
 
-If Android Studio shows **“Web assets have not been copied to Android assets yet”**, the website build was never synced into `android/`. Close the app, run `npm run cap:sync` from the repo root, then **Run** again. After this change, a fresh pull also includes those assets so Studio can open without a sync first — but you still need sync after any website change.
+If Android Studio shows **“Web assets have not been copied to Android assets yet”**, the website build is missing from **your local** `android/` folder. Running sync in Cursor’s cloud does **not** update the project on your PC.
+
+On **your computer**, from the repo root:
+
+```bash
+# optional but safest if a placeholder page is stuck:
+rm -rf android/app/src/main/assets/public
+
+npm install
+npm run cap:sync
+```
+
+Then in Android Studio: **Build → Clean Project** → **Run** (uninstall the app from the emulator first if it still shows the old screen).
+
+After pulling a branch that already includes synced assets, Studio can open without sync — but you still need `npm run cap:sync` after any website change.
 
 ### iOS (Mac only)
 
