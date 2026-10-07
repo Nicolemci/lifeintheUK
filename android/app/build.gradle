@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 
-// Fail fast if web assets were never synced (Capacitor placeholder screen).
+// Prefer freshly built web assets when dist/ exists (after npm run build / cap:sync).
 def webIndex = file('src/main/assets/public/index.html')
 def webDistIndex = file('../../dist/index.html')
+def capConfig = file('src/main/assets/capacitor.config.json')
 task ensureWebAssets {
     doLast {
         if (webDistIndex.exists()) {
@@ -10,6 +11,12 @@ task ensureWebAssets {
                 from '../../dist'
                 into 'src/main/assets/public'
             }
+        }
+        // When capacitor.config.json has server.url, the WebView loads the live site
+        // and local assets are optional — so don't fail the build.
+        def usesRemoteServer = capConfig.exists() && capConfig.getText('UTF-8').contains('"url"')
+        if (usesRemoteServer) {
+            return
         }
         if (!webIndex.exists()) {
             throw new GradleException(

@@ -3,6 +3,7 @@
 	"appName": "Life in the UK Prep",
 	"webDir": "dist",
 	"server": {
+		"url": "https://www.lifeintheukprep.co",
 		"androidScheme": "https",
 		"iosScheme": "https"
 	},
