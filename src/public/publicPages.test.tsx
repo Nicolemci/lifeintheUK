@@ -16,6 +16,7 @@ describe("public information pages", () => {
     );
 
     [
+      "/install",
       "/privacy",
       "/terms",
       "/refund-policy",

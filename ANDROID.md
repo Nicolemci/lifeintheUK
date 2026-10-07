@@ -1,11 +1,13 @@
-# Android setup
+# Android / iOS native shells
 
-Capacitor mobile setup (Android + iOS) is documented in **[MOBILE.md](./MOBILE.md)**.
+**Prefer the PWA:** most users should install from the website instead of building with Android Studio.
 
-Quick start:
+→ [MOBILE.md](./MOBILE.md) · [Install page](https://www.lifeintheukprep.co/install)
+
+Capacitor projects under `/android` and `/ios` remain available for optional store builds:
 
 ```bash
 npm install
 npm run cap:sync
-npm run cap:android
+npm run cap:android   # or npm run cap:ios on a Mac
 ```

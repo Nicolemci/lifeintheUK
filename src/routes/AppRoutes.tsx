@@ -9,6 +9,7 @@ import LoginPage from "../auth/LoginPage";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import ResetPasswordPage from "../auth/ResetPasswordPage";
 import SignUpPage from "../auth/SignUpPage";
+import PwaInstallPrompt from "../components/PwaInstallPrompt";
 import SiteFooter from "../components/SiteFooter";
 import PaymentCancelledPage from "../premium/PaymentCancelledPage";
 import PaymentSuccessPage from "../premium/PaymentSuccessPage";
@@ -25,6 +26,7 @@ const AdminQuestionsPage = lazy(() => import("../admin/AdminQuestionsPage"));
 const AboutPage = lazy(() => import("../public/AboutPage"));
 const ContactPage = lazy(() => import("../public/ContactPage"));
 const CookiePolicyPage = lazy(() => import("../public/CookiePolicyPage"));
+const InstallAppPage = lazy(() => import("../public/InstallAppPage"));
 const PrivacyPage = lazy(() => import("../public/PrivacyPage"));
 const RefundPolicyPage = lazy(() => import("../public/RefundPolicyPage"));
 const TermsPage = lazy(() => import("../public/TermsPage"));
@@ -44,6 +46,7 @@ export default function AppRoutes() {
           <Route path="/cookie-policy" element={publicPage(<CookiePolicyPage />)} />
           <Route path="/about" element={publicPage(<AboutPage />)} />
           <Route path="/contact" element={publicPage(<ContactPage />)} />
+          <Route path="/install" element={publicPage(<InstallAppPage />)} />
 
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
@@ -85,6 +88,7 @@ export default function AppRoutes() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
+      <PwaInstallPrompt />
       <SiteFooter />
     </div>
   );
