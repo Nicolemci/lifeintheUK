@@ -25,6 +25,7 @@ export default function PublicPageLayout({
         </Link>
         <div>
           <Link to="/">Study</Link>
+          <Link to="/install">Install</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
           <Link className="secondary-button" to="/login">
