@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from "react";
+import PasswordInput from "../components/PasswordInput";
 import { useAuth } from "./AuthContext";
 import { getAuthErrorMessage } from "./authErrorMessage";
 
@@ -44,17 +45,14 @@ export default function SignUpForm({
           onChange={(event) => setEmail(event.target.value)}
         />
       </label>
-      <label>
-        Password
-        <input
-          type="password"
-          autoComplete="new-password"
-          required
-          minLength={6}
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </label>
+      <PasswordInput
+        label="Password"
+        autoComplete="new-password"
+        required
+        minLength={6}
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+      />
       {error ? <p className="form-error">{error}</p> : null}
       <button className="primary-button" type="submit" disabled={submitting}>
         {submitting ? "Creating account…" : submitLabel}
