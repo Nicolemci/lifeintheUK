@@ -23,7 +23,7 @@ This Vite + React site is wrapped for the **Google Play Store** and **Apple App 
 ### Android (Windows, Mac, or Linux)
 
 1. Install [Android Studio](https://developer.android.com/studio) with an Android SDK and an emulator (or use a USB phone with USB debugging).
-2. In this repo:
+2. In this repo (from the project root, not only the `android/` folder):
 
 ```bash
 npm install
@@ -32,6 +32,8 @@ npm run cap:android
 ```
 
 3. In Android Studio: wait for Gradle sync → choose emulator/device → **Run**.
+
+If Android Studio shows **“Web assets have not been copied to Android assets yet”**, the website build was never synced into `android/`. Close the app, run `npm run cap:sync` from the repo root, then **Run** again. After this change, a fresh pull also includes those assets so Studio can open without a sync first — but you still need sync after any website change.
 
 ### iOS (Mac only)
 
