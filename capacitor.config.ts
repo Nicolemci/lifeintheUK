@@ -5,6 +5,11 @@ const config: CapacitorConfig = {
   appName: "Life in the UK Prep",
   webDir: "dist",
   server: {
+    // Load the live site in the native shell so Android Studio / Cursor
+    // can run without a local `npm run cap:sync` (Node is often missing).
+    // Bundled assets in android/.../assets/public remain as a fallback
+    // when this URL is removed for offline / store builds.
+    url: "https://www.lifeintheukprep.co",
     androidScheme: "https",
     iosScheme: "https",
   },

@@ -1,0 +1,19 @@
+{
+	"appId": "co.lifeintheukprep.app",
+	"appName": "Life in the UK Prep",
+	"webDir": "dist",
+	"server": {
+		"url": "https://www.lifeintheukprep.co",
+		"androidScheme": "https",
+		"iosScheme": "https"
+	},
+	"android": {
+		"allowMixedContent": false,
+		"backgroundColor": "#071f4d"
+	},
+	"ios": {
+		"backgroundColor": "#071f4d",
+		"contentInset": "automatic",
+		"preferredContentMode": "mobile"
+	}
+}

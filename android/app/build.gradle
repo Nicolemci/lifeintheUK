@@ -1,5 +1,50 @@
 apply plugin: 'com.android.application'
 
+// Prefer freshly built web assets when dist/ exists (after npm run build / cap:sync).
+def webIndex = file('src/main/assets/public/index.html')
+def webDistIndex = file('../../dist/index.html')
+def capConfig = file('src/main/assets/capacitor.config.json')
+task ensureWebAssets {
+    doLast {
+        if (webDistIndex.exists()) {
+            copy {
+                from '../../dist'
+                into 'src/main/assets/public'
+            }
+        }
+        // When capacitor.config.json has server.url, the WebView loads the live site
+        // and local assets are optional — so don't fail the build.
+        def usesRemoteServer = capConfig.exists() && capConfig.getText('UTF-8').contains('"url"')
+        if (usesRemoteServer) {
+            return
+        }
+        if (!webIndex.exists()) {
+            throw new GradleException(
+                "Missing android web assets (src/main/assets/public/index.html).\n" +
+                "From the repo root (not this android/ folder), run:\n" +
+                "  npm install\n" +
+                "  npm run cap:sync\n" +
+                "Then Build → Clean Project and Run again in Android Studio."
+            )
+        }
+        def indexText = webIndex.getText('UTF-8')
+        if (indexText.contains('Web assets have not been copied')) {
+            throw new GradleException(
+                "Android is still using the Capacitor placeholder page.\n" +
+                "From the repo root, run: npm run cap:sync\n" +
+                "Then in Android Studio: Build → Clean Project → Run."
+            )
+        }
+        if (!indexText.contains('id="root"')) {
+            throw new GradleException(
+                "android/app/src/main/assets/public/index.html does not look like the built web app.\n" +
+                "From the repo root, run: npm run cap:sync"
+            )
+        }
+    }
+}
+preBuild.dependsOn ensureWebAssets
+
 android {
     namespace = "co.lifeintheukprep.app"
     compileSdk = rootProject.ext.compileSdkVersion
