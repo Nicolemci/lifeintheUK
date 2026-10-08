@@ -21,7 +21,7 @@ describe("Stripe Checkout function request validation", () => {
     await createCheckoutSession({ method: "GET", headers: {} }, response);
 
     expect(response.status).toHaveBeenCalledWith(405);
-    expect(response.setHeader).toHaveBeenCalledWith("Allow", "POST");
+    expect(response.setHeader).toHaveBeenCalledWith("Allow", "POST, OPTIONS");
   });
 
   it("allows guest checkout without a Supabase bearer token", async () => {

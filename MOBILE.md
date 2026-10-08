@@ -35,19 +35,20 @@ npm run cap:android
 
 ### iOS (Mac only)
 
-Apple requires a Mac with Xcode to build and submit iOS apps.
+Apple requires a Mac with Xcode to build and submit iOS apps. See **[IOS.md](./IOS.md)** for readiness notes.
 
 1. Install [Xcode](https://developer.apple.com/xcode/) from the Mac App Store and open it once to accept the license.
-2. Install CocoaPods if needed: `sudo gem install cocoapods`
-3. In this repo:
+2. In this repo:
 
 ```bash
 npm install
-npm run cap:sync
+npm run cap:sync:ios
 npm run cap:ios
 ```
 
-4. In Xcode: select a simulator or your iPhone → **Run**.
+3. In Xcode: select a simulator or your iPhone → **Run**.
+
+Safe-area insets, swipe-back, absolute `/api` URLs, and iOS icons/splash are already configured in-repo.
 
 ## After any website change
 

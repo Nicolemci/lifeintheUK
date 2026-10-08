@@ -1,5 +1,10 @@
 const { createClient } = require("@supabase/supabase-js");
 const Stripe = require("stripe");
+const {
+  applyCorsHeaders,
+  getPublicAppOrigin,
+  handleCorsPreflight,
+} = require("./_lib/cors");
 const { getErrorMessage, logApiFailure } = require("./_lib/httpError");
 const { isPremiumPlanId } = require("./_lib/plans");
 const { getStripeServerConfig } = require("./_lib/stripeConfig");
@@ -13,38 +18,6 @@ function getBearerToken(request) {
 
   const token = authorization.slice("Bearer ".length).trim();
   return token || null;
-}
-
-function getRequestOrigin(request) {
-  const originHeader = request.headers.origin;
-  const origin = Array.isArray(originHeader) ? originHeader[0] : originHeader;
-
-  if (origin) {
-    try {
-      const parsedOrigin = new URL(origin);
-      const isHttps = parsedOrigin.protocol === "https:";
-      const isLocalDevelopment =
-        parsedOrigin.protocol === "http:" &&
-        (parsedOrigin.hostname === "localhost" || parsedOrigin.hostname === "127.0.0.1");
-
-      if (isHttps || isLocalDevelopment) {
-        return parsedOrigin.origin;
-      }
-    } catch {
-      // Fall through to trusted Vercel forwarding headers.
-    }
-  }
-
-  const forwardedHostHeader = request.headers["x-forwarded-host"];
-  const forwardedHost = Array.isArray(forwardedHostHeader)
-    ? forwardedHostHeader[0]
-    : forwardedHostHeader;
-
-  if (forwardedHost) {
-    return `https://${forwardedHost}`;
-  }
-
-  return "http://localhost:5173";
 }
 
 function parseBody(request) {
@@ -61,8 +34,14 @@ function parseBody(request) {
 }
 
 module.exports = async function createCheckoutSession(request, response) {
+  applyCorsHeaders(request, response);
+
+  if (handleCorsPreflight(request, response)) {
+    return;
+  }
+
   if (request.method !== "POST") {
-    response.setHeader("Allow", "POST");
+    response.setHeader("Allow", "POST, OPTIONS");
     return response.status(405).json({ error: "Method not allowed." });
   }
 
@@ -76,7 +55,8 @@ module.exports = async function createCheckoutSession(request, response) {
   try {
     const config = getStripeServerConfig();
     const stripe = new Stripe(config.secretKey);
-    const origin = getRequestOrigin(request);
+    // Never use Capacitor https://localhost as Stripe return URLs.
+    const origin = getPublicAppOrigin(request);
     let user = null;
 
     if (accessToken) {

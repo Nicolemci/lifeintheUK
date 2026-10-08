@@ -1,5 +1,9 @@
 const { createClient } = require("@supabase/supabase-js");
 const Stripe = require("stripe");
+const {
+  applyCorsHeaders,
+  handleCorsPreflight,
+} = require("./_lib/cors");
 const { getErrorMessage, logApiFailure } = require("./_lib/httpError");
 const { findOrCreateUserByEmail } = require("./_lib/findOrCreateUserByEmail");
 const { buildPremiumGrant, getCheckoutEmail } = require("./_lib/premiumGrant");
@@ -18,8 +22,14 @@ function parseBody(request) {
 }
 
 module.exports = async function activatePurchase(request, response) {
+  applyCorsHeaders(request, response);
+
+  if (handleCorsPreflight(request, response)) {
+    return;
+  }
+
   if (request.method !== "POST") {
-    response.setHeader("Allow", "POST");
+    response.setHeader("Allow", "POST, OPTIONS");
     return response.status(405).json({ error: "Method not allowed." });
   }
 

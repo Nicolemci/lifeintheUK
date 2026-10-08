@@ -1,11 +1,21 @@
 const Stripe = require("stripe");
+const {
+  applyCorsHeaders,
+  handleCorsPreflight,
+} = require("./_lib/cors");
 const { getErrorMessage, logApiFailure } = require("./_lib/httpError");
 const { getCheckoutEmail } = require("./_lib/premiumGrant");
 const { getStripeServerConfig } = require("./_lib/stripeConfig");
 
 module.exports = async function getCheckoutSession(request, response) {
+  applyCorsHeaders(request, response);
+
+  if (handleCorsPreflight(request, response)) {
+    return;
+  }
+
   if (request.method !== "GET") {
-    response.setHeader("Allow", "GET");
+    response.setHeader("Allow", "GET, OPTIONS");
     return response.status(405).json({ error: "Method not allowed." });
   }
 
