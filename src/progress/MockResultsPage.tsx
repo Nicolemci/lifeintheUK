@@ -75,9 +75,6 @@ export default function MockResultsPage() {
           >
             {saving ? "Resetting…" : "Reset all quiz scores"}
           </button>
-          <Link className="ghost-button" to="/delete-data">
-            Delete account / data
-          </Link>
         </div>
         {resetMessage ? <p className="form-success">{resetMessage}</p> : null}
         {resetError ? <p className="form-error">{resetError}</p> : null}
