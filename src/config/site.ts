@@ -38,3 +38,17 @@ export function authRedirectUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return `${AUTH_SITE_URL}${normalized}`;
 }
+
+/**
+ * Absolute API URL for Capacitor / native shells.
+ * Relative `/api/...` paths resolve against capacitor:// or https://localhost
+ * and miss the Vercel backend — always call the live site origin instead.
+ */
+export function apiUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${AUTH_SITE_URL}${normalized}`;
+}

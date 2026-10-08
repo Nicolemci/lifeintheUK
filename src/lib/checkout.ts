@@ -1,4 +1,5 @@
 import type { PremiumPlanId } from "../config/premium";
+import { apiUrl } from "../config/site";
 
 type CheckoutResponse = {
   url?: unknown;
@@ -37,7 +38,7 @@ export async function createCheckoutSession(plan: PremiumPlanId): Promise<string
     // Guest checkout is allowed when Supabase session is unavailable.
   }
 
-  const response = await fetch("/api/create-checkout-session", {
+  const response = await fetch(apiUrl("/api/create-checkout-session"), {
     method: "POST",
     headers,
     body: JSON.stringify({ plan }),
@@ -77,7 +78,7 @@ export type CheckoutSessionSummary = {
 
 export async function fetchCheckoutSession(sessionId: string): Promise<CheckoutSessionSummary> {
   const response = await fetch(
-    `/api/checkout-session?session_id=${encodeURIComponent(sessionId)}`,
+    apiUrl(`/api/checkout-session?session_id=${encodeURIComponent(sessionId)}`),
   );
   const data = (await response.json()) as CheckoutSessionSummary & CheckoutResponse;
 
@@ -92,7 +93,7 @@ export async function activateGuestPurchase(
   sessionId: string,
   password: string,
 ): Promise<{ email: string }> {
-  const response = await fetch("/api/activate-purchase", {
+  const response = await fetch(apiUrl("/api/activate-purchase"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ sessionId, password }),
