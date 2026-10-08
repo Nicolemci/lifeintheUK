@@ -12,3 +12,4 @@
 | 06-contact.png | Contact |
 | 07-delete-data.png | Delete your data |
 | 08-privacy.png | Privacy |
+| 09-mock-test.png | Mock test in progress |
