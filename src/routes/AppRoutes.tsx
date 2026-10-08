@@ -25,6 +25,7 @@ const AdminQuestionsPage = lazy(() => import("../admin/AdminQuestionsPage"));
 const AboutPage = lazy(() => import("../public/AboutPage"));
 const ContactPage = lazy(() => import("../public/ContactPage"));
 const CookiePolicyPage = lazy(() => import("../public/CookiePolicyPage"));
+const DeleteDataPage = lazy(() => import("../public/DeleteDataPage"));
 const PrivacyPage = lazy(() => import("../public/PrivacyPage"));
 const RefundPolicyPage = lazy(() => import("../public/RefundPolicyPage"));
 const TermsPage = lazy(() => import("../public/TermsPage"));
@@ -66,6 +67,10 @@ export default function AppRoutes() {
           </Route>
 
           <Route element={<ProgressProvider />}>
+            <Route
+              path="/delete-data"
+              element={publicPage(<DeleteDataPage />)}
+            />
             <Route element={<PremiumProvider />}>
               <Route path="/upgrade" element={<UpgradePage />} />
               <Route path="/pricing" element={<PricingPage />} />

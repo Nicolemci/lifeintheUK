@@ -82,6 +82,8 @@ type ProgressContextValue = {
   refreshProgress: () => Promise<void>;
   saveQuestionAnswer: (input: SaveQuestionAnswerInput) => Promise<void>;
   saveMockTest: (input: SaveMockTestInput) => Promise<void>;
+  /** Clears quiz answers, wrong-question bank and mock-test history (signed-in + local). */
+  resetAllQuizScores: () => Promise<void>;
 };
 
 const emptyProgress: ProgressState = {
@@ -434,6 +436,55 @@ export function ProgressProvider() {
     [user],
   );
 
+  const resetAllQuizScores = useCallback(async () => {
+    setSavingCount((count) => count + 1);
+    setError(null);
+
+    try {
+      clearAnonymousProgress();
+      try {
+        window.localStorage.removeItem("life-in-the-uk-prep-progress-v1");
+        window.localStorage.removeItem("life-in-the-uk-prep-users-v1");
+      } catch {
+        // Private browsing / storage failures should not block reset.
+      }
+
+      const clearedLocal = loadAnonymousProgress();
+      setAnonymousProgress(clearedLocal);
+      setProgress(emptyProgress);
+      setMockTestHistory([]);
+
+      if (!user) {
+        return;
+      }
+
+      const supabase = await loadSupabaseClient();
+      const [quizDelete, mockDelete] = await Promise.all([
+        supabase.from("quiz_progress").delete().eq("user_id", user.id),
+        supabase.from("mock_tests").delete().eq("user_id", user.id),
+      ]);
+
+      if (quizDelete.error) {
+        throw quizDelete.error;
+      }
+
+      if (mockDelete.error) {
+        throw mockDelete.error;
+      }
+
+      await refreshProgress();
+    } catch (resetError) {
+      const message =
+        resetError instanceof Error
+          ? resetError.message
+          : "Unable to reset your quiz scores.";
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setSavingCount((count) => Math.max(0, count - 1));
+    }
+  }, [user, refreshProgress]);
+
   const value = useMemo<ProgressContextValue>(
     () => ({
       loading,
@@ -451,6 +502,7 @@ export function ProgressProvider() {
       refreshProgress,
       saveQuestionAnswer,
       saveMockTest,
+      resetAllQuizScores,
     }),
     [
       loading,
@@ -461,6 +513,7 @@ export function ProgressProvider() {
       refreshProgress,
       saveQuestionAnswer,
       saveMockTest,
+      resetAllQuizScores,
     ],
   );
 

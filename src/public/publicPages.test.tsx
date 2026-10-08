@@ -17,6 +17,7 @@ describe("public information pages", () => {
 
     [
       "/privacy",
+      "/delete-data",
       "/terms",
       "/refund-policy",
       "/cookie-policy",
