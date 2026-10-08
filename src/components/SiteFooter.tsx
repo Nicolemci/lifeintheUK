@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 const footerLinks = [
   { to: "/privacy", label: "Privacy Policy" },
+  { to: "/delete-data", label: "Delete your data" },
   { to: "/terms", label: "Terms & Conditions" },
   { to: "/refund-policy", label: "Refund Policy" },
   { to: "/cookie-policy", label: "Cookie Policy" },

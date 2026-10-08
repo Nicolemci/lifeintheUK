@@ -841,6 +841,14 @@ export default function App() {
               </div>
             ) : null}
           </dl>
+          <div className="score-card-links">
+            <Link className="ghost-button" to="/results-history">
+              View / reset scores
+            </Link>
+            <Link className="ghost-button" to="/delete-data">
+              Delete data
+            </Link>
+          </div>
           {progressSaving ? <span className="progress-saving">Saving progress…</span> : null}
         </div>
       </section>

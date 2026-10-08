@@ -74,6 +74,13 @@ export const privacySections: ContentSection[] = [
     ],
   },
   {
+    id: "delete-data",
+    title: "How to delete your data",
+    paragraphs: [
+      "You can reset quiz scores or delete your account yourself at https://www.lifeintheukprep.co/delete-data. You may also email support@lifeintheukprep.co from the address on your account. Uninstalling the Android app does not delete your cloud account.",
+    ],
+  },
+  {
     id: "contact",
     title: "Contact",
     paragraphs: [

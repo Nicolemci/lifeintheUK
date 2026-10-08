@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { usePageMetadata } from "../seo/usePageMetadata";
 import { useProgress } from "./ProgressContext";
@@ -20,7 +21,10 @@ function formatDuration(durationSeconds: number): string {
 }
 
 export default function MockResultsPage() {
-  const { loading, error, stats, mockTestHistory, refreshProgress } = useProgress();
+  const { loading, error, saving, stats, mockTestHistory, refreshProgress, resetAllQuizScores } =
+    useProgress();
+  const [resetMessage, setResetMessage] = useState("");
+  const [resetError, setResetError] = useState("");
 
   usePageMetadata({
     title: "Mock test results",
@@ -28,6 +32,30 @@ export default function MockResultsPage() {
     path: "/results-history",
     noIndex: true,
   });
+
+  const handleResetScores = async () => {
+    setResetMessage("");
+    setResetError("");
+
+    const confirmed = window.confirm(
+      "Reset all quiz scores? This clears your answers, wrong-question bank and mock-test history. This cannot be undone.",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await resetAllQuizScores();
+      setResetMessage("All quiz scores have been reset.");
+    } catch (resetFailure) {
+      setResetError(
+        resetFailure instanceof Error
+          ? resetFailure.message
+          : "Unable to reset quiz scores. Please try again.",
+      );
+    }
+  };
 
   return (
     <main className="results-history-page">
@@ -38,6 +66,21 @@ export default function MockResultsPage() {
         <p className="british-kicker">Your progress</p>
         <h1>Previous mock-test results</h1>
         <p>Review completed tests and see how your scores are developing over time.</p>
+        <div className="hero-actions">
+          <button
+            className="secondary-button"
+            type="button"
+            disabled={saving || loading}
+            onClick={() => void handleResetScores()}
+          >
+            {saving ? "Resetting…" : "Reset all quiz scores"}
+          </button>
+          <Link className="ghost-button" to="/delete-data">
+            Delete account / data
+          </Link>
+        </div>
+        {resetMessage ? <p className="form-success">{resetMessage}</p> : null}
+        {resetError ? <p className="form-error">{resetError}</p> : null}
       </header>
 
       <section className="results-summary-grid" aria-label="Mock test summary">

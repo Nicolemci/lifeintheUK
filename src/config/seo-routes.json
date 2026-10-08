@@ -11,6 +11,7 @@
     { "path": "/login", "priority": "0.5", "changefreq": "monthly" },
     { "path": "/sign-up", "priority": "0.6", "changefreq": "monthly" },
     { "path": "/privacy", "priority": "0.4", "changefreq": "yearly" },
+    { "path": "/delete-data", "priority": "0.5", "changefreq": "yearly" },
     { "path": "/terms", "priority": "0.4", "changefreq": "yearly" },
     { "path": "/refund-policy", "priority": "0.4", "changefreq": "yearly" },
     { "path": "/cookie-policy", "priority": "0.4", "changefreq": "yearly" }
