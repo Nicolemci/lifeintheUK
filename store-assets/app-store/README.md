@@ -20,3 +20,7 @@ Images are **RGB PNG with no alpha** (Apple requirement).
 4. Copy text from `APP_STORE_COPY.md` into Promotional Text and Description.
 
 These creative assets are optional and only appear on newer App Store layouts; they do not block review if left empty.
+
+## App screenshots
+
+See **`SCREENSHOTS.md`** for iPhone Dynamic Island, iPhone Duo (outer + inner), and iPad 13" screenshot folders. Watch was skipped.
