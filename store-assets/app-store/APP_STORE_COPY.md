@@ -62,9 +62,11 @@ First release of Life in the UK Prep for iPhone and iPad.
 
 ---
 
-## Keywords (optional, up to 100 bytes)
+## Keywords (max 100 bytes)
 
-Do not repeat the app name. Comma-separated, no spaces after commas is fine.
+Comma-separated. Do **not** repeat the app name or your developer name. Spaces inside a phrase are OK.
+
+**Paste this (82 bytes):**
 
 ```
 citizenship,ILR,mock test,revision,practice,british,settlement,handbook,exam,study
@@ -72,9 +74,16 @@ citizenship,ILR,mock test,revision,practice,british,settlement,handbook,exam,stu
 
 ---
 
-## Support / Marketing URLs
+## Support URL / Marketing URL / Version / Copyright
 
-| Field | Value |
+| Field | Paste this |
 |---|---|
-| Support URL | `https://www.lifeintheukprep.co/contact` |
-| Marketing URL | `https://www.lifeintheukprep.co` |
+| **Support URL** | `https://www.lifeintheukprep.co/contact` |
+| **Marketing URL** | `https://www.lifeintheukprep.co` |
+| **Version** | `1.0` (leave as-is if already filled) |
+| **Copyright** | `2026 Life in the UK Prep` |
+
+Notes:
+- Apple adds the © symbol automatically — do **not** type © yourself.
+- Support URL must be a real page users can use for help (contact page is fine).
+- Leave **Routing App Coverage File** empty (only for navigation/routing apps).
