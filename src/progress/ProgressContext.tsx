@@ -104,6 +104,38 @@ async function loadSupabaseClient() {
   return getSupabaseClient();
 }
 
+function getErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error && error.message.trim()) {
+    return error.message;
+  }
+
+  if (typeof error === "object" && error !== null) {
+    const message = (error as { message?: unknown }).message;
+    if (typeof message === "string" && message.trim()) {
+      return message;
+    }
+  }
+
+  if (typeof error === "string" && error.trim()) {
+    return error;
+  }
+
+  return fallback;
+}
+
+function isProgressSchemaMissing(message: string): boolean {
+  const normalized = message.toLowerCase();
+  return (
+    normalized.includes("schema cache") ||
+    normalized.includes("pgrst205") ||
+    normalized.includes("does not exist") ||
+    normalized.includes("quiz_progress") ||
+    normalized.includes("mock_tests") ||
+    normalized.includes("migrate_anonymous_progress") ||
+    normalized.includes("get_user_progress_summary")
+  );
+}
+
 function asNumber(value: number | string | null): number {
   const number = Number(value ?? 0);
   return Number.isFinite(number) ? number : 0;
@@ -269,25 +301,9 @@ export function ProgressProvider() {
         ),
       );
     } catch (summaryError) {
-      const message =
-        summaryError instanceof Error && summaryError.message.trim()
-          ? summaryError.message
-          : typeof summaryError === "object" &&
-              summaryError !== null &&
-              typeof (summaryError as { message?: unknown }).message === "string"
-            ? String((summaryError as { message: string }).message)
-            : "Unable to load your progress.";
-      const normalized = message.toLowerCase();
-      const schemaMissing =
-        normalized.includes("schema cache") ||
-        normalized.includes("pgrst205") ||
-        normalized.includes("does not exist") ||
-        normalized.includes("quiz_progress") ||
-        normalized.includes("mock_tests") ||
-        normalized.includes("migrate_anonymous_progress") ||
-        normalized.includes("get_user_progress_summary");
+      const message = getErrorMessage(summaryError, "Unable to load your progress.");
 
-      if (schemaMissing) {
+      if (isProgressSchemaMissing(message)) {
         console.warn(
           "[progress] Supabase progress tables/RPCs are missing. Apply supabase/APPLY_ALL.sql, then refresh.",
           summaryError,
@@ -340,13 +356,26 @@ export function ProgressProvider() {
         });
 
         if (insertError) {
+          const insertMessage = getErrorMessage(insertError, "Unable to save your answer.");
+          if (isProgressSchemaMissing(insertMessage)) {
+            console.warn(
+              "[progress] quiz_progress unavailable; saving answer locally instead.",
+              insertError,
+            );
+            setAnonymousProgress((current) => {
+              const next = addAnonymousAnswer(current, answer);
+              saveAnonymousProgress(next);
+              return next;
+            });
+            setProgress((current) => applyAnswerToProgress(current, questionId, correct));
+            return;
+          }
           throw insertError;
         }
 
         setProgress((current) => applyAnswerToProgress(current, questionId, correct));
       } catch (saveError) {
-        const message =
-          saveError instanceof Error ? saveError.message : "Unable to save your answer.";
+        const message = getErrorMessage(saveError, "Unable to save your answer.");
         setError(message);
         throw new Error(message);
       } finally {
@@ -408,6 +437,37 @@ export function ProgressProvider() {
           .single();
 
         if (insertError) {
+          const insertMessage = getErrorMessage(insertError, "Unable to save your mock test.");
+          if (isProgressSchemaMissing(insertMessage)) {
+            console.warn(
+              "[progress] mock_tests unavailable; saving mock result locally instead.",
+              insertError,
+            );
+            const localMockTest = {
+              localId: Date.now(),
+              score,
+              percentage,
+              completedAt,
+              durationSeconds,
+            };
+            setAnonymousProgress((current) => {
+              const next = addAnonymousMockTest(current, localMockTest);
+              saveAnonymousProgress(next);
+              return next;
+            });
+            setMockTestHistory((currentHistory) => [
+              {
+                id: -localMockTest.localId,
+                score,
+                percentage,
+                completedAt,
+                durationSeconds,
+              },
+              ...currentHistory,
+            ]);
+            setProgress((current) => applyMockToProgress(current, percentage));
+            return;
+          }
           throw insertError;
         }
 
@@ -423,10 +483,7 @@ export function ProgressProvider() {
 
         setProgress((current) => applyMockToProgress(current, percentage));
       } catch (saveError) {
-        const message =
-          saveError instanceof Error
-            ? saveError.message
-            : "Unable to save your mock test.";
+        const message = getErrorMessage(saveError, "Unable to save your mock test.");
         setError(message);
         throw new Error(message);
       } finally {
